@@ -25,12 +25,14 @@
 #define CELL_SIZE 21			// セルサイズ
 #define PITCH 399				// PC 格子定数
 #define PITCH_SHIFT_MAX 399 //480		// 格子定数変化PCWのPC格子定数の最大値
+#define CELL_NUM_X (PITCH / CELL_SIZE)
 
-#define SLAB_HEIGHT 210		// スラブ厚
-#define CLAD_HEIGHT1 525	// 上部クラッド高さ
-#define CLAD_HEIGHT2 0		// 下部クラッド高さ
+#define SLAB_HEIGHT 210		// スラブ厚[nm]
+#define CLAD_HEIGHT1 525	// 上部クラッド高さ[nm]
+#define CLAD_HEIGHT2 0		// 下部クラッド高さ[nm]
 #define AIR_HEIGHT 0		// 空気層高さ
 
+#define Row_X 2				//1つの分割モデル内にあるフォトニック結晶周期
 #define RADIUS 105			// PCの標準円孔半径
 //#define SX3 80				// 伝搬(X)方向の3列目格子シフト量(SX2,SX4=0でないと使えない要改善!!mainの1380行目)
 //#define SX1 0				// 伝搬(X)方向の1列目格子シフト量
@@ -38,7 +40,7 @@
 //#define SX4 0				//伝搬(X)方向の4列目格子シフト量(SX2,SX3=0でないと使えない要改善!!mainの1380行目)
 //#define SY 0				// 横(Y)方向の導波路全体格子シフト量(対称境界を使用しているので実際にはこの倍)
 
-#define EXCT_LEN 840					// 励振点 (モデルの左端からの距離)
+#define EXCT_LEN 10*21					// 励振点 (モデルの左端からの距離)
 #define EXCT_OBSE_LEN 975				// 励振点から観測面の中心までの距離
 #define OBSE_WIRE_LEN 2540				// 観測面の中心から細線導波路端までの距離
 #define OBSE_INTER (PITCH)				// 観測面の長さ(透過率，反射率を求めるために使用)
@@ -49,7 +51,7 @@
 #define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
 #define PCW_WIDTH_CHIRP 180				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
 
-// これ以下は周期数	
+// これ以下は周期数
 //#define NORM_PCW_PER 0				// 通常PCW周期数
 //#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数． 2~4列目まで対応．※シフト量/周期数<cellsizeだとチャープしない
 //#define CHIRP_2ND_LS_PER 0			//導波路幅チャープとシフト量チャープを同時に行う際のチャープLSPCW周期数．PITCH_SHIFT_PERより小さくないとダメ?　2,3列目のみ対応．※シフト量/周期数<cellsizeだとチャープしない
@@ -68,7 +70,7 @@
 #define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
 #define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// 出射観測面の中心座標 (モデルの右端からの距離)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長 
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長
 #define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// 出射細線長
 
 /****************************** 3列目格子シフト構造 ******************************/
@@ -76,21 +78,21 @@
 /*****************************************************************************/
 // 全解析領域
 /*****************************************************************************/
-#define XMAX_ALL 38*2	// SiO2 1340
-#define YMAX_ALL 163	//163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
-#define ZMAX_ALL 42		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
+#define XMAX_ALL (CELL_NUM_X * Row_X * NODE)	// SiO2 1340
+#define YMAX_ALL 130    //163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
+#define ZMAX_ALL 30		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 
 
 /*****************************************************************************/
 // セルサイズ [m]
 /*****************************************************************************/
-static const double dblCellSize = CELL_SIZE * 1e-9; 
-static const double dx = dblCellSize; 
-static const double dy = dblCellSize; 
-static const double dz = dblCellSize; 
-static const double inv_dx = 1/dx; 
-static const double inv_dy = 1/dy; 
-static const double inv_dz = 1/dz; 
+static const double dblCellSize = CELL_SIZE * 1e-9;
+static const double dx = dblCellSize;
+static const double dy = dblCellSize;
+static const double dz = dblCellSize;
+static const double inv_dx = 1/dx;
+static const double inv_dy = 1/dy;
+static const double inv_dz = 1/dz;
 
 /*****************************************************************************/
 // 時間ステップ (クーラントの安定条件などに注意)
@@ -99,7 +101,7 @@ static const double inv_dz = 1/dz;
 
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 2.8e-17; 			// 時間ステップ[s]
-static const int Nmax = 100000; 				// 最終時間ステップ
+static const int Nmax = 100; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 
 static const int Ncut = 50000; 				// 時間ステップ数を表示させる間隔
@@ -116,7 +118,7 @@ static const int Nmax = 1; 			// 最終時間ステップ
 
 static const int Ncheck = 10; 					// 動作確認用のフィールドを出力する時間ステップ
 static const int Ncutfield = Ncut; 			// フィールドを出力する時間ステップ
-static const int Ncutfield2 = 5; 			// 安定状態でのフィールドを出力する時間ステップ間隔
+static const int Ncutfield2 = 20; 			// 安定状態でのフィールドを出力する時間ステップ間隔
 
 /*****************************************************************************/
 // 物理量[MKSA系]
@@ -150,9 +152,8 @@ static const int intPitchX = INT_DIV (PITCH, CELL_SIZE); 		// 格子定数のセルサイ
 static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0)/2 + 0.5), CELL_SIZE)); 		// 格子定数のセルサイズ(Y方向)	+0.5は四捨五入のため
 static const int intRadius = INT_DIV (RADIUS, CELL_SIZE); 		// 円孔半径
 
-//static const int Row_x = 12;
-static const int Row_y = 9;
-static const int Wid = 15;
+static const int Row_y = 6;
+static const int Wid = 14;
 
 
 /*****************************************************************************/
@@ -189,7 +190,7 @@ static const double delta_omega = 0.05; 						// 中心周波数で規格した半値全幅
 static const int Npeak = 500; 								// ピークステップ数
 
 // 励振点の座標
-static const int ex_y_st = YMAX_ALL - 10; 		// 導波路断面始セル数(横) ←解析空間の中間セル座標から導波路幅(既に1/2値になっている)を引いている
+static const int ex_y_st = YMAX_ALL - Wid + intRadius; 		// 導波路断面始セル数(横) ←解析空間の中間セル座標から導波路幅(既に1/2値になっている)を引いている
 static const int ex_y_ed = YMAX_ALL; 					// 導波路断面終セル数(横)
 static const int ex_z_st = ZMAX_ALL - intSlabHeigPer; 	// 導波路断面始セル数(縦) ←解析空間の中間セル座標から導波路幅(の1/2値)を引いている
 static const int ex_z_ed = ZMAX_ALL; 			// 導波路断面終セル数(縦)
