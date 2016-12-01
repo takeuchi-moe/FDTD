@@ -92,7 +92,8 @@ int main(int argc, char **argv){
 	MPI_Get_processor_name (processor_name, &namelen);
 
 	if (isize != ISIZE){
-		printf ("MPIで設定した計算機の台数(%d)がプログラム中の値と一致しません．\n終了します\n", ISIZE);
+//		printf ("MPIで設定した計算機の台数(%d)がプログラム中の値と一致しません．\n終了します\n", ISIZE);
+		printf ("Can't number of node for MPI\nexit\n", ISIZE);
 		return 0;
 	}
 
