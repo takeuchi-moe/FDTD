@@ -191,7 +191,7 @@
 /*****************************************************************************/
 static const double dblCellSize = CELL_SIZE * 1e-9;
 static const double dx = dblCellSize;
-static const double dy = dblCellSize; 
+static const double dy = dblCellSize;
 static const double dz = dblCellSize;
 static const double inv_dx = 1/dx;
 static const double inv_dy = 1/dy;
@@ -207,7 +207,7 @@ static const double inv_dz = 1/dz;
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 38e-18; 			// 時間ステップ[s]
-static const int Nmax = 100; 				// 最終時間ステップ
+static const int Nmax = 1000000; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
@@ -254,16 +254,16 @@ static const int Nmax = 1000; 			// 最終時間ステップ
 
 #else
 static const double dt = 2.8e-17; 			// 時間ステップ[s]
-static const int Ncut = 5; 				// 時間ステップ数を表示させる間隔
+static const int Ncut = 50; 				// 時間ステップ数を表示させる間隔
 static const int Tcut = 30; 			// エネルギーの平均の算出を開始する時間ステップ
 static const int Fcut = 30; 			// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
 static const int Nmax = 1; 			// 最終時間ステップ
 #endif
 
-static const int Ncheck = 10; 					// 動作確認用のフィールドを出力する時間ステップ
+static const int Ncheck = 100000; 					// 動作確認用のフィールドを出力する時間ステップ
 static const int Ncutfield = Ncut; 			// フィールドを出力する時間ステップ
 //static const int Ncutfield2 = 10; 			// 安定状態でのフィールドを出力する時間ステップ間隔
-static const int Ncutfield2 = 5; 			// 安定状態でのフィールドを出力する時間ステップ間隔
+static const int Ncutfield2 = 50000; 			// 安定状態でのフィールドを出力する時間ステップ間隔
 
 /*****************************************************************************/
 // 物理量[MKSA系]
