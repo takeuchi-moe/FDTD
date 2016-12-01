@@ -219,8 +219,7 @@ void file_open(char* dir_name_def){
 	//_mkdir(strcpy(dir_name, dir_name_def)); 		// 振り分けできるかテスト
 
 	//kuramitsu lab
-	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// 振り分けできるかテスト
-
+	printf("mkdir result : %d\n",mkdir(strcpy(dir_name, dir_name_def), 0755)); 		// 振り分けできるかテスト
 
 
 	if (irank == IRANK_MIN){
