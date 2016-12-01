@@ -81,6 +81,8 @@ int main(int argc, char **argv){
 	int right, left;
 	int namelen;
 
+	printf("%s\n", "Program start");
+
 	MPI_Status status;
 
 	// MPI‚É‚æ‚é’ÊM‚ÌŠJn
