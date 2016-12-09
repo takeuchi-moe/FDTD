@@ -1,5 +1,5 @@
 /*
-3ŸŒ³_FDTD–@‚É‚æ‚é“d¥ŠE‰ğÍ ver. 2.01
+3ï¿½ï¿½ï¿½ï¿½_FDTDï¿½@ï¿½É‚ï¿½ï¿½ï¿½ï¿½dï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ver. 2.01
 From September, 2000;
 Designed by Atsushi SAKAI;
 supported by
@@ -14,24 +14,24 @@ Koichiro YOSHIDA (Observation Area: 2008)
 Norihiro ISHIKURA (October, 2012)
 */
 
-#define _FDTD 1		// FDTDŒvZ			0 : ƒ‚ƒfƒ‹‘|‚«o‚µ(ƒvƒŠƒvƒƒZƒbƒT‚ÅƒRƒ“ƒpƒCƒ‹‚ğ•ÏX‚³‚¹‚é)
-//										1 : ŒvZÀs
+#define _FDTD 1		// FDTDï¿½vï¿½Z			0 : ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½|ï¿½ï¿½ï¿½oï¿½ï¿½(ï¿½vï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Zï¿½bï¿½Tï¿½ÅƒRï¿½ï¿½ï¿½pï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+//										1 : ï¿½vï¿½Zï¿½ï¿½ï¿½s
 
-#define _BAND_CALCULATION 0			// ŒvZ‚Ìí—Ş ƒoƒ“ƒhŒvZ
-#define _PROPAGATION_CALCULATION 1	// ŒvZ‚Ìí—Ş “`”ÀŒvZ
+#define _BAND_CALCULATION 0			// ï¿½vï¿½Zï¿½Ìï¿½ï¿½ï¿½ ï¿½oï¿½ï¿½ï¿½hï¿½vï¿½Z
+#define _PROPAGATION_CALCULATION 1	// ï¿½vï¿½Zï¿½Ìï¿½ï¿½ï¿½ ï¿½`ï¿½ï¿½ï¿½vï¿½Z
 
-#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// ŒvZ‚Ìí—Ş
+#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// ï¿½vï¿½Zï¿½Ìï¿½ï¿½ï¿½
 
-#define _EXITATION_FUNC 1	// —ãUŠÖ”‚Ìí—Ş		0 : Gaussian
+#define _EXITATION_FUNC 1	// ï¿½ï¿½ï¿½Uï¿½Öï¿½ï¿½Ìï¿½ï¿½ï¿½		0 : Gaussian
 //													1 : CW
 
-#define _PROGRAM_TEST 1		// ƒvƒƒOƒ‰ƒ€‚Ì“®ìƒeƒXƒg	0: TEST(ÅIŒvZƒXƒeƒbƒvCo—Íƒtƒ@ƒCƒ‹‚ğ’Z‚­)
-//															1: –{”Ô
+#define _PROGRAM_TEST 1		// ï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½eï¿½Xï¿½g	0: TEST(ï¿½ÅIï¿½vï¿½Zï¿½Xï¿½eï¿½bï¿½vï¿½Cï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½)
+//															1: ï¿½{ï¿½ï¿½
 
-#define _MODEL_ALL_EPSILON 0 	// XY’f–Ê‚ğƒ‚ƒfƒ‹‘S‘Ì‚Ìo—Í	0: ‚È‚µ
-//																1: ‚ ‚è
+#define _MODEL_ALL_EPSILON 0 	// XYï¿½fï¿½Ê‚ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Sï¿½Ì‚Ìoï¿½ï¿½	0: ï¿½È‚ï¿½
+//																1: ï¿½ï¿½ï¿½ï¿½
 
-#define _CRT_SECURE_NO_WARNINGS //	Œx‚ğ”­¶‚³‚¹‚È‚¢‚æ‚¤‚É‚·‚é
+#define _CRT_SECURE_NO_WARNINGS //	ï¿½xï¿½ï¿½ï¿½ğ”­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,7 +54,7 @@ Norihiro ISHIKURA (October, 2012)
 #include "parameter.h"
 #include "module0.h"
 
-//ƒTƒuƒ‹[ƒeƒBƒ“
+//ï¿½Tï¿½uï¿½ï¿½ï¿½[ï¿½eï¿½Bï¿½ï¿½
 void file_open(char*);
 void file_close();
 void parameter(char*);
@@ -81,26 +81,23 @@ int main(int argc, char **argv){
 	int right, left;
 	int namelen;
 
-	printf("%s\n", "Program start");
-
 	MPI_Status status;
 
-	// MPI‚É‚æ‚é’ÊM‚ÌŠJn
+	// MPIï¿½É‚ï¿½ï¿½ï¿½ï¿½ÊMï¿½ÌŠJï¿½n
 	MPI_Init (&argc, &argv);
 	MPI_Comm_size (MPI_COMM_WORLD, &isize);
 	MPI_Comm_rank (MPI_COMM_WORLD, &irank);
 	MPI_Get_processor_name (processor_name, &namelen);
 
 	if (isize != ISIZE){
-//		printf ("MPI‚Åİ’è‚µ‚½ŒvZ‹@‚Ì‘ä”(%d)‚ªƒvƒƒOƒ‰ƒ€’†‚Ì’l‚Æˆê’v‚µ‚Ü‚¹‚ñD\nI—¹‚µ‚Ü‚·\n", ISIZE);
-		printf ("Can't number of node for MPI. size = %d\nexit\n", ISIZE);
+		printf ("MPIï¿½Åİ’è‚µï¿½ï¿½ï¿½vï¿½Zï¿½@ï¿½Ì‘ä”(%d)ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì’lï¿½Æˆï¿½ï¿½vï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½D\nï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½\n", ISIZE);
 		return 0;
 	}
 
-	printf ("%d•ªŠ„•À—ñˆ—ƒXƒ^[ƒg\n", isize);
+	printf ("%dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñˆ—ï¿½ï¿½Xï¿½^ï¿½[ï¿½g\n", isize);
 	printf ("Process %d on %s\n", irank, processor_name);
 
-	// —×‚ÌŒvZ‹@‚Ì”Ô†‚Ìw’è
+	// ï¿½×‚ÌŒvï¿½Zï¿½@ï¿½Ì”Ôï¿½ï¿½Ìwï¿½ï¿½
 	left = irank - 1;
 	if(irank == IRANK_MIN){
 		left = MPI_PROC_NULL;
@@ -110,103 +107,103 @@ int main(int argc, char **argv){
 		right = MPI_PROC_NULL;
 	}
 
-	// dir_name (—ãU”g’·) ‚Ì”z—ñ’·‚¾‚¯ŒJ‚è•Ô‚µ
+	// dir_name (ï¿½ï¿½ï¿½Uï¿½gï¿½ï¿½) ï¿½Ì”zï¿½ñ’·‚ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Ô‚ï¿½
 	for(int dir_count = 0; dir_count < (sizeof(dir_name) / sizeof(dir_name[0]) ); dir_count++){
 
-		initialize_matrix(); 						// ”z—ñ‚Ì‰Šú‰»
-		modeling(); 								// ƒ‚ƒfƒ‹‚Ìİ’è
-		file_open(dir_name[dir_count]); 			// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
-		parameter(dir_name[dir_count]); 			// ƒpƒ‰ƒ[ƒ^‚Ìİ’è‚Æo—Í
+		initialize_matrix(); 						// ï¿½zï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
+		modeling(); 								// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ìİ’ï¿½
+		file_open(dir_name[dir_count]); 			// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½
+		parameter(dir_name[dir_count]); 			// ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½Ìİ’ï¿½ï¿½Æoï¿½ï¿½
 
 
-		// ŒvZŠJn‚Ìo—Í
+		// ï¿½vï¿½Zï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½ï¿½
 		if (irank == IRANK_MIN){
-			//_strtime(time);
+			_strtime(time);
 			fprintf(fpparameter, "Start Time:\t %s\n", time);
 			s_time = MPI_Wtime();
 		}
 
-		// “d¥ŠEŒvZ
+		// ï¿½dï¿½ï¿½ï¿½Eï¿½vï¿½Z
 		for(n = 1 ; n <= Nmax; n++){
 
-			// ŠÔƒXƒeƒbƒv”‚Ì•\¦
+			// ï¿½ï¿½ï¿½ÔƒXï¿½eï¿½bï¿½vï¿½ï¿½ï¿½Ì•\ï¿½ï¿½
 			if(n % Ncut == 0){
-				//_strtime(time); 				//baba lab
+				_strtime(time);
 				printf("n = %d, \t\t", n);
 				printf("time = %s\n", time);
 			}
 
-			// —ãUŠÖ”‚Ìİ’è
+			// ï¿½ï¿½ï¿½Uï¿½Öï¿½ï¿½Ìİ’ï¿½
 			source_func();
 
 #if _FDTD
 
-			// ˆê“x“¯Šú‚ğ‚Æ‚é(“¯Šú‚Íƒm[ƒhŠÔ‚Å‘¬“x‚É‚Î‚ç‚Â‚«‚ª¶‚¶‚éì‹Æ)
+			// ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Íƒmï¿½[ï¿½hï¿½Ô‚Å‘ï¿½ï¿½xï¿½É‚Î‚ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 			MPI_Barrier (MPI_COMM_WORLD);
 
-			// “dŠE‚ÌŒvZ
+			// ï¿½dï¿½Eï¿½ÌŒvï¿½Z
 			calc_efield();
 
-			// ‹zû‹«ŠEğŒ‚É‚æ‚é’[–Ê‚ÌŒvZ
+			// ï¿½zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½[ï¿½Ê‚ÌŒvï¿½Z
 			absorpt_bound_condition();
 
-			// ˆê“x“¯Šú‚ğ‚Æ‚é
+			// ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
 			MPI_Barrier(MPI_COMM_WORLD);
 
-			MPI_Sendrecv( &Ex[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_send,
-				&Ex[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ey[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_send,
-				&Ey[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ez[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_send,
-				&Ez[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ex[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Ex[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ey[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Ey[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Ez[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ex[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
+				&Ex[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ey[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
+				&Ey[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ez[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
+				&Ez[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ex[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
+				&Ex[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ey[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
+				&Ey[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
+				&Ez[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
 
-			// “dŠE‚Ì•Û‘¶
+			// ï¿½dï¿½Eï¿½Ì•Û‘ï¿½
 			saving_electric_field();
 
-			// ¥ŠE‚ÌŒvZ
+			// ï¿½ï¿½ï¿½Eï¿½ÌŒvï¿½Z
 			calc_hfield();
 
-			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Hy[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Hz[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
+				&Hy[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
+				&Hz[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
 
-			// ƒtƒB[ƒ‹ƒh‚Ìo—Í
+			// ï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½hï¿½Ìoï¿½ï¿½
 			output_field (dir_name[dir_count]);
 
-			// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[ŒvZ‚Æo—Í
+			// ï¿½|ï¿½Cï¿½ï¿½ï¿½eï¿½Bï¿½ï¿½ï¿½Oï¿½pï¿½ï¿½ï¿½[ï¿½vï¿½Zï¿½Æoï¿½ï¿½
 #if _EXITATION_FUNC
 #else
 #endif
 
-			// ˆê“x“¯Šú‚ğ‚Æ‚é
+			// ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½
 			MPI_Barrier(MPI_COMM_WORLD);
 #endif
 			if(n == 1) {
-				observation_func(); 	// ŠÏ‘ª“_‚Ìİ’è
-				output_model(); 		// ƒ‚ƒfƒ‹‚Ìo—Í
-				set_epsilon(); 			// —U“d—¦‚ÌŠ„‚è“–‚Ä
+				observation_func(); 	// ï¿½Ï‘ï¿½ï¿½_ï¿½Ìİ’ï¿½
+				output_model(); 		// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ìoï¿½ï¿½
+				set_epsilon(); 			// ï¿½Uï¿½dï¿½ï¿½ï¿½ÌŠï¿½ï¿½è“–ï¿½ï¿½
 			}
 		}
 
 		if (irank == IRANK_MIN){
-			//_strtime(time);
-			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*ŒvZI—¹‚Ìo—Í*/
-			//‚Ìo—Í
+			_strtime(time);
+			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*ï¿½vï¿½Zï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½ï¿½*/
+			//ï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½ï¿½
 			e_time = MPI_Wtime();
 			printf ("\ntime = %f\n", e_time - s_time);
 		}
 
-		file_close(); 			// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+		file_close(); 			// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½
 	}
 
-	//MPI_Finalize(); 			// MPI‚ğI—¹‚·‚é
+	//MPI_Finalize(); 			// MPIï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 #elif _CALCULATION_TYPE == _BAND_CALCULATION
 
 #endif
@@ -214,26 +211,33 @@ int main(int argc, char **argv){
 
 
 
-// o—Í—pƒtƒ@ƒCƒ‹‚ğŠJ‚­
+// ï¿½oï¿½Í—pï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½
 void file_open(char* dir_name_def){
 	char dir_name[40];
+	char name_xy[40], name_yz[40], name_xz[40];
+
+	sprintf(name_xy, "/Model_xy_%d.txt", irank);
+	sprintf(name_yz, "/Model_yz_%d.txt", irank);
+	sprintf(name_xz, "/Model_xz_%d.txt", irank);
 
 	//baba lab
-	//_mkdir(strcpy(dir_name, dir_name_def)); 		// U‚è•ª‚¯‚Å‚«‚é‚©ƒeƒXƒg
+	//_mkdir(strcpy(dir_name, dir_name_def)); 		// ï¿½Uï¿½è•ªï¿½ï¿½ï¿½Å‚ï¿½ï¿½é‚©ï¿½eï¿½Xï¿½g
 
 	//kuramitsu lab
-	printf("mkdir result : %d\n",mkdir(strcpy(dir_name, dir_name_def), 0755)); 		// U‚è•ª‚¯‚Å‚«‚é‚©ƒeƒXƒg
+	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// ï¿½Uï¿½è•ªï¿½ï¿½ï¿½Å‚ï¿½ï¿½é‚©ï¿½eï¿½Xï¿½g
+
 
 
 	if (irank == IRANK_MIN){
 		fpparameter = fopen (strcat(strcpy(dir_name, dir_name_def), "/Parameter.txt"), "w");
 		allmodel_xy = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xy.txt"), "w");
 		fpallepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/All_Epsilon_xy.txt"), "w");
+		allmodel_xz = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xz.txt"), "w");
 	}
 
-	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_xy.txt"), "w"); 		// U‚è•ª‚¯‚Å‚«‚é‚©ƒeƒXƒg
-	model_yz = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_yz.txt"), "w");
-	model_xz = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_xz.txt"), "w");
+	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), name_xy), "w"); 		// ï¿½Uï¿½è•ªï¿½ï¿½ï¿½Å‚ï¿½ï¿½é‚©ï¿½eï¿½Xï¿½g
+	model_yz = fopen (strcat(strcpy(dir_name, dir_name_def), name_yz), "w");
+	model_xz = fopen (strcat(strcpy(dir_name, dir_name_def), name_xz), "w");
 
 	fpepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_xy.txt"), "w");
 	fpepsilony = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_yz.txt"), "w");
@@ -244,7 +248,7 @@ void file_open(char* dir_name_def){
 }
 
 
-/*o—Í—pƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é*/
+/*ï¿½oï¿½Í—pï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½*/
 void file_close(){
 
 	if (irank == IRANK_MIN){
@@ -264,7 +268,7 @@ void file_close(){
 }
 
 
-// ŒvZ—pƒpƒ‰ƒ[ƒ^‚Ìİ’è‚Æo—Í
+// ï¿½vï¿½Zï¿½pï¿½pï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½Ìİ’ï¿½ï¿½Æoï¿½ï¿½
 void parameter(char* dir_name){
 
 	if (irank == IRANK_MIN){
@@ -335,40 +339,42 @@ void parameter(char* dir_name){
 		fprintf(fpparameter, "\n");
 	}
 
-	// —ãUŠÖ”’è”‚Ìİ’è
+	// ï¿½ï¿½ï¿½Uï¿½Öï¿½ï¿½è”ï¿½Ìİ’ï¿½
 	lambda = atof(dir_name) * 1e-9;
 	omega0 = 2.0*PI*C0/lambda;
 	sigma = omega0 * delta_omega;
 }
 
-/*”z—ñ‚Ì‰Šú‰»*/
+/*ï¿½zï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½*/
 void initialize_matrix(){
 
-	//Šeƒm[ƒh‚ÌÀ•W
+	//ï¿½eï¿½mï¿½[ï¿½hï¿½Ìï¿½ï¿½W
 	if(irank != IRANK_MAX){
 		xmax = XMAX;
 		ymax = YMAX;
 		zmax = ZMAX;
+		zmax_ff = ZMAX_FF;
 	}
 
-	//ÅŒã‚Ìƒm[ƒh‚¾‚¯‚Ì‚è‚µ‚ë•s—v‚È‚Ì‚Åx•ûŒü‚É1ƒZƒ‹¬‚³‚¢
+	//ï¿½ÅŒï¿½ï¿½Ìƒmï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½Ì‚è‚µï¿½ï¿½ï¿½sï¿½vï¿½È‚Ì‚ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if(irank == IRANK_MAX){
 		xmax = XMAX - 1;
 		ymax = YMAX;
 		zmax = ZMAX;
+		zmax_ff = ZMAX_FF;
 	}
 
-	// ‰ğÍ‹óŠÔ‚ÌÅ‘å’l
+	// ï¿½ï¿½ï¿½Í‹ï¿½ï¿½Ô‚ÌÅ‘ï¿½ï¿½l
 	xmax_all = XMAX_ALL;
 	ymax_all = YMAX_ALL;
 	zmax_all = ZMAX_ALL;
 
-	// ‰ğÍ‹óŠÔ‚Ì’†SÀ•W
+	// ï¿½ï¿½ï¿½Í‹ï¿½ï¿½Ô‚Ì’ï¿½ï¿½Sï¿½ï¿½ï¿½W
 	x_cen = xmax/2;
 	y_cen = ymax/2;
 	z_cen = zmax/2;
 
-	//ƒ‚ƒfƒ‹‚Ì’†S‚Æ‰ğÍ‹óŠÔ‚Ì’†S‚Í‚PƒZƒ‹•ª‚¸‚ê‚Ä‚¢‚é‚Ì‚Å—v’ˆÓ
+	//ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ì’ï¿½ï¿½Sï¿½Æ‰ï¿½ï¿½Í‹ï¿½ï¿½Ô‚Ì’ï¿½ï¿½Sï¿½Í‚Pï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ì‚Å—vï¿½ï¿½ï¿½ï¿½
 	x_model_cen = x_cen + 1;
 	y_model_cen = y_cen + 1;
 
@@ -376,13 +382,13 @@ void initialize_matrix(){
 
 	for (x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
-			for(z = 0; z < zmax+1; z++){
-				// “dŠE
+			for(z = 0; z < zmax_ff+1; z++){
+				// ï¿½dï¿½E
 				Ex[x][y][z] = 0.0;
 				Ey[x][y][z] = 0.0;
 				Ez[x][y][z] = 0.0;
 
-				// ¥ŠE
+				// ï¿½ï¿½ï¿½E
 				Hx[x][y][z] = 0.0;
 				Hy[x][y][z] = 0.0;
 				Hz[x][y][z] = 0.0;
@@ -393,7 +399,7 @@ void initialize_matrix(){
 	for (x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// —U“d—¦
+				// ï¿½Uï¿½dï¿½ï¿½
 				ALL_epsilonx[x][y][z] = EPSILON0;
 				ALL_epsilony[x][y][z] = EPSILON0;
 				ALL_epsilonz[x][y][z] = EPSILON0;
@@ -403,8 +409,8 @@ void initialize_matrix(){
 
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
-			for(z = 0; z < zmax+1; z++){
-				// —U“d—¦(•ªŠ„‚·‚é•K—v‚ª‚È‚¢‚æ‚¤‚ÈDDD)
+			for(z = 0; z < zmax_ff+1; z++){
+				// ï¿½Uï¿½dï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½ï¿½ï¿½È‚ï¿½ï¿½æ‚¤ï¿½ÈDï¿½Dï¿½D)
 				epsilonx[x][y][z] = EPSILON0;
 				epsilony[x][y][z] = EPSILON0;
 				epsilonz[x][y][z] = EPSILON0;
@@ -415,7 +421,7 @@ void initialize_matrix(){
 	for(x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// ƒZƒ‹‚Ì–Úˆó
+				// ï¿½Zï¿½ï¿½ï¿½Ì–Úˆï¿½
 				ALL_cell[x][y][z] = CLAD;
 			}
 		}
@@ -424,18 +430,18 @@ void initialize_matrix(){
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			for(z = 0; z < zmax; z++){
-				// ƒZƒ‹‚Ì–Úˆó
+			for(z = 0; z < zmax_ff; z++){
+				// ï¿½Zï¿½ï¿½ï¿½Ì–Úˆï¿½
 				cell[x][y][z] = 0;
 			}
 		}
 	}
 
 
-	/****************************** Mur‚Ì‹zû‹«ŠEğŒ ******************************/
+	/****************************** Murï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ******************************/
 
 	for(x = 0; x < xmax+1; x++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			Exn2y00[x][z] = 0.0;
 			Exn1y00[x][z] = 0.0;
 			Exn2y01[x][z] = 0.0;
@@ -459,7 +465,7 @@ void initialize_matrix(){
 		}
 	}
 	for(y = 0; y < ymax; y++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			Eyn2x00[y][z] = 0.0;
 			Eyn1x00[y][z] = 0.0;
 			Eyn2x01[y][z] = 0.0;
@@ -471,7 +477,7 @@ void initialize_matrix(){
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
-		for(z = 0; z < zmax; z++){
+		for(z = 0; z < zmax_ff; z++){
 			Ezn2y00[x][z] = 0.0;
 			Ezn1y00[x][z] = 0.0;
 			Ezn2y01[x][z] = 0.0;
@@ -479,7 +485,7 @@ void initialize_matrix(){
 		}
 	}
 	for(y = 0; y <= ymax; y++){
-		for(z = 0; z <= zmax-1; z++){
+		for(z = 0; z <= zmax_ff-1; z++){
 			Ezn2x00[y][z] = 0.0;
 			Ezn1x00[y][z] = 0.0;
 			Ezn2x01[y][z] = 0.0;
@@ -491,17 +497,17 @@ void initialize_matrix(){
 		}
 	}
 
-	/****************************** Mur‚Ì‹zû‹«ŠEğŒ ******************************/
+	/****************************** Murï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ******************************/
 }
 
 
-// ƒ‚ƒfƒ‹‚Ìİ’è
+// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ìİ’ï¿½
 void modeling(){
 
-	int n_temp; 		//‹üÜ—¦‚Ì’l•Û‘¶—p
-	double epsilon_temp; 		//—U“d—¦‚Ì’l•Û‘¶—p
+	int n_temp; 		//ï¿½ï¿½ï¿½Ü—ï¿½ï¿½Ì’lï¿½Û‘ï¿½ï¿½p
+	double epsilon_temp; 		//ï¿½Uï¿½dï¿½ï¿½ï¿½Ì’lï¿½Û‘ï¿½ï¿½p
 
-	/****************************** ƒXƒ‰ƒu‚ÌŒ`¬ ******************************/
+	/****************************** ï¿½Xï¿½ï¿½ï¿½uï¿½ÌŒ`ï¿½ï¿½ ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(y = 0; y < ymax_all; y++){
@@ -509,11 +515,11 @@ void modeling(){
 				n_temp = CLAD;
 				epsilon_temp = epsilon2;
 
-				if(z < air_hc){			//‹ó‹C‘w‚Éİ’è
+				if(z < air_hc){			//ï¿½ï¿½ï¿½Cï¿½wï¿½Éİ’ï¿½
 				}
-				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//ã•”ƒNƒ‰ƒbƒh‚Éİ’è
+				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//ï¿½ã•”ï¿½Nï¿½ï¿½ï¿½bï¿½hï¿½Éİ’ï¿½
 				}
-				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// ƒXƒ‰ƒu‚Éİ’è
+				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// ï¿½Xï¿½ï¿½ï¿½uï¿½Éİ’ï¿½
 					n_temp = CORE;
 					epsilon_temp = epsilon1;
 				}
@@ -525,37 +531,38 @@ void modeling(){
 			}
 		}
 	}
-	/****************************** ƒXƒ‰ƒu‚ÌŒ`¬ ******************************/
+	/****************************** ï¿½Xï¿½ï¿½ï¿½uï¿½ÌŒ`ï¿½ï¿½ ******************************/
 
 
-	/****************************** ƒtƒHƒgƒjƒbƒNŒ‹» ******************************/
+	/****************************** ï¿½tï¿½Hï¿½gï¿½jï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ ******************************/
 
-	int s_x3; 		// ƒ`ƒƒ[ƒvLSPCW‚ÌƒVƒtƒg—Ê
+	int s_x3; 		// ï¿½`ï¿½ï¿½ï¿½[ï¿½vLSPCWï¿½ÌƒVï¿½tï¿½gï¿½ï¿½
 	int s_x2;
 	int s_x4;
-	int z_end; 				// ‰~E‚ÌI—¹À•W
+	int z_end; 				// ï¿½~ï¿½Eï¿½ÌIï¿½ï¿½ï¿½ï¿½ï¿½W
+
 
 	if (intPcwPer == 0){
-		intWirePer2 = intWireLen1 - 1;									// oËCOREƒXƒ‰ƒu‚ÌŠJn“_
-		intWirePer3 = intWirePer2 + intWireLen2;						// oËCOREƒXƒ‰ƒu‚ÌI—¹“_
+		intWirePer2 = intWireLen1 - 1;									// ï¿½oï¿½ï¿½COREï¿½Xï¿½ï¿½ï¿½uï¿½ÌŠJï¿½nï¿½_
+		intWirePer3 = intWirePer2 + intWireLen2;						// ï¿½oï¿½ï¿½COREï¿½Xï¿½ï¿½ï¿½uï¿½ÌIï¿½ï¿½ï¿½_
 	}
 
 	else{
-		struct PNUM Pnum[100][10]; 	// ‰~’Œ‚Ì’†SÀ•W
-		struct PNUM Pnum_Init[1][10]; 		// ‰~’Œ‚Ì•W€Šiq’è”‚É‚æ‚é’†SÀ•W
+		struct PNUM Pnum[100][10]; 	// ï¿½~ï¿½ï¿½ï¿½Ì’ï¿½ï¿½Sï¿½ï¿½ï¿½W
+		struct PNUM Pnum_Init[1][10]; 		// ï¿½~ï¿½ï¿½ï¿½Ì•Wï¿½ï¿½ï¿½iï¿½qï¿½è”ï¿½É‚ï¿½ï¿½é’†ï¿½Sï¿½ï¿½ï¿½W
 
-		z_end = zmax_all; 		// ‰~E‚ªŠÑ’Ê‚µ‚Ä‚¢‚éê‡‚ğl‚¦‚é
-		Pnum_Init[0][0].Y = intPcwStartY; 	// ‰~’Œ‚ğ”z’u‚·‚éÅ‰‚ÌYÀ•W
+		z_end = zmax_all; 		// ï¿½~ï¿½Eï¿½ï¿½ï¿½Ñ’Ê‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½
+		Pnum_Init[0][0].Y = intPcwStartY; 	// ï¿½~ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½uï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½Yï¿½ï¿½ï¿½W
 
 		if(intPcwWid % 2 == 1){		// if y:even
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 		}
-		else{						// if y:odd 0.5A‚¸‚ç‚·
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+		else{						// if y:odd 0.5Aï¿½ï¿½ï¿½ç‚·
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 		}
 
 		if(y != 0){
-			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//‚™À•W‚ğ(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½(root3)/2*intPitchXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
 		}
 
 		for(z = 0; z < z_end; z++){
@@ -577,10 +584,10 @@ void modeling(){
 				else{
 					input_NormPcw_Xend = 0;
 				}
-				/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 				input_PitchShiftPcw_Xend = input_NormPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer;
 				input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend;
-				/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 				if (intChirp3rdLsPer > 0){
 					input_Chirp_Ls_Xend = input_PitchShiftChirpPcw_Xend + (intChirp3rdLsPer);
@@ -595,10 +602,10 @@ void modeling(){
 				else{
 					output_Chirp_Ls_Xend = Lspcw_Xend;
 				}
-				/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 				output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend;
 				output_PitchShiftPcw_Xend = output_PitchShiftChirpPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer;
-				/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 				output_PCW_Xend = output_Chirp_Ls_Xend + intNormPcwPer;
 
@@ -608,12 +615,12 @@ void modeling(){
 				int intPreviousPCWwidthOffset;
 				int intNowPCWwidthOffset;
 
-				/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 				double  dblPitchShiftChirpY;
 				//double dblPitchShiftChirpX, dblPitchShiftChirpY, dblPitchShiftChirpY2;
 				int intPitchShiftChirpX, intPitchShiftChirpY;
 				//int intPitchShiftChirpX, intPitchShiftChirpX2, intPitchShiftChirpY;
-				/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 
 				/****************************** LSPCW ******************************/
@@ -623,23 +630,23 @@ void modeling(){
 					s_x3 = 0;
 					s_x2 = 0;
 					s_x4 = 0;
-					// “üË ’ÊíPCW
+					// ï¿½ï¿½ï¿½ï¿½ ï¿½Êï¿½PCW
 					if (x < input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//‚™À•W‚ğ(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½(root3)/2*intPitchXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aï¿½ï¿½ï¿½ç‚·
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -652,37 +659,37 @@ void modeling(){
 						}
 					}
 
-					// “üË Šiq’è”•Ï‰»PCW
+					// ï¿½ï¿½ï¿½ï¿½ ï¿½iï¿½qï¿½è”ï¿½Ï‰ï¿½PCW
 					else if (x < input_PitchShiftPcw_Xend && x >= input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//‚™À•W‚ğ(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½(root3)/2*intPitchXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aï¿½ï¿½ï¿½ç‚·
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
 
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½H1ï¿½ï¿½ï¿½ÚƒVï¿½tï¿½gï¿½\ï¿½ï¿½(2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 								}
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½H1ï¿½ï¿½ï¿½ÚƒVï¿½tï¿½gï¿½\ï¿½ï¿½(2013/7/12) ********************/
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
-							/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+							/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 							intPitchShiftChirpX = intPitchShiftX;
 							intPitchShiftChirpY = 0;
 
@@ -713,19 +720,19 @@ void modeling(){
 								}
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 							}
-							/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+							/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 						}
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 2—ñ–ÚŠiqƒVƒtƒg
+							// 2ï¿½ï¿½ï¿½ÚŠiï¿½qï¿½Vï¿½tï¿½g
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
-							// 3—ñ–ÚŠiqƒVƒtƒg
+							// 3ï¿½ï¿½ï¿½ÚŠiï¿½qï¿½Vï¿½tï¿½g
 							if (y == intPcwWid - 3){
-								/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
-								/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 							}
 							if (y == intPcwWid - 4){
@@ -734,23 +741,23 @@ void modeling(){
 						}
 					}
 
-					// “üË ƒ`ƒƒ[ƒvLSPCW
+					// ï¿½ï¿½ï¿½ï¿½ ï¿½`ï¿½ï¿½ï¿½[ï¿½vLSPCW
 					else if (x >= input_NormPcw_Xend && x < input_Chirp_Ls_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//‚™À•W‚ğ(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½(root3)/2*intPitchXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aï¿½ï¿½ï¿½ç‚·
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -790,26 +797,26 @@ void modeling(){
 					}
 
 
-					// oË Šiq’è”•Ï‰»PCW
+					// ï¿½oï¿½ï¿½ ï¿½iï¿½qï¿½è”ï¿½Ï‰ï¿½PCW
 					else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 
-						// Šiq’è”•Ï‰»PCW‚Æ‚Ì“üËÚ‘±•”
+						// ï¿½iï¿½qï¿½è”ï¿½Ï‰ï¿½PCWï¿½Æ‚Ì“ï¿½ï¿½ËÚ‘ï¿½ï¿½ï¿½
 						if (x == output_PitchShiftChirpPcw_Xend){
 							y_poo = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
 
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½H1ï¿½ï¿½ï¿½ÚƒVï¿½tï¿½gï¿½\ï¿½ï¿½(2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 								}
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½H1ï¿½ï¿½ï¿½ÚƒVï¿½tï¿½gï¿½\ï¿½ï¿½(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
-						/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 						intPitchShiftChirpX = intPitchX;
 						intPitchShiftChirpY = 0;
 						dblPitchShiftChirpY = 0;
@@ -850,10 +857,10 @@ void modeling(){
 							Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 						}
 
-						/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 3—ñ–ÚŠiqƒVƒtƒg
+							// 3ï¿½ï¿½ï¿½ÚŠiï¿½qï¿½Vï¿½tï¿½g
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
@@ -862,14 +869,14 @@ void modeling(){
 							}
 							if (y == intPcwWid - 3){
 
-								/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
-								/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 							}
 						}
 					}
 
-					// oË ƒ`ƒƒ[ƒvLSPCW
+					// ï¿½oï¿½ï¿½ ï¿½`ï¿½ï¿½ï¿½[ï¿½vLSPCW
 					else if (x >= Lspcw_Xend && x < output_Chirp_Ls_Xend){
 						for (y2 = intPcwWid-1; y2 >= 0; y2--){
 							Pnum[x][y2].Y = Pnum[x-1][y2].Y;
@@ -903,23 +910,24 @@ void modeling(){
 					}
 
 
-					// oË ’ÊíPCW
+					// ï¿½oï¿½ï¿½ ï¿½Êï¿½PCW
 					else if (x >= output_Chirp_Ls_Xend && x < output_PCW_Xend){
 						if (x == 0){
+							flag_2r = 1;
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//‚™À•W‚ğ(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½(root3)/2*intPitchXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aï¿½ï¿½ï¿½ç‚·
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 								}
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Sï¿½ÌƒVï¿½tï¿½g(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -932,7 +940,7 @@ void modeling(){
 						}
 					}
 
-					// ’ÊíŠiq’è”PCW or LSPCW
+					// ï¿½Êï¿½ï¿½iï¿½qï¿½è”PCW or LSPCW
 					else{
 						if (x != 0){
 							y_poo = 0;
@@ -943,7 +951,7 @@ void modeling(){
 							}
 						}
 
-						// 3—ñ–ÚŠiqƒVƒtƒg
+						// 3ï¿½ï¿½ï¿½ÚŠiï¿½qï¿½Vï¿½tï¿½g
 						if (y == intPcwWid - 3){
 							s_x3 = intSx3Per;
 						}
@@ -955,12 +963,12 @@ void modeling(){
 						}
 					}
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					// “±”g˜H•ƒ`ƒƒ[ƒv
+					// ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½[ï¿½v
 					if (PCW_WIDTH_CHIRP != 0){
 						if (x < input_PitchShiftPcw_Xend){
-							////////“üËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚©‚ç(“c‘º)
+							////////ï¿½ï¿½ï¿½ËƒVï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½cï¿½ï¿½)
 							if(intChirp2ndLsPer != 0){
-							//3—ñ–Ú
+							//3ï¿½ï¿½ï¿½ï¿½
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
@@ -972,7 +980,7 @@ void modeling(){
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2—ñ–Ú
+							//2ï¿½ï¿½ï¿½ï¿½
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
@@ -985,7 +993,7 @@ void modeling(){
 								}
 							}
 							}
-							////////“üËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚Ü‚Å
+							////////ï¿½ï¿½ï¿½ËƒVï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 							if (x == 0){
 								intNowPCWwidthOffset = intPCWwidthChirp;
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
@@ -994,7 +1002,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = intNowPCWwidthOffset;
 							}
 							else{
-								// PCW_WIDTH_CHIRP—p”÷’²®
+								// PCW_WIDTH_CHIRPï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 								intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * (x / (double) (input_PitchShiftPcw_Xend-1)));
 								//intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * ((x + 1) / (double) (input_PitchShiftPcw_Xend-1)));
 								if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){
@@ -1006,10 +1014,9 @@ void modeling(){
 							}
 						}
 						else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
-
-							////////oËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚©‚ç(“c‘º)
+							////////ï¿½oï¿½ËƒVï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½cï¿½ï¿½)
 							if(intChirp2ndLsPer != 0){
-							//3—ñ–Ú
+							//3ï¿½ï¿½ï¿½ï¿½
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
@@ -1021,7 +1028,7 @@ void modeling(){
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2—ñ–Ú
+							//2ï¿½ï¿½ï¿½ï¿½
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
@@ -1034,7 +1041,7 @@ void modeling(){
 								}
 							}
 							}
-						//////////oËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚Ü‚Å
+						//////////ï¿½oï¿½ËƒVï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½
 
 							if (x == output_PitchShiftChirpPcw_Xend){
 								intPreviousPCWwidthOffset = 0;
@@ -1051,7 +1058,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = 0;
 							}
 							else{
-								// PCW_WIDTH_CHIRP—p”÷’²®
+								// PCW_WIDTH_CHIRPï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
 									if (y2 % 2 == 1){
 										intNowPCWwidthOffset = (int) (intPCWwidthChirp * ((x - output_PitchShiftChirpPcw_Xend) / (double) (input_PitchShiftPcw_Xend-1)) + 0.9);
@@ -1071,10 +1078,19 @@ void modeling(){
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-					/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+					/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 					if (PITCH_SHIFT_MAX > PITCH && intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
 					}
-					/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+					/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
+
+					flag_2r = 0;
+					if(x < PITCH_SHIFT_PER && x > PITCH_SHIFT_PER+LSPCW_PER){
+						flag_2r = 0;
+					}else if(x%2 == 0 && x >= PITCH_SHIFT_PER && x <= PITCH_SHIFT_PER+LSPCW_PER){
+						flag_2r = 1;
+					}else if(x%2 == 1 && x >= PITCH_SHIFT_PER && x <= PITCH_SHIFT_PER+LSPCW_PER){
+						flag_2r = 2;
+					}
 
 					if (SX2 == 0 && SX4 == 0)
 					mcircle(Pnum[x][y].X + s_x3, Pnum[x][y].Y, z, 1);
@@ -1083,45 +1099,48 @@ void modeling(){
 					if (SX2 == 0 && SX3 == 0)
 					mcircle(Pnum[x][y].X + s_x4, Pnum[x][y].Y, z, 1);
 
-					// oËCORE×ü“±”g˜H‚Æ‚ÌÚ‘±•”•ª‚Ì’²®
+
+					// ï¿½oï¿½ï¿½COREï¿½×ï¿½ï¿½ï¿½ï¿½gï¿½Hï¿½Æ‚ÌÚ‘ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì’ï¿½ï¿½ï¿½
 					if(x == intPcwPer - 1){
-						// Šiq’è”•Ï‰»PCW‚ ‚è
-						/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						// ï¿½iï¿½qï¿½è”ï¿½Ï‰ï¿½PCWï¿½ï¿½ï¿½ï¿½
+						/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 						if (intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
-							/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+							/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 							if(y % 2 == 1){
 								if (Pnum[x][y].X > 0){
-									/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 									if (PITCH_SHIFT_MAX == PITCH){
+										//ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½
 										Pnum[x][y].X += intPitchX;
 									}
 									else{
-										Pnum[x][y].X += intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+										Pnum[x][y].X += intPitchShiftX; 		// intPitchXï¿½ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½Wï¿½É’uï¿½ï¿½
 									}
-									/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXï¿½ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½Wï¿½É’uï¿½ï¿½
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXï¿½ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½Wï¿½É’uï¿½ï¿½
 								}
 
 								int poo = 0;
 
 								if (PCW_WIDTH_CHIRP != 0){
-									// PCW_WIDTH_CHIRP—p”÷’²®
+									//ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½
+									// PCW_WIDTH_CHIRPï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPer-1));
 								}
 
 
-								/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 								if (PITCH_SHIFT_MAX != PITCH){
 									Pnum[x][y].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * (intPcwWid-1 - y) - intPCWwidthChirp;
 								}
-								/******************** ŠiqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** ï¿½iï¿½qï¿½Vï¿½tï¿½gï¿½Êƒ`ï¿½ï¿½ï¿½[ï¿½v(2013/7/19) ********************/
 
 								if (SX2 == 0 && SX4 == 0)
 									mcircle(Pnum[x][y].X + s_x3, Pnum[x][y].Y, z, 1);
@@ -1133,18 +1152,19 @@ void modeling(){
 						}
 						else{
 							if(y % 2 == 1){
+
 								if (Pnum[x][y].X > 0){
-									Pnum[x][y].X += intPitchX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X += intPitchX; 		// intPitchXï¿½ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½Wï¿½É’uï¿½ï¿½
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXï¿½ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½Wï¿½É’uï¿½ï¿½
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXï¿½ï¿½ï¿½ï¿½+Xï¿½ï¿½ï¿½Wï¿½É’uï¿½ï¿½
 								}
 
 								if (PCW_WIDTH_CHIRP != 0){
-									// PCW_WIDTH_CHIRP—p”÷’²®
+									// PCW_WIDTH_CHIRPï¿½pï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 									int poo;
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPer-1));
@@ -1164,17 +1184,17 @@ void modeling(){
 
 			}
 		}
-		// CORE×ü“±”g˜H‚ÌˆÊ’u‚ğŒvZ
-		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// oËCOREƒXƒ‰ƒu‚ÌŠJn“_
-		intWirePer3 = intWirePer2 + intWireLen2;						// oËCOREƒXƒ‰ƒu‚ÌI—¹“_
+		// COREï¿½×ï¿½ï¿½ï¿½ï¿½gï¿½Hï¿½ÌˆÊ’uï¿½ï¿½ï¿½vï¿½Z
+		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// ï¿½oï¿½ï¿½COREï¿½Xï¿½ï¿½ï¿½uï¿½ÌŠJï¿½nï¿½_
+		intWirePer3 = intWirePer2 + intWireLen2;						// ï¿½oï¿½ï¿½COREï¿½Xï¿½ï¿½ï¿½uï¿½ÌIï¿½ï¿½ï¿½_
 
 	}
-	/****************************** ƒtƒHƒgƒjƒbƒNŒ‹» ******************************/
+	/****************************** ï¿½tï¿½Hï¿½gï¿½jï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ ******************************/
 
-	/****************************** “üoË×ü“±”g˜H ******************************/
+	/****************************** ï¿½ï¿½ï¿½oï¿½Ë×ï¿½ï¿½ï¿½ï¿½gï¿½H ******************************/
 	int intPcwSislabOffset;
 
-	// ‘S–ÊƒXƒ‰ƒu‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅC×üˆÈŠO‚Ì•”•ª‚ğ‹ó‹C‚É•ÏX
+	// ï¿½Sï¿½ÊƒXï¿½ï¿½ï¿½uï¿½É‚È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ì‚ÅCï¿½×ï¿½ï¿½ÈŠOï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½É•ÏX
 	if (PCW_SiSLAB_OFFSET != 0){
 		intPcwSislabOffset = INT_DIV(PCW_SiSLAB_OFFSET, CELL_SIZE);
 	}
@@ -1185,17 +1205,17 @@ void modeling(){
 	for (z = zmax_all - intSlabHeigPer; z < (zmax_all + 1); z++){
 		for (y = 0; y < ymax_all - intWireWid_2; y++){
 
-			// “üË
+			// ï¿½ï¿½ï¿½ï¿½
 			if (PCW_SiSLAB_OFFSET != 0){
 			}
-			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 				ALL_cell[x][y][z] = CLAD;
 				ALL_epsilonx[x][y][z] = epsilon2;
 				ALL_epsilony[x][y][z] = epsilon2;
 				ALL_epsilonz[x][y][z] = epsilon2;
 			}
 
-			// oË
+			// ï¿½oï¿½ï¿½
 			if (PCW_SiSLAB_OFFSET != 0){
 			}
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++){
@@ -1207,11 +1227,11 @@ void modeling(){
 		}
 
 	}
-	/****************************** “üoË×ü“±”g˜H ******************************/
+	/****************************** ï¿½ï¿½ï¿½oï¿½Ë×ï¿½ï¿½ï¿½ï¿½gï¿½H ******************************/
 
 
 
-	/****************************** ‘ÎÌ‹«ŠE•”•ª‚Ì—U“d—¦‚Ìİ’è ******************************/
+	/****************************** ï¿½ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Ì—Uï¿½dï¿½ï¿½ï¿½Ìİ’ï¿½ ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(z = 0; z < zmax_all+1; z++){
@@ -1231,12 +1251,111 @@ void modeling(){
 		}
 	}
 
-	/****************************** ‘ÎÌ‹«ŠE•”•ª‚Ì—U“d—¦‚Ìİ’è ******************************/
+	/****************************** ï¿½ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Ì—Uï¿½dï¿½ï¿½ï¿½Ìİ’ï¿½ ******************************/
 
 
 
-	/****************************** Šeƒm[ƒh‚Éƒ‚ƒfƒ‹‚ğ•ªŠ„ ******************************/
+	/****************************** ï¿½eï¿½mï¿½[ï¿½hï¿½Éƒï¿½ï¿½fï¿½ï¿½ï¿½ğ•ªŠï¿½ ******************************/
+
 	if(NODE < 3){
+		if(irank != IRANK_MAX){
+			for(x = 0; x < xmax+1; x++){
+				for(y = 0; y < ymax+1; y++){
+					for(z = 0; z < Z_AIR; z++){
+						cell[x][y][z] = AIR;
+						epsilonx[x][y][z] = epsilon0;
+						epsilony[x][y][z] = epsilon0;
+						epsilonz[x][y][z] = epsilon0;
+					}
+					for(z = Z_AIR; z < zmax_ff+1; z++){
+						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z-Z_AIR];
+						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax-1)+x][y][z-Z_AIR];
+						epsilony[x][y][z] = ALL_epsilony[irank*(xmax-1)+x][y][z-Z_AIR];
+						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax-1)+x][y][z-Z_AIR];
+					}
+				}
+			}
+
+		}
+		else{
+			for(x = 0; x < xmax+1; x++){
+				for(y = 0; y < ymax+1; y++){
+					for(z = 0; z < Z_AIR; z++){
+						cell[x][y][z] = AIR;
+						epsilonx[x][y][z] = epsilon0;
+						epsilony[x][y][z] = epsilon0;
+						epsilonz[x][y][z] = epsilon0;
+					}
+					for(z = Z_AIR; z < zmax_ff+1; z++){
+						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z-Z_AIR];
+						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax)+x][y][z-Z_AIR];
+						epsilony[x][y][z] = ALL_epsilony[irank*(xmax)+x][y][z-Z_AIR];
+						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax)+x][y][z-Z_AIR];
+					}
+				}
+			}
+		}
+	}else{
+		if(irank == IRANK_MAX){
+			for(x = 0; x < xmax+1; x++){
+				for(y = 0; y < ymax+1; y++){
+					for(z = 0; z < Z_AIR; z++){
+						cell[x][y][z] = AIR;
+						epsilonx[x][y][z] = epsilon0;
+						epsilony[x][y][z] = epsilon0;
+						epsilonz[x][y][z] = epsilon0;
+					}
+					for(z = Z_AIR; z < zmax_ff+1; z++){
+						cell[x][y][z] = ALL_cell[2*(xmax)+x][y][z-Z_AIR];
+						epsilonx[x][y][z] = ALL_epsilonx[2*(xmax)+x][y][z-Z_AIR];
+						epsilony[x][y][z] = ALL_epsilony[2*(xmax)+x][y][z-Z_AIR];
+						epsilonz[x][y][z] = ALL_epsilonz[2*(xmax)+x][y][z-Z_AIR];
+					}
+				}
+			}
+		}else if(irank == IRANK_MIN){
+			for(x = 0; x < xmax+1; x++){
+				for(y = 0; y < ymax+1; y++){
+					for(z = 0; z < Z_AIR; z++){
+						cell[x][y][z] = AIR;
+						epsilonx[x][y][z] = epsilon0;
+						epsilony[x][y][z] = epsilon0;
+						epsilonz[x][y][z] = epsilon0;
+					}
+					for(z = Z_AIR; z < zmax_ff+1; z++){
+						cell[x][y][z] = ALL_cell[x][y][z-Z_AIR];
+						epsilonx[x][y][z] = ALL_epsilonx[x][y][z-Z_AIR];
+						epsilony[x][y][z] = ALL_epsilony[x][y][z-Z_AIR];
+						epsilonz[x][y][z] = ALL_epsilonz[x][y][z-Z_AIR];
+					}
+				}
+			}
+		}else{
+			for(x = 0; x < xmax+1; x++){
+				for(y = 0; y < ymax+1; y++){
+					for(z = 0; z < Z_AIR; z++){
+						cell[x][y][z] = AIR;
+						epsilonx[x][y][z] = epsilon0;
+						epsilony[x][y][z] = epsilon0;
+						epsilonz[x][y][z] = epsilon0;
+					}
+					for(z = Z_AIR; z < zmax_ff+1; z++){
+						cell[x][y][z] = ALL_cell[(xmax-1)+x][y][z-Z_AIR];
+						epsilonx[x][y][z] = ALL_epsilonx[(xmax-1)+x][y][z-Z_AIR];
+						epsilony[x][y][z] = ALL_epsilony[(xmax-1)+x][y][z-Z_AIR];
+						epsilonz[x][y][z] = ALL_epsilonz[(xmax-1)+x][y][z-Z_AIR];
+					}
+				}
+			}
+
+		}
+
+
+	}
+
+
+
+	/*if(NODE < 3){
 		if(irank != IRANK_MAX){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
@@ -1346,25 +1465,29 @@ void modeling(){
 
 		}
 
-	}
-
-	/****************************** Šeƒm[ƒh‚Éƒ‚ƒfƒ‹‚ğ•ªŠ„ ******************************/
+	}*/
 
 
-	/****************************** ‹¤’Êƒpƒ‰ƒ[ƒ^‚Ìİ’è ******************************/
 
-	// —ãU“_CŠÏ‘ª–Ê‚Ìİ’è (XMAX‚Í "‚Ì‚è‚µ‚ë" •”•ª‚ğŠÜ‚ß‚Ä‚¢‚é‚±‚Æ‚É’ˆÓ)
+
+
+	/****************************** ï¿½eï¿½mï¿½[ï¿½hï¿½Éƒï¿½ï¿½fï¿½ï¿½ï¿½ğ•ªŠï¿½ ******************************/
+
+
+	/****************************** ï¿½ï¿½ï¿½Êƒpï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½Ìİ’ï¿½ ******************************/
+
+	// ï¿½ï¿½ï¿½Uï¿½_ï¿½Cï¿½Ï‘ï¿½ï¿½Ê‚Ìİ’ï¿½ (XMAXï¿½ï¿½ "ï¿½Ì‚è‚µï¿½ï¿½" ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ß‚Ä‚ï¿½ï¿½é‚±ï¿½Æ‚É’ï¿½ï¿½ï¿½)
 	intExctPortNum = intExctLen / (XMAX - 1);
 	intObseInPortNum = intObseLen1 / (XMAX - 1);
 	intObseOutPortNum = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) / (XMAX - 1);
 	if (NODE % 2 != 0){
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// Šï”ŒÂ•À—ñŒvZ‚Ì‚Æ‚«
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// ï¿½ï”ï¿½Â•ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½Ì‚Æ‚ï¿½
 	}
 	else{
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// ‹ô”ŒÂ•À—ñŒvZ‚Ì‚Æ‚«
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// ï¿½ï¿½ï¿½ï¿½ï¿½Â•ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½Ì‚Æ‚ï¿½
 	}
 
-	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// ”z—ñ‚Ìˆø”‚Ég—p‚·‚é‚Ì‚Å-1
+	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// ï¿½zï¿½ï¿½ï¿½Ìˆï¿½ï¿½ï¿½ï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½-1
 	intObseLenPart1 = intObseLen1 % (XMAX - 1) - INT_DIV(intObseInter, 2) - 1;
 	intObseLenPart2 = intObseLenPart1 + intObseInter;
 	intObseLenPart3 = intObseLen1 % (XMAX - 1);
@@ -1372,30 +1495,30 @@ void modeling(){
 	intObseLenPart5 = intObseLenPart4 + intObseInter;
 	intObseLenPart6 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1);
 	if (NODE % 2 != 0){
-		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// Šï”ŒÂ•À—ñŒvZ‚Ì‚Æ‚«
+		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// ï¿½ï”ï¿½Â•ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½Ì‚Æ‚ï¿½
 	}
 	else{
-		intObseLenPart7 = (XMAX - 1) - 10;		// ‹ô”ŒÂ•À—ñŒvZ‚Ì‚Æ‚«
+		intObseLenPart7 = (XMAX - 1) - 10;		// ï¿½ï¿½ï¿½ï¿½ï¿½Â•ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½Ì‚Æ‚ï¿½
 	}
-	/****************************** ‹¤’Êƒpƒ‰ƒ[ƒ^‚Ìİ’è ******************************/
+	/****************************** ï¿½ï¿½ï¿½Êƒpï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^ï¿½Ìİ’ï¿½ ******************************/
 }
 
 
 
-//—U“d—¦‚ÌŠ„‚è“–‚Ä
+//ï¿½Uï¿½dï¿½ï¿½ï¿½ÌŠï¿½ï¿½è“–ï¿½ï¿½
 void set_epsilon(){
 
-	//—U“d—¦•ª•z‚Ìo—Í(ƒ‚ƒfƒ‹‚ÌŠm”F)
+	//ï¿½Uï¿½dï¿½ï¿½ï¿½ï¿½ï¿½zï¿½Ìoï¿½ï¿½(ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ÌŠmï¿½F)
 	int tag1 = 1;
 
 #if _FDTD
 
-	/****************************** ŒvZÀs ******************************/
+	/****************************** ï¿½vï¿½Zï¿½ï¿½ï¿½sï¿½ï¿½ ******************************/
 	int node;
 
 	MPI_Status status;
 
-	//XY•½–Ê
+	//XYï¿½ï¿½ï¿½ï¿½
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
 			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1];
@@ -1445,11 +1568,11 @@ void set_epsilon(){
 			}
 		}
 	}
-	/****************************** ŒvZÀs ******************************/
+	/****************************** ï¿½vï¿½Zï¿½ï¿½ï¿½sï¿½ï¿½ ******************************/
 #else
 
-	/****************************** ƒ‚ƒfƒ‹Šm”F ******************************/
-	char fname[40],dir_name[50];	//ƒtƒ@ƒCƒ‹–¼Ši”[•Ï”
+	/****************************** ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ ******************************/
+	char fname[40],dir_name[50];	//ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½iï¿½[ï¿½Ïï¿½
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
@@ -1509,49 +1632,49 @@ void set_epsilon(){
 	}
 #endif
 
-	/****************************** ƒ‚ƒfƒ‹Šm”F ******************************/
+	/****************************** ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ ******************************/
 #endif
 
-	//YZ•½–Ê
+	//YZï¿½ï¿½ï¿½ï¿½
 	for(y = 0; y < ymax+1; y++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			epsilon_yz[y][z] = epsilony[intObseLenPart1][y][z];
 		}
 	}
 	for(y = 0; y < ymax+1; y++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			fprintf(fpepsilony, "%e\t", epsilon_yz[y][z]);
 		}
 		fprintf(fpepsilony, "\n");
 	}
 
-	//ZX•½–Ê (Y:‹«ŠE–Ê)
+	//ZXï¿½ï¿½ï¿½ï¿½ (Y:ï¿½ï¿½ï¿½Eï¿½ï¿½)
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			epsilon_zx[x][z] = epsilonz[x][ymax][z];
 		}
 	}
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			fprintf(fpepsilonz, "%e\t", epsilon_zx[x][z]);
 		}
 		fprintf(fpepsilonz, "\n");
 	}
-	//ZX•½–Ê (Y:’†S)
+	//ZXï¿½ï¿½ï¿½ï¿½ (Y:ï¿½ï¿½ï¿½S)
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			epsilon_zx2[x][z] = epsilonz[x][ymax/2][z];
 		}
 	}
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			fprintf(fpepsilonz2, "%e\t", epsilon_zx2[x][z]);
 		}
 		fprintf(fpepsilonz2, "\n");
 	}
 
 
-	// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ğ•Â‚¶‚é
+	// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½
 	if (irank == IRANK_MIN){
 		fclose(fpallepsilonx);
 	}
@@ -1562,33 +1685,33 @@ void set_epsilon(){
 }
 
 
-// —ãUŠÖ”
+// ï¿½ï¿½ï¿½Uï¿½Öï¿½
 void source_func(){
 
 	int x, y, z;
 
 	if(irank == intExctPortNum){
 
-		// —ãU“_‚Ìİ’è
+		// ï¿½ï¿½ï¿½Uï¿½_ï¿½Ìİ’ï¿½
 		x = intExctLenPart;
 
 		for(y = ex_y_st; y < ex_y_ed; y++){
 			for(z = ex_z_st; z < ex_z_ed; z++){
-#if _EXITATION_FUNC	// CW—ãU
+#if _EXITATION_FUNC	// CWï¿½ï¿½ï¿½U
 
 
-				//–Ê“à³Œ·•ª•z—ãU‚Ìê‡ ©‰ğÍ‹óŠÔ‚ª‹ô”ƒZƒ‹‚©Šï”ƒZƒ‹‚©‚Å—ãU‚ªˆÙ‚È‚é‚Ì‚Å‚»‚Ì“s“x’ˆÓ
+				//ï¿½Ê“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ï¿½Uï¿½Ìê‡ ï¿½ï¿½ï¿½ï¿½ï¿½Í‹ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï”ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½Å—ï¿½ï¿½Uï¿½ï¿½ï¿½Ù‚È‚ï¿½ï¿½Ì‚Å‚ï¿½ï¿½Ì“sï¿½xï¿½ï¿½ï¿½ï¿½
 
-				// ƒXƒ‰ƒuŒú‚Ì”¼•ª‚ÌƒZƒ‹”:‹ô” “±”g˜H•‚Ì”¼•ª‚ÌƒZƒ‹”:‹ô”
+				// ï¿½Xï¿½ï¿½ï¿½uï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½ï¿½ÌƒZï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½ï¿½ÌƒZï¿½ï¿½ï¿½ï¿½:ï¿½ï¿½ï¿½ï¿½
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt);
 
-				// ƒXƒ‰ƒuŒú‚Ì”¼•ª‚ÌƒZƒ‹”:Šï” “±”g˜H•‚Ì”¼•ª‚ÌƒZƒ‹”:Šï”
+				// ï¿½Xï¿½ï¿½ï¿½uï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½ï¿½ÌƒZï¿½ï¿½ï¿½ï¿½:ï¿½ï” ï¿½ï¿½ï¿½gï¿½Hï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½ï¿½ÌƒZï¿½ï¿½ï¿½ï¿½:ï¿½ï”
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt);
 				Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 01
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 02
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 03
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 04
-#else	// Gaussian—ãU
+#else	// Gaussianï¿½ï¿½ï¿½U
 
 				//Hz[x][(YMAX+1)/2][intSlabCen] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2));
 				Hz[x][y][z] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2)) * cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st));
@@ -1598,47 +1721,47 @@ void source_func(){
 	}
 
 
-	/****************************** ¥ŠE‚Ì‘ÎÌ‹«ŠEğŒ(4‰ñ‘ÎÌ) ******************************/
+	/****************************** ï¿½ï¿½ï¿½Eï¿½Ì‘ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(4ï¿½ï¿½ï¿½Îï¿½) ******************************/
 
 	for(x = 0; x < xmax+1; x++){
-		for(z = 0; z < zmax; z++){
-			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// ‹ôŠÖ”
+		for(z = 0; z < zmax_ff; z++){
+			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// ï¿½ï¿½ï¿½Öï¿½
 		}
 	}
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax+1; z++){
-			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// ‹ôŠÖ”
+		for(z = 0; z < zmax_ff+1; z++){
+			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// ï¿½ï¿½ï¿½Öï¿½
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			Hy[x][y][zmax] = -Hy[x][y][zmax-1];		// ŠïŠÖ”
+			Hy[x][y][zmax_ff] = -Hy[x][y][zmax_ff-1];		// ï¿½ï¿½ï¿½Öï¿½
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			Hx[x][y][zmax] = -Hx[x][y][zmax-1];		// ŠïŠÖ”
+			Hx[x][y][zmax_ff] = -Hx[x][y][zmax_ff-1];		// ï¿½ï¿½ï¿½Öï¿½
 		}
 	}
 
-	/****************************** ¥ŠE‚Ì‘ÎÌ‹«ŠEğŒ(4‰ñ‘ÎÌ) ******************************/
+	/****************************** ï¿½ï¿½ï¿½Eï¿½Ì‘ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(4ï¿½ï¿½ï¿½Îï¿½) ******************************/
 }
 
 
-// ƒ‚ƒfƒ‹‚Ö‚Ì—ãU“_CŠÏ‘ª“_‚Ì‹L˜^
+// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ö‚Ì—ï¿½ï¿½Uï¿½_ï¿½Cï¿½Ï‘ï¿½ï¿½_ï¿½Ì‹Lï¿½^
 void observation_func(){
 
-	if(irank == intObseInPortNum){ //“üË
+	if(irank == intObseInPortNum){ //ï¿½ï¿½ï¿½ï¿½
 
 		for(int x = intObseLenPart1; x < intObseLenPart2; x++){
-			/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-					/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		//Šˆ«‘w’f–Ê’†‰›“_‚Ì‚ğ‹L˜^
-						//cell[x][y][z] = 4; 					//’†‰›“_Šm”F—p
+			/****************************** ï¿½Ï‘ï¿½ï¿½Ê‚ÌCï¿½ï¿½(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½fï¿½D
+				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½fï¿½D
+					/****************************** ï¿½Ï‘ï¿½ï¿½Ê‚ÌCï¿½ï¿½(2013/8/8) ******************************/
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		//ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½fï¿½Ê’ï¿½ï¿½ï¿½ï¿½_ï¿½Ìï¿½ï¿½ï¿½ï¿½Lï¿½^
+						//cell[x][y][z] = 4; 					//ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½mï¿½Fï¿½p
 					}
-					//cell[x][y][z] += OBSERVATION; 		//–ÊŠm”F—p
+					//cell[x][y][z] += OBSERVATION; 		//ï¿½ÊŠmï¿½Fï¿½p
 				}
 			}
 		}
@@ -1646,42 +1769,42 @@ void observation_func(){
 	if (irank == intExctPortNum){
 		int x;
 		x = intExctLenPart;
-		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//ƒvƒ‰ƒX1‚µ‚Ä‚¢‚é‚Ì‚ÍƒZƒ‹”‚ÌŠÖŒW
+		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//ï¿½vï¿½ï¿½ï¿½X1ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ì‚ÍƒZï¿½ï¿½ï¿½ï¿½ï¿½ÌŠÖŒW
 			for(int z = ex_z_st; z <= ex_z_ed-1; z++){
-				cell[x][y][z] += EXITATION; 		//—ãU–ÊŠm”F—p
+				cell[x][y][z] += EXITATION; 		//ï¿½ï¿½ï¿½Uï¿½ÊŠmï¿½Fï¿½p
 			}
 		}
 	}
 
-	if(irank == intObseOutPortNum){ //oË NODE 2
+	if(irank == intObseOutPortNum){ //ï¿½oï¿½ï¿½ NODE 2
 		for(int x = intObseLenPart4; x < intObseLenPart5; x++){
-			/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-					//for(int y = 0; y <= YMAX-1; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD-1‚Í”z—ñ‚ª0ŠJn‚È‚½‚ß
-					/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+			/****************************** ï¿½Ï‘ï¿½ï¿½Ê‚ÌCï¿½ï¿½(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½fï¿½D
+				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½fï¿½D
+					//for(int y = 0; y <= YMAX-1; y++){ //ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½fï¿½D
+					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½fï¿½D-1ï¿½Í”zï¿½ï¿½ï¿½ï¿½0ï¿½Jï¿½nï¿½È‚ï¿½ï¿½ï¿½
+					/****************************** ï¿½Ï‘ï¿½ï¿½Ê‚ÌCï¿½ï¿½(2013/8/8) ******************************/
 
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		// Šˆ«‘w’f–Ê’†‰›“_‚Ì‚ğ‹L˜^
-						//cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		// ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½fï¿½Ê’ï¿½ï¿½ï¿½ï¿½_ï¿½Ìï¿½ï¿½ï¿½ï¿½Lï¿½^
+						//cell[x][y][z] = 4; 					// ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½mï¿½Fï¿½p
 					}
-					//cell[x][y][z] += OBSERVATION; 			// –ÊŠm”F—p
+					//cell[x][y][z] += OBSERVATION; 			// ï¿½ÊŠmï¿½Fï¿½p
 				}
 			}
 		}
 	}
 
-	if(irank == intObseCenPortNum){ //oË NODE 2
+	if(irank == intObseCenPortNum){ //ï¿½oï¿½ï¿½ NODE 2
 		int x = intObseLenPart7;
-		/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-		for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-			for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-				/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+		/****************************** ï¿½Ï‘ï¿½ï¿½Ê‚ÌCï¿½ï¿½(2013/8/8) ******************************/
+		for(int y = ymax - intObseWid; y < ymax; y++){ // ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½fï¿½D
+			for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½fï¿½D
+				/****************************** ï¿½Ï‘ï¿½ï¿½Ê‚ÌCï¿½ï¿½(2013/8/8) ******************************/
 
-				if((y == YMAX-1) && (z == (intSlabCen-1))){		// Šˆ«‘w’f–Ê’†‰›“_‚Ì‚ğ‹L˜^
-					//cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+				if((y == YMAX-1) && (z == (intSlabCen-1))){		// ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½fï¿½Ê’ï¿½ï¿½ï¿½ï¿½_ï¿½Ìï¿½ï¿½ï¿½ï¿½Lï¿½^
+					//cell[x][y][z] = 4; 					// ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½mï¿½Fï¿½p
 				}
-				//cell[x][y][z] += OBSERVATION; 			// –ÊŠm”F—p
+				//cell[x][y][z] += OBSERVATION; 			// ï¿½ÊŠmï¿½Fï¿½p
 			}
 		}
 
@@ -1696,8 +1819,8 @@ void calc_efield(){
 
 	// Ex
 	for(x = 0; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ex‚Íy²‚É‘Î‚µ‚ÄŠïŠÖ”
-			for(z = 1; z < zmax+1; z++){
+		for(y = 1; y < ymax+1; y++){		// Exï¿½ï¿½yï¿½ï¿½ï¿½É‘Î‚ï¿½ï¿½ÄŠï¿½ï¿½Öï¿½
+			for(z = 1; z < zmax_ff+1; z++){
 				cnstEx = dt / epsilonx[x][y][z];
 				dex = ( (Hz[x][y][z] - Hz[x][y-1][z]) / dy) - ( (Hy[x][y][z] - Hy[x][y][z-1]) / dz);
 				Ex[x][y][z] = Ex[x][y][z] + cnstEx * dex;
@@ -1708,7 +1831,7 @@ void calc_efield(){
 	// Ey
 	for(x = 1; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			for(z = 1; z < zmax+1; z++){
+			for(z = 1; z < zmax_ff+1; z++){
 				cnstEy = dt / epsilony[x][y][z];
 				dey = ( (Hx[x][y][z] - Hx[x][y][z-1]) / dz)-( (Hz[x][y][z] - Hz[x-1][y][z]) / dx);
 				Ey[x][y][z] = Ey[x][y][z] + cnstEy * dey;
@@ -1718,8 +1841,8 @@ void calc_efield(){
 
 	// Ez
 	for(x = 1; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ez‚Íy²‚É‘Î‚µ‚ÄŠïŠÖ”
-			for(z = 0; z < zmax; z++){
+		for(y = 1; y < ymax+1; y++){		// Ezï¿½ï¿½yï¿½ï¿½ï¿½É‘Î‚ï¿½ï¿½ÄŠï¿½ï¿½Öï¿½
+			for(z = 0; z < zmax_ff; z++){
 				cnstEz = dt / epsilonz[x][y][z];
 				dez = ( (Hy[x][y][z] - Hy[x-1][y][z]) / dx) - ( (Hx[x][y][z] - Hx[x][y-1][z]) / dy);
 				Ez[x][y][z] = Ez[x][y][z] + cnstEz * dez;
@@ -1728,20 +1851,20 @@ void calc_efield(){
 	}
 
 
-	/****************************** “dŠE‚Ì‘ÎÌ‹«ŠEğŒ ******************************/
+	/****************************** ï¿½dï¿½Eï¿½Ì‘ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ******************************/
 
-	// ‹«ŠE–Ê‚Å”½‘ÎÌ‚Æ‚È‚é“dŠE¬•ª‚Ì‹«ŠE–Êã‚Ì’l‚ğ0‚Æ‚µ‚Ä‚¢‚é
+	// ï¿½ï¿½ï¿½Eï¿½Ê‚Å”ï¿½ï¿½ÎÌ‚Æ‚È‚ï¿½ï¿½dï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Ì‹ï¿½ï¿½Eï¿½Êï¿½ï¿½Ì’lï¿½ï¿½0ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax+1; z++){
-			Ex[x][ymax][z] = 0.0;		// ŠïŠÖ”
+		for(z = 0; z < zmax_ff+1; z++){
+			Ex[x][ymax][z] = 0.0;		// ï¿½ï¿½ï¿½Öï¿½
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
-		for(z = 0; z < zmax; z++){
-			Ez[x][ymax][z] = 0.0;		// ŠïŠÖ”
+		for(z = 0; z < zmax_ff; z++){
+			Ez[x][ymax][z] = 0.0;		// ï¿½ï¿½ï¿½Öï¿½
 		}
 	}
-	/****************************** “dŠE‚Ì‘ÎÌ‹«ŠEğŒ ******************************/
+	/****************************** ï¿½dï¿½Eï¿½Ì‘ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ******************************/
 }
 
 
@@ -1753,7 +1876,7 @@ void calc_hfield(){
 	// Hx
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			for(z = 0; z < zmax; z++){
+			for(z = 0; z < zmax_ff; z++){
 				dhx = ( (Ey[x][y][z+1] - Ey[x][y][z]) / dz) - ( (Ez[x][y+1][z] - Ez[x][y][z]) / dy);
 				Hx[x][y][z] = Hx[x][y][z] + cnstHxyz * dhx;
 			}
@@ -1763,7 +1886,7 @@ void calc_hfield(){
 	// Hy
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			for(z = 0; z < zmax; z++){
+			for(z = 0; z < zmax_ff; z++){
 				dhy = ( (Ez[x+1][y][z] - Ez[x][y][z]) / dx) - ( (Ex[x][y][z+1] - Ex[x][y][z]) / dz);
 				Hy[x][y][z] = Hy[x][y][z] + cnstHxyz * dhy;
 			}
@@ -1773,7 +1896,7 @@ void calc_hfield(){
 	// Hz
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			for(z = 0; z < zmax+1; z++){
+			for(z = 0; z < zmax_ff+1; z++){
 				dhz = ((Ex[x][y+1][z] - Ex[x][y][z]) / dy) - ((Ey[x+1][y][z] - Ey[x][y][z]) / dx);
 				Hz[x][y][z] = Hz[x][y][z] + cnstHxyz * dhz;
 			}
@@ -1782,12 +1905,12 @@ void calc_hfield(){
 }
 
 
-// Mur2ŸC1Ÿ‚Ì‹zû‹«ŠEğŒ‚©‚ç’[–Ê‚ÌŒvZ
+// Mur2ï¿½ï¿½ï¿½C1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Ê‚ÌŒvï¿½Z
 void absorpt_bound_condition(){
 
-	/****************************** ‘ÎÌ‹«ŠEğŒ ******************************/
+	/****************************** ï¿½ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ******************************/
 
-	// 2‰ñ‘ÎÌ
+	// 2ï¿½ï¿½ï¿½Îï¿½
 	//for(z = 0; z < zmax+1; z++){
 	//	Exn1y00[xmax][z] = Exn1y00[xmax-1][z];
 	//	Exn1y01[xmax][z] = Exn1y01[xmax-1][z];
@@ -1813,8 +1936,8 @@ void absorpt_bound_condition(){
 	//	Ezn1ym1[xmax+1][z] = -Ezn1ym1[xmax-1][z];
 	//}
 
-	// 4‰ñ‘ÎÌ
-	for(z = 0; z < zmax+1; z++){
+	// 4ï¿½ï¿½ï¿½Îï¿½
+	for(z = 0; z < zmax_ff+1; z++){
 		Eyn1x00[ymax][z] = Eyn1x00[ymax-1][z];
 		Eyn1x01[ymax][z] = Eyn1x01[ymax-1][z];
 		Eyn1xm0[ymax][z] = Eyn1xm0[ymax-1][z];
@@ -1832,44 +1955,44 @@ void absorpt_bound_condition(){
 		//Exn1zm0[x][ymax+1] = -Exn1zm0[x][ymax-1];
 		//Exn1zm1[x][ymax+1] = -Exn1zm1[x][ymax-1];
 	}
-	for(z = 0; z < zmax; z++){
+	for(z = 0; z < zmax_ff; z++){
 		Ezn1x00[ymax+1][z] = -Ezn1x00[ymax-1][z];
 		Ezn1x01[ymax+1][z] = -Ezn1x01[ymax-1][z];
 		Ezn1xm0[ymax+1][z] = -Ezn1xm0[ymax-1][z];
 		Ezn1xm1[ymax+1][z] = -Ezn1xm1[ymax-1][z];
 	}
 
-	// 8‰ñ‘ÎÌ
+	// 8ï¿½ï¿½ï¿½Îï¿½
 	for(y = 0; y < ymax+1; y++){
-		Ezn1x00[y][zmax] = -Ezn1x00[y][zmax-1];
-		Ezn1x01[y][zmax] = -Ezn1x01[y][zmax-1];
-		Ezn1xm0[y][zmax] = -Ezn1xm0[y][zmax-1];
-		Ezn1xm1[y][zmax] = -Ezn1xm1[y][zmax-1];
+		Ezn1x00[y][zmax_ff] = -Ezn1x00[y][zmax_ff-1];
+		Ezn1x01[y][zmax_ff] = -Ezn1x01[y][zmax_ff-1];
+		Ezn1xm0[y][zmax_ff] = -Ezn1xm0[y][zmax_ff-1];
+		Ezn1xm1[y][zmax_ff] = -Ezn1xm1[y][zmax_ff-1];
 	}
 	for(x = 0; x < xmax+1; x++){
-		Ezn1y00[x][zmax] = -Ezn1y00[x][zmax-1];
-		Ezn1y01[x][zmax] = -Ezn1y01[x][zmax-1];
+		Ezn1y00[x][zmax_ff] = -Ezn1y00[x][zmax_ff-1];
+		Ezn1y01[x][zmax_ff] = -Ezn1y01[x][zmax_ff-1];
 		//Ezn1ym0[x][zmax] = -Ezn1ym0[x][zmax-1];
 		//Ezn1ym1[x][zmax] = -Ezn1ym1[x][zmax-1];
 	}
 	for(x = 0; x < xmax; x++){
-		Exn1y00[x][zmax+1] = Exn1y00[x][zmax-1];
-		Exn1y01[x][zmax+1] = Exn1y01[x][zmax-1];
+		Exn1y00[x][zmax_ff+1] = Exn1y00[x][zmax_ff-1];
+		Exn1y01[x][zmax_ff+1] = Exn1y01[x][zmax_ff-1];
 		//Exn1ym0[x][zmax+1] = Exn1ym0[x][zmax-1];
 		//Exn1ym1[x][zmax+1] = Exn1ym1[x][zmax-1];
 	}
 	for(y = 0; y <= ymax-1; y++){
-		Eyn1x00[y][zmax+1] = Eyn1x00[y][zmax-1];
-		Eyn1x01[y][zmax+1] = Eyn1x01[y][zmax-1];
-		Eyn1xm0[y][zmax+1] = Eyn1xm0[y][zmax-1];
-		Eyn1xm1[y][zmax+1] = Eyn1xm1[y][zmax-1];
+		Eyn1x00[y][zmax_ff+1] = Eyn1x00[y][zmax_ff-1];
+		Eyn1x01[y][zmax_ff+1] = Eyn1x01[y][zmax_ff-1];
+		Eyn1xm0[y][zmax_ff+1] = Eyn1xm0[y][zmax_ff-1];
+		Eyn1xm1[y][zmax_ff+1] = Eyn1xm1[y][zmax_ff-1];
 	}
-	/****************************** ‘ÎÌ‹«ŠEğŒ ******************************/
+	/****************************** ï¿½ÎÌ‹ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ ******************************/
 
 
 
 
-	/****************************** Mur‚Ì2Ÿ‚Ì‹zû‹«ŠEğŒ(Ex) ******************************/
+	/****************************** Murï¿½ï¿½2ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ex) ******************************/
 
 	double u1ax1, u2ax1,u3ax1, u4ax1;
 	double u1bx1, u2bx1,u3bx1, u4bx1;
@@ -1879,7 +2002,7 @@ void absorpt_bound_condition(){
 
 	if(irank != IRANK_MAX){
 		for(x = 1; x < xmax; x++){
-			for(z = 1; z < zmax+1; z++){
+			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilonx[x][0][z]/epsilon0) ) * dt;
 
 				u1ax1 = (velo_dt - dy) / (velo_dt + dy);
@@ -1913,7 +2036,7 @@ void absorpt_bound_condition(){
 	}
 	else{
 		for(x = 1; x < xmax-1; x++){
-			for(z = 1; z < zmax+1; z++){
+			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilonx[x][0][z]/epsilon0) ) * dt;
 
 				u1ax1 = (velo_dt - dy) / (velo_dt + dy);
@@ -1946,12 +2069,12 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì2Ÿ‚Ì‹zû‹«ŠEğŒ(Ex) ******************************/
+	/****************************** Murï¿½ï¿½2ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ex) ******************************/
 
 	double u1xa, u1xc;
 	double u2xa, u2xc;
 
-	/****************************** Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ(Ex) ******************************/
+	/****************************** Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ex) ******************************/
 
 	for(y = 1; y < ymax+1; y++){
 
@@ -1970,7 +2093,7 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	for(z = 1; z < zmax; z++){
+	for(z = 1; z < zmax_ff; z++){
 
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilonx[0][0][z]/epsilon0) ) * dt;
@@ -1988,7 +2111,7 @@ void absorpt_bound_condition(){
 	}
 
 
-	// •Ó(Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ) -- y•½–Ê‚Æz•½–Ê‚©‚ç‚»‚ê‚¼‚êZo‚³‚ê‚é’l‚Ì•½‹Ï’l‚ğæ‚é
+	// ï¿½ï¿½(Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½) -- yï¿½ï¿½ï¿½Ê‚ï¿½zï¿½ï¿½ï¿½Ê‚ï¿½ï¿½ç‚»ï¿½ê‚¼ï¿½ï¿½ï¿½Zï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½Ì•ï¿½ï¿½Ï’lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (irank != IRANK_MIN){
 		for(x = 0; x < xmax; x++){
 			velo_dt = (C0 / sqrt(epsilonx[x][0][0]/epsilon0) ) * dt;
@@ -2010,13 +2133,13 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ(Ex) ******************************/
+	/****************************** Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ex) ******************************/
 
 	double u1by1, u2by1, u3by1, u4by1;
 	double u1cy1, u2cy1, u3cy1, u4cy1;
 	double u1cy2, u2cy2, u3cy2, u4cy2;
 
-	/****************************** Mur‚Ì2Ÿ‚Ì‹zû‹«ŠEğŒ(Ey) ******************************/
+	/****************************** Murï¿½ï¿½2ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(y = 1; y < ymax; y++){
@@ -2036,7 +2159,7 @@ void absorpt_bound_condition(){
 	}
 	if(irank == IRANK_MIN){
 		for(y = 1; y < ymax; y++){
-			for(z = 1; z < zmax+1; z++){
+			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilony[0][y][z]/epsilon0) ) * dt;
 
 				u1cy1 = (velo_dt - dx) / (velo_dt + dx);
@@ -2054,7 +2177,7 @@ void absorpt_bound_condition(){
 	}
 	if(irank == IRANK_MAX){
 		for(y = 1; y < ymax; y++){
-			for(z = 1; z < zmax+1; z++){
+			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilony[xmax][y][z]/epsilon0) ) * dt;
 
 				u1cy2 = (velo_dt - dx) / (velo_dt + dx);
@@ -2071,14 +2194,14 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì2Ÿ‚Ì‹zû‹«ŠEğŒ(Ey) ******************************/
+	/****************************** Murï¿½ï¿½2ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ey) ******************************/
 
 
 	double u2ya, u3ya, u3yb;
 	double u2ya1;
 	double u2yc1;
 
-	/****************************** Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ(Ey) ******************************/
+	/****************************** Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilony[x][0][0]/epsilon0) ) * dt;
@@ -2086,7 +2209,7 @@ void absorpt_bound_condition(){
 		Ey[x][0][0] = Eyn1z01[x][0] + u2ya * (Ey[x][0][1] - Eyn1z00[x][0]);
 	}
 
-	for(z = 1; z < zmax+1; z++){
+	for(z = 1; z < zmax_ff+1; z++){
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilony[0][0][z]/epsilon0) ) * dt;
 
@@ -2101,7 +2224,7 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// •Ó(Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ) --x•½–Ê‚Æz•½–Ê‚©‚ç‚»‚ê‚¼‚êZo‚³‚ê‚é’l‚Ì•½‹Ï’l‚ğæ‚é
+	// ï¿½ï¿½(Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½) --xï¿½ï¿½ï¿½Ê‚ï¿½zï¿½ï¿½ï¿½Ê‚ï¿½ï¿½ç‚»ï¿½ê‚¼ï¿½ï¿½ï¿½Zï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½Ì•ï¿½ï¿½Ï’lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	for(y = 0; y < ymax; y++){
 
 		if(irank == IRANK_MIN){
@@ -2119,16 +2242,16 @@ void absorpt_bound_condition(){
 				+ Eyn1xm1[y][0] + u2yc1 * (Ey[xmax-1][y][0] - Eyn1xm0[y][0]));
 		}
 	}
-	/****************************** Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ(Ey) ******************************/
+	/****************************** Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ey) ******************************/
 
 	double u1az1, u2az1, u3az1, u4az1;
 	double u1cz1, u2cz1, u3cz1, u4cz1;
 	double u1cz2, u2cz2, u3cz2, u4cz2;
 
-	/****************************** Mur‚Ì2Ÿ‚Ì‹zû‹«ŠEğŒ(Ez) ******************************/
+	/****************************** Murï¿½ï¿½2ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ez) ******************************/
 
 	for(x = 1; x < xmax; x++){
-		for(z = 1; z < zmax; z++){
+		for(z = 1; z < zmax_ff; z++){
 			velo_dt = (C0 / sqrt(epsilonz[x][0][z] / epsilon0) ) * dt;
 
 			u1az1 = (velo_dt - dy) / (velo_dt + dy);
@@ -2145,7 +2268,7 @@ void absorpt_bound_condition(){
 	}
 
 	for(y = 1; y < ymax+1; y++){
-		for(z = 1; z < zmax; z++){
+		for(z = 1; z < zmax_ff; z++){
 			if(irank == IRANK_MIN){
 				velo_dt = (C0 / sqrt(epsilonz[0][y][z] / epsilon0) ) * dt;
 
@@ -2177,12 +2300,12 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì2Ÿ‚Ì‹zû‹«ŠEğŒ(Ez) ******************************/
+	/****************************** Murï¿½ï¿½2ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ez) ******************************/
 
 	double u1za, u3za, u3zb;
 	double u1za1, u1zb1;
 
-	/****************************** Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ(Ez) ******************************/
+	/****************************** Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ez) ******************************/
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilonz[x][0][0] / epsilon0) ) * dt;
 		u1za = (velo_dt - dy) / (velo_dt + dy);
@@ -2206,8 +2329,8 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// •Ó(Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ) --x•½–Ê‚Æy•½–Ê‚©‚ç‚»‚ê‚¼‚êZo‚³‚ê‚é’l‚Ì•½‹Ï’l‚ğæ‚é
-	for(z = 0; z < zmax+1; z++){
+	// ï¿½ï¿½(Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½) --xï¿½ï¿½ï¿½Ê‚ï¿½yï¿½ï¿½ï¿½Ê‚ï¿½ï¿½ç‚»ï¿½ê‚¼ï¿½ï¿½ï¿½Zï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½Ì•ï¿½ï¿½Ï’lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	for(z = 0; z < zmax_ff+1; z++){
 
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilonz[0][0][z] / epsilon0) ) * dt;
@@ -2224,18 +2347,18 @@ void absorpt_bound_condition(){
 				+ Ezn1xm1[0][z] + u1zb1 * (Ez[xmax-1][0][z] - Ezn1xm0[0][z]));
 		}
 	}
-	/****************************** Mur‚Ì1Ÿ‚Ì‹zû‹«ŠEğŒ(Ez) ******************************/
+	/****************************** Murï¿½ï¿½1ï¿½ï¿½ï¿½Ì‹zï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½(Ez) ******************************/
 
 }
 
 
 
-/*“dŠE‚Ì•Û‘¶*/
+/*ï¿½dï¿½Eï¿½Ì•Û‘ï¿½*/
 void saving_electric_field(){
 
 	// Ex
 	for(x = 0; x < xmax+1; x++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			Exn2y00[x][z] = Exn1y00[x][z];
 			Exn1y00[x][z] = Ex[x][0][z];
 			Exn2y01[x][z] = Exn1y01[x][z];
@@ -2265,7 +2388,7 @@ void saving_electric_field(){
 		}
 	}
 	for(y = 0; y < ymax; y++){
-		for(z = 0; z < zmax+1; z++){
+		for(z = 0; z < zmax_ff+1; z++){
 			if(irank == IRANK_MIN){
 				Eyn2x00[y][z] = Eyn1x00[y][z];
 				Eyn1x00[y][z] = Ey[0][y][z];
@@ -2283,7 +2406,7 @@ void saving_electric_field(){
 
 	//Ez
 	for(x = 0; x < xmax+1; x++){
-		for(z = 0; z < zmax; z++){
+		for(z = 0; z < zmax_ff; z++){
 			Ezn2y00[x][z] = Ezn1y00[x][z];
 			Ezn1y00[x][z] = Ez[x][0][z];
 			Ezn2y01[x][z] = Ezn1y01[x][z];
@@ -2291,7 +2414,7 @@ void saving_electric_field(){
 		}
 	}
 	for(y = 0; y < ymax+1; y++){
-		for(z = 0; z < zmax; z++){
+		for(z = 0; z < zmax_ff; z++){
 			if(irank == IRANK_MIN){
 				Ezn2x00[y][z] = Ezn1x00[y][z];
 				Ezn1x00[y][z] = Ez[0][y][z];
@@ -2309,27 +2432,26 @@ void saving_electric_field(){
 }
 
 
-//ƒ‚ƒfƒ‹‚Ìo—Í
+//ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½Ìoï¿½ï¿½
 void output_model(){
 
 	int tag2 = 2;
 	int x, y, z;
 
 #if _FDTD
-	/****************************** ŒvZÀs ******************************/
+	/****************************** ï¿½vï¿½Zï¿½ï¿½ï¿½sï¿½ï¿½ ******************************/
 	int node;
 
 	MPI_Status status;
 
 	z = intSlabCen - 1;
 
-	// XY•½–Ê
+	// XYï¿½ï¿½ï¿½ï¿½
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			cell_xy[x][y] = cell[x][y][z];
 		}
 	}
-
 
 	if(irank == IRANK_MIN){
 		for(x = 0; x < xmax; x++){
@@ -2341,11 +2463,31 @@ void output_model(){
 			fprintf(model_xy, "\n");
 		}
 		fclose(model_xy);
-
-
 	}
 
-	// ‚»‚ê‚¼‚ê•ªŠ„•”‚Ìƒ‚ƒfƒ‹
+	// XZï¿½ï¿½ï¿½ï¿½
+	for(x = 0; x < xmax; x++){
+		for(z = 0; z < zmax_ff; z++){
+			cell_xz[x][z] = cell[x][y][z];
+		}
+	}
+
+	if(irank == IRANK_MIN){
+		for(x = 0; x < xmax; x++){
+			for(z = 0; z < zmax_ff; z++){
+				fprintf(allmodel_xz, "%d\t", cell_xz[x][z]);
+				fprintf(model_xz, "%d\t", cell_xz[x][z]);
+			}
+			fprintf(allmodel_xz, "\n");
+			fprintf(model_xz, "\n");
+		}
+		fclose(model_xz);
+	}
+
+
+
+
+	// ï¿½ï¿½ï¿½ê‚¼ï¿½ê•ªï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½fï¿½ï¿½
 	if(irank != IRANK_MIN){
 		MPI_Send(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, 0, tag2, MPI_COMM_WORLD);
 		for(x = 1; x < xmax; x++){
@@ -2354,17 +2496,28 @@ void output_model(){
 			}
 			fprintf(model_xy, "\n");
 		}
-
 		fclose(model_xy);
 	}
 
-	// ‘S‘Ìƒ‚ƒfƒ‹¶¬
+	if(irank != IRANK_MIN){
+		MPI_Send(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, 0, tag2, MPI_COMM_WORLD);
+		for(x = 1; x < xmax; x++){
+			for(z = 0; z < zmax_ff; z++){
+				fprintf(model_xz, "%d\t", cell_xz[x][z]);
+			}
+			fprintf(model_xz, "\n");
+		}
+		fclose(model_xz);
+	}
+
+	// ï¿½Sï¿½Ìƒï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
 			if(node == IRANK_MAX){
 
-				// ÅI’i‚Í"‚Ì‚è‚µ‚ë"‚ª–³‚¢‚Ì‚ÅCx•ûŒü‚ğ-1‚·‚é
+				// ï¿½ÅIï¿½iï¿½ï¿½"ï¿½Ì‚è‚µï¿½ï¿½"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ÅCxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1ï¿½ï¿½ï¿½ï¿½
 				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
+				MPI_Recv(&cell_xz[0][0], (xmax-1)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 
 				for(x = 1; x < xmax-1; x++){
 					for(y = 0; y < ymax; y++){
@@ -2372,10 +2525,17 @@ void output_model(){
 					}
 					fprintf(allmodel_xy, "\n");
 				}
+				for(x = 1; x < xmax-1; x++){
+					for(z = 0; z < zmax_ff; z++){
+						fprintf(allmodel_xz, "%d\t", cell_xz[x][z]);
+					}
+					fprintf(allmodel_xz, "\n");
+				}
 			}
 			else{
 
 				MPI_Recv(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
+				MPI_Recv(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 
 				for(x = 1; x < xmax; x++){
 					for(y = 0; y < ymax; y++){
@@ -2383,17 +2543,24 @@ void output_model(){
 					}
 					fprintf(allmodel_xy, "\n");
 				}
+				for(x = 1; x < xmax; x++){
+					for(z = 0; z < zmax_ff; z++){
+						fprintf(allmodel_xz, "%d\t", cell_xz[x][z]);
+					}
+					fprintf(allmodel_xz, "\n");
+				}
 			}
 		}
 		fclose(allmodel_xy);
+		fclose(allmodel_xz);
 	}
 
 
 
-	/****************************** ŒvZÀs ******************************/
+	/****************************** ï¿½vï¿½Zï¿½ï¿½ï¿½sï¿½ï¿½ ******************************/
 
 #else
-	/****************************** ƒ‚ƒfƒ‹Šm”F ******************************/
+	/****************************** ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ ******************************/
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			cell_xy[x][y] = cell[x][y][intSlabCen-1];
@@ -2424,7 +2591,7 @@ void output_model(){
 	}
 	fclose(allmodel_yz1);
 
-	if(irank == intObseOutPortNum){ // oË
+	if(irank == intObseOutPortNum){ // ï¿½oï¿½ï¿½
 		x = intObseLenPart4;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -2440,7 +2607,7 @@ void output_model(){
 		fclose(allmodel_yz4);
 	}
 
-	if(irank == intObseCenPortNum){			// ’†‰›
+	if(irank == intObseCenPortNum){			// ï¿½ï¿½ï¿½ï¿½
 		x = intObseLenPart7;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -2455,7 +2622,7 @@ void output_model(){
 		}
 		fclose(allmodel_yz7);
 	}
-	/****************************** ƒ‚ƒfƒ‹Šm”F ******************************/
+	/****************************** ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ ******************************/
 #endif
 
 }
@@ -2463,7 +2630,7 @@ void output_model(){
 
 void output_field_write(char *dir_name_def){
 
-	char fname[40], dir_name[50]; 	//ƒtƒ@ƒCƒ‹–¼Ši”[•Ï”
+	char fname[40], dir_name[50]; 	//ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½iï¿½[ï¿½Ïï¿½
 	int node;
 	int tag3 = 3;
 	int pi1, pj1, pk1;
@@ -2480,17 +2647,17 @@ void output_field_write(char *dir_name_def){
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			field_xy[x][y] = Hz[x][y][ex_z_ed-1]; 	//‘S‚Ä‚Ìƒm[ƒh‚Å“d¥ŠE¬•ª‚ğ2ŸŒ³”z—ñ‚ÉŠi”[‚·‚éD
+			field_xy[x][y] = Hz[x][y][ex_z_ed-1]; 	//ï¿½Sï¿½Ä‚Ìƒmï¿½[ï¿½hï¿½Å“dï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ï¿½ÉŠiï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½D
 		}
 	}
 
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax; z++){
-			field_xz[x][z] = Hz[x][YMAX][z]; 	//‘S‚Ä‚Ìƒm[ƒh‚Å“d¥ŠE¬•ª‚ğ2ŸŒ³”z—ñ‚ÉŠi”[‚·‚éD
+		for(z = 0; z < zmax_ff; z++){
+			field_xz[x][z] = Hz[x][YMAX][z]; 	//ï¿½Sï¿½Ä‚Ìƒmï¿½[ï¿½hï¿½Å“dï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½ï¿½ï¿½ÉŠiï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½D
 		}
 	}
 
-	// ƒ‚ƒfƒ‹o—Íƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚Ì‰Šú‰»
+	// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½oï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
 	if(irank == IRANK_MIN){
 		sprintf(fname, "/Field_Hz_XY_%d_01.txt", n);
 		HZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
@@ -2506,26 +2673,26 @@ void output_field_write(char *dir_name_def){
 		sprintf(fname, "/Field_Hz_XZ_%d_01.txt", n);
 		HZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
 		for(x = 0; x < xmax; x++){
-			for(z = 0; z < zmax; z++){
+			for(z = 0; z < zmax_ff; z++){
 				fprintf(HZ2, "%e\t", field_xz[x][z]);
 			}
 			fprintf(HZ2, "\n");
 		}
 	}
 
-	// ƒ‚ƒfƒ‹‚ğƒzƒXƒg‚É‘—M
+	// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½zï¿½Xï¿½gï¿½É‘ï¿½ï¿½M
 	else{
 		if(irank != IRANK_MAX){
-			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“d¥ŠE¬•ª‚ğ‘—‚éD
-			MPI_Send(&field_xz[0][0], (xmax)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD);
+			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ï¿½mï¿½[ï¿½h0ï¿½ÈŠOï¿½Ìƒmï¿½[ï¿½hï¿½ï¿½ï¿½mï¿½[ï¿½h0ï¿½É“dï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ğ‘—‚ï¿½ï¿½D
+			MPI_Send(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD);
 		}
 		if(irank == IRANK_MAX){
-			MPI_Send(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“d¥ŠE¬•ª‚ğ‘—‚éD
-			MPI_Send(&field_xz[0][0], (xmax-1)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“d¥ŠE¬•ª‚ğ‘—‚éD
+			MPI_Send(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ï¿½mï¿½[ï¿½h0ï¿½ÈŠOï¿½Ìƒmï¿½[ï¿½hï¿½ï¿½ï¿½mï¿½[ï¿½h0ï¿½É“dï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ğ‘—‚ï¿½ï¿½D
+			MPI_Send(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ï¿½mï¿½[ï¿½h0ï¿½ÈŠOï¿½Ìƒmï¿½[ï¿½hï¿½ï¿½ï¿½mï¿½[ï¿½h0ï¿½É“dï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ğ‘—‚ï¿½ï¿½D
 		}
 	}
 
-	// Šeƒm[ƒh‚²‚Æ‚ÉXY•½–Ê‚Ì¥ŠE•ª•z‚Ìo—Í
+	// ï¿½eï¿½mï¿½[ï¿½hï¿½ï¿½ï¿½Æ‚ï¿½XYï¿½ï¿½ï¿½Ê‚Ìï¿½ï¿½Eï¿½ï¿½ï¿½zï¿½Ìoï¿½ï¿½
 	sprintf(fname, "/Field_Hz_XY_%d_%d_01.txt", irank, n);
 	HZ1_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
 	for(x = 0; x < xmax; x++){
@@ -2535,22 +2702,22 @@ void output_field_write(char *dir_name_def){
 		fprintf(HZ1_NODE, "\n");
 	}
 
-	// Šeƒm[ƒh‚²‚Æ‚ÉXY•½–Ê‚Ì¥ŠE•ª•z‚Ìo—Í
+	// ï¿½eï¿½mï¿½[ï¿½hï¿½ï¿½ï¿½Æ‚ï¿½XYï¿½ï¿½ï¿½Ê‚Ìï¿½ï¿½Eï¿½ï¿½ï¿½zï¿½Ìoï¿½ï¿½
 	sprintf(fname, "/Field_Hz_XZ_%d_%d_01.txt", irank, n);
 	HZ2_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
 	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax; z++){
+		for(z = 0; z < zmax_ff; z++){
 			fprintf(HZ2_NODE, "%e\t", field_xz[x][z]);
 		}
 		fprintf(HZ2_NODE, "\n");
 	}
 
-	// óM‚µ‚½ƒ‚ƒfƒ‹‚©‚ç‘Sƒ‚ƒfƒ‹‚ğì¬
+	// ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½ì¬
 	if(irank == IRANK_MIN){
-		for(node = 1; node < ISIZE; node++){		// ƒm[ƒh0‚ªƒm[ƒh1‚©‚ç‡‚Éƒf[ƒ^‚ğó‚¯æ‚èo—Í‚µ‚Ä‚¢‚­D
-			if(node == IRANK_MAX){					// ƒm[ƒhisize-1‚Ì‚İ1ƒZƒ‹¬‚³‚­İ’è‚µ‚Ä‚¢‚é‚½‚ßğŒ•¶‚Å•ªŠò
+		for(node = 1; node < ISIZE; node++){		// ï¿½mï¿½[ï¿½h0ï¿½ï¿½ï¿½mï¿½[ï¿½h1ï¿½ï¿½ï¿½ç‡ï¿½Éƒfï¿½[ï¿½^ï¿½ï¿½ï¿½ó‚¯ï¿½ï¿½ï¿½ï¿½oï¿½Í‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½D
+			if(node == IRANK_MAX){					// ï¿½mï¿½[ï¿½hisize-1ï¿½Ì‚ï¿½1ï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ’è‚µï¿½Ä‚ï¿½ï¿½é‚½ï¿½ßï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å•ï¿½ï¿½ï¿½
 				MPI_Recv(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
-				MPI_Recv(&field_xz[0][0], (xmax-1)*(zmax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
+				MPI_Recv(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				for(x = 1; x < xmax-1; x++){
 					for(y = 0; y < ymax; y++){
 						fprintf(HZ1, "%e\t", field_xy[x][y]);
@@ -2558,7 +2725,7 @@ void output_field_write(char *dir_name_def){
 					fprintf(HZ1, "\n");
 				}
 				for(x = 1; x < xmax-1; x++){
-					for(z = 0; z < zmax; z++){
+					for(z = 0; z < zmax_ff; z++){
 						fprintf(HZ2, "%e\t", field_xz[x][z]);
 					}
 					fprintf(HZ2, "\n");
@@ -2566,9 +2733,9 @@ void output_field_write(char *dir_name_def){
 			}
 			else{
 				MPI_Recv(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
-				MPI_Recv(&field_xz[0][0], (xmax)*(zmax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
+				MPI_Recv(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				for(x = 1; x < xmax; x++){
-					for(z = 0; z < zmax; z++){
+					for(z = 0; z < zmax_ff; z++){
 						fprintf(HZ2, "%e\t", field_xz[x][z]);
 					}
 					fprintf(HZ2, "\n");
@@ -2576,7 +2743,7 @@ void output_field_write(char *dir_name_def){
 			}
 		}
 
-		// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ğ•Â‚¶‚é
+		// ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½
 		fclose(HZ1);
 		fclose(HZ2);
 	}
@@ -2585,19 +2752,19 @@ void output_field_write(char *dir_name_def){
 
 
 
-	// YZ•½–Ê‚Ì“dŠE•ª•z‚Ìo—Í
+	// YZï¿½ï¿½ï¿½Ê‚Ì“dï¿½Eï¿½ï¿½ï¿½zï¿½Ìoï¿½ï¿½
 	/*int x;
 	double E_yz;
 	FILE *EYZ1, *EYZ2, *EYZ3;
 	char fname2[40], fname3[40], fname4[40];*/
 
-	/*if(irank == intObseInPortNum){ //“üË
+	/*if(irank == intObseInPortNum){ //ï¿½ï¿½ï¿½ï¿½
 		x = intObseLenPart1;
 		sprintf(fname2, "/Field_E_YZ_%d_01.txt", n);
 		EYZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w");
 
-		for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-			for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
+		for(int y = 0; y < ymax; y++){ //ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½f
+			for(int z = 0; z < zmax; z++){		// ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½f
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ1, "%e\t", E_yz);
 			}
@@ -2606,13 +2773,13 @@ void output_field_write(char *dir_name_def){
 		fclose(EYZ1);
 	}
 
-	if(irank == intObseOutPortNum){			// oË
+	if(irank == intObseOutPortNum){			// ï¿½oï¿½ï¿½
 		x = intObseLenPart4;
 		sprintf(fname3, "/Field_E_YZ_%d_04.txt", n);
 		EYZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
 
-		for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-			for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
+		for(int y = 0; y < ymax; y++){ //ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½f
+			for(int z = 0; z < zmax; z++){		// ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½f
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ2, "%e\t", E_yz);
 			}
@@ -2621,13 +2788,13 @@ void output_field_write(char *dir_name_def){
 		fclose(EYZ2);
 	}
 
-	if(irank == intObseCenPortNum){			// oË
+	if(irank == intObseCenPortNum){			// ï¿½oï¿½ï¿½
 		x = intObseLenPart7;
 		sprintf(fname4, "/Field_E_YZ_%d_07.txt", n);
 		EYZ3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname4), "w");
 
-		for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-			for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
+		for(int y = 0; y < ymax; y++){ //ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Yï¿½Ìˆæ”»ï¿½f
+			for(int z = 0; z < zmax; z++){		// ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½gï¿½Hï¿½fï¿½ï¿½Zï¿½Ìˆæ”»ï¿½f
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ3, "%e\t", E_yz);
 			}
@@ -2638,23 +2805,23 @@ void output_field_write(char *dir_name_def){
 
 }
 
-//ƒtƒ@ƒCƒ‹o—Í
+//ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½oï¿½ï¿½
 void output_field(char *dir_name_def){
 
 	if(n <= Nmax - Fcut){
-		// “®ìŠm”F‚Ì‚½‚ß‚Ìƒtƒ@ƒCƒ‹o—Í
+		// ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½Fï¿½Ì‚ï¿½ï¿½ß‚Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½oï¿½ï¿½
 		if(n == Ncheck){
 			output_field_write (dir_name_def);
 		}
 
-		// ’èŠú“I‚Èƒtƒ@ƒCƒ‹o—Í
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Èƒtï¿½@ï¿½Cï¿½ï¿½ï¿½oï¿½ï¿½
 		if(n % Ncutfield == 0){
 			output_field_write (dir_name_def);
 		}
 	}
 	if((n >= Nmax - Fcut) && (n <= Nmax)){
 
-		// ˆÀ’è“_‚Å‚Ìƒtƒ@ƒCƒ‹o—Í
+		// ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Å‚Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½oï¿½ï¿½
 		if(n % Ncutfield2 == 0){
 			output_field_write (dir_name_def);
 		}
@@ -2665,9 +2832,13 @@ void output_field(char *dir_name_def){
 void mcircle(int x_circ, int y_circ, int z_circ, int type){
 
 	double R;
+	double Rs,Rb;
 
-	//”¼ŒaƒZƒ‹”‚ÌŒvZ
-	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//ŒvZŒë·‚ğ–h‚®‚½‚ß‚ÉŒ…ã‚°‚µ‚Ä‚¢‚Ü‚·
+	Rs = ((dblRadius_s*1.0e10)/(dx*1.0e10));
+	Rb = ((dblRadius_b*1.0e10)/(dx*1.0e10));
+
+	//ï¿½ï¿½ï¿½aï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ÌŒvï¿½Z
+	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//ï¿½vï¿½Zï¿½ë·ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚ÉŒï¿½ï¿½ã‚°ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½
 	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10));
 	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10));
 	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10));
@@ -2676,10 +2847,24 @@ void mcircle(int x_circ, int y_circ, int z_circ, int type){
 	else if(type == 8)	R = ((dblRadius8*1.0e10)/(dx*1.0e10));
 	else			R = ((dblRadius4*1.0e10)/(dx*1.0e10));
 
-	rightquartercircle1(x_circ, y_circ, z_circ, type, R);
-	leftquartercircle1(x_circ-1, y_circ, z_circ, type, R);
-	rightquartercircle2(x_circ, y_circ-1, z_circ, type, R);
-	leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, R);
+
+
+	if(flag_2r == 0){
+		rightquartercircle1(x_circ, y_circ, z_circ, type, R);
+		leftquartercircle1(x_circ-1, y_circ, z_circ, type, R);
+		rightquartercircle2(x_circ, y_circ-1, z_circ, type, R);
+		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, R);
+	}else if(flag_2r == 2){
+		rightquartercircle1(x_circ, y_circ, z_circ, type, Rs);
+		leftquartercircle1(x_circ-1, y_circ, z_circ, type, Rs);
+		rightquartercircle2(x_circ, y_circ-1, z_circ, type, Rs);
+		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, Rs);
+	}else if(flag_2r == 1){
+		rightquartercircle1(x_circ, y_circ, z_circ, type, Rb);
+		leftquartercircle1(x_circ-1, y_circ, z_circ, type, Rb);
+		rightquartercircle2(x_circ, y_circ-1, z_circ, type, Rb);
+		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, Rb);
+	}
 }
 
 
@@ -2687,8 +2872,8 @@ void halfcircle(int x_circ, int y_circ, int z_circ, int type){
 
 	double R;
 
-	//”¼ŒaƒZƒ‹”‚ÌŒvZ
-	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//ŒvZŒë·‚ğ–h‚®‚½‚ß‚ÉŒ…ã‚°‚µ‚Ä‚¢‚Ü‚·
+	//ï¿½ï¿½ï¿½aï¿½Zï¿½ï¿½ï¿½ï¿½ï¿½ÌŒvï¿½Z
+	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//ï¿½vï¿½Zï¿½ë·ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ß‚ÉŒï¿½ï¿½ã‚°ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½
 	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10));
 	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10));
 	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10));

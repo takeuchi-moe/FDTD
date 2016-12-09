@@ -2,7 +2,7 @@
 // •À—ñŒvŽZŽž‚ÌŒvŽZ‹@‚Ì‘ä”
 /*****************************************************************************/
 #if _FDTD
-#define NODE 3
+#define NODE 4
 #else
 #define NODE 1
 #endif
@@ -41,37 +41,39 @@
 #define PITCH_SHIFT_MAX 399 //480		// ŠiŽq’è”•Ï‰»PCW‚ÌPCŠiŽq’è”‚ÌÅ‘å’l
 
 #define SLAB_HEIGHT 210		// ƒXƒ‰ƒuŒú
-#define CLAD_HEIGHT1 2100	// ã•”ƒNƒ‰ƒbƒh‚‚³
+#define CLAD_HEIGHT1 2100	// ã•”ƒNƒ‰ƒbƒh‚‚³ +21*95‚Ü‚Å‚Í‘åä•v
 #define CLAD_HEIGHT2 0		// ‰º•”ƒNƒ‰ƒbƒh‚‚³
-#define AIR_HEIGHT 0		// ‹ó‹C‘w‚‚³
+#define AIR_HEIGHT 0//21*500		// ‹ó‹C‘w‚‚³
 
 #define RADIUS 105			// PC‚Ì•W€‰~E”¼Œa
+#define RADIUS_S 80		// PC‚Ì•W€‰~E”¼Œai¬‚³‚¢j
+#define RADIUS_B 130		// PC‚Ì•W€‰~E”¼Œai‘å‚«‚¢j
 #define SX3 80				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX2,SX4=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
 #define SX1 0				// “`”À(X)•ûŒü‚Ì1—ñ–ÚŠiŽqƒVƒtƒg—Ê
 #define SX2 0				// “`”À(X)•ûŒü‚Ì2—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX3,SX4=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
 #define SX4 0				//“`”À(X)•ûŒü‚Ì4—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX2,SX3=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
 #define SY 0				// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê(‘ÎÌ‹«ŠE‚ðŽg—p‚µ‚Ä‚¢‚é‚Ì‚ÅŽÀÛ‚É‚Í‚±‚Ì”{)
 
-#define EXCT_LEN 777					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
-#define EXCT_OBSE_LEN 975+19*21				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
-#define OBSE_WIRE_LEN 1500 //2540				// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
+#define EXCT_LEN 42*CELL_SIZE					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+#define EXCT_OBSE_LEN 35*CELL_SIZE				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
+#define OBSE_WIRE_LEN 15*CELL_SIZE //2540				// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
 //#define OBSE_INTER (2 * PITCH)		// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
 #define OBSE_INTER (PITCH)				// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
-#define WIRE_OUTPUT_LEN EXCT_LEN+19*21 //(EXCT_LEN + 45)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
+#define WIRE_OUTPUT_LEN 70*21 //(EXCT_LEN + 45)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
 #define WIRE_OUTPUT_OFFSET 0			// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
 #define WIRE_WID_OFFSET 180				// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê‚Ì”¼•ª(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
 #define PCW_SiSLAB_TERMINATION_LEN 255	// PCW‰¡‚ÌCOREƒXƒ‰ƒuI’[‚Ì’·‚³
 #define PCW_SiSLAB_OFFSET 0				// PCWc‚ÌCOREƒXƒ‰ƒu‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
 #define PCW_WIDTH_CHIRP 180				// PCW•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
 
-// ‚±‚êˆÈ‰º‚ÍŽüŠú”
+// ‚±‚êˆÈ‰º‚ÍŽüŠú”	
 #define NORM_PCW_PER 0				// ’ÊíPCWŽüŠú”
 #define CHIRP_3RD_LS_PER 0			// 3—ñ–ÚŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒvLSPCWŽüŠú”D 2~4—ñ–Ú‚Ü‚Å‘Î‰žD¦ƒVƒtƒg—Ê/ŽüŠú”<cellsize‚¾‚Æƒ`ƒƒ[ƒv‚µ‚È‚¢
 #define CHIRP_2ND_LS_PER 0			//“±”g˜H•ƒ`ƒƒ[ƒv‚ÆƒVƒtƒg—Êƒ`ƒƒ[ƒv‚ð“¯Žž‚És‚¤Û‚Ìƒ`ƒƒ[ƒvLSPCWŽüŠú”DPITCH_SHIFT_PER‚æ‚è¬‚³‚­‚È‚¢‚Æƒ_ƒ?@2,3—ñ–Ú‚Ì‚Ý‘Î‰žD¦ƒVƒtƒg—Ê/ŽüŠú”<cellsize‚¾‚Æƒ`ƒƒ[ƒv‚µ‚È‚¢
 #define PITCH_SHIFT_PER 7				// “±”g˜H•ƒ`ƒƒ[ƒv‚ÌŽüŠú”
 #define LSPCW_SHIFT_DESCRETE FALSE			// ŠiŽq’è”•Ï‰»PCW‚Ì‚Æ‚«C‚Í‚¶‚ß‚©‚çLSPCW‚É‚·‚éê‡‚ÍFALSE@‚µ‚È‚¢ê‡‚ÍTRUE
 #define PITCH_SHIFT_CHIRP_PER 0		// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
-#define LSPCW_PER 16				// LSPCWŽüŠú”
+#define LSPCW_PER 12				// LSPCWŽüŠú”
 #define PCW_WID 8				// PCW‚Ì—ñ”
 // ‚±‚êˆÈã‚ÍŽüŠú”
 
@@ -85,8 +87,8 @@
 #define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// “üŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
 #define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// “üŽË×ü’·
-#define WIRE_LEN2 (WIRE_LEN1-12*CELL_SIZE) //(OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// oŽË×ü’·
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// “üŽË×ü’· 
+#define WIRE_LEN2 (WIRE_LEN1-2*CELL_SIZE) //(OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// oŽË×ü’·
 //#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW’·
 
 /****************************** 3—ñ–ÚŠiŽqƒVƒtƒg\‘¢ ******************************/
@@ -144,7 +146,7 @@
 #define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)	// “üŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
 #define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)		// oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)						// “üŽË×ü’·
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)						// “üŽË×ü’· 
 #define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)					// oŽË×ü’·
 #define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW’·
 
@@ -163,9 +165,12 @@
 #if PCW_S1S3_Shift
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
-#define XMAX_ALL LSPCW_PER*19*3   //1342//1612		// SiO2 1340
+#define XMAX_ALL 228*3 //522   //1342//1612		// SiO2 1340
 #define YMAX_ALL 113+46-14	//163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
-#define ZMAX_ALL 105		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
+#define ZMAX_ALL (CLAD_HEIGHT1 + SLAB_HEIGHT/2)/CELL_SIZE		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
+#define ZMAX_ALL_FF (CLAD_HEIGHT1 + SLAB_HEIGHT/2 + AIR_HEIGHT)/CELL_SIZE
+#define Z_AIR AIR_HEIGHT/CELL_SIZE
+
 //#define ZMAX_ALL 73	// CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
@@ -189,13 +194,13 @@
 /*****************************************************************************/
 // ƒZƒ‹ƒTƒCƒY [m]
 /*****************************************************************************/
-static const double dblCellSize = CELL_SIZE * 1e-9;
-static const double dx = dblCellSize;
-static const double dy = dblCellSize;
-static const double dz = dblCellSize;
-static const double inv_dx = 1/dx;
-static const double inv_dy = 1/dy;
-static const double inv_dz = 1/dz;
+static const double dblCellSize = CELL_SIZE * 1e-9; 
+static const double dx = dblCellSize; 
+static const double dy = dblCellSize; 
+static const double dz = dblCellSize; 
+static const double inv_dx = 1/dx; 
+static const double inv_dy = 1/dy; 
+static const double inv_dz = 1/dz; 
 
 /*****************************************************************************/
 // ŽžŠÔƒXƒeƒbƒv (ƒN[ƒ‰ƒ“ƒg‚ÌˆÀ’èðŒ‚È‚Ç‚É’ˆÓ)
@@ -207,7 +212,7 @@ static const double inv_dz = 1/dz;
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 38e-18; 			// ŽžŠÔƒXƒeƒbƒv[s]
-static const int Nmax = 1000000; 				// ÅIŽžŠÔƒXƒeƒbƒv
+static const int Nmax = 10000; 				// ÅIŽžŠÔƒXƒeƒbƒv
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
@@ -254,16 +259,16 @@ static const int Nmax = 1000; 			// ÅIŽžŠÔƒXƒeƒbƒv
 
 #else
 static const double dt = 2.8e-17; 			// ŽžŠÔƒXƒeƒbƒv[s]
-static const int Ncut = 50; 				// ŽžŠÔƒXƒeƒbƒv”‚ð•\Ž¦‚³‚¹‚éŠÔŠu
+static const int Ncut = 5; 				// ŽžŠÔƒXƒeƒbƒv”‚ð•\Ž¦‚³‚¹‚éŠÔŠu
 static const int Tcut = 30; 			// ƒGƒlƒ‹ƒM[‚Ì•½‹Ï‚ÌŽZo‚ðŠJŽn‚·‚éŽžŠÔƒXƒeƒbƒv
 static const int Fcut = 30; 			// ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv” (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
 static const int Nmax = 1; 			// ÅIŽžŠÔƒXƒeƒbƒv
 #endif
 
-static const int Ncheck = 100000; 					// “®ìŠm”F—p‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv
+static const int Ncheck = 10; 					// “®ìŠm”F—p‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv
 static const int Ncutfield = Ncut; 			// ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv
 //static const int Ncutfield2 = 10; 			// ˆÀ’èó‘Ô‚Å‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒvŠÔŠu
-static const int Ncutfield2 = 50000; 			// ˆÀ’èó‘Ô‚Å‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒvŠÔŠu
+static const int Ncutfield2 = 5; 			// ˆÀ’èó‘Ô‚Å‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒvŠÔŠu
 
 /*****************************************************************************/
 // •¨——Ê[MKSAŒn]
@@ -282,7 +287,7 @@ static const double dblCladHeight1 = CLAD_HEIGHT1 * 1.0e-9; 				// ã•”ƒNƒ‰ƒbƒh‘
 static const int	intSlabHeigPer = INT_DIV (dblSlabHeig/2.0, dblCellSize); 				//ƒXƒ‰ƒu—ñ”(‘ÎÌ‹«ŠEðŒ‚ðŽg—p‚µ‚Ä‚¢‚é‚Ì‚ÅCƒXƒ‰ƒuŒú‚ð1/2)
 static const int	intCladHeight1 = INT_DIV (CLAD_HEIGHT1, CELL_SIZE); 				//ã•”ƒNƒ‰ƒbƒh—ñ”
 static const int	air_hc = 	(int)((0.0e-6*1e10)/(dz*1e10)); 					//ƒNƒ‰ƒbƒhã•”‹ó‹C‘wŒú
-static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer; 			//Šˆ«‘w’†SƒZƒ‹(+1‚Í[intSlabHeigPer]‚ªŠï”ƒZƒ‹”‚Ì‚Æ‚«‚É’†‰›’l‚É‚·‚é‚½‚ß)
+static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer +Z_AIR; 			//Šˆ«‘w’†SƒZƒ‹(+1‚Í[intSlabHeigPer]‚ªŠï”ƒZƒ‹”‚Ì‚Æ‚«‚É’†‰›’l‚É‚·‚é‚½‚ß)
 
 
 /*****************************************************************************/
@@ -301,9 +306,15 @@ static const double dblRadius7 = 0.14e-6; 						//’†‰›‰~E—ñæ’[‰~E”¼Œa
 static const double dblRadius8 = 0.16e-6; 						//’†‰›‰~E—ñæ’[‰~E”¼Œa
 static const double dblDiamter = 2.0 * dblRadius; 				// ‰~E’¼Œa
 
+static const double dblRadius_s = RADIUS_S * 1e-9; 					// ‰~E”¼Œai¬‚³‚¢j
+static const double dblRadius_b = RADIUS_B * 1e-9; 					// ‰~E”¼Œai‘å‚«‚¢j
+
 static const int intPitchX = INT_DIV (PITCH, CELL_SIZE); 		// ŠiŽq’è”‚ÌƒZƒ‹ƒTƒCƒY(X•ûŒü)
 static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0)/2 + 0.5), CELL_SIZE)); 		// ŠiŽq’è”‚ÌƒZƒ‹ƒTƒCƒY(Y•ûŒü)	+0.5‚ÍŽlŽÌŒÜ“ü‚Ì‚½‚ß
 static const int intRadius = INT_DIV (RADIUS, CELL_SIZE); 		// ‰~E”¼Œa
+
+static const int intRadius_s = INT_DIV (RADIUS_S, CELL_SIZE); 		// ‰~E”¼Œai¬‚³‚¢j
+static const int intRadius_b = INT_DIV (RADIUS_B, CELL_SIZE); 		// ‰~E”¼Œai‘å‚«‚¢j
 
 static const int intNormPcwPer = NORM_PCW_PER; 				// PCW—ñ”
 static const int intPitchShiftPcwPer = PITCH_SHIFT_PER;				// ŠiŽq’è”•Ï‰»PCW‚ÌŽüŠú”
@@ -387,8 +398,8 @@ static const int Npeak = 500; 								// ƒs[ƒNƒXƒeƒbƒv”
 // —ãU“_‚ÌÀ•W
 static const int ex_y_st = YMAX_ALL - intWireWid_2; 		// “±”g˜H’f–ÊŽnƒZƒ‹”(‰¡) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(Šù‚É1/2’l‚É‚È‚Á‚Ä‚¢‚é)‚ðˆø‚¢‚Ä‚¢‚é
 static const int ex_y_ed = YMAX_ALL; 					// “±”g˜H’f–ÊIƒZƒ‹”(‰¡)
-static const int ex_z_st = ZMAX_ALL - intSlabHeigPer; 	// “±”g˜H’f–ÊŽnƒZƒ‹”(c) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(‚Ì1/2’l)‚ðˆø‚¢‚Ä‚¢‚é
-static const int ex_z_ed = ZMAX_ALL; 			// “±”g˜H’f–ÊIƒZƒ‹”(c)
+static const int ex_z_st = ZMAX_ALL_FF - intSlabHeigPer; 	// “±”g˜H’f–ÊŽnƒZƒ‹”(c) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(‚Ì1/2’l)‚ðˆø‚¢‚Ä‚¢‚é
+static const int ex_z_ed = ZMAX_ALL_FF; 			// “±”g˜H’f–ÊIƒZƒ‹”(c)
 
 
 /*****************************************************************************/
