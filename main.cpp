@@ -1,5 +1,5 @@
 /*
-3����_FDTD�@�ɂ����d���E���� ver. 2.01
+3????_FDTD?@??????d???E???? ver. 2.01
 From September, 2000;
 Designed by Atsushi SAKAI;
 supported by
@@ -14,24 +14,24 @@ Koichiro YOSHIDA (Observation Area: 2008)
 Norihiro ISHIKURA (October, 2012)
 */
 
-#define _FDTD 1		// FDTD�v�Z			0 : ���f���|���o��(�v���v���Z�b�T�ŃR���p�C�����ύX������)
-//										1 : �v�Z���s
+#define _FDTD 1		// FDTD?v?Z			0 : ???f???|???o??(?v???v???Z?b?T??R???p?C??????X??????)
+//										1 : ?v?Z???s
 
-#define _BAND_CALCULATION 0			// �v�Z�̎��� �o���h�v�Z
-#define _PROPAGATION_CALCULATION 1	// �v�Z�̎��� �`���v�Z
+#define _BAND_CALCULATION 0			// ?v?Z????? ?o???h?v?Z
+#define _PROPAGATION_CALCULATION 1	// ?v?Z????? ?`???v?Z
 
-#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// �v�Z�̎���
+#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// ?v?Z?????
 
-#define _EXITATION_FUNC 1	// ���U�֐��̎���		0 : Gaussian
+#define _EXITATION_FUNC 1	// ???U????????		0 : Gaussian
 //													1 : CW
 
-#define _PROGRAM_TEST 1		// �v���O�����̓����e�X�g	0: TEST(�ŏI�v�Z�X�e�b�v�C�o�̓t�@�C�����Z��)
-//															1: �{��
+#define _PROGRAM_TEST 1		// ?v???O??????????e?X?g	0: TEST(??I?v?Z?X?e?b?v?C?o??t?@?C?????Z??)
+//															1: ?{??
 
-#define _MODEL_ALL_EPSILON 0 	// XY�f�ʂ����f���S�̂̏o��	0: �Ȃ�
-//																1: ����
+#define _MODEL_ALL_EPSILON 0 	// XY?f??????f???S???o??	0: ???
+//																1: ????
 
-#define _CRT_SECURE_NO_WARNINGS //	�x���𔭐������Ȃ��悤�ɂ���
+#define _CRT_SECURE_NO_WARNINGS //	?x???????????????????
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,7 +46,6 @@ Norihiro ISHIKURA (October, 2012)
 #include<sys/types.h>
 
 
-
 #include <stdlib.h>
 #include <string>
 #include "mpi.h"
@@ -54,7 +53,7 @@ Norihiro ISHIKURA (October, 2012)
 #include "parameter.h"
 #include "module0.h"
 
-//�T�u���[�e�B��
+//?T?u???[?e?B??
 void file_open(char*);
 void file_close();
 void parameter(char*);
@@ -83,21 +82,22 @@ int main(int argc, char **argv){
 
 	MPI_Status status;
 
-	// MPI�ɂ����ʐM�̊J�n
+	// MPI???????M??J?n
 	MPI_Init (&argc, &argv);
 	MPI_Comm_size (MPI_COMM_WORLD, &isize);
 	MPI_Comm_rank (MPI_COMM_WORLD, &irank);
 	MPI_Get_processor_name (processor_name, &namelen);
 
 	if (isize != ISIZE){
-		printf ("MPI�Őݒ肵���v�Z�@�̑䐔(%d)���v���O�������̒l�ƈ��v���܂����D\n�I�����܂�\n", ISIZE);
+		//		printf ("MPI�����ꤷ���׻��������(%d)���ץ����������ͤȰ��פ��ޤ���\n��λ���ޤ�\n", ISIZE);
+		printf ("Can't match number of node for MPI. size = %d\nexit\n", ISIZE);
 		return 0;
 	}
 
-	printf ("%d�������񏈗��X�^�[�g\n", isize);
+	printf ("%d??????????X?^?[?g\n", isize);
 	printf ("Process %d on %s\n", irank, processor_name);
 
-	// �ׂ̌v�Z�@�̔ԍ��̎w��
+	// ???v?Z?@??????w??
 	left = irank - 1;
 	if(irank == IRANK_MIN){
 		left = MPI_PROC_NULL;
@@ -107,47 +107,47 @@ int main(int argc, char **argv){
 		right = MPI_PROC_NULL;
 	}
 
-	// dir_name (���U�g��) �̔z�񒷂����J���Ԃ�
+	// dir_name (???U?g??) ??z??????J?????
 	for(int dir_count = 0; dir_count < (sizeof(dir_name) / sizeof(dir_name[0]) ); dir_count++){
 
-		initialize_matrix(); 						// �z���̏�����
-		modeling(); 								// ���f���̐ݒ�
-		file_open(dir_name[dir_count]); 			// �t�@�C�����J��
-		parameter(dir_name[dir_count]); 			// �p�����[�^�̐ݒ��Əo��
+		initialize_matrix(); 						// ?z?????????
+		modeling(); 								// ???f??????
+		file_open(dir_name[dir_count]); 			// ?t?@?C?????J??
+		parameter(dir_name[dir_count]); 			// ?p?????[?^??????o??
 
 
-		// �v�Z�J�n�����̏o��
+		// ?v?Z?J?n??????o??
 		if (irank == IRANK_MIN){
 			_strtime(time);
 			fprintf(fpparameter, "Start Time:\t %s\n", time);
 			s_time = MPI_Wtime();
 		}
 
-		// �d���E�v�Z
+		// ?d???E?v?Z
 		for(n = 1 ; n <= Nmax; n++){
 
-			// ���ԃX�e�b�v���̕\��
+			// ????X?e?b?v????\??
 			if(n % Ncut == 0){
 				_strtime(time);
 				printf("n = %d, \t\t", n);
 				printf("time = %s\n", time);
 			}
 
-			// ���U�֐��̐ݒ�
+			// ???U???????
 			source_func();
 
 #if _FDTD
 
-			// ���x�������Ƃ�(�����̓m�[�h�Ԃő��x�ɂ΂���������������)
+			// ???x?????????(??????m?[?h?????x???????????????????)
 			MPI_Barrier (MPI_COMM_WORLD);
 
-			// �d�E�̌v�Z
+			// ?d?E??v?Z
 			calc_efield();
 
-			// �z�����E�����ɂ����[�ʂ̌v�Z
+			// ?z?????E??????????[???v?Z
 			absorpt_bound_condition();
 
-			// ���x�������Ƃ�
+			// ???x?????????
 			MPI_Barrier(MPI_COMM_WORLD);
 
 			MPI_Sendrecv( &Ex[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
@@ -163,10 +163,10 @@ int main(int argc, char **argv){
 			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
 				&Ez[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
 
-			// �d�E�̕ۑ�
+			// ?d?E????
 			saving_electric_field();
 
-			// ���E�̌v�Z
+			// ???E??v?Z
 			calc_hfield();
 
 			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
@@ -174,36 +174,36 @@ int main(int argc, char **argv){
 			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
 				&Hz[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
 
-			// �t�B�[���h�̏o��
+			// ?t?B?[???h??o??
 			output_field (dir_name[dir_count]);
 
-			// �|�C���e�B���O�p���[�v�Z�Əo��
+			// ?|?C???e?B???O?p???[?v?Z??o??
 #if _EXITATION_FUNC
 #else
 #endif
 
-			// ���x�������Ƃ�
+			// ???x?????????
 			MPI_Barrier(MPI_COMM_WORLD);
 #endif
 			if(n == 1) {
-				observation_func(); 	// �ϑ��_�̐ݒ�
-				output_model(); 		// ���f���̏o��
-				set_epsilon(); 			// �U�d���̊��蓖��
+				observation_func(); 	// ????_????
+				output_model(); 		// ???f????o??
+				set_epsilon(); 			// ?U?d??????��??
 			}
 		}
 
 		if (irank == IRANK_MIN){
 			_strtime(time);
-			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*�v�Z�I�������̏o��*/
-			//�����̏o��
+			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*?v?Z?I????????o??*/
+			//??????o??
 			e_time = MPI_Wtime();
 			printf ("\ntime = %f\n", e_time - s_time);
 		}
 
-		file_close(); 			// �t�@�C��������
+		file_close(); 			// ?t?@?C?????????
 	}
 
-	//MPI_Finalize(); 			// MPI���I������
+	//MPI_Finalize(); 			// MPI???I??????
 #elif _CALCULATION_TYPE == _BAND_CALCULATION
 
 #endif
@@ -211,7 +211,7 @@ int main(int argc, char **argv){
 
 
 
-// �o�͗p�t�@�C�����J��
+// ?o??p?t?@?C?????J??
 void file_open(char* dir_name_def){
 	char dir_name[40];
 	char name_xy[40], name_yz[40], name_xz[40];
@@ -221,10 +221,10 @@ void file_open(char* dir_name_def){
 	sprintf(name_xz, "/Model_xz_%d.txt", irank);
 
 	//baba lab
-	//_mkdir(strcpy(dir_name, dir_name_def)); 		// �U�蕪���ł��邩�e�X�g
+	//_mkdir(strcpy(dir_name, dir_name_def)); 		// ?U?��????????e?X?g
 
 	//kuramitsu lab
-	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// �U�蕪���ł��邩�e�X�g
+	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// ?U?��????????e?X?g
 
 
 
@@ -235,7 +235,7 @@ void file_open(char* dir_name_def){
 		allmodel_xz = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xz.txt"), "w");
 	}
 
-	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), name_xy), "w"); 		// �U�蕪���ł��邩�e�X�g
+	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), name_xy), "w"); 		// ?U?��????????e?X?g
 	model_yz = fopen (strcat(strcpy(dir_name, dir_name_def), name_yz), "w");
 	model_xz = fopen (strcat(strcpy(dir_name, dir_name_def), name_xz), "w");
 
@@ -248,7 +248,7 @@ void file_open(char* dir_name_def){
 }
 
 
-/*�o�͗p�t�@�C��������*/
+/*?o??p?t?@?C?????????*/
 void file_close(){
 
 	if (irank == IRANK_MIN){
@@ -268,7 +268,7 @@ void file_close(){
 }
 
 
-// �v�Z�p�p�����[�^�̐ݒ��Əo��
+// ?v?Z?p?p?????[?^??????o??
 void parameter(char* dir_name){
 
 	if (irank == IRANK_MIN){
@@ -339,16 +339,16 @@ void parameter(char* dir_name){
 		fprintf(fpparameter, "\n");
 	}
 
-	// ���U�֐��萔�̐ݒ�
+	// ???U?????????
 	lambda = atof(dir_name) * 1e-9;
 	omega0 = 2.0*PI*C0/lambda;
 	sigma = omega0 * delta_omega;
 }
 
-/*�z���̏�����*/
+/*?z?????????*/
 void initialize_matrix(){
 
-	//�e�m�[�h�̍��W
+	//?e?m?[?h????W
 	if(irank != IRANK_MAX){
 		xmax = XMAX;
 		ymax = YMAX;
@@ -356,7 +356,7 @@ void initialize_matrix(){
 		zmax_ff = ZMAX_FF;
 	}
 
-	//�Ō��̃m�[�h�����̂肵���s�v�Ȃ̂�x������1�Z��������
+	//?????m?[?h??????????s?v????x??????1?Z????????
 	if(irank == IRANK_MAX){
 		xmax = XMAX - 1;
 		ymax = YMAX;
@@ -364,17 +364,17 @@ void initialize_matrix(){
 		zmax_ff = ZMAX_FF;
 	}
 
-	// ���͋��Ԃ̍ő��l
+	// ???????????l
 	xmax_all = XMAX_ALL;
 	ymax_all = YMAX_ALL;
 	zmax_all = ZMAX_ALL;
 
-	// ���͋��Ԃ̒��S���W
+	// ??????????S???W
 	x_cen = xmax/2;
 	y_cen = ymax/2;
 	z_cen = zmax/2;
 
-	//���f���̒��S�Ɖ��͋��Ԃ̒��S�͂P�Z���������Ă����̂ŗv����
+	//???f??????S???????????S??P?Z????????????????v????
 	x_model_cen = x_cen + 1;
 	y_model_cen = y_cen + 1;
 
@@ -383,12 +383,12 @@ void initialize_matrix(){
 	for (x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax_ff+1; z++){
-				// �d�E
+				// ?d?E
 				Ex[x][y][z] = 0.0;
 				Ey[x][y][z] = 0.0;
 				Ez[x][y][z] = 0.0;
 
-				// ���E
+				// ???E
 				Hx[x][y][z] = 0.0;
 				Hy[x][y][z] = 0.0;
 				Hz[x][y][z] = 0.0;
@@ -399,7 +399,7 @@ void initialize_matrix(){
 	for (x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// �U�d��
+				// ?U?d??
 				ALL_epsilonx[x][y][z] = EPSILON0;
 				ALL_epsilony[x][y][z] = EPSILON0;
 				ALL_epsilonz[x][y][z] = EPSILON0;
@@ -410,7 +410,7 @@ void initialize_matrix(){
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax_ff+1; z++){
-				// �U�d��(���������K�v���Ȃ��悤�ȁD�D�D)
+				// ?U?d??(?????????K?v?????????D?D?D)
 				epsilonx[x][y][z] = EPSILON0;
 				epsilony[x][y][z] = EPSILON0;
 				epsilonz[x][y][z] = EPSILON0;
@@ -421,7 +421,7 @@ void initialize_matrix(){
 	for(x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// �Z���̖ڈ�
+				// ?Z??????
 				ALL_cell[x][y][z] = CLAD;
 			}
 		}
@@ -431,14 +431,14 @@ void initialize_matrix(){
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax_ff; z++){
-				// �Z���̖ڈ�
+				// ?Z??????
 				cell[x][y][z] = 0;
 			}
 		}
 	}
 
 
-	/****************************** Mur�̋z�����E���� ******************************/
+	/****************************** Mur??z?????E???? ******************************/
 
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff+1; z++){
@@ -497,17 +497,17 @@ void initialize_matrix(){
 		}
 	}
 
-	/****************************** Mur�̋z�����E���� ******************************/
+	/****************************** Mur??z?????E???? ******************************/
 }
 
 
-// ���f���̐ݒ�
+// ???f??????
 void modeling(){
 
-	int n_temp; 		//���ܗ��̒l�ۑ��p
-	double epsilon_temp; 		//�U�d���̒l�ۑ��p
+	int n_temp; 		//???????l????p
+	double epsilon_temp; 		//?U?d????l????p
 
-	/****************************** �X���u�̌`�� ******************************/
+	/****************************** ?X???u??`?? ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(y = 0; y < ymax_all; y++){
@@ -515,11 +515,11 @@ void modeling(){
 				n_temp = CLAD;
 				epsilon_temp = epsilon2;
 
-				if(z < air_hc){			//���C�w�ɐݒ�
+				if(z < air_hc){			//???C?w????
 				}
-				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//�㕔�N���b�h�ɐݒ�
+				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//???N???b?h????
 				}
-				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// �X���u�ɐݒ�
+				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// ?X???u????
 					n_temp = CORE;
 					epsilon_temp = epsilon1;
 				}
@@ -531,38 +531,38 @@ void modeling(){
 			}
 		}
 	}
-	/****************************** �X���u�̌`�� ******************************/
+	/****************************** ?X???u??`?? ******************************/
 
 
-	/****************************** �t�H�g�j�b�N���� ******************************/
+	/****************************** ?t?H?g?j?b?N???? ******************************/
 
-	int s_x3; 		// �`���[�vLSPCW�̃V�t�g��
+	int s_x3; 		// ?`???[?vLSPCW??V?t?g??
 	int s_x2;
 	int s_x4;
-	int z_end; 				// �~�E�̏I�����W
+	int z_end; 				// ?~?E??I?????W
 
 
 	if (intPcwPer == 0){
-		intWirePer2 = intWireLen1 - 1;									// �o��CORE�X���u�̊J�n�_
-		intWirePer3 = intWirePer2 + intWireLen2;						// �o��CORE�X���u�̏I���_
+		intWirePer2 = intWireLen1 - 1;									// ?o??CORE?X???u??J?n?_
+		intWirePer3 = intWirePer2 + intWireLen2;						// ?o??CORE?X???u??I???_
 	}
 
 	else{
-		struct PNUM Pnum[100][10]; 	// �~���̒��S���W
-		struct PNUM Pnum_Init[1][10]; 		// �~���̕W���i�q�萔�ɂ��钆�S���W
+		struct PNUM Pnum[100][10]; 	// ?~??????S???W
+		struct PNUM Pnum_Init[1][10]; 		// ?~????W???i?q????????S???W
 
-		z_end = zmax_all; 		// �~�E���ђʂ��Ă����ꍇ���l����
-		Pnum_Init[0][0].Y = intPcwStartY; 	// �~�����z�u�����ŏ���Y���W
+		z_end = zmax_all; 		// ?~?E????????????????l????
+		Pnum_Init[0][0].Y = intPcwStartY; 	// ?~?????z?u?????????Y???W
 
 		if(intPcwWid % 2 == 1){		// if y:even
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// �z���̈����Ɏg�p�����̂�-1
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
 		}
-		else{						// if y:odd 0.5A���炷
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// �z���̈����Ɏg�p�����̂�-1
+		else{						// if y:odd 0.5A????
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// ?z?????????g?p???????-1
 		}
 
 		if(y != 0){
-			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//�����W��(root3)/2*intPitchX�������炷
+			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//?????W??(root3)/2*intPitchX????????
 		}
 
 		for(z = 0; z < z_end; z++){
@@ -584,10 +584,10 @@ void modeling(){
 				else{
 					input_NormPcw_Xend = 0;
 				}
-				/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 				input_PitchShiftPcw_Xend = input_NormPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer;
 				input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend;
-				/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 				if (intChirp3rdLsPer > 0){
 					input_Chirp_Ls_Xend = input_PitchShiftChirpPcw_Xend + (intChirp3rdLsPer);
@@ -602,10 +602,10 @@ void modeling(){
 				else{
 					output_Chirp_Ls_Xend = Lspcw_Xend;
 				}
-				/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 				output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend;
 				output_PitchShiftPcw_Xend = output_PitchShiftChirpPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer;
-				/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 				output_PCW_Xend = output_Chirp_Ls_Xend + intNormPcwPer;
 
@@ -615,12 +615,12 @@ void modeling(){
 				int intPreviousPCWwidthOffset;
 				int intNowPCWwidthOffset;
 
-				/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 				double  dblPitchShiftChirpY;
 				//double dblPitchShiftChirpX, dblPitchShiftChirpY, dblPitchShiftChirpY2;
 				int intPitchShiftChirpX, intPitchShiftChirpY;
 				//int intPitchShiftChirpX, intPitchShiftChirpX2, intPitchShiftChirpY;
-				/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 
 				/****************************** LSPCW ******************************/
@@ -630,23 +630,23 @@ void modeling(){
 					s_x3 = 0;
 					s_x2 = 0;
 					s_x4 = 0;
-					// ���� �ʏ�PCW
+					// ???? ???PCW
 					if (x < input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//�����W��(root3)/2*intPitchX�������炷
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//?????W??(root3)/2*intPitchX????????
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// �z���̈����Ɏg�p�����̂�-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ?z?????????g?p???????-1
 								}
-								else{				// if y:odd 0.5A���炷
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// �z���̈����Ɏg�p�����̂�-1
+								else{				// if y:odd 0.5A????
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
 								}
 
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -659,37 +659,37 @@ void modeling(){
 						}
 					}
 
-					// ���� �i�q�萔�ω�PCW
+					// ???? ?i?q???��?PCW
 					else if (x < input_PitchShiftPcw_Xend && x >= input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//�����W��(root3)/2*intPitchX�������炷
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//?????W??(root3)/2*intPitchX????????
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// �z���̈����Ɏg�p�����̂�-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// ?z?????????g?p???????-1
 								}
-								else{				// if y:odd 0.5A���炷
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// �z���̈����Ɏg�p�����̂�-1
+								else{				// if y:odd 0.5A????
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
 								}
 
-								/******************** ���g�H1���ڃV�t�g�\��(2013/7/12) ********************/
+								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 								}
-								/******************** ���g�H1���ڃV�t�g�\��(2013/7/12) ********************/
+								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
 
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
-							/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+							/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 							intPitchShiftChirpX = intPitchShiftX;
 							intPitchShiftChirpY = 0;
 
@@ -720,19 +720,19 @@ void modeling(){
 								}
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 							}
-							/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+							/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 						}
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 2���ڊi�q�V�t�g
+							// 2????i?q?V?t?g
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
-							// 3���ڊi�q�V�t�g
+							// 3????i?q?V?t?g
 							if (y == intPcwWid - 3){
-								/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
-								/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 							}
 							if (y == intPcwWid - 4){
@@ -741,23 +741,23 @@ void modeling(){
 						}
 					}
 
-					// ���� �`���[�vLSPCW
+					// ???? ?`???[?vLSPCW
 					else if (x >= input_NormPcw_Xend && x < input_Chirp_Ls_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//�����W��(root3)/2*intPitchX�������炷
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//?????W??(root3)/2*intPitchX????????
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// �z���̈����Ɏg�p�����̂�-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ?z?????????g?p???????-1
 								}
-								else{				// if y:odd 0.5A���炷
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// �z���̈����Ɏg�p�����̂�-1
+								else{				// if y:odd 0.5A????
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
 								}
 
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -797,26 +797,26 @@ void modeling(){
 					}
 
 
-					// �o�� �i�q�萔�ω�PCW
+					// ?o?? ?i?q???��?PCW
 					else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 
-						// �i�q�萔�ω�PCW�Ƃ̓��ːڑ���
+						// ?i?q???��?PCW??????????
 						if (x == output_PitchShiftChirpPcw_Xend){
 							y_poo = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
 
-								/******************** ���g�H1���ڃV�t�g�\��(2013/7/12) ********************/
+								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 								}
-								/******************** ���g�H1���ڃV�t�g�\��(2013/7/12) ********************/
+								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
-						/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+						/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 						intPitchShiftChirpX = intPitchX;
 						intPitchShiftChirpY = 0;
 						dblPitchShiftChirpY = 0;
@@ -857,10 +857,10 @@ void modeling(){
 							Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 						}
 
-						/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+						/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 3���ڊi�q�V�t�g
+							// 3????i?q?V?t?g
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
@@ -869,14 +869,14 @@ void modeling(){
 							}
 							if (y == intPcwWid - 3){
 
-								/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
-								/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 							}
 						}
 					}
 
-					// �o�� �`���[�vLSPCW
+					// ?o?? ?`???[?vLSPCW
 					else if (x >= Lspcw_Xend && x < output_Chirp_Ls_Xend){
 						for (y2 = intPcwWid-1; y2 >= 0; y2--){
 							Pnum[x][y2].Y = Pnum[x-1][y2].Y;
@@ -910,24 +910,24 @@ void modeling(){
 					}
 
 
-					// �o�� �ʏ�PCW
+					// ?o?? ???PCW
 					else if (x >= output_Chirp_Ls_Xend && x < output_PCW_Xend){
 						if (x == 0){
 							flag_2r = 1;
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//�����W��(root3)/2*intPitchX�������炷
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//?????W??(root3)/2*intPitchX????????
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// �z���̈����Ɏg�p�����̂�-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ?z?????????g?p???????-1
 								}
-								else{				// if y:odd 0.5A���炷
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// �z���̈����Ɏg�p�����̂�-1
+								else{				// if y:odd 0.5A????
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
 								}
 
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ���g�H���S�̃V�t�g(2013/7/12) ********************/
+								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -940,7 +940,7 @@ void modeling(){
 						}
 					}
 
-					// �ʏ��i�q�萔PCW or LSPCW
+					// ????i?q??PCW or LSPCW
 					else{
 						if (x != 0){
 							y_poo = 0;
@@ -951,7 +951,7 @@ void modeling(){
 							}
 						}
 
-						// 3���ڊi�q�V�t�g
+						// 3????i?q?V?t?g
 						if (y == intPcwWid - 3){
 							s_x3 = intSx3Per;
 						}
@@ -963,12 +963,12 @@ void modeling(){
 						}
 					}
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					// ���g�H���`���[�v
+					// ???g?H???`???[?v
 					if (PCW_WIDTH_CHIRP != 0){
 						if (x < input_PitchShiftPcw_Xend){
-							////////���˃V�t�g�ʃ`���[�v��������(�c��)
+							////////????V?t?g??`???[?v????????(?c??)
 							if(intChirp2ndLsPer != 0){
-							//3����
+							//3????
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
@@ -980,7 +980,7 @@ void modeling(){
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2����
+							//2????
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
@@ -993,7 +993,7 @@ void modeling(){
 								}
 							}
 							}
-							////////���˃V�t�g�ʃ`���[�v�����܂�
+							////////????V?t?g??`???[?v???????
 							if (x == 0){
 								intNowPCWwidthOffset = intPCWwidthChirp;
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
@@ -1002,7 +1002,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = intNowPCWwidthOffset;
 							}
 							else{
-								// PCW_WIDTH_CHIRP�p������
+								// PCW_WIDTH_CHIRP?p??????
 								intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * (x / (double) (input_PitchShiftPcw_Xend-1)));
 								//intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * ((x + 1) / (double) (input_PitchShiftPcw_Xend-1)));
 								if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){
@@ -1014,9 +1014,9 @@ void modeling(){
 							}
 						}
 						else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
-							////////�o�˃V�t�g�ʃ`���[�v��������(�c��)
+							////////?o??V?t?g??`???[?v????????(?c??)
 							if(intChirp2ndLsPer != 0){
-							//3����
+							//3????
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
@@ -1028,7 +1028,7 @@ void modeling(){
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2����
+							//2????
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
@@ -1041,7 +1041,7 @@ void modeling(){
 								}
 							}
 							}
-						//////////�o�˃V�t�g�ʃ`���[�v�����܂�
+						//////////?o??V?t?g??`???[?v???????
 
 							if (x == output_PitchShiftChirpPcw_Xend){
 								intPreviousPCWwidthOffset = 0;
@@ -1058,7 +1058,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = 0;
 							}
 							else{
-								// PCW_WIDTH_CHIRP�p������
+								// PCW_WIDTH_CHIRP?p??????
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
 									if (y2 % 2 == 1){
 										intNowPCWwidthOffset = (int) (intPCWwidthChirp * ((x - output_PitchShiftChirpPcw_Xend) / (double) (input_PitchShiftPcw_Xend-1)) + 0.9);
@@ -1078,10 +1078,10 @@ void modeling(){
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-					/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+					/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 					if (PITCH_SHIFT_MAX > PITCH && intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
 					}
-					/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+					/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 					flag_2r = 0;
 					if(x < PITCH_SHIFT_PER && x > PITCH_SHIFT_PER+LSPCW_PER){
@@ -1100,47 +1100,47 @@ void modeling(){
 					mcircle(Pnum[x][y].X + s_x4, Pnum[x][y].Y, z, 1);
 
 
-					// �o��CORE�א����g�H�Ƃ̐ڑ������̒���
+					// ?o??CORE??????g?H??????????????
 					if(x == intPcwPer - 1){
-						// �i�q�萔�ω�PCW����
-						/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+						// ?i?q???��?PCW????
+						/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 						if (intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
-							/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+							/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 							if(y % 2 == 1){
 								if (Pnum[x][y].X > 0){
-									/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 									if (PITCH_SHIFT_MAX == PITCH){
-										//�����Ă�
+										//???????
 										Pnum[x][y].X += intPitchX;
 									}
 									else{
-										Pnum[x][y].X += intPitchShiftX; 		// intPitchX����+X���W�ɒu��
+										Pnum[x][y].X += intPitchShiftX; 		// intPitchX????+X???W??u??
 									}
-									/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX����+X���W�ɒu��
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX????+X???W??u??
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX����+X���W�ɒu��
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX????+X???W??u??
 								}
 
 								int poo = 0;
 
 								if (PCW_WIDTH_CHIRP != 0){
-									//�����Ă�
-									// PCW_WIDTH_CHIRP�p������
+									//???????
+									// PCW_WIDTH_CHIRP?p??????
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPer-1));
 								}
 
 
-								/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 								if (PITCH_SHIFT_MAX != PITCH){
 									Pnum[x][y].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * (intPcwWid-1 - y) - intPCWwidthChirp;
 								}
-								/******************** �i�q�V�t�g�ʃ`���[�v(2013/7/19) ********************/
+								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
 
 								if (SX2 == 0 && SX4 == 0)
 									mcircle(Pnum[x][y].X + s_x3, Pnum[x][y].Y, z, 1);
@@ -1154,17 +1154,17 @@ void modeling(){
 							if(y % 2 == 1){
 
 								if (Pnum[x][y].X > 0){
-									Pnum[x][y].X += intPitchX; 		// intPitchX����+X���W�ɒu��
+									Pnum[x][y].X += intPitchX; 		// intPitchX????+X???W??u??
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX����+X���W�ɒu��
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX????+X???W??u??
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX����+X���W�ɒu��
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX????+X???W??u??
 								}
 
 								if (PCW_WIDTH_CHIRP != 0){
-									// PCW_WIDTH_CHIRP�p������
+									// PCW_WIDTH_CHIRP?p??????
 									int poo;
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPer-1));
@@ -1184,17 +1184,17 @@ void modeling(){
 
 			}
 		}
-		// CORE�א����g�H�̈ʒu���v�Z
-		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// �o��CORE�X���u�̊J�n�_
-		intWirePer3 = intWirePer2 + intWireLen2;						// �o��CORE�X���u�̏I���_
+		// CORE??????g?H???u???v?Z
+		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// ?o??CORE?X???u??J?n?_
+		intWirePer3 = intWirePer2 + intWireLen2;						// ?o??CORE?X???u??I???_
 
 	}
-	/****************************** �t�H�g�j�b�N���� ******************************/
+	/****************************** ?t?H?g?j?b?N???? ******************************/
 
-	/****************************** ���o�ˍא����g�H ******************************/
+	/****************************** ???o???????g?H ******************************/
 	int intPcwSislabOffset;
 
-	// �S�ʃX���u�ɂȂ��Ă����̂ŁC�א��ȊO�̕��������C�ɕύX
+	// ?S??X???u????????????C?????O??????????C???X
 	if (PCW_SiSLAB_OFFSET != 0){
 		intPcwSislabOffset = INT_DIV(PCW_SiSLAB_OFFSET, CELL_SIZE);
 	}
@@ -1205,17 +1205,17 @@ void modeling(){
 	for (z = zmax_all - intSlabHeigPer; z < (zmax_all + 1); z++){
 		for (y = 0; y < ymax_all - intWireWid_2; y++){
 
-			// ����
+			// ????
 			if (PCW_SiSLAB_OFFSET != 0){
 			}
-			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// �z���̈����Ɏg�p�����̂�-1
+			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// ?z?????????g?p???????-1
 				ALL_cell[x][y][z] = CLAD;
 				ALL_epsilonx[x][y][z] = epsilon2;
 				ALL_epsilony[x][y][z] = epsilon2;
 				ALL_epsilonz[x][y][z] = epsilon2;
 			}
 
-			// �o��
+			// ?o??
 			if (PCW_SiSLAB_OFFSET != 0){
 			}
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++){
@@ -1227,11 +1227,11 @@ void modeling(){
 		}
 
 	}
-	/****************************** ���o�ˍא����g�H ******************************/
+	/****************************** ???o???????g?H ******************************/
 
 
 
-	/****************************** �Ώ̋��E�����̗U�d���̐ݒ� ******************************/
+	/****************************** ?????E??????U?d?????? ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(z = 0; z < zmax_all+1; z++){
@@ -1251,11 +1251,11 @@ void modeling(){
 		}
 	}
 
-	/****************************** �Ώ̋��E�����̗U�d���̐ݒ� ******************************/
+	/****************************** ?????E??????U?d?????? ******************************/
 
 
 
-	/****************************** �e�m�[�h�Ƀ��f���𕪊� ******************************/
+	/****************************** ?e?m?[?h????f????? ******************************/
 
 	if(NODE < 3){
 		if(irank != IRANK_MAX){
@@ -1471,23 +1471,23 @@ void modeling(){
 
 
 
-	/****************************** �e�m�[�h�Ƀ��f���𕪊� ******************************/
+	/****************************** ?e?m?[?h????f????? ******************************/
 
 
-	/****************************** ���ʃp�����[�^�̐ݒ� ******************************/
+	/****************************** ????p?????[?^???? ******************************/
 
-	// ���U�_�C�ϑ��ʂ̐ݒ� (XMAX�� "�̂肵��" �������܂߂Ă��邱�Ƃɒ���)
+	// ???U?_?C???????? (XMAX?? "?????" ????????????�??????)
 	intExctPortNum = intExctLen / (XMAX - 1);
 	intObseInPortNum = intObseLen1 / (XMAX - 1);
 	intObseOutPortNum = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) / (XMAX - 1);
 	if (NODE % 2 != 0){
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// ������v�Z�̂Ƃ�
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// ????????v?Z????
 	}
 	else{
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// ���������v�Z�̂Ƃ�
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// ??????????v?Z????
 	}
 
-	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// �z���̈����Ɏg�p�����̂�-1
+	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// ?z?????????g?p???????-1
 	intObseLenPart1 = intObseLen1 % (XMAX - 1) - INT_DIV(intObseInter, 2) - 1;
 	intObseLenPart2 = intObseLenPart1 + intObseInter;
 	intObseLenPart3 = intObseLen1 % (XMAX - 1);
@@ -1495,30 +1495,30 @@ void modeling(){
 	intObseLenPart5 = intObseLenPart4 + intObseInter;
 	intObseLenPart6 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1);
 	if (NODE % 2 != 0){
-		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// ������v�Z�̂Ƃ�
+		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// ????????v?Z????
 	}
 	else{
-		intObseLenPart7 = (XMAX - 1) - 10;		// ���������v�Z�̂Ƃ�
+		intObseLenPart7 = (XMAX - 1) - 10;		// ??????????v?Z????
 	}
-	/****************************** ���ʃp�����[�^�̐ݒ� ******************************/
+	/****************************** ????p?????[?^???? ******************************/
 }
 
 
 
-//�U�d���̊��蓖��
+//?U?d??????��??
 void set_epsilon(){
 
-	//�U�d�����z�̏o��(���f���̊m�F)
+	//?U?d?????z??o??(???f????m?F)
 	int tag1 = 1;
 
 #if _FDTD
 
-	/****************************** �v�Z���s�� ******************************/
+	/****************************** ?v?Z???s?? ******************************/
 	int node;
 
 	MPI_Status status;
 
-	//XY����
+	//XY????
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
 			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1];
@@ -1568,11 +1568,11 @@ void set_epsilon(){
 			}
 		}
 	}
-	/****************************** �v�Z���s�� ******************************/
+	/****************************** ?v?Z???s?? ******************************/
 #else
 
-	/****************************** ���f���m�F�� ******************************/
-	char fname[40],dir_name[50];	//�t�@�C�����i�[�ϐ�
+	/****************************** ???f???m?F?? ******************************/
+	char fname[40],dir_name[50];	//?t?@?C?????i?[???
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
@@ -1632,10 +1632,10 @@ void set_epsilon(){
 	}
 #endif
 
-	/****************************** ���f���m�F�� ******************************/
+	/****************************** ???f???m?F?? ******************************/
 #endif
 
-	//YZ����
+	//YZ????
 	for(y = 0; y < ymax+1; y++){
 		for(z = 0; z < zmax_ff+1; z++){
 			epsilon_yz[y][z] = epsilony[intObseLenPart1][y][z];
@@ -1648,7 +1648,7 @@ void set_epsilon(){
 		fprintf(fpepsilony, "\n");
 	}
 
-	//ZX���� (Y:���E��)
+	//ZX???? (Y:???E??)
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
 			epsilon_zx[x][z] = epsilonz[x][ymax][z];
@@ -1660,7 +1660,7 @@ void set_epsilon(){
 		}
 		fprintf(fpepsilonz, "\n");
 	}
-	//ZX���� (Y:���S)
+	//ZX???? (Y:???S)
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
 			epsilon_zx2[x][z] = epsilonz[x][ymax/2][z];
@@ -1674,7 +1674,7 @@ void set_epsilon(){
 	}
 
 
-	// �t�@�C���|�C���^������
+	// ?t?@?C???|?C???^???????
 	if (irank == IRANK_MIN){
 		fclose(fpallepsilonx);
 	}
@@ -1685,33 +1685,33 @@ void set_epsilon(){
 }
 
 
-// ���U�֐�
+// ???U???
 void source_func(){
 
 	int x, y, z;
 
 	if(irank == intExctPortNum){
 
-		// ���U�_�̐ݒ�
+		// ???U?_????
 		x = intExctLenPart;
 
 		for(y = ex_y_st; y < ex_y_ed; y++){
 			for(z = ex_z_st; z < ex_z_ed; z++){
-#if _EXITATION_FUNC	// CW���U
+#if _EXITATION_FUNC	// CW???U
 
 
-				//�ʓ��������z���U�̏ꍇ �����͋��Ԃ������Z������Z�����ŗ��U���قȂ��̂ł��̓s�x����
+				//??????????z???U??? ???????????????Z???????Z????????U????????????s?x????
 
-				// �X���u���̔����̃Z����:���� ���g�H���̔����̃Z����:����
+				// ?X???u?????????Z????:???? ???g?H?????????Z????:????
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt);
 
-				// �X���u���̔����̃Z����:� ���g�H���̔����̃Z����:�
+				// ?X???u?????????Z????:?? ???g?H?????????Z????:??
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt);
 				Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 01
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 02
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 03
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 04
-#else	// Gaussian���U
+#else	// Gaussian???U
 
 				//Hz[x][(YMAX+1)/2][intSlabCen] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2));
 				Hz[x][y][z] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2)) * cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st));
@@ -1721,47 +1721,47 @@ void source_func(){
 	}
 
 
-	/****************************** ���E�̑Ώ̋��E����(4���Ώ�) ******************************/
+	/****************************** ???E??????E????(4?????) ******************************/
 
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff; z++){
-			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// ���֐�
+			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// ?????
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// ���֐�
+			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// ?????
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			Hy[x][y][zmax_ff] = -Hy[x][y][zmax_ff-1];		// ���֐�
+			Hy[x][y][zmax_ff] = -Hy[x][y][zmax_ff-1];		// ?????
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			Hx[x][y][zmax_ff] = -Hx[x][y][zmax_ff-1];		// ���֐�
+			Hx[x][y][zmax_ff] = -Hx[x][y][zmax_ff-1];		// ?????
 		}
 	}
 
-	/****************************** ���E�̑Ώ̋��E����(4���Ώ�) ******************************/
+	/****************************** ???E??????E????(4?????) ******************************/
 }
 
 
-// ���f���ւ̗��U�_�C�ϑ��_�̋L�^
+// ???f???????U?_?C????_??L?^
 void observation_func(){
 
-	if(irank == intObseInPortNum){ //����
+	if(irank == intObseInPortNum){ //????
 
 		for(int x = intObseLenPart1; x < intObseLenPart2; x++){
-			/****************************** �ϑ��ʂ̏C��(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ���`���g�H�f��Y�̈攻�f�D
-				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//���`���g�H�f��Z�̈攻�f�D
-					/****************************** �ϑ��ʂ̏C��(2013/8/8) ******************************/
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		//�����w�f�ʒ����_�̎����L�^
-						//cell[x][y][z] = 4; 					//�����_�m�F�p
+			/****************************** ??????C??(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // ???`???g?H?f??Y??��?f?D
+				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//???`???g?H?f??Z??��?f?D
+					/****************************** ??????C??(2013/8/8) ******************************/
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		//?????w?f??????_??????L?^
+						//cell[x][y][z] = 4; 					//?????_?m?F?p
 					}
-					//cell[x][y][z] += OBSERVATION; 		//�ʊm�F�p
+					//cell[x][y][z] += OBSERVATION; 		//??m?F?p
 				}
 			}
 		}
@@ -1769,42 +1769,42 @@ void observation_func(){
 	if (irank == intExctPortNum){
 		int x;
 		x = intExctLenPart;
-		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//�v���X1���Ă����̂̓Z�����̊֌W
+		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//?v???X1??????????Z???????W
 			for(int z = ex_z_st; z <= ex_z_ed-1; z++){
-				cell[x][y][z] += EXITATION; 		//���U�ʊm�F�p
+				cell[x][y][z] += EXITATION; 		//???U??m?F?p
 			}
 		}
 	}
 
-	if(irank == intObseOutPortNum){ //�o�� NODE 2
+	if(irank == intObseOutPortNum){ //?o?? NODE 2
 		for(int x = intObseLenPart4; x < intObseLenPart5; x++){
-			/****************************** �ϑ��ʂ̏C��(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ���`���g�H�f��Y�̈攻�f�D
-				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//���`���g�H�f��Z�̈攻�f�D
-					//for(int y = 0; y <= YMAX-1; y++){ //���`���g�H�f��Y�̈攻�f�D
-					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//���`���g�H�f��Z�̈攻�f�D-1�͔z����0�J�n�Ȃ���
-					/****************************** �ϑ��ʂ̏C��(2013/8/8) ******************************/
+			/****************************** ??????C??(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // ???`???g?H?f??Y??��?f?D
+				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//???`???g?H?f??Z??��?f?D
+					//for(int y = 0; y <= YMAX-1; y++){ //???`???g?H?f??Y??��?f?D
+					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//???`???g?H?f??Z??��?f?D-1??z????0?J?n?????
+					/****************************** ??????C??(2013/8/8) ******************************/
 
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		// �����w�f�ʒ����_�̎����L�^
-						//cell[x][y][z] = 4; 					// �����_�m�F�p
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		// ?????w?f??????_??????L?^
+						//cell[x][y][z] = 4; 					// ?????_?m?F?p
 					}
-					//cell[x][y][z] += OBSERVATION; 			// �ʊm�F�p
+					//cell[x][y][z] += OBSERVATION; 			// ??m?F?p
 				}
 			}
 		}
 	}
 
-	if(irank == intObseCenPortNum){ //�o�� NODE 2
+	if(irank == intObseCenPortNum){ //?o?? NODE 2
 		int x = intObseLenPart7;
-		/****************************** �ϑ��ʂ̏C��(2013/8/8) ******************************/
-		for(int y = ymax - intObseWid; y < ymax; y++){ // ���`���g�H�f��Y�̈攻�f�D
-			for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//���`���g�H�f��Z�̈攻�f�D
-				/****************************** �ϑ��ʂ̏C��(2013/8/8) ******************************/
+		/****************************** ??????C??(2013/8/8) ******************************/
+		for(int y = ymax - intObseWid; y < ymax; y++){ // ???`???g?H?f??Y??��?f?D
+			for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//???`???g?H?f??Z??��?f?D
+				/****************************** ??????C??(2013/8/8) ******************************/
 
-				if((y == YMAX-1) && (z == (intSlabCen-1))){		// �����w�f�ʒ����_�̎����L�^
-					//cell[x][y][z] = 4; 					// �����_�m�F�p
+				if((y == YMAX-1) && (z == (intSlabCen-1))){		// ?????w?f??????_??????L?^
+					//cell[x][y][z] = 4; 					// ?????_?m?F?p
 				}
-				//cell[x][y][z] += OBSERVATION; 			// �ʊm�F�p
+				//cell[x][y][z] += OBSERVATION; 			// ??m?F?p
 			}
 		}
 
@@ -1819,7 +1819,7 @@ void calc_efield(){
 
 	// Ex
 	for(x = 0; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ex��y���ɑ΂��Ċ��֐�
+		for(y = 1; y < ymax+1; y++){		// Ex??y????????????
 			for(z = 1; z < zmax_ff+1; z++){
 				cnstEx = dt / epsilonx[x][y][z];
 				dex = ( (Hz[x][y][z] - Hz[x][y-1][z]) / dy) - ( (Hy[x][y][z] - Hy[x][y][z-1]) / dz);
@@ -1841,7 +1841,7 @@ void calc_efield(){
 
 	// Ez
 	for(x = 1; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ez��y���ɑ΂��Ċ��֐�
+		for(y = 1; y < ymax+1; y++){		// Ez??y????????????
 			for(z = 0; z < zmax_ff; z++){
 				cnstEz = dt / epsilonz[x][y][z];
 				dez = ( (Hy[x][y][z] - Hy[x-1][y][z]) / dx) - ( (Hx[x][y][z] - Hx[x][y-1][z]) / dy);
@@ -1851,20 +1851,20 @@ void calc_efield(){
 	}
 
 
-	/****************************** �d�E�̑Ώ̋��E���� ******************************/
+	/****************************** ?d?E??????E???? ******************************/
 
-	// ���E�ʂŔ��Ώ̂ƂȂ��d�E�����̋��E�ʏ��̒l��0�Ƃ��Ă���
+	// ???E???????????d?E????????E?????l??0????????
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			Ex[x][ymax][z] = 0.0;		// ���֐�
+			Ex[x][ymax][z] = 0.0;		// ?????
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff; z++){
-			Ez[x][ymax][z] = 0.0;		// ���֐�
+			Ez[x][ymax][z] = 0.0;		// ?????
 		}
 	}
-	/****************************** �d�E�̑Ώ̋��E���� ******************************/
+	/****************************** ?d?E??????E???? ******************************/
 }
 
 
@@ -1905,12 +1905,12 @@ void calc_hfield(){
 }
 
 
-// Mur2���C1���̋z�����E���������[�ʂ̌v�Z
+// Mur2???C1????z?????E?????????[???v?Z
 void absorpt_bound_condition(){
 
-	/****************************** �Ώ̋��E���� ******************************/
+	/****************************** ?????E???? ******************************/
 
-	// 2���Ώ�
+	// 2?????
 	//for(z = 0; z < zmax+1; z++){
 	//	Exn1y00[xmax][z] = Exn1y00[xmax-1][z];
 	//	Exn1y01[xmax][z] = Exn1y01[xmax-1][z];
@@ -1936,7 +1936,7 @@ void absorpt_bound_condition(){
 	//	Ezn1ym1[xmax+1][z] = -Ezn1ym1[xmax-1][z];
 	//}
 
-	// 4���Ώ�
+	// 4?????
 	for(z = 0; z < zmax_ff+1; z++){
 		Eyn1x00[ymax][z] = Eyn1x00[ymax-1][z];
 		Eyn1x01[ymax][z] = Eyn1x01[ymax-1][z];
@@ -1962,7 +1962,7 @@ void absorpt_bound_condition(){
 		Ezn1xm1[ymax+1][z] = -Ezn1xm1[ymax-1][z];
 	}
 
-	// 8���Ώ�
+	// 8?????
 	for(y = 0; y < ymax+1; y++){
 		Ezn1x00[y][zmax_ff] = -Ezn1x00[y][zmax_ff-1];
 		Ezn1x01[y][zmax_ff] = -Ezn1x01[y][zmax_ff-1];
@@ -1987,12 +1987,12 @@ void absorpt_bound_condition(){
 		Eyn1xm0[y][zmax_ff+1] = Eyn1xm0[y][zmax_ff-1];
 		Eyn1xm1[y][zmax_ff+1] = Eyn1xm1[y][zmax_ff-1];
 	}
-	/****************************** �Ώ̋��E���� ******************************/
+	/****************************** ?????E???? ******************************/
 
 
 
 
-	/****************************** Mur��2���̋z�����E����(Ex) ******************************/
+	/****************************** Mur??2????z?????E????(Ex) ******************************/
 
 	double u1ax1, u2ax1,u3ax1, u4ax1;
 	double u1bx1, u2bx1,u3bx1, u4bx1;
@@ -2069,12 +2069,12 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur��2���̋z�����E����(Ex) ******************************/
+	/****************************** Mur??2????z?????E????(Ex) ******************************/
 
 	double u1xa, u1xc;
 	double u2xa, u2xc;
 
-	/****************************** Mur��1���̋z�����E����(Ex) ******************************/
+	/****************************** Mur??1????z?????E????(Ex) ******************************/
 
 	for(y = 1; y < ymax+1; y++){
 
@@ -2111,7 +2111,7 @@ void absorpt_bound_condition(){
 	}
 
 
-	// ��(Mur��1���̋z�����E����) -- y���ʂ�z���ʂ��炻�ꂼ���Z�o�������l�̕��ϒl������
+	// ??(Mur??1????z?????E????) -- y?????z??????��?????Z?o???????l?????l??????
 	if (irank != IRANK_MIN){
 		for(x = 0; x < xmax; x++){
 			velo_dt = (C0 / sqrt(epsilonx[x][0][0]/epsilon0) ) * dt;
@@ -2133,13 +2133,13 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur��1���̋z�����E����(Ex) ******************************/
+	/****************************** Mur??1????z?????E????(Ex) ******************************/
 
 	double u1by1, u2by1, u3by1, u4by1;
 	double u1cy1, u2cy1, u3cy1, u4cy1;
 	double u1cy2, u2cy2, u3cy2, u4cy2;
 
-	/****************************** Mur��2���̋z�����E����(Ey) ******************************/
+	/****************************** Mur??2????z?????E????(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(y = 1; y < ymax; y++){
@@ -2194,14 +2194,14 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur��2���̋z�����E����(Ey) ******************************/
+	/****************************** Mur??2????z?????E????(Ey) ******************************/
 
 
 	double u2ya, u3ya, u3yb;
 	double u2ya1;
 	double u2yc1;
 
-	/****************************** Mur��1���̋z�����E����(Ey) ******************************/
+	/****************************** Mur??1????z?????E????(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilony[x][0][0]/epsilon0) ) * dt;
@@ -2224,7 +2224,7 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// ��(Mur��1���̋z�����E����) --x���ʂ�z���ʂ��炻�ꂼ���Z�o�������l�̕��ϒl������
+	// ??(Mur??1????z?????E????) --x?????z??????��?????Z?o???????l?????l??????
 	for(y = 0; y < ymax; y++){
 
 		if(irank == IRANK_MIN){
@@ -2242,13 +2242,13 @@ void absorpt_bound_condition(){
 				+ Eyn1xm1[y][0] + u2yc1 * (Ey[xmax-1][y][0] - Eyn1xm0[y][0]));
 		}
 	}
-	/****************************** Mur��1���̋z�����E����(Ey) ******************************/
+	/****************************** Mur??1????z?????E????(Ey) ******************************/
 
 	double u1az1, u2az1, u3az1, u4az1;
 	double u1cz1, u2cz1, u3cz1, u4cz1;
 	double u1cz2, u2cz2, u3cz2, u4cz2;
 
-	/****************************** Mur��2���̋z�����E����(Ez) ******************************/
+	/****************************** Mur??2????z?????E????(Ez) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(z = 1; z < zmax_ff; z++){
@@ -2300,12 +2300,12 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur��2���̋z�����E����(Ez) ******************************/
+	/****************************** Mur??2????z?????E????(Ez) ******************************/
 
 	double u1za, u3za, u3zb;
 	double u1za1, u1zb1;
 
-	/****************************** Mur��1���̋z�����E����(Ez) ******************************/
+	/****************************** Mur??1????z?????E????(Ez) ******************************/
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilonz[x][0][0] / epsilon0) ) * dt;
 		u1za = (velo_dt - dy) / (velo_dt + dy);
@@ -2329,7 +2329,7 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// ��(Mur��1���̋z�����E����) --x���ʂ�y���ʂ��炻�ꂼ���Z�o�������l�̕��ϒl������
+	// ??(Mur??1????z?????E????) --x?????y??????��?????Z?o???????l?????l??????
 	for(z = 0; z < zmax_ff+1; z++){
 
 		if(irank == IRANK_MIN){
@@ -2347,13 +2347,13 @@ void absorpt_bound_condition(){
 				+ Ezn1xm1[0][z] + u1zb1 * (Ez[xmax-1][0][z] - Ezn1xm0[0][z]));
 		}
 	}
-	/****************************** Mur��1���̋z�����E����(Ez) ******************************/
+	/****************************** Mur??1????z?????E????(Ez) ******************************/
 
 }
 
 
 
-/*�d�E�̕ۑ�*/
+/*?d?E????*/
 void saving_electric_field(){
 
 	// Ex
@@ -2432,21 +2432,21 @@ void saving_electric_field(){
 }
 
 
-//���f���̏o��
+//???f????o??
 void output_model(){
 
 	int tag2 = 2;
 	int x, y, z;
 
 #if _FDTD
-	/****************************** �v�Z���s�� ******************************/
+	/****************************** ?v?Z???s?? ******************************/
 	int node;
 
 	MPI_Status status;
 
 	z = intSlabCen - 1;
 
-	// XY����
+	// XY????
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			cell_xy[x][y] = cell[x][y][z];
@@ -2465,7 +2465,7 @@ void output_model(){
 		fclose(model_xy);
 	}
 
-	// XZ����
+	// XZ????
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff; z++){
 			cell_xz[x][z] = cell[x][y][z];
@@ -2487,7 +2487,7 @@ void output_model(){
 
 
 
-	// ���ꂼ�ꕪ�����̃��f��
+	// ??????????????f??
 	if(irank != IRANK_MIN){
 		MPI_Send(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, 0, tag2, MPI_COMM_WORLD);
 		for(x = 1; x < xmax; x++){
@@ -2510,12 +2510,12 @@ void output_model(){
 		fclose(model_xz);
 	}
 
-	// �S�̃��f������
+	// ?S????f??????
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
 			if(node == IRANK_MAX){
 
-				// �ŏI�i��"�̂肵��"�������̂ŁCx������-1����
+				// ??I?i??"?????"?????????Cx??????-1????
 				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 				MPI_Recv(&cell_xz[0][0], (xmax-1)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 
@@ -2557,10 +2557,10 @@ void output_model(){
 
 
 
-	/****************************** �v�Z���s�� ******************************/
+	/****************************** ?v?Z???s?? ******************************/
 
 #else
-	/****************************** ���f���m�F�� ******************************/
+	/****************************** ???f???m?F?? ******************************/
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			cell_xy[x][y] = cell[x][y][intSlabCen-1];
@@ -2591,7 +2591,7 @@ void output_model(){
 	}
 	fclose(allmodel_yz1);
 
-	if(irank == intObseOutPortNum){ // �o��
+	if(irank == intObseOutPortNum){ // ?o??
 		x = intObseLenPart4;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -2607,7 +2607,7 @@ void output_model(){
 		fclose(allmodel_yz4);
 	}
 
-	if(irank == intObseCenPortNum){			// ����
+	if(irank == intObseCenPortNum){			// ????
 		x = intObseLenPart7;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -2622,7 +2622,7 @@ void output_model(){
 		}
 		fclose(allmodel_yz7);
 	}
-	/****************************** ���f���m�F�� ******************************/
+	/****************************** ???f???m?F?? ******************************/
 #endif
 
 }
@@ -2630,7 +2630,7 @@ void output_model(){
 
 void output_field_write(char *dir_name_def){
 
-	char fname[40], dir_name[50]; 	//�t�@�C�����i�[�ϐ�
+	char fname[40], dir_name[50]; 	//?t?@?C?????i?[???
 	int node;
 	int tag3 = 3;
 	int pi1, pj1, pk1;
@@ -2647,17 +2647,17 @@ void output_field_write(char *dir_name_def){
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			field_xy[x][y] = Hz[x][y][ex_z_ed-1]; 	//�S�Ẵm�[�h�œd���E������2�����z���Ɋi�[�����D
+			field_xy[x][y] = Hz[x][y][ex_z_ed-1]; 	//?S???m?[?h??d???E??????2?????z????i?[?????D
 		}
 	}
 
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff; z++){
-			field_xz[x][z] = Hz[x][YMAX][z]; 	//�S�Ẵm�[�h�œd���E������2�����z���Ɋi�[�����D
+			field_xz[x][z] = Hz[x][YMAX][z]; 	//?S???m?[?h??d???E??????2?????z????i?[?????D
 		}
 	}
 
-	// ���f���o�̓t�@�C���|�C���^�̏�����
+	// ???f???o??t?@?C???|?C???^???????
 	if(irank == IRANK_MIN){
 		sprintf(fname, "/Field_Hz_XY_%d_01.txt", n);
 		HZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
@@ -2680,19 +2680,19 @@ void output_field_write(char *dir_name_def){
 		}
 	}
 
-	// ���f�����z�X�g�ɑ��M
+	// ???f?????z?X?g????M
 	else{
 		if(irank != IRANK_MAX){
-			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// �m�[�h0�ȊO�̃m�[�h���m�[�h0�ɓd���E�����𑗂��D
+			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ?m?[?h0??O??m?[?h???m?[?h0??d???E????????D
 			MPI_Send(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD);
 		}
 		if(irank == IRANK_MAX){
-			MPI_Send(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// �m�[�h0�ȊO�̃m�[�h���m�[�h0�ɓd���E�����𑗂��D
-			MPI_Send(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// �m�[�h0�ȊO�̃m�[�h���m�[�h0�ɓd���E�����𑗂��D
+			MPI_Send(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ?m?[?h0??O??m?[?h???m?[?h0??d???E????????D
+			MPI_Send(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ?m?[?h0??O??m?[?h???m?[?h0??d???E????????D
 		}
 	}
 
-	// �e�m�[�h���Ƃ�XY���ʂ̎��E���z�̏o��
+	// ?e?m?[?h?????XY???????E???z??o??
 	sprintf(fname, "/Field_Hz_XY_%d_%d_01.txt", irank, n);
 	HZ1_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
 	for(x = 0; x < xmax; x++){
@@ -2702,7 +2702,7 @@ void output_field_write(char *dir_name_def){
 		fprintf(HZ1_NODE, "\n");
 	}
 
-	// �e�m�[�h���Ƃ�XY���ʂ̎��E���z�̏o��
+	// ?e?m?[?h?????XY???????E???z??o??
 	sprintf(fname, "/Field_Hz_XZ_%d_%d_01.txt", irank, n);
 	HZ2_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
 	for(x = 0; x < xmax; x++){
@@ -2712,10 +2712,10 @@ void output_field_write(char *dir_name_def){
 		fprintf(HZ2_NODE, "\n");
 	}
 
-	// ���M�������f�������S���f�����쐬
+	// ???M???????f???????S???f??????
 	if(irank == IRANK_MIN){
-		for(node = 1; node < ISIZE; node++){		// �m�[�h0���m�[�h1���珇�Ƀf�[�^���󂯎����o�͂��Ă����D
-			if(node == IRANK_MAX){					// �m�[�hisize-1�̂�1�Z���������ݒ肵�Ă��邽�ߏ������ŕ���
+		for(node = 1; node < ISIZE; node++){		// ?m?[?h0???m?[?h1??????f?[?^????????o?????????D
+			if(node == IRANK_MAX){					// ?m?[?hisize-1???1?Z????????????????????????????
 				MPI_Recv(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				MPI_Recv(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				for(x = 1; x < xmax-1; x++){
@@ -2743,7 +2743,7 @@ void output_field_write(char *dir_name_def){
 			}
 		}
 
-		// �t�@�C���|�C���^������
+		// ?t?@?C???|?C???^???????
 		fclose(HZ1);
 		fclose(HZ2);
 	}
@@ -2752,19 +2752,19 @@ void output_field_write(char *dir_name_def){
 
 
 
-	// YZ���ʂ̓d�E���z�̏o��
+	// YZ?????d?E???z??o??
 	/*int x;
 	double E_yz;
 	FILE *EYZ1, *EYZ2, *EYZ3;
 	char fname2[40], fname3[40], fname4[40];*/
 
-	/*if(irank == intObseInPortNum){ //����
+	/*if(irank == intObseInPortNum){ //????
 		x = intObseLenPart1;
 		sprintf(fname2, "/Field_E_YZ_%d_01.txt", n);
 		EYZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w");
 
-		for(int y = 0; y < ymax; y++){ //���`���g�H�f��Y�̈攻�f
-			for(int z = 0; z < zmax; z++){		// ���`���g�H�f��Z�̈攻�f
+		for(int y = 0; y < ymax; y++){ //???`???g?H?f??Y??��?f
+			for(int z = 0; z < zmax; z++){		// ???`???g?H?f??Z??��?f
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ1, "%e\t", E_yz);
 			}
@@ -2773,13 +2773,13 @@ void output_field_write(char *dir_name_def){
 		fclose(EYZ1);
 	}
 
-	if(irank == intObseOutPortNum){			// �o��
+	if(irank == intObseOutPortNum){			// ?o??
 		x = intObseLenPart4;
 		sprintf(fname3, "/Field_E_YZ_%d_04.txt", n);
 		EYZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
 
-		for(int y = 0; y < ymax; y++){ //���`���g�H�f��Y�̈攻�f
-			for(int z = 0; z < zmax; z++){		// ���`���g�H�f��Z�̈攻�f
+		for(int y = 0; y < ymax; y++){ //???`???g?H?f??Y??��?f
+			for(int z = 0; z < zmax; z++){		// ???`???g?H?f??Z??��?f
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ2, "%e\t", E_yz);
 			}
@@ -2788,13 +2788,13 @@ void output_field_write(char *dir_name_def){
 		fclose(EYZ2);
 	}
 
-	if(irank == intObseCenPortNum){			// �o��
+	if(irank == intObseCenPortNum){			// ?o??
 		x = intObseLenPart7;
 		sprintf(fname4, "/Field_E_YZ_%d_07.txt", n);
 		EYZ3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname4), "w");
 
-		for(int y = 0; y < ymax; y++){ //���`���g�H�f��Y�̈攻�f
-			for(int z = 0; z < zmax; z++){		// ���`���g�H�f��Z�̈攻�f
+		for(int y = 0; y < ymax; y++){ //???`???g?H?f??Y??��?f
+			for(int z = 0; z < zmax; z++){		// ???`???g?H?f??Z??��?f
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ3, "%e\t", E_yz);
 			}
@@ -2805,23 +2805,23 @@ void output_field_write(char *dir_name_def){
 
 }
 
-//�t�@�C���o��
+//?t?@?C???o??
 void output_field(char *dir_name_def){
 
 	if(n <= Nmax - Fcut){
-		// �����m�F�̂��߂̃t�@�C���o��
+		// ?????m?F??????t?@?C???o??
 		if(n == Ncheck){
 			output_field_write (dir_name_def);
 		}
 
-		// �����I�ȃt�@�C���o��
+		// ?????I??t?@?C???o??
 		if(n % Ncutfield == 0){
 			output_field_write (dir_name_def);
 		}
 	}
 	if((n >= Nmax - Fcut) && (n <= Nmax)){
 
-		// �����_�ł̃t�@�C���o��
+		// ?????_???t?@?C???o??
 		if(n % Ncutfield2 == 0){
 			output_field_write (dir_name_def);
 		}
@@ -2837,8 +2837,8 @@ void mcircle(int x_circ, int y_circ, int z_circ, int type){
 	Rs = ((dblRadius_s*1.0e10)/(dx*1.0e10));
 	Rb = ((dblRadius_b*1.0e10)/(dx*1.0e10));
 
-	//���a�Z�����̌v�Z
-	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//�v�Z�덷���h�����߂Ɍ��グ���Ă��܂�
+	//???a?Z??????v?Z
+	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//?v?Z?????h?????????��????????
 	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10));
 	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10));
 	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10));
@@ -2872,8 +2872,8 @@ void halfcircle(int x_circ, int y_circ, int z_circ, int type){
 
 	double R;
 
-	//���a�Z�����̌v�Z
-	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//�v�Z�덷���h�����߂Ɍ��グ���Ă��܂�
+	//???a?Z??????v?Z
+	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//?v?Z?????h?????????��????????
 	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10));
 	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10));
 	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10));
