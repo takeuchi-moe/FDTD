@@ -265,10 +265,10 @@ static const int Fcut = 30; 			// フィールドを出力する時間ステップ数 (最終計算ス
 static const int Nmax = 1; 			// 最終時間ステップ
 #endif
 
-static const int Ncheck = 1000; 					// 動作確認用のフィールドを出力する時間ステップ
+static const int Ncheck = 10; 					// 動作確認用のフィールドを出力する時間ステップ
 static const int Ncutfield = Ncut; 			// フィールドを出力する時間ステップ
 //static const int Ncutfield2 = 10; 			// 安定状態でのフィールドを出力する時間ステップ間隔
-static const int Ncutfield2 = 500; 			// 安定状態でのフィールドを出力する時間ステップ間隔
+static const int Ncutfield2 = 5; 			// 安定状態でのフィールドを出力する時間ステップ間隔
 
 /*****************************************************************************/
 // 物理量[MKSA系]
