@@ -1,37 +1,37 @@
 /*
-3????_FDTD?@??????d???E???? ver. 2.01
-From September, 2000;
-Designed by Atsushi SAKAI;
-supported by
-Hiroya DAN (3D-_FDTD),
-Yoshitaka WATANABE (Periodic Boundary Condition in 3D-_FDTD),
-Hiroshi YAMADA(2D-_FDTD, PLRC),
-Tomoki YONEHANA (2D-_FDTD PML, Non-Linear),
-Toshihiko BABA (Photonic crystal bend model: April, 2001),
+3次元_FDTD法による電磁界解析 ver. 2.01
+From September, 2000; 
+Designed by Atsushi SAKAI; 
+supported by 
+Hiroya DAN (3D-_FDTD), 
+Yoshitaka WATANABE (Periodic Boundary Condition in 3D-_FDTD), 
+Hiroshi YAMADA(2D-_FDTD, PLRC), 
+Tomoki YONEHANA (2D-_FDTD PML, Non-Linear), 
+Toshihiko BABA (Photonic crystal bend model: April, 2001), 
 Kosuke MORITO (3D_Symmetry_Condition : October, 2003).
 Takashi KAWASAKI (PCCW: 2007)
 Koichiro YOSHIDA (Observation Area: 2008)
 Norihiro ISHIKURA (October, 2012)
 */
 
-#define _FDTD 1		// FDTD?v?Z			0 : ???f???|???o??(?v???v???Z?b?T??R???p?C??????X??????)
-//										1 : ?v?Z???s
+#define _FDTD 1		// FDTD計算			0 : モデル掃き出し(プリプロセッサでコンパイルを変更させる)
+//										1 : 計算実行
 
-#define _BAND_CALCULATION 0			// ?v?Z????? ?o???h?v?Z
-#define _PROPAGATION_CALCULATION 1	// ?v?Z????? ?`???v?Z
+#define _BAND_CALCULATION 0			// 計算の種類 バンド計算
+#define _PROPAGATION_CALCULATION 1	// 計算の種類 伝搬計算
 
-#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// ?v?Z?????
+#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// 計算の種類
 
-#define _EXITATION_FUNC 1	// ???U????????		0 : Gaussian
+#define _EXITATION_FUNC 1	// 励振関数の種類		0 : Gaussian 
 //													1 : CW
 
-#define _PROGRAM_TEST 1		// ?v???O??????????e?X?g	0: TEST(??I?v?Z?X?e?b?v?C?o??t?@?C?????Z??)
-//															1: ?{??
+#define _PROGRAM_TEST 1		// プログラムの動作テスト	0: TEST(最終計算ステップ，出力ファイルを短く)
+//															1: 本番
 
-#define _MODEL_ALL_EPSILON 0 	// XY?f??????f???S???o??	0: ???
-//																1: ????
+#define _MODEL_ALL_EPSILON 0 	// XY断面をモデル全体の出力	0: なし
+//																1: あり
 
-#define _CRT_SECURE_NO_WARNINGS //	?x???????????????????
+#define _CRT_SECURE_NO_WARNINGS //	警告を発生させないようにする
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,11 +39,12 @@ Norihiro ISHIKURA (October, 2012)
 #include <time.h>
 
 //baba lab
-//#include <direct.h>
+#include <direct.h>
 
 //kuramitsu lab
-#include<sys/stat.h>
-#include<sys/types.h>
+//#include<sys/stat.h>
+//#include<sys/types.h>
+
 
 
 #include <stdlib.h>
@@ -53,157 +54,156 @@ Norihiro ISHIKURA (October, 2012)
 #include "parameter.h"
 #include "module0.h"
 
-//?T?u???[?e?B??
-void file_open(char*);
-void file_close();
-void parameter(char*);
-void initialize_matrix();
-void modeling();
-void set_epsilon();
-void source_func();
-void observation_func();
-void calc_efield();
-void calc_hfield();
-void absorpt_bound_condition();
-void saving_electric_field();
-void output_field(char*);
-void output_field_write(char *);
-void output_model();
+//サブルーティン
+void file_open(char*); 
+void file_close(); 
+void parameter(char*); 
+void initialize_matrix(); 
+void modeling(); 
+void set_epsilon(); 
+void source_func(); 
+void observation_func(); 
+void calc_efield(); 
+void calc_hfield(); 
+void absorpt_bound_condition(); 
+void saving_electric_field();  
+void output_field(char*); 
+void output_field_write(char *); 
+void output_model(); 
 
 int main(int argc, char **argv){
 
 #if _CALCULATION_TYPE == _PROPAGATION_CALCULATION
-	double s_time, e_time;
-	char processor_name[MPI_MAX_PROCESSOR_NAME];
-	char time[9];
-	int tag_send = 0, tag_recv = 0;
-	int right, left;
-	int namelen;
+	double s_time, e_time; 
+	char processor_name[MPI_MAX_PROCESSOR_NAME]; 
+	char time[9]; 
+	int tag_send = 0, tag_recv = 0; 
+	int right, left; 
+	int namelen; 
 
-	MPI_Status status;
+	MPI_Status status; 
 
-	// MPI???????M??J?n
-	MPI_Init (&argc, &argv);
-	MPI_Comm_size (MPI_COMM_WORLD, &isize);
-	MPI_Comm_rank (MPI_COMM_WORLD, &irank);
-	MPI_Get_processor_name (processor_name, &namelen);
+	// MPIによる通信の開始
+	MPI_Init (&argc, &argv); 
+	MPI_Comm_size (MPI_COMM_WORLD, &isize); 
+	MPI_Comm_rank (MPI_COMM_WORLD, &irank); 
+	MPI_Get_processor_name (processor_name, &namelen); 
 
 	if (isize != ISIZE){
-		//		printf ("MPI､ﾇﾀﾟﾄ熙ｷ､ｿｷﾗｻｻｵ｡､ﾎﾂ豼?(%d)､ｬ･ﾗ･愠ｰ･鬣狹讀ﾎﾃﾍ､ﾈｰ?ﾃﾗ､ｷ､ﾞ､ｻ､?･\nｽｪﾎｻ､ｷ､ﾞ､ｹ\n", ISIZE);
-		printf ("Can't match number of node for MPI. size = %d\nexit\n", ISIZE);
-		return 0;
+		printf ("MPIで設定した計算機の台数(%d)がプログラム中の値と一致しません．\n終了します\n", ISIZE); 
+		return 0; 
 	}
 
-	printf ("%d??????????X?^?[?g\n", isize);
-	printf ("Process %d on %s\n", irank, processor_name);
+	printf ("%d分割並列処理スタート\n", isize); 
+	printf ("Process %d on %s\n", irank, processor_name); 
 
-	// ???v?Z?@??????w??
-	left = irank - 1;
+	// 隣の計算機の番号の指定
+	left = irank - 1; 
 	if(irank == IRANK_MIN){
-		left = MPI_PROC_NULL;
+		left = MPI_PROC_NULL; 
 	}
-	right = irank + 1;
+	right = irank + 1; 
 	if(irank == IRANK_MAX){
-		right = MPI_PROC_NULL;
+		right = MPI_PROC_NULL; 
 	}
 
-	// dir_name (???U?g??) ??z??????J?????
+	// dir_name (励振波長) の配列長だけ繰り返し
 	for(int dir_count = 0; dir_count < (sizeof(dir_name) / sizeof(dir_name[0]) ); dir_count++){
 
-		initialize_matrix(); 						// ?z?????????
-		modeling(); 								// ???f??????
-		file_open(dir_name[dir_count]); 			// ?t?@?C?????J??
-		parameter(dir_name[dir_count]); 			// ?p?????[?^??????o??
+		initialize_matrix(); 						// 配列の初期化
+		modeling(); 								// モデルの設定
+		file_open(dir_name[dir_count]); 			// ファイルを開く
+		parameter(dir_name[dir_count]); 			// パラメータの設定と出力
 
 
-		// ?v?Z?J?n??????o??
+		// 計算開始時刻の出力
 		if (irank == IRANK_MIN){
-			//_strtime(time);			//babalab
-			fprintf(fpparameter, "Start Time:\t %s\n", time);
-			s_time = MPI_Wtime();
+			//_strtime(time); 
+			fprintf(fpparameter, "Start Time:\t %s\n", time); 
+			s_time = MPI_Wtime(); 
 		}
 
-		// ?d???E?v?Z
+		// 電磁界計算
 		for(n = 1 ; n <= Nmax; n++){
 
-			// ????X?e?b?v????\??
+			// 時間ステップ数の表示
 			if(n % Ncut == 0){
-				//_strtime(time);
-				printf("n = %d, \t\t", n);
-				printf("time = %s\n", time);
+				//_strtime(time); 
+				printf("n = %d, \t\t", n); 
+				printf("time = %s\n", time); 
 			}
 
-			// ???U???????
-			source_func();
+			// 励振関数の設定
+			source_func(); 
 
 #if _FDTD
 
-			// ???x?????????(??????m?[?h?????x???????????????????)
-			MPI_Barrier (MPI_COMM_WORLD);
+			// 一度同期をとる(同期はノード間で速度にばらつきが生じる作業)
+			MPI_Barrier (MPI_COMM_WORLD); 	
 
-			// ?d?E??v?Z
-			calc_efield();
+			// 電界の計算
+			calc_efield(); 							
 
-			// ?z?????E??????????[???v?Z
+			// 吸収境界条件による端面の計算
 			absorpt_bound_condition();
 
-			// ???x?????????
-			MPI_Barrier(MPI_COMM_WORLD);
+			// 一度同期をとる
+			MPI_Barrier(MPI_COMM_WORLD); 			
 
-			MPI_Sendrecv( &Ex[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
-				&Ex[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ey[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
-				&Ey[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ez[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send,
-				&Ez[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ex[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
-				&Ex[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ey[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
-				&Ey[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
-				&Ez[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ex[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send, 
+				&Ex[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status); 
+			MPI_Sendrecv( &Ey[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send, 
+				&Ey[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status); 
+			MPI_Sendrecv( &Ez[1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_send, 
+				&Ez[xmax][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status); 
+			MPI_Sendrecv( &Ex[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send, 
+				&Ex[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status); 
+			MPI_Sendrecv( &Ey[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send, 
+				&Ey[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status); 
+			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send, 
+				&Ez[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status); 
 
-			// ?d?E????
+			// 電界の保存
 			saving_electric_field();
 
-			// ???E??v?Z
+			// 磁界の計算
 			calc_hfield();
 
-			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
-				&Hy[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send,
+			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send, 
+				&Hy[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status); 
+			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, right, tag_send, 
 				&Hz[0][0][0], (ymax+1)*(zmax_ff+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
 
-			// ?t?B?[???h??o??
-			output_field (dir_name[dir_count]);
+			// フィールドの出力
+			output_field (dir_name[dir_count]); 
 
-			// ?|?C???e?B???O?p???[?v?Z??o??
-#if _EXITATION_FUNC
-#else
+			// ポインティングパワー計算と出力
+#if _EXITATION_FUNC					
+#else 					
 #endif
 
-			// ???x?????????
-			MPI_Barrier(MPI_COMM_WORLD);
+			// 一度同期をとる
+			MPI_Barrier(MPI_COMM_WORLD); 
 #endif
 			if(n == 1) {
-				observation_func(); 	// ????_????
-				output_model(); 		// ???f????o??
-				set_epsilon(); 			// ?U?d??????韵??
+				observation_func(); 	// 観測点の設定
+				output_model(); 		// モデルの出力
+				set_epsilon(); 			// 誘電率の割り当て
 			}
 		}
 
 		if (irank == IRANK_MIN){
 			//_strtime(time);
-			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*?v?Z?I????????o??*/
-			//??????o??
-			e_time = MPI_Wtime();
-			printf ("\ntime = %f\n", e_time - s_time);
+			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*計算終了時刻の出力*/
+			//時刻の出力
+			e_time = MPI_Wtime(); 
+			printf ("\ntime = %f\n", e_time - s_time); 
 		}
 
-		file_close(); 			// ?t?@?C?????????
+		file_close(); 			// ファイルを閉じる
 	}
 
-	//MPI_Finalize(); 			// MPI???I??????
+	//MPI_Finalize(); 			// MPIを終了する
 #elif _CALCULATION_TYPE == _BAND_CALCULATION
 
 #endif
@@ -211,100 +211,100 @@ int main(int argc, char **argv){
 
 
 
-// ?o??p?t?@?C?????J??
+// 出力用ファイルを開く
 void file_open(char* dir_name_def){
-	char dir_name[40];
+	char dir_name[40]; 
 	char name_xy[40], name_yz[40], name_xz[40];
-
+	
 	sprintf(name_xy, "/Model_xy_%d.txt", irank);
 	sprintf(name_yz, "/Model_yz_%d.txt", irank);
 	sprintf(name_xz, "/Model_xz_%d.txt", irank);
 
 	//baba lab
-	//_mkdir(strcpy(dir_name, dir_name_def)); 		// ?U?ﾉ?????????e?X?g
+	_mkdir(strcpy(dir_name, dir_name_def)); 		// 振り分けできるかテスト
 
 	//kuramitsu lab
-	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// ?U?ﾉ?????????e?X?g
+	//mkdir(strcpy(dir_name, dir_name_def), 0755); 		// 振り分けできるかテスト
 
 
 
 	if (irank == IRANK_MIN){
-		fpparameter = fopen (strcat(strcpy(dir_name, dir_name_def), "/Parameter.txt"), "w");
-		allmodel_xy = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xy.txt"), "w");
-		fpallepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/All_Epsilon_xy.txt"), "w");
-		allmodel_xz = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xz.txt"), "w");
+		fpparameter = fopen (strcat(strcpy(dir_name, dir_name_def), "/Parameter.txt"), "w"); 
+		allmodel_xy = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xy.txt"), "w"); 
+		fpallepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/All_Epsilon_xy.txt"), "w"); 
+		allmodel_xz = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_xz.txt"), "w"); 
 	}
 
-	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), name_xy), "w"); 		// ?U?ﾉ?????????e?X?g
-	model_yz = fopen (strcat(strcpy(dir_name, dir_name_def), name_yz), "w");
-	model_xz = fopen (strcat(strcpy(dir_name, dir_name_def), name_xz), "w");
+	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), name_xy), "w"); 		// 振り分けできるかテスト
+	model_yz = fopen (strcat(strcpy(dir_name, dir_name_def), name_yz), "w"); 
+	model_xz = fopen (strcat(strcpy(dir_name, dir_name_def), name_xz), "w"); 
 
-	fpepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_xy.txt"), "w");
-	fpepsilony = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_yz.txt"), "w");
-	fpepsilonz = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_zx.txt"), "w");
-	fpepsilony2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_yz2.txt"), "w");
-	fpepsilonz2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_zx2.txt"), "w");
+	fpepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_xy.txt"), "w"); 
+	fpepsilony = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_yz.txt"), "w"); 
+	fpepsilonz = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_zx.txt"), "w"); 
+	fpepsilony2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_yz2.txt"), "w"); 
+	fpepsilonz2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/Epsilon_zx2.txt"), "w"); 
 
 }
 
 
-/*?o??p?t?@?C?????????*/
+/*出力用ファイルを閉じる*/
 void file_close(){
 
 	if (irank == IRANK_MIN){
-		fclose(fpparameter);
-		fclose(fpallepsilonx);
+		fclose(fpparameter); 
+		fclose(fpallepsilonx); 
 	}
 
 	fclose(model_xy);
-	fclose(model_yz);
-	fclose(model_xz);
+	fclose(model_yz); 
+	fclose(model_xz); 
 
-	fclose(fpepsilonx);
-	fclose(fpepsilony);
-	fclose(fpepsilonz);
-	fclose(fpepsilony2);
-	fclose(fpepsilonz2);
+	fclose(fpepsilonx); 
+	fclose(fpepsilony); 
+	fclose(fpepsilonz); 
+	fclose(fpepsilony2); 
+	fclose(fpepsilonz2); 
 }
 
 
-// ?v?Z?p?p?????[?^??????o??
+// 計算用パラメータの設定と出力
 void parameter(char* dir_name){
 
 	if (irank == IRANK_MIN){
 
-		fprintf(fpparameter, "XMAX_ALL = %d\n", XMAX_ALL);
-		fprintf(fpparameter, "YMAX_ALL = %d\n", YMAX_ALL);
-		fprintf(fpparameter, "ZMAX_ALL = %d\n", ZMAX_ALL);
-		fprintf(fpparameter, "Nodes = %d\n", NODE);
-		fprintf(fpparameter, "Cell Size [nm] = %d\n", CELL_SIZE);
-		fprintf(fpparameter, "Time Step [s] = %e\n", dt);
-		fprintf(fpparameter, "Final Time Step = %d\n", Nmax);
-		fprintf(fpparameter, "Final Time [s] = %e\n", (double) Nmax * dt);
-		fprintf(fpparameter, "\n");
+		fprintf(fpparameter, "XMAX_ALL = %d\n", XMAX_ALL); 
+		fprintf(fpparameter, "YMAX_ALL = %d\n", YMAX_ALL); 
+		fprintf(fpparameter, "ZMAX_ALL = %d\n", ZMAX_ALL); 
+		fprintf(fpparameter, "Nodes = %d\n", NODE); 
+		fprintf(fpparameter, "Cell Size [nm] = %d\n", CELL_SIZE); 
+		fprintf(fpparameter, "Time Step [s] = %e\n", dt); 
+		fprintf(fpparameter, "Final Time Step = %d\n", Nmax); 
+		fprintf(fpparameter, "Final Time [s] = %e\n", (double) Nmax * dt); 
+		fprintf(fpparameter, "\n"); 
 
-		fprintf(fpparameter, "Upper Clad Index = %lf\n", n_clad);
-		fprintf(fpparameter, "Slab Index = %lf\n", n_core);
-		fprintf(fpparameter, "Upper Height [nm] = %d\n", CLAD_HEIGHT1);
-		fprintf(fpparameter, "Slab Height [nm] = %d\n", SLAB_HEIGHT);
-		fprintf(fpparameter, "Hole Pitch [nm] = %d\n", PITCH);
-		fprintf(fpparameter, "Pitch Shift Max [nm] = %d\n", PITCH_SHIFT_MAX);
+		fprintf(fpparameter, "Upper Clad Index = %lf\n", n_clad); 
+		fprintf(fpparameter, "Slab Index = %lf\n", n_core); 
+		fprintf(fpparameter, "Upper Height [nm] = %d\n", CLAD_HEIGHT1); 
+		fprintf(fpparameter, "Slab Height [nm] = %d\n", SLAB_HEIGHT); 
+		fprintf(fpparameter, "Hole Pitch [nm] = %d\n", PITCH); 
+		fprintf(fpparameter, "Pitch Shift Max [nm] = %d\n", PITCH_SHIFT_MAX); 
 		fprintf(fpparameter, "Hole Diameter [nm] = %d\n", RADIUS*2);
 		fprintf(fpparameter, "%d-row Shift [nm] = %d\n", 1, SX1);
 		fprintf(fpparameter, "%d-row Shift [nm] = %d\n", 3, SX3);
 		fprintf(fpparameter, "%Y-direction All Shift [nm] = %d\n", SY);
-		fprintf(fpparameter, "Normal PCW Period = %d\n", NORM_PCW_PER);
-		fprintf(fpparameter, "Chirped LSPCW Period = %d\n", CHIRP_3RD_LS_PER);
-		fprintf(fpparameter, "Pitch Shift PCW Period = %d\n", PITCH_SHIFT_PER);
-		fprintf(fpparameter, "Pitch Shift Chirp PCW Period = %d\n", PITCH_SHIFT_CHIRP_PER);
-		fprintf(fpparameter, "LSPCW Period = %d\n", LSPCW_PER);
-		fprintf(fpparameter, "Hole Column[y] = %d \n", intPcwWid);
-		fprintf(fpparameter, "Hole Row[x] = %d \n", intPcwPer);
-		fprintf(fpparameter, "Hole Start Coordinate = (%d, %d)\n", intPcwStartX, intPcwStartY);
-		fprintf(fpparameter, "\n");
+		fprintf(fpparameter, "Normal PCW Period = %d\n", NORM_PCW_PER); 
+		fprintf(fpparameter, "Chirped LSPCW Period = %d\n", CHIRP_3RD_LS_PER); 
+		fprintf(fpparameter, "Pitch Shift PCW Period = %d\n", PITCH_SHIFT_PER); 
+		fprintf(fpparameter, "Pitch Shift Chirp PCW Period = %d\n", PITCH_SHIFT_CHIRP_PER); 
+		fprintf(fpparameter, "LSPCW Period = %d\n", LSPCW_PER); 
+		fprintf(fpparameter, "Hole Column[y] = %d \n", intPcwWid); 
+		fprintf(fpparameter, "Hole Row[x] = %d \n", intPcwPer); 
+		fprintf(fpparameter, "Hole Start Coordinate = (%d, %d)\n", intPcwStartX, intPcwStartY); 
+		fprintf(fpparameter, "\n"); 
 
 		fprintf(fpparameter, "Exctation [nm] = %d\n", EXCT_LEN);
-		fprintf(fpparameter, "Exctation to Observation [nm] = %d\n", EXCT_OBSE_LEN);
+		fprintf(fpparameter, "Exctation to Observation [nm] = %d\n", EXCT_OBSE_LEN); 
 		fprintf(fpparameter, "Observation to Wire [nm] = %d\n", OBSE_WIRE_LEN);
 		fprintf(fpparameter, "Output Wire to Termination [nm] = %d\n", WIRE_OUTPUT_LEN);
 		fprintf(fpparameter, "Termination Length [nm] = %d\n", WIRE_OUTPUT_OFFSET);
@@ -314,255 +314,255 @@ void parameter(char* dir_name){
 		else{
 			fprintf(fpparameter, "Wire Width [nm] = %d\n", intWireWid * CELL_SIZE);
 		}
-		fprintf(fpparameter, "PCW Slab Termination Length [nm] = %d\n", PCW_SiSLAB_TERMINATION_LEN);
+		fprintf(fpparameter, "PCW Slab Termination Length [nm] = %d\n", PCW_SiSLAB_TERMINATION_LEN); 
 		if(PCW_SiSLAB_OFFSET < 0){
-			fprintf(fpparameter, "PCW Slab Offset [nm] = %d\n", PCW_SiSLAB_OFFSET + CELL_SIZE);
+			fprintf(fpparameter, "PCW Slab Offset [nm] = %d\n", PCW_SiSLAB_OFFSET + CELL_SIZE); 
 		}
 		else{
-			fprintf(fpparameter, "PCW Slab Offset [nm] = %d\n", PCW_SiSLAB_OFFSET);
+			fprintf(fpparameter, "PCW Slab Offset [nm] = %d\n", PCW_SiSLAB_OFFSET); 
 		}
 		if(PCW_WIDTH_CHIRP < 0){
-			fprintf(fpparameter, "PCW Width Chirp [nm] = %d\n", PCW_WIDTH_CHIRP + CELL_SIZE);
+			fprintf(fpparameter, "PCW Width Chirp [nm] = %d\n", PCW_WIDTH_CHIRP + CELL_SIZE); 
 		}
 		else{
-			fprintf(fpparameter, "PCW Width Chirp [nm] = %d\n", PCW_WIDTH_CHIRP);
+			fprintf(fpparameter, "PCW Width Chirp [nm] = %d\n", PCW_WIDTH_CHIRP); 
 		}
 
 		if(LSPCW_SHIFT_DESCRETE == FALSE){
 			fprintf(fpparameter, "LSPCW_SHIFT_DESCRETE = FALSE\n");
 		}
 		else{
-			fprintf(fpparameter, "LSPCW_SHIFT_DESCRETE = TRUE\n");
+			fprintf(fpparameter, "LSPCW_SHIFT_DESCRETE = TRUE\n"); 
 		}
 
 
-		fprintf(fpparameter, "\n");
+		fprintf(fpparameter, "\n"); 
 	}
 
-	// ???U?????????
-	lambda = atof(dir_name) * 1e-9;
-	omega0 = 2.0*PI*C0/lambda;
+	// 励振関数定数の設定
+	lambda = atof(dir_name) * 1e-9; 		
+	omega0 = 2.0*PI*C0/lambda; 
 	sigma = omega0 * delta_omega;
 }
 
-/*?z?????????*/
+/*配列の初期化*/
 void initialize_matrix(){
 
-	//?e?m?[?h????W
-	if(irank != IRANK_MAX){
-		xmax = XMAX;
-		ymax = YMAX;
+	//各ノードの座標
+	if(irank != IRANK_MAX){				
+		xmax = XMAX; 
+		ymax = YMAX; 
 		zmax = ZMAX;
 		zmax_ff = ZMAX_FF;
 	}
 
-	//?????m?[?h??????????s?v????x??????1?Z????????
-	if(irank == IRANK_MAX){
-		xmax = XMAX - 1;
-		ymax = YMAX;
-		zmax = ZMAX;
+	//最後のノードだけのりしろ不要なのでx方向に1セル小さい
+	if(irank == IRANK_MAX){				
+		xmax = XMAX - 1; 
+		ymax = YMAX; 
+		zmax = ZMAX; 
 		zmax_ff = ZMAX_FF;
 	}
 
-	// ???????????l
-	xmax_all = XMAX_ALL;
-	ymax_all = YMAX_ALL;
-	zmax_all = ZMAX_ALL;
+	// 解析空間の最大値
+	xmax_all = XMAX_ALL; 
+	ymax_all = YMAX_ALL; 
+	zmax_all = ZMAX_ALL; 
 
-	// ??????????S???W
-	x_cen = xmax/2;
-	y_cen = ymax/2;
-	z_cen = zmax/2;
+	// 解析空間の中心座標
+	x_cen = xmax/2; 
+	y_cen = ymax/2; 
+	z_cen = zmax/2; 	
 
-	//???f??????S???????????S??P?Z????????????????v????
-	x_model_cen = x_cen + 1;
-	y_model_cen = y_cen + 1;
+	//モデルの中心と解析空間の中心は１セル分ずれているので要注意
+	x_model_cen = x_cen + 1; 
+	y_model_cen = y_cen + 1; 
 
 	int x, y, z;
 
 	for (x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax_ff+1; z++){
-				// ?d?E
-				Ex[x][y][z] = 0.0;
+				// 電界
+				Ex[x][y][z] = 0.0; 
 				Ey[x][y][z] = 0.0;
-				Ez[x][y][z] = 0.0;
+				Ez[x][y][z] = 0.0; 
 
-				// ???E
+				// 磁界
 				Hx[x][y][z] = 0.0;
-				Hy[x][y][z] = 0.0;
-				Hz[x][y][z] = 0.0;
-			}
-		}
+				Hy[x][y][z] = 0.0; 
+				Hz[x][y][z] = 0.0; 
+			}	
+		}	
 	}
 
 	for (x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// ?U?d??
-				ALL_epsilonx[x][y][z] = EPSILON0;
-				ALL_epsilony[x][y][z] = EPSILON0;
-				ALL_epsilonz[x][y][z] = EPSILON0;
-			}
-		}
+				// 誘電率
+				ALL_epsilonx[x][y][z] = EPSILON0; 
+				ALL_epsilony[x][y][z] = EPSILON0; 
+				ALL_epsilonz[x][y][z] = EPSILON0; 
+			}	
+		}	
 	}
 
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax_ff+1; z++){
-				// ?U?d??(?????????K?v?????????D?D?D)
-				epsilonx[x][y][z] = EPSILON0;
-				epsilony[x][y][z] = EPSILON0;
-				epsilonz[x][y][z] = EPSILON0;
-			}
-		}
+				// 誘電率(分割する必要がないような．．．)
+				epsilonx[x][y][z] = EPSILON0; 
+				epsilony[x][y][z] = EPSILON0; 
+				epsilonz[x][y][z] = EPSILON0; 
+			}	
+		}	
 	}
 
 	for(x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// ?Z??????
+				// セルの目印
 				ALL_cell[x][y][z] = CLAD;
-			}
-		}
+			}	
+		}	
 	}
 
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax_ff; z++){
-				// ?Z??????
-				cell[x][y][z] = 0;
-			}
-		}
+				// セルの目印
+				cell[x][y][z] = 0; 
+			}	
+		}	
 	}
 
 
-	/****************************** Mur??z?????E???? ******************************/
+	/****************************** Murの吸収境界条件 ******************************/
 
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			Exn2y00[x][z] = 0.0;
-			Exn1y00[x][z] = 0.0;
-			Exn2y01[x][z] = 0.0;
-			Exn1y01[x][z] = 0.0;
-		}
+			Exn2y00[x][z] = 0.0; 
+			Exn1y00[x][z] = 0.0; 
+			Exn2y01[x][z] = 0.0; 
+			Exn1y01[x][z] = 0.0; 
+		}	
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
-			Exn2z00[x][y] = 0.0;
-			Exn1z00[x][y] = 0.0;
-			Exn2z01[x][y] = 0.0;
-			Exn1z01[x][y] = 0.0;
-		}
+			Exn2z00[x][y] = 0.0; 
+			Exn1z00[x][y] = 0.0; 
+			Exn2z01[x][y] = 0.0; 
+			Exn1z01[x][y] = 0.0; 
+		}	
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			Eyn2z00[x][y] = 0.0;
-			Eyn1z00[x][y] = 0.0;
-			Eyn2z01[x][y] = 0.0;
-			Eyn1z01[x][y] = 0.0;
-		}
+			Eyn2z00[x][y] = 0.0; 
+			Eyn1z00[x][y] = 0.0; 
+			Eyn2z01[x][y] = 0.0; 
+			Eyn1z01[x][y] = 0.0; 
+		}	
 	}
 	for(y = 0; y < ymax; y++){
 		for(z = 0; z < zmax_ff+1; z++){
 			Eyn2x00[y][z] = 0.0;
 			Eyn1x00[y][z] = 0.0;
 			Eyn2x01[y][z] = 0.0;
-			Eyn1x01[y][z] = 0.0;
+			Eyn1x01[y][z] = 0.0; 
 			Eyn2xm1[y][z] = 0.0;
 			Eyn1xm1[y][z] = 0.0;
 			Eyn2xm0[y][z] = 0.0;
-			Eyn1xm0[y][z] = 0.0;
-		}
+			Eyn1xm0[y][z] = 0.0; 
+		}	
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff; z++){
 			Ezn2y00[x][z] = 0.0;
 			Ezn1y00[x][z] = 0.0;
 			Ezn2y01[x][z] = 0.0;
-			Ezn1y01[x][z] = 0.0;
-		}
+			Ezn1y01[x][z] = 0.0; 
+		}	
 	}
 	for(y = 0; y <= ymax; y++){
 		for(z = 0; z <= zmax_ff-1; z++){
 			Ezn2x00[y][z] = 0.0;
 			Ezn1x00[y][z] = 0.0;
 			Ezn2x01[y][z] = 0.0;
-			Ezn1x01[y][z] = 0.0;
+			Ezn1x01[y][z] = 0.0; 
 			Ezn2xm1[y][z] = 0.0;
 			Ezn1xm1[y][z] = 0.0;
 			Ezn2xm0[y][z] = 0.0;
-			Ezn1xm0[y][z] = 0.0;
-		}
+			Ezn1xm0[y][z] = 0.0; 
+		}	
 	}
 
-	/****************************** Mur??z?????E???? ******************************/
+	/****************************** Murの吸収境界条件 ******************************/
 }
 
 
-// ???f??????
+// モデルの設定
 void modeling(){
 
-	int n_temp; 		//???????l????p
-	double epsilon_temp; 		//?U?d????l????p
+	int n_temp; 		//屈折率の値保存用
+	double epsilon_temp; 		//誘電率の値保存用
 
-	/****************************** ?X???u??`?? ******************************/
+	/****************************** スラブの形成 ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(y = 0; y < ymax_all; y++){
-			for(z = 0; z < zmax_all; z++){
-				n_temp = CLAD;
-				epsilon_temp = epsilon2;
+			for(z = 0; z < zmax_all; z++){		
+				n_temp = CLAD; 
+				epsilon_temp = epsilon2; 
 
-				if(z < air_hc){			//???C?w????
+				if(z < air_hc){			//空気層に設定
 				}
-				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//???N???b?h????
+				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//上部クラッドに設定
 				}
-				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// ?X???u????
-					n_temp = CORE;
-					epsilon_temp = epsilon1;
+				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// スラブに設定
+					n_temp = CORE; 
+					epsilon_temp = epsilon1; 
 				}
 
-				ALL_cell[x][y][z] = n_temp;
-				ALL_epsilonx[x][y][z] = epsilon_temp;
-				ALL_epsilony[x][y][z] = epsilon_temp;
-				ALL_epsilonz[x][y][z] = epsilon_temp;
+				ALL_cell[x][y][z] = n_temp; 
+				ALL_epsilonx[x][y][z] = epsilon_temp; 
+				ALL_epsilony[x][y][z] = epsilon_temp; 
+				ALL_epsilonz[x][y][z] = epsilon_temp; 
 			}
 		}
 	}
-	/****************************** ?X???u??`?? ******************************/
+	/****************************** スラブの形成 ******************************/
 
 
-	/****************************** ?t?H?g?j?b?N???? ******************************/
+	/****************************** フォトニック結晶 ******************************/
 
-	int s_x3; 		// ?`???[?vLSPCW??V?t?g??
+	int s_x3; 		// チャープLSPCWのシフト量
 	int s_x2;
 	int s_x4;
-	int z_end; 				// ?~?E??I?????W
-
+	int z_end; 				// 円孔の終了座標
+	
 
 	if (intPcwPer == 0){
-		intWirePer2 = intWireLen1 - 1;									// ?o??CORE?X???u??J?n?_
-		intWirePer3 = intWirePer2 + intWireLen2;						// ?o??CORE?X???u??I???_
+		intWirePer2 = intWireLen1 - 1;									// 出射COREスラブの開始点
+		intWirePer3 = intWirePer2 + intWireLen2;						// 出射COREスラブの終了点
 	}
 
 	else{
-		struct PNUM Pnum[100][10]; 	// ?~??????S???W
-		struct PNUM Pnum_Init[1][10]; 		// ?~????W???i?q????????S???W
+		struct PNUM Pnum[100][10]; 	// 円柱の中心座標
+		struct PNUM Pnum_Init[1][10]; 		// 円柱の標準格子定数による中心座標
 
-		z_end = zmax_all; 		// ?~?E????????????????l????
-		Pnum_Init[0][0].Y = intPcwStartY; 	// ?~?????z?u?????????Y???W
+		z_end = zmax_all; 		// 円孔が貫通している場合を考える
+		Pnum_Init[0][0].Y = intPcwStartY; 	// 円柱を配置する最初のY座標
 
-		if(intPcwWid % 2 == 1){		// if y:even
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
+		if(intPcwWid % 2 == 1){		// if y:even 
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// 配列の引数に使用するので-1	
 		}
-		else{						// if y:odd 0.5A????
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// ?z?????????g?p???????-1
+		else{						// if y:odd 0.5Aずらす
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// 配列の引数に使用するので-1
 		}
 
 		if(y != 0){
-			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//?????W??(root3)/2*intPitchX????????
+			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//ｙ座標を(root3)/2*intPitchXだけずらす
 		}
 
 		for(z = 0; z < z_end; z++){
@@ -584,10 +584,10 @@ void modeling(){
 				else{
 					input_NormPcw_Xend = 0;
 				}
-				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+				/******************** 格子シフト量チャープ(2013/7/19) ********************/
 				input_PitchShiftPcw_Xend = input_NormPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer;
 				input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend;
-				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+				/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 				if (intChirp3rdLsPer > 0){
 					input_Chirp_Ls_Xend = input_PitchShiftChirpPcw_Xend + (intChirp3rdLsPer);
@@ -602,10 +602,10 @@ void modeling(){
 				else{
 					output_Chirp_Ls_Xend = Lspcw_Xend;
 				}
-				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+				/******************** 格子シフト量チャープ(2013/7/19) ********************/
 				output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend;
 				output_PitchShiftPcw_Xend = output_PitchShiftChirpPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer;
-				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+				/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 				output_PCW_Xend = output_Chirp_Ls_Xend + intNormPcwPer;
 
@@ -615,12 +615,12 @@ void modeling(){
 				int intPreviousPCWwidthOffset;
 				int intNowPCWwidthOffset;
 
-				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+				/******************** 格子シフト量チャープ(2013/7/19) ********************/
 				double  dblPitchShiftChirpY;
 				//double dblPitchShiftChirpX, dblPitchShiftChirpY, dblPitchShiftChirpY2;
 				int intPitchShiftChirpX, intPitchShiftChirpY;
 				//int intPitchShiftChirpX, intPitchShiftChirpX2, intPitchShiftChirpY;
-				/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+				/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 
 				/****************************** LSPCW ******************************/
@@ -630,66 +630,66 @@ void modeling(){
 					s_x3 = 0;
 					s_x2 = 0;
 					s_x4 = 0;
-					// ???? ???PCW
+					// 入射 通常PCW
 					if (x < input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//?????W??(root3)/2*intPitchX????????
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ｙ座標を(root3)/2*intPitchXだけずらす
 
-								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ?z?????????g?p???????-1
+								if(y2 % 2 == 1){		// if y:even 
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// 配列の引数に使用するので-1
 								}
-								else{				// if y:odd 0.5A????
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
+								else{				// if y:odd 0.5Aずらす
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// 配列の引数に使用するので-1
 								}
 
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+								Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;
 							}
 						}
 					}
 
-					// ???? ?i?q???ｦﾘ?PCW
+					// 入射 格子定数変化PCW
 					else if (x < input_PitchShiftPcw_Xend && x >= input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//?????W??(root3)/2*intPitchX????????
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//ｙ座標を(root3)/2*intPitchXだけずらす
 
-								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// ?z?????????g?p???????-1
+								if(y2 % 2 == 1){		// if y:even 
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// 配列の引数に使用するので-1
 								}
-								else{				// if y:odd 0.5A????
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
+								else{				// if y:odd 0.5Aずらす
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// 配列の引数に使用するので-1
 								}
 
-								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
+								/******************** 導波路1列目シフト構造(2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+									/******************** 格子シフト量チャープ(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+									/******************** 格子シフト量チャープ(2013/7/19) ********************/
 								}
-								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
+								/******************** 導波路1列目シフト構造(2013/7/12) ********************/
 
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
-							/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+							/******************** 格子シフト量チャープ(2013/7/19) ********************/
 							intPitchShiftChirpX = intPitchShiftX;
 							intPitchShiftChirpY = 0;
 
@@ -704,35 +704,35 @@ void modeling(){
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
 								if(x < intPitchShiftPcwPer + intPitchShiftChirpPcwPer - 1){
 									if (y2 < intPcwWid-1){
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid-1 - y2));
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid-1 - y2));	
 									}
 									else{
-										Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+										Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 									}
 								}
 								else{
 									if (y2 < intPcwWid-1){
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchY * (intPcwWid-1 - y2);
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchY * (intPcwWid-1 - y2);	
 									}
 									else{
-										Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+										Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 									}
 								}
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 							}
-							/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+							/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 						}
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 2????i?q?V?t?g
+							// 2列目格子シフト
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
-							// 3????i?q?V?t?g
+							// 3列目格子シフト
 							if (y == intPcwWid - 3){
-								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+								/******************** 格子シフト量チャープ(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
-								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+								/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 							}
 							if (y == intPcwWid - 4){
@@ -741,30 +741,30 @@ void modeling(){
 						}
 					}
 
-					// ???? ?`???[?vLSPCW
+					// 入射 チャープLSPCW
 					else if (x >= input_NormPcw_Xend && x < input_Chirp_Ls_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//?????W??(root3)/2*intPitchX????????
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ｙ座標を(root3)/2*intPitchXだけずらす
 
-								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ?z?????????g?p???????-1
+								if(y2 % 2 == 1){		// if y:even 
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// 配列の引数に使用するので-1
 								}
-								else{				// if y:odd 0.5A????
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
+								else{				// if y:odd 0.5Aずらす
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// 配列の引数に使用するので-1
 								}
 
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+								Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;
 
 							}
@@ -774,7 +774,7 @@ void modeling(){
 									s_x3 = 0;
 								}
 								else{
-									s_x3 = INT_DIV (intSx3Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend);
+									s_x3 = INT_DIV (intSx3Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend); 
 								}
 							}
 							if (y == intPcwWid - 2){
@@ -782,7 +782,7 @@ void modeling(){
 									s_x2 = 0;
 								}
 								else{
-									s_x2 = INT_DIV (intSx2Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend);
+									s_x2 = INT_DIV (intSx2Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend); 
 								}
 							}
 							if (y == intPcwWid - 4){
@@ -790,33 +790,33 @@ void modeling(){
 									s_x4 = 0;
 								}
 								else{
-									s_x4 = INT_DIV (intSx4Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend);
+									s_x4 = INT_DIV (intSx4Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend); 
 								}
 							}
 						}
 					}
 
 
-					// ?o?? ?i?q???ｦﾘ?PCW
+					// 出射 格子定数変化PCW
 					else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 
-						// ?i?q???ｦﾘ?PCW??????????
+						// 格子定数変化PCWとの入射接続部
 						if (x == output_PitchShiftChirpPcw_Xend){
 							y_poo = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
 
-								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
+								/******************** 導波路1列目シフト構造(2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+									/******************** 格子シフト量チャープ(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+									/******************** 格子シフト量チャープ(2013/7/19) ********************/
 								}
-								/******************** ???g?H1????V?t?g?\??(2013/7/12) ********************/
+								/******************** 導波路1列目シフト構造(2013/7/12) ********************/
 
 								y_poo++;
 							}
-						}
-						/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+						}							
+						/******************** 格子シフト量チャープ(2013/7/19) ********************/
 						intPitchShiftChirpX = intPitchX;
 						intPitchShiftChirpY = 0;
 						dblPitchShiftChirpY = 0;
@@ -830,37 +830,37 @@ void modeling(){
 							if (x != output_PitchShiftChirpPcw_Xend){
 								if (y2 < intPcwWid-1){
 									if (y2 % 2 == 1){
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchY + dblPitchShiftChirpY * (x - output_PitchShiftChirpPcw_Xend)) * (intPcwWid-1 - y2));
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchY + dblPitchShiftChirpY * (x - output_PitchShiftChirpPcw_Xend)) * (intPcwWid-1 - y2));	
 									}
 									else{
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchY + dblPitchShiftChirpY * (x - output_PitchShiftChirpPcw_Xend + 1)) * (intPcwWid-1 - y2));
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchY + dblPitchShiftChirpY * (x - output_PitchShiftChirpPcw_Xend + 1)) * (intPcwWid-1 - y2));	
 									}
 								}
 								else{
-									Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+									Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 								}
 							}
 							else{
 								if (y2 < intPcwWid-1){
 									if (y2 % 2 == 1){
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchY * (intPcwWid-1 - y2);
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchY * (intPcwWid-1 - y2);	
 									}
 									else{
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchY + dblPitchShiftChirpY * (x - output_PitchShiftChirpPcw_Xend + 1)) * (intPcwWid-1 - y2));
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchY + dblPitchShiftChirpY * (x - output_PitchShiftChirpPcw_Xend + 1)) * (intPcwWid-1 - y2));	
 									}
 								}
 								else{
-									Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+									Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 								}
 							}
 
 							Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 						}
 
-						/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+						/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 3????i?q?V?t?g
+							// 3列目格子シフト
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
@@ -869,17 +869,17 @@ void modeling(){
 							}
 							if (y == intPcwWid - 3){
 
-								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+								/******************** 格子シフト量チャープ(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
-								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+								/******************** 格子シフト量チャープ(2013/7/19) ********************/
 							}
 						}
 					}
 
-					// ?o?? ?`???[?vLSPCW
+					// 出射 チャープLSPCW
 					else if (x >= Lspcw_Xend && x < output_Chirp_Ls_Xend){
 						for (y2 = intPcwWid-1; y2 >= 0; y2--){
-							Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+							Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 							Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;
 
 						}
@@ -888,7 +888,7 @@ void modeling(){
 								s_x3 = 0;
 							}
 							else{
-								s_x3 = INT_DIV (intSx3Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x);
+								s_x3 = INT_DIV (intSx3Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x); 
 							}
 						}
 						if (y == intPcwWid - 4){
@@ -896,7 +896,7 @@ void modeling(){
 								s_x4 = 0;
 							}
 							else{
-								s_x4 = INT_DIV (intSx4Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x);
+								s_x4 = INT_DIV (intSx4Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x); 
 							}
 						}
 						if (y == intPcwWid - 2){
@@ -904,54 +904,54 @@ void modeling(){
 								s_x2 = 0;
 							}
 							else{
-								s_x2 = INT_DIV (intSx2Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x);
+								s_x2 = INT_DIV (intSx2Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x); 
 							}
 						}
 					}
 
 
-					// ?o?? ???PCW
+					// 出射 通常PCW
 					else if (x >= output_Chirp_Ls_Xend && x < output_PCW_Xend){
 						if (x == 0){
 							flag_2r = 1;
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//?????W??(root3)/2*intPitchX????????
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ｙ座標を(root3)/2*intPitchXだけずらす
 
-								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ?z?????????g?p???????-1
+								if(y2 % 2 == 1){		// if y:even 
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// 配列の引数に使用するので-1
 								}
-								else{				// if y:odd 0.5A????
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ?z?????????g?p???????-1
+								else{				// if y:odd 0.5Aずらす
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// 配列の引数に使用するので-1
 								}
 
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** ???g?H???S??V?t?g(2013/7/12) ********************/
+								/******************** 導波路列全体シフト(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum[x-1][y2].Y;
+								Pnum[x][y2].Y = Pnum[x-1][y2].Y;	
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;
 							}
 						}
 					}
 
-					// ????i?q??PCW or LSPCW
+					// 通常格子定数PCW or LSPCW
 					else{
 						if (x != 0){
 							y_poo = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (intPitchY * y_poo);
+								Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (intPitchY * y_poo);	
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;
 								y_poo++;
 							}
 						}
 
-						// 3????i?q?V?t?g
+						// 3列目格子シフト
 						if (y == intPcwWid - 3){
 							s_x3 = intSx3Per;
 						}
@@ -963,37 +963,37 @@ void modeling(){
 						}
 					}
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					// ???g?H???`???[?v
+					// 導波路幅チャープ
 					if (PCW_WIDTH_CHIRP != 0){
 						if (x < input_PitchShiftPcw_Xend){
-							////////????V?t?g??`???[?v????????(?c??)
+							////////入射シフト量チャープここから(田村)
 							if(intChirp2ndLsPer != 0){
-							//3????
+							//3列目
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
 								}
 								else if (INT_DIV (intSx3Per, intChirp2ndLsPer) * (x +10 - input_PitchShiftPcw_Xend)<INT_DIV(SX3,CELL_SIZE)){
-									s_x3 = INT_DIV (intSx3Per, intChirp2ndLsPer) * (x +10 - input_PitchShiftPcw_Xend);
+									s_x3 = INT_DIV (intSx3Per, intChirp2ndLsPer) * (x +10 - input_PitchShiftPcw_Xend); 
 								}
 								else{
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2????
+							//2列目
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
 								}
 								else if (INT_DIV (intSx2Per, intChirp2ndLsPer) * (x +10 - input_PitchShiftPcw_Xend)<INT_DIV(SX2,CELL_SIZE)){
-									s_x2 = INT_DIV (intSx2Per, intChirp2ndLsPer) * (x +10 - input_PitchShiftPcw_Xend);
+									s_x2 = INT_DIV (intSx2Per, intChirp2ndLsPer) * (x +10 - input_PitchShiftPcw_Xend); 
 								}
 								else{
 									s_x2 = INT_DIV(SX2,CELL_SIZE);
 								}
 							}
 							}
-							////////????V?t?g??`???[?v???????
+							////////入射シフト量チャープここまで
 							if (x == 0){
 								intNowPCWwidthOffset = intPCWwidthChirp;
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
@@ -1002,7 +1002,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = intNowPCWwidthOffset;
 							}
 							else{
-								// PCW_WIDTH_CHIRP?p??????
+								// PCW_WIDTH_CHIRP用微調整
 								intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * (x / (double) (input_PitchShiftPcw_Xend-1)));
 								//intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * ((x + 1) / (double) (input_PitchShiftPcw_Xend-1)));
 								if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){
@@ -1014,34 +1014,34 @@ void modeling(){
 							}
 						}
 						else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
-							////////?o??V?t?g??`???[?v????????(?c??)
+							////////出射シフト量チャープここから(田村)
 							if(intChirp2ndLsPer != 0){
-							//3????
+							//3列目
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
 								}
 								else if( INT_DIV (intSx3Per, intChirp2ndLsPer) * (output_PitchShiftPcw_Xend - x-2)<INT_DIV(SX3,CELL_SIZE)){
-									s_x3 = INT_DIV (intSx3Per, intChirp2ndLsPer) * (output_PitchShiftPcw_Xend - x-2);
+									s_x3 = INT_DIV (intSx3Per, intChirp2ndLsPer) * (output_PitchShiftPcw_Xend - x-2); 
 								}
 								else{
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2????
+							//2列目
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
 								}
 								else if( INT_DIV (intSx2Per, intChirp2ndLsPer) * (output_PitchShiftPcw_Xend - x-2)<INT_DIV(SX2,CELL_SIZE)){
-									s_x2 = INT_DIV (intSx2Per, intChirp2ndLsPer) * (output_PitchShiftPcw_Xend - x-2);
+									s_x2 = INT_DIV (intSx2Per, intChirp2ndLsPer) * (output_PitchShiftPcw_Xend - x-2); 
 								}
 								else{
 									s_x2 = INT_DIV(SX2,CELL_SIZE);
 								}
 							}
 							}
-						//////////?o??V?t?g??`???[?v???????
+						//////////出射シフト量チャープここまで
 
 							if (x == output_PitchShiftChirpPcw_Xend){
 								intPreviousPCWwidthOffset = 0;
@@ -1058,7 +1058,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = 0;
 							}
 							else{
-								// PCW_WIDTH_CHIRP?p??????
+								// PCW_WIDTH_CHIRP用微調整
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
 									if (y2 % 2 == 1){
 										intNowPCWwidthOffset = (int) (intPCWwidthChirp * ((x - output_PitchShiftChirpPcw_Xend) / (double) (input_PitchShiftPcw_Xend-1)) + 0.9);
@@ -1073,15 +1073,15 @@ void modeling(){
 
 								intPreviousPCWwidthOffset = (int) (intPCWwidthChirp * ((x - output_PitchShiftChirpPcw_Xend) / (double) (input_PitchShiftPcw_Xend-1)) + 0.9);
 							}
-						}
+						}				
 					}
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-					/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+					/******************** 格子シフト量チャープ(2013/7/19) ********************/
 					if (PITCH_SHIFT_MAX > PITCH && intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
 					}
-					/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+					/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 					flag_2r = 0;
 					if(x < PITCH_SHIFT_PER && x > PITCH_SHIFT_PER+LSPCW_PER){
@@ -1100,47 +1100,47 @@ void modeling(){
 					mcircle(Pnum[x][y].X + s_x4, Pnum[x][y].Y, z, 1);
 
 
-					// ?o??CORE??????g?H??????????????
+					// 出射CORE細線導波路との接続部分の調整
 					if(x == intPcwPer - 1){
-						// ?i?q???ｦﾘ?PCW????
-						/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
-						if (intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
-							/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+						// 格子定数変化PCWあり
+						/******************** 格子シフト量チャープ(2013/7/19) ********************/
+						if (intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){						 
+							/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 							if(y % 2 == 1){
 								if (Pnum[x][y].X > 0){
-									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+									/******************** 格子シフト量チャープ(2013/7/19) ********************/
 									if (PITCH_SHIFT_MAX == PITCH){
-										//???????
+										//入ってる
 										Pnum[x][y].X += intPitchX;
 									}
 									else{
-										Pnum[x][y].X += intPitchShiftX; 		// intPitchX????+X???W??u??
+										Pnum[x][y].X += intPitchShiftX; 		// intPitchXだけ+X座標に置く
 									}
-									/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+									/******************** 格子シフト量チャープ(2013/7/19) ********************/
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX????+X???W??u??
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXだけ+X座標に置く
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX????+X???W??u??
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXだけ+X座標に置く
 								}
 
 								int poo = 0;
 
 								if (PCW_WIDTH_CHIRP != 0){
-									//???????
-									// PCW_WIDTH_CHIRP?p??????
+									//入ってる
+									// PCW_WIDTH_CHIRP用微調整
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPer-1));
 								}
 
 
-								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+								/******************** 格子シフト量チャープ(2013/7/19) ********************/
 								if (PITCH_SHIFT_MAX != PITCH){
 									Pnum[x][y].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * (intPcwWid-1 - y) - intPCWwidthChirp;
 								}
-								/******************** ?i?q?V?t?g??`???[?v(2013/7/19) ********************/
+								/******************** 格子シフト量チャープ(2013/7/19) ********************/
 
 								if (SX2 == 0 && SX4 == 0)
 									mcircle(Pnum[x][y].X + s_x3, Pnum[x][y].Y, z, 1);
@@ -1154,17 +1154,17 @@ void modeling(){
 							if(y % 2 == 1){
 
 								if (Pnum[x][y].X > 0){
-									Pnum[x][y].X += intPitchX; 		// intPitchX????+X???W??u??
+									Pnum[x][y].X += intPitchX; 		// intPitchXだけ+X座標に置く
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX????+X???W??u??
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXだけ+X座標に置く
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX????+X???W??u??
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXだけ+X座標に置く
 								}
 
 								if (PCW_WIDTH_CHIRP != 0){
-									// PCW_WIDTH_CHIRP?p??????
+									// PCW_WIDTH_CHIRP用微調整
 									int poo;
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPer-1));
@@ -1184,17 +1184,17 @@ void modeling(){
 
 			}
 		}
-		// CORE??????g?H???u???v?Z
-		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// ?o??CORE?X???u??J?n?_
-		intWirePer3 = intWirePer2 + intWireLen2;						// ?o??CORE?X???u??I???_
+		// CORE細線導波路の位置を計算
+		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// 出射COREスラブの開始点
+		intWirePer3 = intWirePer2 + intWireLen2;						// 出射COREスラブの終了点
 
 	}
-	/****************************** ?t?H?g?j?b?N???? ******************************/
+	/****************************** フォトニック結晶 ******************************/
 
-	/****************************** ???o???????g?H ******************************/
+	/****************************** 入出射細線導波路 ******************************/
 	int intPcwSislabOffset;
 
-	// ?S??X???u????????????C?????O??????????C???X
+	// 全面スラブになっているので，細線以外の部分を空気に変更
 	if (PCW_SiSLAB_OFFSET != 0){
 		intPcwSislabOffset = INT_DIV(PCW_SiSLAB_OFFSET, CELL_SIZE);
 	}
@@ -1205,92 +1205,92 @@ void modeling(){
 	for (z = zmax_all - intSlabHeigPer; z < (zmax_all + 1); z++){
 		for (y = 0; y < ymax_all - intWireWid_2; y++){
 
-			// ????
+			// 入射
 			if (PCW_SiSLAB_OFFSET != 0){
 			}
-			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// ?z?????????g?p???????-1
-				ALL_cell[x][y][z] = CLAD;
-				ALL_epsilonx[x][y][z] = epsilon2;
-				ALL_epsilony[x][y][z] = epsilon2;
-				ALL_epsilonz[x][y][z] = epsilon2;
+			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// 配列の引数に使用するので-1
+				ALL_cell[x][y][z] = CLAD; 
+				ALL_epsilonx[x][y][z] = epsilon2; 
+				ALL_epsilony[x][y][z] = epsilon2; 
+				ALL_epsilonz[x][y][z] = epsilon2; 
 			}
 
-			// ?o??
+			// 出射
 			if (PCW_SiSLAB_OFFSET != 0){
 			}
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++){
-				ALL_cell[x][y][z] = CLAD;
-				ALL_epsilonx[x][y][z] = epsilon2;
-				ALL_epsilony[x][y][z] = epsilon2;
-				ALL_epsilonz[x][y][z] = epsilon2;
+				ALL_cell[x][y][z] = CLAD; 
+				ALL_epsilonx[x][y][z] = epsilon2; 
+				ALL_epsilony[x][y][z] = epsilon2; 
+				ALL_epsilonz[x][y][z] = epsilon2; 
 			}
 		}
 
 	}
-	/****************************** ???o???????g?H ******************************/
+	/****************************** 入出射細線導波路 ******************************/
 
 
 
-	/****************************** ?????E??????U?d?????? ******************************/
+	/****************************** 対称境界部分の誘電率の設定 ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(z = 0; z < zmax_all+1; z++){
-			ALL_cell[x][ymax][z] = ALL_cell[x][ymax-1][z];
-			ALL_epsilonx[x][ymax][z] = ALL_epsilonx[x][ymax-1][z];
-			ALL_epsilony[x][ymax][z] = ALL_epsilony[x][ymax-1][z];
-			ALL_epsilonz[x][ymax][z] = ALL_epsilonz[x][ymax-1][z];
+			ALL_cell[x][ymax][z] = ALL_cell[x][ymax-1][z]; 
+			ALL_epsilonx[x][ymax][z] = ALL_epsilonx[x][ymax-1][z]; 
+			ALL_epsilony[x][ymax][z] = ALL_epsilony[x][ymax-1][z]; 
+			ALL_epsilonz[x][ymax][z] = ALL_epsilonz[x][ymax-1][z]; 
 		}
 	}
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(y = 0; y < ymax_all+1; y++){
-			ALL_cell[x][y][zmax] = ALL_cell[x][y][zmax-1];
-			ALL_epsilonx[x][y][zmax] = ALL_epsilonx[x][y][zmax-1];
-			ALL_epsilony[x][y][zmax] = ALL_epsilony[x][y][zmax-1];
-			ALL_epsilonz[x][y][zmax] = ALL_epsilonz[x][y][zmax-1];
+			ALL_cell[x][y][zmax] = ALL_cell[x][y][zmax-1]; 
+			ALL_epsilonx[x][y][zmax] = ALL_epsilonx[x][y][zmax-1]; 
+			ALL_epsilony[x][y][zmax] = ALL_epsilony[x][y][zmax-1]; 
+			ALL_epsilonz[x][y][zmax] = ALL_epsilonz[x][y][zmax-1]; 
 		}
 	}
 
-	/****************************** ?????E??????U?d?????? ******************************/
+	/****************************** 対称境界部分の誘電率の設定 ******************************/
 
 
 
-	/****************************** ?e?m?[?h????f????? ******************************/
-
+	/****************************** 各ノードにモデルを分割 ******************************/
+	
 	if(NODE < 3){
 		if(irank != IRANK_MAX){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < Z_AIR; z++){
-						cell[x][y][z] = AIR;
-						epsilonx[x][y][z] = epsilon0;
-						epsilony[x][y][z] = epsilon0;
-						epsilonz[x][y][z] = epsilon0;
+						cell[x][y][z] = AIR; 
+						epsilonx[x][y][z] = epsilon0; 
+						epsilony[x][y][z] = epsilon0; 
+						epsilonz[x][y][z] = epsilon0; 
 					}
 					for(z = Z_AIR; z < zmax_ff+1; z++){
-						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z-Z_AIR];
-						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax-1)+x][y][z-Z_AIR];
-						epsilony[x][y][z] = ALL_epsilony[irank*(xmax-1)+x][y][z-Z_AIR];
-						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax-1)+x][y][z-Z_AIR];
+						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z-Z_AIR]; 
+						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax-1)+x][y][z-Z_AIR]; 
+						epsilony[x][y][z] = ALL_epsilony[irank*(xmax-1)+x][y][z-Z_AIR]; 
+						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax-1)+x][y][z-Z_AIR]; 
 					}
 				}
 			}
-
+			
 		}
 		else{
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < Z_AIR; z++){
-						cell[x][y][z] = AIR;
-						epsilonx[x][y][z] = epsilon0;
-						epsilony[x][y][z] = epsilon0;
-						epsilonz[x][y][z] = epsilon0;
+						cell[x][y][z] = AIR; 
+						epsilonx[x][y][z] = epsilon0; 
+						epsilony[x][y][z] = epsilon0; 
+						epsilonz[x][y][z] = epsilon0; 
 					}
 					for(z = Z_AIR; z < zmax_ff+1; z++){
-						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z-Z_AIR];
-						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax)+x][y][z-Z_AIR];
-						epsilony[x][y][z] = ALL_epsilony[irank*(xmax)+x][y][z-Z_AIR];
-						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax)+x][y][z-Z_AIR];
+						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z-Z_AIR]; 
+						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax)+x][y][z-Z_AIR]; 
+						epsilony[x][y][z] = ALL_epsilony[irank*(xmax)+x][y][z-Z_AIR]; 
+						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax)+x][y][z-Z_AIR]; 
 					}
 				}
 			}
@@ -1300,16 +1300,16 @@ void modeling(){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < Z_AIR; z++){
-						cell[x][y][z] = AIR;
-						epsilonx[x][y][z] = epsilon0;
-						epsilony[x][y][z] = epsilon0;
-						epsilonz[x][y][z] = epsilon0;
+						cell[x][y][z] = AIR; 
+						epsilonx[x][y][z] = epsilon0; 
+						epsilony[x][y][z] = epsilon0; 
+						epsilonz[x][y][z] = epsilon0; 
 					}
 					for(z = Z_AIR; z < zmax_ff+1; z++){
-						cell[x][y][z] = ALL_cell[2*(xmax)+x][y][z-Z_AIR];
-						epsilonx[x][y][z] = ALL_epsilonx[2*(xmax)+x][y][z-Z_AIR];
-						epsilony[x][y][z] = ALL_epsilony[2*(xmax)+x][y][z-Z_AIR];
-						epsilonz[x][y][z] = ALL_epsilonz[2*(xmax)+x][y][z-Z_AIR];
+						cell[x][y][z] = ALL_cell[2*(xmax)+x][y][z-Z_AIR]; 
+						epsilonx[x][y][z] = ALL_epsilonx[2*(xmax)+x][y][z-Z_AIR]; 
+						epsilony[x][y][z] = ALL_epsilony[2*(xmax)+x][y][z-Z_AIR]; 
+						epsilonz[x][y][z] = ALL_epsilonz[2*(xmax)+x][y][z-Z_AIR]; 
 					}
 				}
 			}
@@ -1317,16 +1317,16 @@ void modeling(){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < Z_AIR; z++){
-						cell[x][y][z] = AIR;
-						epsilonx[x][y][z] = epsilon0;
-						epsilony[x][y][z] = epsilon0;
-						epsilonz[x][y][z] = epsilon0;
+						cell[x][y][z] = AIR; 
+						epsilonx[x][y][z] = epsilon0; 
+						epsilony[x][y][z] = epsilon0; 
+						epsilonz[x][y][z] = epsilon0; 
 					}
 					for(z = Z_AIR; z < zmax_ff+1; z++){
-						cell[x][y][z] = ALL_cell[x][y][z-Z_AIR];
-						epsilonx[x][y][z] = ALL_epsilonx[x][y][z-Z_AIR];
-						epsilony[x][y][z] = ALL_epsilony[x][y][z-Z_AIR];
-						epsilonz[x][y][z] = ALL_epsilonz[x][y][z-Z_AIR];
+						cell[x][y][z] = ALL_cell[x][y][z-Z_AIR]; 
+						epsilonx[x][y][z] = ALL_epsilonx[x][y][z-Z_AIR]; 
+						epsilony[x][y][z] = ALL_epsilony[x][y][z-Z_AIR]; 
+						epsilonz[x][y][z] = ALL_epsilonz[x][y][z-Z_AIR]; 
 					}
 				}
 			}
@@ -1334,16 +1334,16 @@ void modeling(){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < Z_AIR; z++){
-						cell[x][y][z] = AIR;
-						epsilonx[x][y][z] = epsilon0;
-						epsilony[x][y][z] = epsilon0;
-						epsilonz[x][y][z] = epsilon0;
+						cell[x][y][z] = AIR; 
+						epsilonx[x][y][z] = epsilon0; 
+						epsilony[x][y][z] = epsilon0; 
+						epsilonz[x][y][z] = epsilon0; 
 					}
 					for(z = Z_AIR; z < zmax_ff+1; z++){
-						cell[x][y][z] = ALL_cell[(xmax-1)+x][y][z-Z_AIR];
-						epsilonx[x][y][z] = ALL_epsilonx[(xmax-1)+x][y][z-Z_AIR];
-						epsilony[x][y][z] = ALL_epsilony[(xmax-1)+x][y][z-Z_AIR];
-						epsilonz[x][y][z] = ALL_epsilonz[(xmax-1)+x][y][z-Z_AIR];
+						cell[x][y][z] = ALL_cell[(xmax-1)+x][y][z-Z_AIR]; 
+						epsilonx[x][y][z] = ALL_epsilonx[(xmax-1)+x][y][z-Z_AIR]; 
+						epsilony[x][y][z] = ALL_epsilony[(xmax-1)+x][y][z-Z_AIR]; 
+						epsilonz[x][y][z] = ALL_epsilonz[(xmax-1)+x][y][z-Z_AIR]; 
 					}
 				}
 			}
@@ -1352,7 +1352,7 @@ void modeling(){
 
 
 	}
-
+	
 
 
 	/*if(NODE < 3){
@@ -1360,10 +1360,10 @@ void modeling(){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < zmax+1; z++){
-						cell[x][y][z] = ALL_cell[irank*(xmax-1)+x][y][z];
-						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax-1)+x][y][z];
-						epsilony[x][y][z] = ALL_epsilony[irank*(xmax-1)+x][y][z];
-						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax-1)+x][y][z];
+						cell[x][y][z] = ALL_cell[irank*(xmax-1)+x][y][z]; 
+						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax-1)+x][y][z]; 
+						epsilony[x][y][z] = ALL_epsilony[irank*(xmax-1)+x][y][z]; 
+						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax-1)+x][y][z]; 
 					}
 				}
 			}
@@ -1372,10 +1372,10 @@ void modeling(){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < zmax+1; z++){
-						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z];
-						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax)+x][y][z];
-						epsilony[x][y][z] = ALL_epsilony[irank*(xmax)+x][y][z];
-						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax)+x][y][z];
+						cell[x][y][z] = ALL_cell[irank*(xmax)+x][y][z]; 
+						epsilonx[x][y][z] = ALL_epsilonx[irank*(xmax)+x][y][z]; 
+						epsilony[x][y][z] = ALL_epsilony[irank*(xmax)+x][y][z]; 
+						epsilonz[x][y][z] = ALL_epsilonz[irank*(xmax)+x][y][z]; 
 					}
 				}
 			}
@@ -1386,10 +1386,10 @@ void modeling(){
 				for(x = 0; x < xmax+1; x++){
 					for(y = 0; y < ymax+1; y++){
 						for(z = 0; z < zmax+1; z++){
-							cell[x][y][z] = ALL_cell[x][y][z];
-							epsilonx[x][y][z] = ALL_epsilonx[x][y][z];
-							epsilony[x][y][z] = ALL_epsilony[x][y][z];
-							epsilonz[x][y][z] = ALL_epsilonz[x][y][z];
+							cell[x][y][z] = ALL_cell[x][y][z]; 
+							epsilonx[x][y][z] = ALL_epsilonx[x][y][z]; 
+							epsilony[x][y][z] = ALL_epsilony[x][y][z]; 
+							epsilonz[x][y][z] = ALL_epsilonz[x][y][z]; 
 						}
 					}
 				}
@@ -1397,20 +1397,20 @@ void modeling(){
 				for(x = 0; x < X_LSPCW-1; x++){
 					for(y = 0; y < ymax+1; y++){
 						for(z = 0; z < zmax+1; z++){
-							cell[x][y][z] = ALL_cell[x][y][z];
-							epsilonx[x][y][z] = ALL_epsilonx[x][y][z];
-							epsilony[x][y][z] = ALL_epsilony[x][y][z];
-							epsilonz[x][y][z] = ALL_epsilonz[x][y][z];
+							cell[x][y][z] = ALL_cell[x][y][z]; 
+							epsilonx[x][y][z] = ALL_epsilonx[x][y][z]; 
+							epsilony[x][y][z] = ALL_epsilony[x][y][z]; 
+							epsilonz[x][y][z] = ALL_epsilonz[x][y][z]; 
 						}
 					}
 				}
 				for(x = X_LSPCW-1; x < xmax+1; x++){
 					for(y = 0; y < ymax+1; y++){
 						for(z = 0; z < zmax+1; z++){
-							cell[x][y][z] = ALL_cell[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-							epsilonx[x][y][z] = ALL_epsilonx[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-							epsilony[x][y][z] = ALL_epsilony[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-							epsilonz[x][y][z] = ALL_epsilonz[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
+							cell[x][y][z] = ALL_cell[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+							epsilonx[x][y][z] = ALL_epsilonx[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+							epsilony[x][y][z] = ALL_epsilony[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+							epsilonz[x][y][z] = ALL_epsilonz[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
 						}
 					}
 				}
@@ -1421,10 +1421,10 @@ void modeling(){
 				for(x = 0; x < xmax+1; x++){
 					for(y = 0; y < ymax+1; y++){
 						for(z = 0; z < zmax+1; z++){
-							cell[xmax-x][y][z] = ALL_cell[xmax_all-x][y][z];
-							epsilonx[xmax-x][y][z] = ALL_epsilonx[xmax_all-x][y][z];
-							epsilony[xmax-x][y][z] = ALL_epsilony[xmax_all-x][y][z];
-							epsilonz[xmax-x][y][z] = ALL_epsilonz[xmax_all-x][y][z];
+							cell[xmax-x][y][z] = ALL_cell[xmax_all-x][y][z]; 
+							epsilonx[xmax-x][y][z] = ALL_epsilonx[xmax_all-x][y][z]; 
+							epsilony[xmax-x][y][z] = ALL_epsilony[xmax_all-x][y][z]; 
+							epsilonz[xmax-x][y][z] = ALL_epsilonz[xmax_all-x][y][z]; 
 						}
 					}
 				}
@@ -1432,20 +1432,20 @@ void modeling(){
 				for(x = 0; x < (X_LSPCW-1)*(NUM_EX-1)+1; x++){
 					for(y = 0; y < ymax+1; y++){
 						for(z = 0; z < zmax+1; z++){
-							cell[x][y][z] = ALL_cell[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-							epsilonx[x][y][z] = ALL_epsilonx[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-							epsilony[x][y][z] = ALL_epsilony[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-							epsilonz[x][y][z] = ALL_epsilonz[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
+							cell[x][y][z] = ALL_cell[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+							epsilonx[x][y][z] = ALL_epsilonx[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+							epsilony[x][y][z] = ALL_epsilony[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+							epsilonz[x][y][z] = ALL_epsilonz[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
 						}
 					}
 				}
 				for(x = (X_LSPCW-1)*(NUM_EX-1)+1; x < xmax+1; x++){
 					for(y = 0; y < ymax+1; y++){
 						for(z = 0; z < zmax+1; z++){
-							cell[x][y][z] = ALL_cell[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z];
-							epsilonx[x][y][z] = ALL_epsilonx[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z];
-							epsilony[x][y][z] = ALL_epsilony[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z];
-							epsilonz[x][y][z] = ALL_epsilonz[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z];
+							cell[x][y][z] = ALL_cell[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z]; 
+							epsilonx[x][y][z] = ALL_epsilonx[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z]; 
+							epsilony[x][y][z] = ALL_epsilony[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z]; 
+							epsilonz[x][y][z] = ALL_epsilonz[2*(X_LSPCW-1)+(x-(X_LSPCW-1)*(NUM_EX-1))][y][z]; 
 						}
 					}
 				}
@@ -1455,137 +1455,137 @@ void modeling(){
 			for(x = 0; x < xmax+1; x++){
 				for(y = 0; y < ymax+1; y++){
 					for(z = 0; z < zmax+1; z++){
-						cell[x][y][z] = ALL_cell[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-						epsilonx[x][y][z] = ALL_epsilonx[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-						epsilony[x][y][z] = ALL_epsilony[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
-						epsilonz[x][y][z] = ALL_epsilonz[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z];
+						cell[x][y][z] = ALL_cell[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+						epsilonx[x][y][z] = ALL_epsilonx[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+						epsilony[x][y][z] = ALL_epsilony[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
+						epsilonz[x][y][z] = ALL_epsilonz[x%(X_LSPCW-1)+(X_LSPCW-1)][y][z]; 
 					}
 				}
 			}
-
+			
 		}
 
 	}*/
 
+	
+	
 
 
+	/****************************** 各ノードにモデルを分割 ******************************/
 
 
-	/****************************** ?e?m?[?h????f????? ******************************/
+	/****************************** 共通パラメータの設定 ******************************/
 
-
-	/****************************** ????p?????[?^???? ******************************/
-
-	// ???U?_?C???????? (XMAX?? "?????" ????????????鋠??????)
+	// 励振点，観測面の設定 (XMAXは "のりしろ" 部分を含めていることに注意)
 	intExctPortNum = intExctLen / (XMAX - 1);
 	intObseInPortNum = intObseLen1 / (XMAX - 1);
 	intObseOutPortNum = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) / (XMAX - 1);
 	if (NODE % 2 != 0){
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// ????????v?Z????
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// 奇数個並列計算のとき
 	}
 	else{
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// ??????????v?Z????
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// 偶数個並列計算のとき
 	}
 
-	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// ?z?????????g?p???????-1
+	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// 配列の引数に使用するので-1
 	intObseLenPart1 = intObseLen1 % (XMAX - 1) - INT_DIV(intObseInter, 2) - 1;
 	intObseLenPart2 = intObseLenPart1 + intObseInter;
 	intObseLenPart3 = intObseLen1 % (XMAX - 1);
 	intObseLenPart4 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1) - INT_DIV(intObseInter, 2);
-	intObseLenPart5 = intObseLenPart4 + intObseInter;
+	intObseLenPart5 = intObseLenPart4 + intObseInter; 
 	intObseLenPart6 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1);
 	if (NODE % 2 != 0){
-		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// ????????v?Z????
+		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// 奇数個並列計算のとき
 	}
 	else{
-		intObseLenPart7 = (XMAX - 1) - 10;		// ??????????v?Z????
+		intObseLenPart7 = (XMAX - 1) - 10;		// 偶数個並列計算のとき
 	}
-	/****************************** ????p?????[?^???? ******************************/
+	/****************************** 共通パラメータの設定 ******************************/
 }
 
 
 
-//?U?d??????韵??
+//誘電率の割り当て
 void set_epsilon(){
 
-	//?U?d?????z??o??(???f????m?F)
-	int tag1 = 1;
+	//誘電率分布の出力(モデルの確認)
+	int tag1 = 1; 
 
 #if _FDTD
 
-	/****************************** ?v?Z???s?? ******************************/
-	int node;
+	/****************************** 計算実行時 ******************************/
+	int node; 
 
-	MPI_Status status;
+	MPI_Status status; 
 
-	//XY????
+	//XY平面
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1];
+			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1]; 
 		}
 	}
 	if(irank == IRANK_MIN){
 		for(x = 0; x<xmax; x++){
 			for(y = 0; y < ymax+1; y++){
-				fprintf (fpallepsilonx, "%e\t", epsilon_xy[x][y]);
-				fprintf (fpepsilonx, "%e\t", epsilon_xy[x][y]);
+				fprintf (fpallepsilonx, "%e\t", epsilon_xy[x][y]); 
+				fprintf (fpepsilonx, "%e\t", epsilon_xy[x][y]); 
 			}
-			fprintf (fpallepsilonx, "\n");
-			fprintf (fpepsilonx, "\n");
+			fprintf (fpallepsilonx, "\n"); 
+			fprintf (fpepsilonx, "\n"); 
 		}
 	}
 	if(irank != IRANK_MIN){
 
-		MPI_Send (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, 0, tag1, MPI_COMM_WORLD);
+		MPI_Send (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, 0, tag1, MPI_COMM_WORLD); 
 
 		for(x = 1; x<xmax; x++){
 			for(y = 0; y < ymax+1; y++){
-				fprintf (fpepsilonx, "%e\t", epsilon_xy[x][y]);
+				fprintf (fpepsilonx, "%e\t", epsilon_xy[x][y]); 
 			}
-			fprintf (fpepsilonx, "\n");
+			fprintf (fpepsilonx, "\n"); 
 		}
 	}
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
 
-			MPI_Recv (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, node, tag1, MPI_COMM_WORLD, &status);
+			MPI_Recv (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, node, tag1, MPI_COMM_WORLD, &status); 
 
 			if(node == IRANK_MAX){
 				for(x = 1; x < xmax-1; x++){
 					for(y = 0; y < ymax+1; y++){
-						fprintf(fpallepsilonx, "%e\t", epsilon_xy[x][y]);
+						fprintf(fpallepsilonx, "%e\t", epsilon_xy[x][y]); 
 					}
-					fprintf(fpallepsilonx, "\n");
+					fprintf(fpallepsilonx, "\n"); 
 				}
 			}
 			else{
 				for(x = 1; x < xmax; x++){
 					for(y = 0; y < ymax+1; y++){
-						fprintf (fpallepsilonx, "%e\t", epsilon_xy[x][y]);
+						fprintf (fpallepsilonx, "%e\t", epsilon_xy[x][y]); 
 					}
-					fprintf (fpallepsilonx, "\n");
+					fprintf (fpallepsilonx, "\n"); 
 				}
 			}
 		}
 	}
-	/****************************** ?v?Z???s?? ******************************/
+	/****************************** 計算実行時 ******************************/
 #else
 
-	/****************************** ???f???m?F?? ******************************/
-	char fname[40],dir_name[50];	//?t?@?C?????i?[???
+	/****************************** モデル確認時 ******************************/
+	char fname[40],dir_name[50];	//ファイル名格納変数	
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1];
+			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1]; 
 		}
 	}
 	for(x = 0; x<xmax; x++){
 		for(y = 0; y<ymax+1; y++){
-			fprintf (fpallepsilonx, "%e\t", epsilon_xy[x][y]);
-			fprintf (fpepsilonx, "%e\t", epsilon_xy[x][y]);
+			fprintf (fpallepsilonx, "%e\t", epsilon_xy[x][y]); 
+			fprintf (fpepsilonx, "%e\t", epsilon_xy[x][y]); 
 		}
-		fprintf (fpallepsilonx, "\n");
-		fprintf (fpepsilonx, "\n");
+		fprintf (fpallepsilonx, "\n"); 
+		fprintf (fpepsilonx, "\n"); 
 	}
 
 #if _PROGRAM_TEST
@@ -1632,136 +1632,136 @@ void set_epsilon(){
 	}
 #endif
 
-	/****************************** ???f???m?F?? ******************************/
+	/****************************** モデル確認時 ******************************/
 #endif
 
-	//YZ????
+	//YZ平面
 	for(y = 0; y < ymax+1; y++){
 		for(z = 0; z < zmax_ff+1; z++){
-			epsilon_yz[y][z] = epsilony[intObseLenPart1][y][z];
+			epsilon_yz[y][z] = epsilony[intObseLenPart1][y][z]; 
 		}
 	}
 	for(y = 0; y < ymax+1; y++){
 		for(z = 0; z < zmax_ff+1; z++){
-			fprintf(fpepsilony, "%e\t", epsilon_yz[y][z]);
+			fprintf(fpepsilony, "%e\t", epsilon_yz[y][z]); 
 		}
-		fprintf(fpepsilony, "\n");
+		fprintf(fpepsilony, "\n"); 
 	}
 
-	//ZX???? (Y:???E??)
+	//ZX平面 (Y:境界面)
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			epsilon_zx[x][z] = epsilonz[x][ymax][z];
+			epsilon_zx[x][z] = epsilonz[x][ymax][z]; 
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			fprintf(fpepsilonz, "%e\t", epsilon_zx[x][z]);
+			fprintf(fpepsilonz, "%e\t", epsilon_zx[x][z]); 
 		}
-		fprintf(fpepsilonz, "\n");
+		fprintf(fpepsilonz, "\n"); 
 	}
-	//ZX???? (Y:???S)
+	//ZX平面 (Y:中心)
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			epsilon_zx2[x][z] = epsilonz[x][ymax/2][z];
+			epsilon_zx2[x][z] = epsilonz[x][ymax/2][z]; 
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			fprintf(fpepsilonz2, "%e\t", epsilon_zx2[x][z]);
+			fprintf(fpepsilonz2, "%e\t", epsilon_zx2[x][z]); 
 		}
-		fprintf(fpepsilonz2, "\n");
+		fprintf(fpepsilonz2, "\n"); 
 	}
 
-
-	// ?t?@?C???|?C???^???????
+	
+	// ファイルポインタを閉じる
 	if (irank == IRANK_MIN){
 		fclose(fpallepsilonx);
 	}
-	fclose(fpepsilonx);
-	fclose(fpepsilony);
-	fclose(fpepsilonz);
-
+	fclose(fpepsilonx); 
+	fclose(fpepsilony); 
+	fclose(fpepsilonz); 
+ 
 }
 
 
-// ???U???
+// 励振関数
 void source_func(){
 
 	int x, y, z;
 
 	if(irank == intExctPortNum){
 
-		// ???U?_????
+		// 励振点の設定
 		x = intExctLenPart;
 
 		for(y = ex_y_st; y < ex_y_ed; y++){
 			for(z = ex_z_st; z < ex_z_ed; z++){
-#if _EXITATION_FUNC	// CW???U
+#if _EXITATION_FUNC	// CW励振
 
 
-				//??????????z???U??? ???????????????Z???????Z????????U????????????s?x????
+				//面内正弦分布励振の場合 ←解析空間が偶数セルか奇数セルかで励振が異なるのでその都度注意
 
-				// ?X???u?????????Z????:???? ???g?H?????????Z????:????
-				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt);
+				// スラブ厚の半分のセル数:偶数 導波路幅の半分のセル数:偶数
+				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); 
 
-				// ?X???u?????????Z????:?? ???g?H?????????Z????:??
-				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt);
+				// スラブ厚の半分のセル数:奇数 導波路幅の半分のセル数:奇数
+				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); 
 				Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 01
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 02
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 03
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 04
-#else	// Gaussian???U
+#else	// Gaussian励振
 
-				//Hz[x][(YMAX+1)/2][intSlabCen] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2));
-				Hz[x][y][z] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2)) * cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st));
+				//Hz[x][(YMAX+1)/2][intSlabCen] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2)); 		
+				Hz[x][y][z] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2)) * cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)); 
 #endif
 			}
 		}
 	}
 
 
-	/****************************** ???E??????E????(4?????) ******************************/
+	/****************************** 磁界の対称境界条件(4回対称) ******************************/
 
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff; z++){
-			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// ?????
+			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// 偶関数
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// ?????
+			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// 偶関数
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			Hy[x][y][zmax_ff] = -Hy[x][y][zmax_ff-1];		// ?????
+			Hy[x][y][zmax_ff] = -Hy[x][y][zmax_ff-1];		// 奇関数
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			Hx[x][y][zmax_ff] = -Hx[x][y][zmax_ff-1];		// ?????
+			Hx[x][y][zmax_ff] = -Hx[x][y][zmax_ff-1];		// 奇関数
 		}
 	}
 
-	/****************************** ???E??????E????(4?????) ******************************/
+	/****************************** 磁界の対称境界条件(4回対称) ******************************/
 }
 
 
-// ???f???????U?_?C????_??L?^
+// モデルへの励振点，観測点の記録
 void observation_func(){
 
-	if(irank == intObseInPortNum){ //????
+	if(irank == intObseInPortNum){ //入射
 
 		for(int x = intObseLenPart1; x < intObseLenPart2; x++){
-			/****************************** ??????C??(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ???`???g?H?f??Y??ｹｶ?f?D
-				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//???`???g?H?f??Z??ｹｶ?f?D
-					/****************************** ??????C??(2013/8/8) ******************************/
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		//?????w?f??????_??????L?^
-						//cell[x][y][z] = 4; 					//?????_?m?F?p
+			/****************************** 観測面の修正(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // 矩形導波路断面Y領域判断．
+				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//矩形導波路断面Z領域判断．
+					/****************************** 観測面の修正(2013/8/8) ******************************/
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		//活性層断面中央点の時を記録
+						//cell[x][y][z] = 4; 					//中央点確認用
 					}
-					//cell[x][y][z] += OBSERVATION; 		//??m?F?p
+					//cell[x][y][z] += OBSERVATION; 		//面確認用
 				}
 			}
 		}
@@ -1769,42 +1769,42 @@ void observation_func(){
 	if (irank == intExctPortNum){
 		int x;
 		x = intExctLenPart;
-		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//?v???X1??????????Z???????W
+		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//プラス1しているのはセル数の関係
 			for(int z = ex_z_st; z <= ex_z_ed-1; z++){
-				cell[x][y][z] += EXITATION; 		//???U??m?F?p
+				cell[x][y][z] += EXITATION; 		//励振面確認用
 			}
 		}
 	}
 
-	if(irank == intObseOutPortNum){ //?o?? NODE 2
+	if(irank == intObseOutPortNum){ //出射 NODE 2
 		for(int x = intObseLenPart4; x < intObseLenPart5; x++){
-			/****************************** ??????C??(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ???`???g?H?f??Y??ｹｶ?f?D
-				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//???`???g?H?f??Z??ｹｶ?f?D
-					//for(int y = 0; y <= YMAX-1; y++){ //???`???g?H?f??Y??ｹｶ?f?D
-					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//???`???g?H?f??Z??ｹｶ?f?D-1??z????0?J?n?????
-					/****************************** ??????C??(2013/8/8) ******************************/
+			/****************************** 観測面の修正(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // 矩形導波路断面Y領域判断．
+				for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//矩形導波路断面Z領域判断．
+					//for(int y = 0; y <= YMAX-1; y++){ //矩形導波路断面Y領域判断．
+					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//矩形導波路断面Z領域判断．-1は配列が0開始なため
+					/****************************** 観測面の修正(2013/8/8) ******************************/
 
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		// ?????w?f??????_??????L?^
-						//cell[x][y][z] = 4; 					// ?????_?m?F?p
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		// 活性層断面中央点の時を記録
+						//cell[x][y][z] = 4; 					// 中央点確認用
 					}
-					//cell[x][y][z] += OBSERVATION; 			// ??m?F?p
+					//cell[x][y][z] += OBSERVATION; 			// 面確認用
 				}
 			}
 		}
 	}
 
-	if(irank == intObseCenPortNum){ //?o?? NODE 2
+	if(irank == intObseCenPortNum){ //出射 NODE 2
 		int x = intObseLenPart7;
-		/****************************** ??????C??(2013/8/8) ******************************/
-		for(int y = ymax - intObseWid; y < ymax; y++){ // ???`???g?H?f??Y??ｹｶ?f?D
-			for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//???`???g?H?f??Z??ｹｶ?f?D
-				/****************************** ??????C??(2013/8/8) ******************************/
+		/****************************** 観測面の修正(2013/8/8) ******************************/
+		for(int y = ymax - intObseWid; y < ymax; y++){ // 矩形導波路断面Y領域判断．
+			for(int z = zmax_ff - intObseHeig; z < zmax_ff; z++){		//矩形導波路断面Z領域判断．
+				/****************************** 観測面の修正(2013/8/8) ******************************/
 
-				if((y == YMAX-1) && (z == (intSlabCen-1))){		// ?????w?f??????_??????L?^
-					//cell[x][y][z] = 4; 					// ?????_?m?F?p
+				if((y == YMAX-1) && (z == (intSlabCen-1))){		// 活性層断面中央点の時を記録
+					//cell[x][y][z] = 4; 					// 中央点確認用
 				}
-				//cell[x][y][z] += OBSERVATION; 			// ??m?F?p
+				//cell[x][y][z] += OBSERVATION; 			// 面確認用
 			}
 		}
 
@@ -1819,57 +1819,57 @@ void calc_efield(){
 
 	// Ex
 	for(x = 0; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ex??y????????????
+		for(y = 1; y < ymax+1; y++){		// Exはy軸に対して奇関数
 			for(z = 1; z < zmax_ff+1; z++){
-				cnstEx = dt / epsilonx[x][y][z];
-				dex = ( (Hz[x][y][z] - Hz[x][y-1][z]) / dy) - ( (Hy[x][y][z] - Hy[x][y][z-1]) / dz);
-				Ex[x][y][z] = Ex[x][y][z] + cnstEx * dex;
+				cnstEx = dt / epsilonx[x][y][z]; 
+				dex = ( (Hz[x][y][z] - Hz[x][y-1][z]) / dy) - ( (Hy[x][y][z] - Hy[x][y][z-1]) / dz); 
+				Ex[x][y][z] = Ex[x][y][z] + cnstEx * dex; 
 			}
 		}
 	}
 
 	// Ey
-	for(x = 1; x < xmax; x++){
+	for(x = 1; x < xmax; x++){	
 		for(y = 0; y < ymax; y++){
-			for(z = 1; z < zmax_ff+1; z++){
-				cnstEy = dt / epsilony[x][y][z];
-				dey = ( (Hx[x][y][z] - Hx[x][y][z-1]) / dz)-( (Hz[x][y][z] - Hz[x-1][y][z]) / dx);
-				Ey[x][y][z] = Ey[x][y][z] + cnstEy * dey;
+			for(z = 1; z < zmax_ff+1; z++){	
+				cnstEy = dt / epsilony[x][y][z]; 
+				dey = ( (Hx[x][y][z] - Hx[x][y][z-1]) / dz)-( (Hz[x][y][z] - Hz[x-1][y][z]) / dx); 
+				Ey[x][y][z] = Ey[x][y][z] + cnstEy * dey; 
 			}
 		}
 	}
 
-	// Ez
-	for(x = 1; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ez??y????????????
+	// Ez	
+	for(x = 1; x < xmax; x++){	
+		for(y = 1; y < ymax+1; y++){		// Ezはy軸に対して奇関数
 			for(z = 0; z < zmax_ff; z++){
-				cnstEz = dt / epsilonz[x][y][z];
-				dez = ( (Hy[x][y][z] - Hy[x-1][y][z]) / dx) - ( (Hx[x][y][z] - Hx[x][y-1][z]) / dy);
-				Ez[x][y][z] = Ez[x][y][z] + cnstEz * dez;
+				cnstEz = dt / epsilonz[x][y][z]; 
+				dez = ( (Hy[x][y][z] - Hy[x-1][y][z]) / dx) - ( (Hx[x][y][z] - Hx[x][y-1][z]) / dy); 
+				Ez[x][y][z] = Ez[x][y][z] + cnstEz * dez; 
 			}
 		}
 	}
 
 
-	/****************************** ?d?E??????E???? ******************************/
+	/****************************** 電界の対称境界条件 ******************************/
 
-	// ???E???????????d?E????????E?????l??0????????
+	// 境界面で反対称となる電界成分の境界面上の値を0としている
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			Ex[x][ymax][z] = 0.0;		// ?????
+			Ex[x][ymax][z] = 0.0;		// 奇関数
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff; z++){
-			Ez[x][ymax][z] = 0.0;		// ?????
+			Ez[x][ymax][z] = 0.0;		// 奇関数
 		}
 	}
-	/****************************** ?d?E??????E???? ******************************/
+	/****************************** 電界の対称境界条件 ******************************/
 }
 
 
 
-void calc_hfield(){
+void calc_hfield(){	
 
 	double dhx, dhy, dhz;
 
@@ -1877,8 +1877,8 @@ void calc_hfield(){
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax_ff; z++){
-				dhx = ( (Ey[x][y][z+1] - Ey[x][y][z]) / dz) - ( (Ez[x][y+1][z] - Ez[x][y][z]) / dy);
-				Hx[x][y][z] = Hx[x][y][z] + cnstHxyz * dhx;
+				dhx = ( (Ey[x][y][z+1] - Ey[x][y][z]) / dz) - ( (Ez[x][y+1][z] - Ez[x][y][z]) / dy); 
+				Hx[x][y][z] = Hx[x][y][z] + cnstHxyz * dhx; 
 			}
 		}
 	}
@@ -1887,8 +1887,8 @@ void calc_hfield(){
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax_ff; z++){
-				dhy = ( (Ez[x+1][y][z] - Ez[x][y][z]) / dx) - ( (Ex[x][y][z+1] - Ex[x][y][z]) / dz);
-				Hy[x][y][z] = Hy[x][y][z] + cnstHxyz * dhy;
+				dhy = ( (Ez[x+1][y][z] - Ez[x][y][z]) / dx) - ( (Ex[x][y][z+1] - Ex[x][y][z]) / dz); 
+				Hy[x][y][z] = Hy[x][y][z] + cnstHxyz * dhy; 
 			}
 		}
 	}
@@ -1897,20 +1897,20 @@ void calc_hfield(){
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax_ff+1; z++){
-				dhz = ((Ex[x][y+1][z] - Ex[x][y][z]) / dy) - ((Ey[x+1][y][z] - Ey[x][y][z]) / dx);
-				Hz[x][y][z] = Hz[x][y][z] + cnstHxyz * dhz;
+				dhz = ((Ex[x][y+1][z] - Ex[x][y][z]) / dy) - ((Ey[x+1][y][z] - Ey[x][y][z]) / dx); 
+				Hz[x][y][z] = Hz[x][y][z] + cnstHxyz * dhz; 
 			}
 		}
 	}
 }
 
 
-// Mur2???C1????z?????E?????????[???v?Z
+// Mur2次，1次の吸収境界条件から端面の計算
 void absorpt_bound_condition(){
 
-	/****************************** ?????E???? ******************************/
+	/****************************** 対称境界条件 ******************************/			
 
-	// 2?????
+	// 2回対称
 	//for(z = 0; z < zmax+1; z++){
 	//	Exn1y00[xmax][z] = Exn1y00[xmax-1][z];
 	//	Exn1y01[xmax][z] = Exn1y01[xmax-1][z];
@@ -1936,7 +1936,7 @@ void absorpt_bound_condition(){
 	//	Ezn1ym1[xmax+1][z] = -Ezn1ym1[xmax-1][z];
 	//}
 
-	// 4?????
+	// 4回対称
 	for(z = 0; z < zmax_ff+1; z++){
 		Eyn1x00[ymax][z] = Eyn1x00[ymax-1][z];
 		Eyn1x01[ymax][z] = Eyn1x01[ymax-1][z];
@@ -1962,7 +1962,7 @@ void absorpt_bound_condition(){
 		Ezn1xm1[ymax+1][z] = -Ezn1xm1[ymax-1][z];
 	}
 
-	// 8?????
+	// 8回対称
 	for(y = 0; y < ymax+1; y++){
 		Ezn1x00[y][zmax_ff] = -Ezn1x00[y][zmax_ff-1];
 		Ezn1x01[y][zmax_ff] = -Ezn1x01[y][zmax_ff-1];
@@ -1987,12 +1987,12 @@ void absorpt_bound_condition(){
 		Eyn1xm0[y][zmax_ff+1] = Eyn1xm0[y][zmax_ff-1];
 		Eyn1xm1[y][zmax_ff+1] = Eyn1xm1[y][zmax_ff-1];
 	}
-	/****************************** ?????E???? ******************************/
+	/****************************** 対称境界条件 ******************************/			
 
 
 
 
-	/****************************** Mur??2????z?????E????(Ex) ******************************/
+	/****************************** Murの2次の吸収境界条件(Ex) ******************************/			
 
 	double u1ax1, u2ax1,u3ax1, u4ax1;
 	double u1bx1, u2bx1,u3bx1, u4bx1;
@@ -2000,21 +2000,21 @@ void absorpt_bound_condition(){
 
 	double velo_dt;
 
-	if(irank != IRANK_MAX){
+	if(irank != IRANK_MAX){	
 		for(x = 1; x < xmax; x++){
 			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilonx[x][0][z]/epsilon0) ) * dt;
 
-				u1ax1 = (velo_dt - dy) / (velo_dt + dy);
+				u1ax1 = (velo_dt - dy) / (velo_dt + dy); 
 				u2ax1 = (2.0 * dy) / (velo_dt + dy);
 				u3ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dy) );
-				u4ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dy) );
+				u4ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dy) ); 
 
 				Ex[x][0][z] = -Exn2y01[x][z]
 				+u1ax1 * (Ex[x][1][z] + Exn2y00[x][z])
 					+u2ax1 * (Exn1y00[x][z] + Exn1y01[x][z])
 					+u3ax1 * (Exn1y00[x+1][z] - 2.0 * Exn1y00[x][z] + Exn1y00[x-1][z] + Exn1y01[x+1][z] - 2.0 * Exn1y01[x][z] + Exn1y01[x-1][z])
-					+u4ax1 * (Exn1y00[x][z+1] - 2.0 * Exn1y00[x][z] + Exn1y00[x][z-1] + Exn1y01[x][z+1] - 2.0 * Exn1y01[x][z] + Exn1y01[x][z-1]);
+					+u4ax1 * (Exn1y00[x][z+1] - 2.0 * Exn1y00[x][z] + Exn1y00[x][z-1] + Exn1y01[x][z+1] - 2.0 * Exn1y01[x][z] + Exn1y01[x][z-1]); 
 			}
 		}
 		for(x = 1; x < xmax; x++){
@@ -2023,32 +2023,32 @@ void absorpt_bound_condition(){
 
 				u1bx1 = (velo_dt - dz) / (velo_dt + dz);
 				u2bx1 = (2.0 * dz) / (velo_dt + dz);
-				u3bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dz) );
-				u4bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dz) );
+				u3bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dz) ); 
+				u4bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dz) ); 
 
 				Ex[x][y][0] = -Exn2z01[x][y]
 				+u1bx1 * (Ex[x][y][1] + Exn2z00[x][y])
 					+u2bx1 * (Exn1z00[x][y] + Exn1z01[x][y])
 					+u3bx1 * (Exn1z00[x+1][y] - 2.0 * Exn1z00[x][y] + Exn1z00[x-1][y] + Exn1z01[x+1][y] - 2.0*Exn1z01[x][y] + Exn1z01[x-1][y])
-					+u4bx1 * (Exn1z00[x][y+1] - 2.0 * Exn1z00[x][y] + Exn1z00[x][y-1] + Exn1z01[x][y+1] - 2.0*Exn1z01[x][y] + Exn1z01[x][y-1]);
+					+u4bx1 * (Exn1z00[x][y+1] - 2.0 * Exn1z00[x][y] + Exn1z00[x][y-1] + Exn1z01[x][y+1] - 2.0*Exn1z01[x][y] + Exn1z01[x][y-1]); 
 			}
 		}
 	}
-	else{
+	else{	
 		for(x = 1; x < xmax-1; x++){
 			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilonx[x][0][z]/epsilon0) ) * dt;
 
-				u1ax1 = (velo_dt - dy) / (velo_dt + dy);
-				u2ax1 = (2.0 * dy) /(velo_dt + dy);
-				u3ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dy));
-				u4ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dy));
+				u1ax1 = (velo_dt - dy) / (velo_dt + dy); 
+				u2ax1 = (2.0 * dy) /(velo_dt + dy); 
+				u3ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dy)); 			
+				u4ax1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dy)); 
 
 				Ex[x][0][z] = -Exn2y01[x][z]
 				+u1ax1 * (Ex[x][1][z] + Exn2y00[x][z])
 					+u2ax1 * (Exn1y00[x][z] + Exn1y01[x][z])
 					+u3ax1 * (Exn1y00[x+1][z] - 2.0 * Exn1y00[x][z] + Exn1y00[x-1][z] + Exn1y01[x+1][z] - 2.0 * Exn1y01[x][z] + Exn1y01[x-1][z])
-					+u4ax1 * (Exn1y00[x][z+1] - 2.0 * Exn1y00[x][z] + Exn1y00[x][z-1] + Exn1y01[x][z+1] - 2.0 * Exn1y01[x][z] + Exn1y01[x][z-1]);
+					+u4ax1 * (Exn1y00[x][z+1] - 2.0 * Exn1y00[x][z] + Exn1y00[x][z-1] + Exn1y01[x][z+1] - 2.0 * Exn1y01[x][z] + Exn1y01[x][z-1]); 
 			}
 		}
 		for(x = 1; x < xmax-1; x++){
@@ -2057,37 +2057,37 @@ void absorpt_bound_condition(){
 
 				u1bx1 = (velo_dt - dz) / (velo_dt + dz);
 				u2bx1 = (2.0 * dz) / (velo_dt + dz);
-				u3bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dz) );
-				u4bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dz) );
+				u3bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dz) ); 
+				u4bx1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dz) ); 
 
 				Ex[x][y][0] = -Exn2z01[x][y]
 				+u1bx1 * (Ex[x][y][1] + Exn2z00[x][y])
 					+u2bx1 * (Exn1z00[x][y] + Exn1z01[x][y])
 					+u3bx1 * (Exn1z00[x+1][y] - 2.0 * Exn1z00[x][y] + Exn1z00[x-1][y] + Exn1z01[x+1][y] - 2.0 * Exn1z01[x][y] + Exn1z01[x-1][y])
-					+u4bx1 * (Exn1z00[x][y+1] - 2.0 * Exn1z00[x][y] + Exn1z00[x][y-1] + Exn1z01[x][y+1] - 2.0 * Exn1z01[x][y] + Exn1z01[x][y-1]);
+					+u4bx1 * (Exn1z00[x][y+1] - 2.0 * Exn1z00[x][y] + Exn1z00[x][y-1] + Exn1z01[x][y+1] - 2.0 * Exn1z01[x][y] + Exn1z01[x][y-1]); 
 			}
 		}
 	}
 
-	/****************************** Mur??2????z?????E????(Ex) ******************************/
+	/****************************** Murの2次の吸収境界条件(Ex) ******************************/			
 
 	double u1xa, u1xc;
 	double u2xa, u2xc;
 
-	/****************************** Mur??1????z?????E????(Ex) ******************************/
+	/****************************** Murの1次の吸収境界条件(Ex) ******************************/			
 
 	for(y = 1; y < ymax+1; y++){
 
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilonx[0][y][0]/epsilon0) ) * dt;
-			u2xa = (velo_dt - dz) / (velo_dt + dz);
+			u2xa = (velo_dt - dz) / (velo_dt + dz); 
 
-			Ex[0][y][0] = Exn1z01[0][y] + u2xa * (Ex[0][y][1] - Exn1z00[0][y]);
+			Ex[0][y][0] = Exn1z01[0][y] + u2xa * (Ex[0][y][1] - Exn1z00[0][y]); 
 		}
 
 		if(irank == IRANK_MAX){
 			velo_dt = (C0 / sqrt(epsilonx[xmax-1][y][0]/epsilon0) ) * dt;
-			u2xc = (velo_dt - dz) / (velo_dt + dz);
+			u2xc = (velo_dt - dz) / (velo_dt + dz); 
 
 			Ex[xmax-1][y][0] = Exn1z01[xmax-1][y] + u2xc * (Ex[xmax-1][y][1] - Exn1z00[xmax-1][y]);
 		}
@@ -2097,21 +2097,21 @@ void absorpt_bound_condition(){
 
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilonx[0][0][z]/epsilon0) ) * dt;
-			u1xa = (velo_dt - dy) / (velo_dt + dy);
+			u1xa = (velo_dt - dy) / (velo_dt + dy); 
 
-			Ex[0][0][z] = Exn1y01[0][z] + u1xa * (Ex[0][1][z] - Exn1y00[0][z]);
+			Ex[0][0][z] = Exn1y01[0][z] + u1xa * (Ex[0][1][z] - Exn1y00[0][z]); 
 		}
 
 		if(irank == IRANK_MAX){
 			velo_dt = (C0 / sqrt(epsilonx[xmax-1][0][z]/epsilon0) ) * dt;
 			u1xc = (velo_dt - dy) / (velo_dt + dy);
 
-			Ex[xmax-1][0][z] = Exn1y01[xmax-1][z] + u1xc * (Ex[xmax-1][1][z] - Exn1y00[xmax-1][z]);
+			Ex[xmax-1][0][z] = Exn1y01[xmax-1][z] + u1xc * (Ex[xmax-1][1][z] - Exn1y00[xmax-1][z]); 
 		}
 	}
 
 
-	// ??(Mur??1????z?????E????) -- y?????z???????ｧ?????Z?o???????l?????l??????
+	// 辺(Murの1次の吸収境界条件) -- y平面とz平面からそれぞれ算出される値の平均値を取る
 	if (irank != IRANK_MIN){
 		for(x = 0; x < xmax; x++){
 			velo_dt = (C0 / sqrt(epsilonx[x][0][0]/epsilon0) ) * dt;
@@ -2133,28 +2133,28 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur??1????z?????E????(Ex) ******************************/
+	/****************************** Murの1次の吸収境界条件(Ex) ******************************/
 
 	double u1by1, u2by1, u3by1, u4by1;
 	double u1cy1, u2cy1, u3cy1, u4cy1;
 	double u1cy2, u2cy2, u3cy2, u4cy2;
 
-	/****************************** Mur??2????z?????E????(Ey) ******************************/
+	/****************************** Murの2次の吸収境界条件(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(y = 1; y < ymax; y++){
 			velo_dt = (C0 / sqrt(epsilony[x][y][0]/epsilon0) ) * dt;
 
-			u1by1 = (velo_dt - dz) / (velo_dt + dz);
-			u2by1 = (2.0 * dz) / (velo_dt + dz);
-			u3by1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dz) );
-			u4by1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dz) );
+			u1by1 = (velo_dt - dz) / (velo_dt + dz); 
+			u2by1 = (2.0 * dz) / (velo_dt + dz); 
+			u3by1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dz) ); 
+			u4by1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dz) ); 
 
 			Ey[x][y][0] = -Eyn2z01[x][y]
 			+ u1by1 * (Ey[x][y][1] + Eyn2z00[x][y])
 				+ u2by1 * (Eyn1z00[x][y] + Eyn1z01[x][y])
 				+ u3by1 * (Eyn1z00[x+1][y] - 2.0 * Eyn1z00[x][y] + Eyn1z00[x-1][y] + Eyn1z01[x+1][y] - 2.0 * Eyn1z01[x][y] + Eyn1z01[x-1][y])
-				+ u4by1 * (Eyn1z00[x][y+1] - 2.0 * Eyn1z00[x][y] + Eyn1z00[x][y-1] + Eyn1z01[x][y+1] - 2.0 * Eyn1z01[x][y] + Eyn1z01[x][y-1]);
+				+ u4by1 * (Eyn1z00[x][y+1] - 2.0 * Eyn1z00[x][y] + Eyn1z00[x][y-1] + Eyn1z01[x][y+1] - 2.0 * Eyn1z01[x][y] + Eyn1z01[x][y-1]); 
 		}
 	}
 	if(irank == IRANK_MIN){
@@ -2162,59 +2162,59 @@ void absorpt_bound_condition(){
 			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilony[0][y][z]/epsilon0) ) * dt;
 
-				u1cy1 = (velo_dt - dx) / (velo_dt + dx);
-				u2cy1 = (2.0 * dx) / (velo_dt + dx);
-				u3cy1 = (dx * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) );
-				u4cy1 = (dx * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) );
+				u1cy1 = (velo_dt - dx) / (velo_dt + dx); 
+				u2cy1 = (2.0 * dx) / (velo_dt + dx); 
+				u3cy1 = (dx * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) ); 
+				u4cy1 = (dx * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) ); 
 
 				Ey[0][y][z] = -Eyn2x01[y][z]
 				+u1cy1 * (Ey[1][y][z] + Eyn2x00[y][z])
 					+u2cy1 * (Eyn1x00[y][z] + Eyn1x01[y][z])
 					+u3cy1 * (Eyn1x00[y+1][z] - 2.0 * Eyn1x00[y][z] + Eyn1x00[y-1][z] + Eyn1x01[y+1][z] - 2.0 * Eyn1x01[y][z] + Eyn1x01[y-1][z])
-					+u4cy1 * (Eyn1x00[y][z+1] - 2.0 * Eyn1x00[y][z] + Eyn1x00[y][z-1] + Eyn1x01[y][z+1] - 2.0 * Eyn1x01[y][z] + Eyn1x01[y][z-1]);
+					+u4cy1 * (Eyn1x00[y][z+1] - 2.0 * Eyn1x00[y][z] + Eyn1x00[y][z-1] + Eyn1x01[y][z+1] - 2.0 * Eyn1x01[y][z] + Eyn1x01[y][z-1]); 
 			}
 		}
-	}
+	}			
 	if(irank == IRANK_MAX){
 		for(y = 1; y < ymax; y++){
 			for(z = 1; z < zmax_ff+1; z++){
 				velo_dt = (C0 / sqrt(epsilony[xmax][y][z]/epsilon0) ) * dt;
 
-				u1cy2 = (velo_dt - dx) / (velo_dt + dx);
-				u2cy2 = (2.0 * dx) / (velo_dt + dx);
-				u3cy2 = (dx * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) );
-				u4cy2 = (dx * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) );
+				u1cy2 = (velo_dt - dx) / (velo_dt + dx); 
+				u2cy2 = (2.0 * dx) / (velo_dt + dx); 
+				u3cy2 = (dx * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) ); 
+				u4cy2 = (dx * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) ); 
 
 				Ey[xmax][y][z] =  -Eyn2xm1[y][z]
 				+ u1cy2 * (Ey[xmax-1][y][z] + Eyn2xm0[y][z])
 					+ u2cy2 * (Eyn1xm0[y][z] + Eyn1xm1[y][z])
 					+ u3cy2 * (Eyn1xm0[y+1][z] - 2.0 * Eyn1xm0[y][z] + Eyn1xm0[y-1][z] + Eyn1xm1[y+1][z] - 2.0 * Eyn1xm1[y][z] + Eyn1xm1[y-1][z])
-					+ u4cy2 * (Eyn1xm0[y][z+1] - 2.0 * Eyn1xm0[y][z] + Eyn1xm0[y][z-1] + Eyn1xm1[y][z+1] - 2.0 * Eyn1xm1[y][z] + Eyn1xm1[y][z-1]);
+					+ u4cy2 * (Eyn1xm0[y][z+1] - 2.0 * Eyn1xm0[y][z] + Eyn1xm0[y][z-1] + Eyn1xm1[y][z+1] - 2.0 * Eyn1xm1[y][z] + Eyn1xm1[y][z-1]); 
 			}
 		}
 	}
 
-	/****************************** Mur??2????z?????E????(Ey) ******************************/
+	/****************************** Murの2次の吸収境界条件(Ey) ******************************/
 
 
 	double u2ya, u3ya, u3yb;
 	double u2ya1;
 	double u2yc1;
 
-	/****************************** Mur??1????z?????E????(Ey) ******************************/
+	/****************************** Murの1次の吸収境界条件(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilony[x][0][0]/epsilon0) ) * dt;
-		u2ya = (velo_dt - dz) / (velo_dt + dz);
-		Ey[x][0][0] = Eyn1z01[x][0] + u2ya * (Ey[x][0][1] - Eyn1z00[x][0]);
+		u2ya = (velo_dt - dz) / (velo_dt + dz); 
+		Ey[x][0][0] = Eyn1z01[x][0] + u2ya * (Ey[x][0][1] - Eyn1z00[x][0]); 
 	}
 
 	for(z = 1; z < zmax_ff+1; z++){
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilony[0][0][z]/epsilon0) ) * dt;
 
-			u3ya = (velo_dt - dx) / (velo_dt + dx);
-			Ey[0][0][z] = Eyn1x01[0][z] + u3ya * (Ey[1][0][z] - Eyn1x00[0][z]);
+			u3ya = (velo_dt - dx) / (velo_dt + dx); 
+			Ey[0][0][z] = Eyn1x01[0][z] + u3ya * (Ey[1][0][z] - Eyn1x00[0][z]); 
 		}
 		if(irank == IRANK_MAX){
 			velo_dt = (C0 / sqrt(epsilony[xmax][0][0]/epsilon0) ) * dt;
@@ -2224,15 +2224,15 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// ??(Mur??1????z?????E????) --x?????z???????ｧ?????Z?o???????l?????l??????
+	// 辺(Murの1次の吸収境界条件) --x平面とz平面からそれぞれ算出される値の平均値を取る
 	for(y = 0; y < ymax; y++){
 
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilonx[0][y][0]/epsilon0) ) * dt;
 
-			u2ya1 = (velo_dt - dz) / (velo_dt + dz);
+			u2ya1 = (velo_dt - dz) / (velo_dt + dz); 
 			Ey[0][y][0] = 0.5 * (Eyn1z01[0][y] + u2ya1 * (Ey[0][y][1] - Eyn1z00[0][y])
-				+ Eyn1x01[y][0] + u2ya1 * (Ey[1][y][0] - Eyn1x00[y][0]));
+				+ Eyn1x01[y][0] + u2ya1 * (Ey[1][y][0] - Eyn1x00[y][0])); 
 		}
 		if(irank == IRANK_MAX){
 			velo_dt = (C0 / sqrt(epsilony[xmax][y][0]/epsilon0) ) * dt;
@@ -2242,28 +2242,28 @@ void absorpt_bound_condition(){
 				+ Eyn1xm1[y][0] + u2yc1 * (Ey[xmax-1][y][0] - Eyn1xm0[y][0]));
 		}
 	}
-	/****************************** Mur??1????z?????E????(Ey) ******************************/
+	/****************************** Murの1次の吸収境界条件(Ey) ******************************/
 
 	double u1az1, u2az1, u3az1, u4az1;
 	double u1cz1, u2cz1, u3cz1, u4cz1;
 	double u1cz2, u2cz2, u3cz2, u4cz2;
 
-	/****************************** Mur??2????z?????E????(Ez) ******************************/
+	/****************************** Murの2次の吸収境界条件(Ez) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(z = 1; z < zmax_ff; z++){
 			velo_dt = (C0 / sqrt(epsilonz[x][0][z] / epsilon0) ) * dt;
 
-			u1az1 = (velo_dt - dy) / (velo_dt + dy);
-			u2az1 = (2.0 * dy) / (velo_dt + dy);
-			u3az1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dy) );
-			u4az1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dy) );
+			u1az1 = (velo_dt - dy) / (velo_dt + dy); 
+			u2az1 = (2.0 * dy) / (velo_dt + dy); 
+			u3az1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dx) * (velo_dt + dy) ); 
+			u4az1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dy) ); 
 
 			Ez[x][0][z] = -Ezn2y01[x][z]
 			+ u1az1 * (Ez[x][1][z] + Ezn2y00[x][z])
 				+ u2az1 * (Ezn1y00[x][z] + Ezn1y01[x][z])
 				+ u3az1 * (Ezn1y00[x+1][z] - 2.0 * Ezn1y00[x][z] + Ezn1y00[x-1][z] + Ezn1y01[x+1][z] - 2.0 * Ezn1y01[x][z] + Ezn1y01[x-1][z])
-				+ u4az1 * (Ezn1y00[x][z+1] - 2.0 * Ezn1y00[x][z] + Ezn1y00[x][z-1] + Ezn1y01[x][z+1] - 2.0 * Ezn1y01[x][z] + Ezn1y01[x][z-1]);
+				+ u4az1 * (Ezn1y00[x][z+1] - 2.0 * Ezn1y00[x][z] + Ezn1y00[x][z-1] + Ezn1y01[x][z+1] - 2.0 * Ezn1y01[x][z] + Ezn1y01[x][z-1]); 
 		}
 	}
 
@@ -2272,10 +2272,10 @@ void absorpt_bound_condition(){
 			if(irank == IRANK_MIN){
 				velo_dt = (C0 / sqrt(epsilonz[0][y][z] / epsilon0) ) * dt;
 
-				u1cz1 = (velo_dt - dx) / (velo_dt + dx);
-				u2cz1 = (2.0 * dx) / (velo_dt + dx);
-				u3cz1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) );
-				u4cz1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) );
+				u1cz1 = (velo_dt - dx) / (velo_dt + dx); 
+				u2cz1 = (2.0 * dx) / (velo_dt + dx); 
+				u3cz1 = (dy * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) ); 
+				u4cz1 = (dz * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) ); 
 
 				Ez[0][y][z] = -Ezn2x01[y][z]
 				+ u1cz1 * (Ezn2x00[y][z] + Ez[1][y][z])
@@ -2286,50 +2286,50 @@ void absorpt_bound_condition(){
 			if(irank == IRANK_MAX){
 				velo_dt = (C0 / sqrt(epsilonz[xmax][y][z] / epsilon0) ) * dt;
 
-				u1cz2 = (velo_dt - dx) / (velo_dt + dx);
-				u2cz2 = (2.0 * dx) / (velo_dt + dx);
-				u3cz2 = (dy * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) );
-				u4cz2 = (dz * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) );
+				u1cz2 = (velo_dt - dx) / (velo_dt + dx); 
+				u2cz2 = (2.0 * dx) / (velo_dt + dx); 
+				u3cz2 = (dy * SQ (velo_dt)) / (2.0 * SQ(dy) * (velo_dt + dx) ); 
+				u4cz2 = (dz * SQ (velo_dt)) / (2.0 * SQ(dz) * (velo_dt + dx) ); 
 
 				Ez[xmax][y][z] = -Ezn2xm1[y][z]
 				+ u1cz2 * (Ezn2xm0[y][z] + Ez[xmax-1][y][z])
 					+ u2cz2 * (Ezn1xm1[y][z] + Ezn1xm0[y][z])
 					+ u3cz2 * (Ezn1xm1[y+1][z] - 2.0 * Ezn1xm1[y][z] + Ezn1xm1[y-1][z] + Ezn1xm0[y+1][z] - 2.0 * Ezn1xm0[y][z] + Ezn1xm0[y-1][z])
-					+ u4cz2 * (Ezn1xm1[y][z+1] - 2.0 * Ezn1xm1[y][z] + Ezn1xm1[y][z-1] + Ezn1xm0[y][z+1] - 2.0 * Ezn1xm0[y][z] + Ezn1xm0[y][z-1]);
+					+ u4cz2 * (Ezn1xm1[y][z+1] - 2.0 * Ezn1xm1[y][z] + Ezn1xm1[y][z-1] + Ezn1xm0[y][z+1] - 2.0 * Ezn1xm0[y][z] + Ezn1xm0[y][z-1]); 
 			}
 		}
 	}
 
-	/****************************** Mur??2????z?????E????(Ez) ******************************/
+	/****************************** Murの2次の吸収境界条件(Ez) ******************************/
 
 	double u1za, u3za, u3zb;
 	double u1za1, u1zb1;
 
-	/****************************** Mur??1????z?????E????(Ez) ******************************/
+	/****************************** Murの1次の吸収境界条件(Ez) ******************************/
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilonz[x][0][0] / epsilon0) ) * dt;
-		u1za = (velo_dt - dy) / (velo_dt + dy);
+		u1za = (velo_dt - dy) / (velo_dt + dy); 
 
-		Ez[x][0][0] = Ezn1y01[x][0] + u1za * (Ez[x][1][0] - Ezn1y00[x][0]);
+		Ez[x][0][0] = Ezn1y01[x][0] + u1za * (Ez[x][1][0] - Ezn1y00[x][0]); 
 	}
 
 	for(y = 1; y < ymax+1; y++){
 
 		if(irank == IRANK_MIN){
 			velo_dt = (C0 / sqrt(epsilonz[0][y][0] / epsilon0) ) * dt;
-			u3za = (velo_dt - dx) / (velo_dt + dx);
+			u3za = (velo_dt - dx) / (velo_dt + dx); 
 
-			Ez[0][y][0] = Ezn1x01[y][0] + u3za * (Ez[1][y][0] - Ezn1x00[y][0]);
+			Ez[0][y][0] = Ezn1x01[y][0] + u3za * (Ez[1][y][0] - Ezn1x00[y][0]); 
 		}
 		if(irank == IRANK_MAX){
 			velo_dt = (C0 / sqrt(epsilonz[xmax][y][0] / epsilon0) ) * dt;
 			u3zb = (velo_dt - dx) / (velo_dt + dx);
 
-			Ez[xmax][y][0] = Ezn1xm1[y][0] + u3zb * (Ez[xmax-1][y][0] - Ezn1xm0[y][0]);
+			Ez[xmax][y][0] = Ezn1xm1[y][0] + u3zb * (Ez[xmax-1][y][0] - Ezn1xm0[y][0]); 
 		}
 	}
 
-	// ??(Mur??1????z?????E????) --x?????y???????ｧ?????Z?o???????l?????l??????
+	// 辺(Murの1次の吸収境界条件) --x平面とy平面からそれぞれ算出される値の平均値を取る
 	for(z = 0; z < zmax_ff+1; z++){
 
 		if(irank == IRANK_MIN){
@@ -2337,69 +2337,69 @@ void absorpt_bound_condition(){
 			u1za1 = (velo_dt - dy) / (velo_dt + dy);
 
 			Ez[0][0][z] = 0.5 * (Ezn1y01[0][z] + u1za1 * (Ez[0][1][z] - Ezn1y00[0][z])
-				+ Ezn1x01[0][z] + u1za1 * (Ez[1][0][z] - Ezn1x00[0][z]) );
+				+ Ezn1x01[0][z] + u1za1 * (Ez[1][0][z] - Ezn1x00[0][z]) ); 
 		}
 		if(irank == IRANK_MAX){
 			velo_dt = (C0 / sqrt(epsilonz[xmax][0][z] / epsilon0) ) * dt;
-			u1zb1 = (velo_dt - dy) / (velo_dt + dy);
+			u1zb1 = (velo_dt - dy) / (velo_dt + dy); 
 
 			Ez[xmax][0][z] = 0.5 * (Ezn1y01[xmax][z] + u1zb1 * (Ez[xmax][1][z] - Ezn1y00[xmax][z])
-				+ Ezn1xm1[0][z] + u1zb1 * (Ez[xmax-1][0][z] - Ezn1xm0[0][z]));
+				+ Ezn1xm1[0][z] + u1zb1 * (Ez[xmax-1][0][z] - Ezn1xm0[0][z])); 
 		}
 	}
-	/****************************** Mur??1????z?????E????(Ez) ******************************/
+	/****************************** Murの1次の吸収境界条件(Ez) ******************************/
 
 }
 
 
 
-/*?d?E????*/
+/*電界の保存*/
 void saving_electric_field(){
 
 	// Ex
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff+1; z++){
-			Exn2y00[x][z] = Exn1y00[x][z];
-			Exn1y00[x][z] = Ex[x][0][z];
-			Exn2y01[x][z] = Exn1y01[x][z];
-			Exn1y01[x][z] = Ex[x][1][z];
-			//exn2ym1[x][z] = exn1ym1[x][z];
-			//exn1ym1[x][z] = Ex[x][ymax-1][z];
-			//exn2ym0[x][z] = exn1ym0[x][z];
-			//exn1ym0[x][z] = Ex[x][ymax][z];
+			Exn2y00[x][z] = Exn1y00[x][z]; 
+			Exn1y00[x][z] = Ex[x][0][z]; 
+			Exn2y01[x][z] = Exn1y01[x][z]; 
+			Exn1y01[x][z] = Ex[x][1][z]; 
+			//exn2ym1[x][z] = exn1ym1[x][z]; 
+			//exn1ym1[x][z] = Ex[x][ymax-1][z]; 
+			//exn2ym0[x][z] = exn1ym0[x][z]; 
+			//exn1ym0[x][z] = Ex[x][ymax][z]; 
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
-			Exn2z00[x][y] = Exn1z00[x][y];
-			Exn1z00[x][y] = Ex[x][y][0];
-			Exn2z01[x][y] = Exn1z01[x][y];
-			Exn1z01[x][y] = Ex[x][y][1];
+			Exn2z00[x][y] = Exn1z00[x][y]; 
+			Exn1z00[x][y] = Ex[x][y][0]; 
+			Exn2z01[x][y] = Exn1z01[x][y]; 
+			Exn1z01[x][y] = Ex[x][y][1];  
 		}
 	}
 
 	// Ey
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			Eyn2z00[x][y] = Eyn1z00[x][y];
-			Eyn1z00[x][y] = Ey[x][y][0];
-			Eyn2z01[x][y] = Eyn1z01[x][y];
-			Eyn1z01[x][y] = Ey[x][y][1];
+			Eyn2z00[x][y] = Eyn1z00[x][y]; 
+			Eyn1z00[x][y] = Ey[x][y][0]; 
+			Eyn2z01[x][y] = Eyn1z01[x][y]; 
+			Eyn1z01[x][y] = Ey[x][y][1]; 
 		}
 	}
 	for(y = 0; y < ymax; y++){
 		for(z = 0; z < zmax_ff+1; z++){
 			if(irank == IRANK_MIN){
-				Eyn2x00[y][z] = Eyn1x00[y][z];
-				Eyn1x00[y][z] = Ey[0][y][z];
-				Eyn2x01[y][z] = Eyn1x01[y][z];
-				Eyn1x01[y][z] = Ey[1][y][z];
+				Eyn2x00[y][z] = Eyn1x00[y][z]; 
+				Eyn1x00[y][z] = Ey[0][y][z]; 
+				Eyn2x01[y][z] = Eyn1x01[y][z]; 
+				Eyn1x01[y][z] = Ey[1][y][z]; 
 			}
 			if(irank == IRANK_MAX){
-				Eyn2xm1[y][z] = Eyn1xm1[y][z];
-				Eyn1xm1[y][z] = Ey[xmax-1][y][z];
-				Eyn2xm0[y][z] = Eyn1xm0[y][z];
-				Eyn1xm0[y][z] = Ey[xmax][y][z];
+				Eyn2xm1[y][z] = Eyn1xm1[y][z]; 
+				Eyn1xm1[y][z] = Ey[xmax-1][y][z]; 
+				Eyn2xm0[y][z] = Eyn1xm0[y][z]; 
+				Eyn1xm0[y][z] = Ey[xmax][y][z]; 
 			}
 		}
 	}
@@ -2407,79 +2407,79 @@ void saving_electric_field(){
 	//Ez
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax_ff; z++){
-			Ezn2y00[x][z] = Ezn1y00[x][z];
-			Ezn1y00[x][z] = Ez[x][0][z];
-			Ezn2y01[x][z] = Ezn1y01[x][z];
-			Ezn1y01[x][z] = Ez[x][1][z];
+			Ezn2y00[x][z] = Ezn1y00[x][z]; 
+			Ezn1y00[x][z] = Ez[x][0][z]; 
+			Ezn2y01[x][z] = Ezn1y01[x][z]; 
+			Ezn1y01[x][z] = Ez[x][1][z]; 
 		}
 	}
 	for(y = 0; y < ymax+1; y++){
 		for(z = 0; z < zmax_ff; z++){
 			if(irank == IRANK_MIN){
-				Ezn2x00[y][z] = Ezn1x00[y][z];
-				Ezn1x00[y][z] = Ez[0][y][z];
-				Ezn2x01[y][z] = Ezn1x01[y][z];
-				Ezn1x01[y][z] = Ez[1][y][z];
+				Ezn2x00[y][z] = Ezn1x00[y][z]; 
+				Ezn1x00[y][z] = Ez[0][y][z]; 
+				Ezn2x01[y][z] = Ezn1x01[y][z]; 
+				Ezn1x01[y][z] = Ez[1][y][z]; 
 			}
 			if(irank == IRANK_MAX){
-				Ezn2xm1[y][z] = Ezn1xm1[y][z];
-				Ezn1xm1[y][z] = Ez[xmax-1][y][z];
-				Ezn2xm0[y][z] = Ezn1xm0[y][z];
-				Ezn1xm0[y][z] = Ez[xmax][y][z];
+				Ezn2xm1[y][z] = Ezn1xm1[y][z]; 
+				Ezn1xm1[y][z] = Ez[xmax-1][y][z]; 
+				Ezn2xm0[y][z] = Ezn1xm0[y][z]; 
+				Ezn1xm0[y][z] = Ez[xmax][y][z]; 
 			}
 		}
 	}
 }
 
 
-//???f????o??
+//モデルの出力
 void output_model(){
 
-	int tag2 = 2;
+	int tag2 = 2; 
 	int x, y, z;
 
 #if _FDTD
-	/****************************** ?v?Z???s?? ******************************/
-	int node;
+	/****************************** 計算実行時 ******************************/
+	int node; 
 
-	MPI_Status status;
+	MPI_Status status; 
 
 	z = intSlabCen - 1;
 
-	// XY????
+	// XY平面
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			cell_xy[x][y] = cell[x][y][z];
+			cell_xy[x][y] = cell[x][y][z]; 
 		}
 	}
 
 	if(irank == IRANK_MIN){
 		for(x = 0; x < xmax; x++){
 			for(y = 0; y < ymax; y++){
-				fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
-				fprintf(model_xy, "%d\t", cell_xy[x][y]);
+				fprintf(allmodel_xy, "%d\t", cell_xy[x][y]); 
+				fprintf(model_xy, "%d\t", cell_xy[x][y]); 
 			}
-			fprintf(allmodel_xy, "\n");
-			fprintf(model_xy, "\n");
+			fprintf(allmodel_xy, "\n"); 
+			fprintf(model_xy, "\n"); 
 		}
 		fclose(model_xy);
 	}
-
-	// XZ????
+	
+	// XZ平面
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff; z++){
-			cell_xz[x][z] = cell[x][y][z];
+			cell_xz[x][z] = cell[x][y][z]; 
 		}
 	}
 
 	if(irank == IRANK_MIN){
 		for(x = 0; x < xmax; x++){
 			for(z = 0; z < zmax_ff; z++){
-				fprintf(allmodel_xz, "%d\t", cell_xz[x][z]);
-				fprintf(model_xz, "%d\t", cell_xz[x][z]);
+				fprintf(allmodel_xz, "%d\t", cell_xz[x][z]); 
+				fprintf(model_xz, "%d\t", cell_xz[x][z]); 
 			}
-			fprintf(allmodel_xz, "\n");
-			fprintf(model_xz, "\n");
+			fprintf(allmodel_xz, "\n"); 
+			fprintf(model_xz, "\n"); 
 		}
 		fclose(model_xz);
 	}
@@ -2487,67 +2487,67 @@ void output_model(){
 
 
 
-	// ??????????????f??
+	// それぞれ分割部のモデル
 	if(irank != IRANK_MIN){
-		MPI_Send(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, 0, tag2, MPI_COMM_WORLD);
+		MPI_Send(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, 0, tag2, MPI_COMM_WORLD); 
 		for(x = 1; x < xmax; x++){
 			for(y = 0; y < ymax; y++){
-				fprintf(model_xy, "%d\t", cell_xy[x][y]);
+				fprintf(model_xy, "%d\t", cell_xy[x][y]); 
 			}
-			fprintf(model_xy, "\n");
+			fprintf(model_xy, "\n"); 
 		}
-		fclose(model_xy);
+		fclose(model_xy); 
 	}
 
 	if(irank != IRANK_MIN){
-		MPI_Send(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, 0, tag2, MPI_COMM_WORLD);
+		MPI_Send(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, 0, tag2, MPI_COMM_WORLD); 
 		for(x = 1; x < xmax; x++){
 			for(z = 0; z < zmax_ff; z++){
-				fprintf(model_xz, "%d\t", cell_xz[x][z]);
+				fprintf(model_xz, "%d\t", cell_xz[x][z]); 
 			}
-			fprintf(model_xz, "\n");
+			fprintf(model_xz, "\n"); 
 		}
-		fclose(model_xz);
+		fclose(model_xz); 
 	}
 
-	// ?S????f??????
+	// 全体モデル生成
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
 			if(node == IRANK_MAX){
 
-				// ??I?i??"?????"?????????Cx??????-1????
-				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
-				MPI_Recv(&cell_xz[0][0], (xmax-1)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
-
+				// 最終段は"のりしろ"が無いので，x方向を-1する
+				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status); 
 				for(x = 1; x < xmax-1; x++){
 					for(y = 0; y < ymax; y++){
-						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
+						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]); 
 					}
-					fprintf(allmodel_xy, "\n");
+					fprintf(allmodel_xy, "\n"); 
 				}
+
+				MPI_Recv(&cell_xz[0][0], (xmax-1)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 				for(x = 1; x < xmax-1; x++){
 					for(z = 0; z < zmax_ff; z++){
-						fprintf(allmodel_xz, "%d\t", cell_xz[x][z]);
+						fprintf(allmodel_xz, "%d\t", cell_xz[x][z]); 
 					}
-					fprintf(allmodel_xz, "\n");
+					fprintf(allmodel_xz, "\n"); 
 				}
 			}
 			else{
 
-				MPI_Recv(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
-				MPI_Recv(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
-
+				MPI_Recv(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status); 
 				for(x = 1; x < xmax; x++){
 					for(y = 0; y < ymax; y++){
-						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
+						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]); 
 					}
-					fprintf(allmodel_xy, "\n");
+					fprintf(allmodel_xy, "\n"); 
 				}
+
+				MPI_Recv(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status); 
 				for(x = 1; x < xmax; x++){
 					for(z = 0; z < zmax_ff; z++){
-						fprintf(allmodel_xz, "%d\t", cell_xz[x][z]);
+						fprintf(allmodel_xz, "%d\t", cell_xz[x][z]); 
 					}
-					fprintf(allmodel_xz, "\n");
+					fprintf(allmodel_xz, "\n"); 
 				}
 			}
 		}
@@ -2557,72 +2557,72 @@ void output_model(){
 
 
 
-	/****************************** ?v?Z???s?? ******************************/
+	/****************************** 計算実行時 ******************************/
 
-#else
-	/****************************** ???f???m?F?? ******************************/
+#else	
+	/****************************** モデル確認時 ******************************/
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			cell_xy[x][y] = cell[x][y][intSlabCen-1];
+			cell_xy[x][y] = cell[x][y][intSlabCen-1]; 
 		}
 	}
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
-			fprintf(model_xy, "%d\t", cell_xy[x][y]);
+			fprintf(allmodel_xy, "%d\t", cell_xy[x][y]); 
+			fprintf(model_xy, "%d\t", cell_xy[x][y]); 
 		}
-		fprintf(allmodel_xy, "\n");
-		fprintf(model_xy, "\n");
+		fprintf(allmodel_xy, "\n"); 
+		fprintf(model_xy, "\n"); 
 	}
-	fclose(model_xy);
+	fclose(model_xy); 
 
 	x = intObseLenPart1;
 	for(y = 0; y < ymax; y++){
 		for(z = 0; z < zmax; z++){
-			cell_yz[y][z] = cell[x][y][z];
+			cell_yz[y][z] = cell[x][y][z]; 
 		}
 	}
 	for(y = 0; y < ymax; y++){
 		for(z = 0; z < zmax; z++){
-			fprintf(allmodel_yz1, "%d\t", cell_yz[y][z]);
+			fprintf(allmodel_yz1, "%d\t", cell_yz[y][z]); 
 		}
-		fprintf(allmodel_yz1, "\n");
+		fprintf(allmodel_yz1, "\n");  
 	}
 	fclose(allmodel_yz1);
 
-	if(irank == intObseOutPortNum){ // ?o??
+	if(irank == intObseOutPortNum){ // 出射
 		x = intObseLenPart4;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
-				cell_yz[y][z] = cell[x][y][z];
+				cell_yz[y][z] = cell[x][y][z]; 
 			}
 		}
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
-				fprintf(allmodel_yz4, "%d\t", cell_yz[y][z]);
+				fprintf(allmodel_yz4, "%d\t", cell_yz[y][z]); 
 			}
-			fprintf(allmodel_yz4, "\n");
+			fprintf(allmodel_yz4, "\n");  
 		}
 		fclose(allmodel_yz4);
 	}
 
-	if(irank == intObseCenPortNum){			// ????
+	if(irank == intObseCenPortNum){			// 中央
 		x = intObseLenPart7;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
-				cell_yz[y][z] = cell[x][y][z];
+				cell_yz[y][z] = cell[x][y][z]; 
 			}
 		}
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
-				fprintf(allmodel_yz7, "%d\t", cell_yz[y][z]);
+				fprintf(allmodel_yz7, "%d\t", cell_yz[y][z]); 
 			}
-			fprintf(allmodel_yz7, "\n");
+			fprintf(allmodel_yz7, "\n");  
 		}
 		fclose(allmodel_yz7);
 	}
-	/****************************** ???f???m?F?? ******************************/
+	/****************************** モデル確認時 ******************************/
 #endif
 
 }
@@ -2630,141 +2630,173 @@ void output_model(){
 
 void output_field_write(char *dir_name_def){
 
-	char fname[40], dir_name[50]; 	//?t?@?C?????i?[???
-	int node;
-	int tag3 = 3;
-	int pi1, pj1, pk1;
-	MPI_Status status;
+	char fname1[40], fname2[40], dir_name[50]; 	//ファイル名格納変数	
+	int node; 
+	int tag3 = 3; 
+	int pi1, pj1, pk1; 
+	MPI_Status status; 
 	FILE *HZ1, *HZ1_NODE;
 	FILE *HZ2, *HZ2_NODE;
-	//FILE *HZ1, *HZ2;
+	//FILE *HZ1, *HZ2; 
 
-	pi1 = x_cen;
-	pj1 = y_cen;
-	pk1 = z_cen;
+	pi1 = x_cen; 
+	pj1 = y_cen; 
+	pk1 = z_cen; 
 
-	printf("n = %d\n", n);
+	printf("n = %d\n", n); 
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			field_xy[x][y] = Hz[x][y][ex_z_ed-1]; 	//?S???m?[?h??d???E??????2?????z????i?[?????D
+			field_xy[x][y] = Hz[x][y][ex_z_ed-1]; 	//全てのノードで電磁界成分を2次元配列に格納する．
 		}
 	}
 
-	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax_ff; z++){
-			field_xz[x][z] = Hz[x][YMAX][z]; 	//?S???m?[?h??d???E??????2?????z????i?[?????D
-		}
-	}
-
-	// ???f???o??t?@?C???|?C???^???????
+	
+	// モデル出力ファイルポインタの初期化
 	if(irank == IRANK_MIN){
-		sprintf(fname, "/Field_Hz_XY_%d_01.txt", n);
-		HZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
+		sprintf(fname1, "/Field_Hz_XY_%d_01.txt", n);
+		HZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname1), "w"); 
 		for(x = 0; x < xmax; x++){
 			for(y = 0; y < ymax; y++){
-				fprintf(HZ1, "%e\t", field_xy[x][y]);
+				fprintf(HZ1, "%e\t", field_xy[x][y]); 
 			}
-			fprintf(HZ1, "\n");
+			fprintf(HZ1, "\n"); 
 		}
 	}
-
-	if(irank == IRANK_MIN){
-		sprintf(fname, "/Field_Hz_XZ_%d_01.txt", n);
-		HZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
-		for(x = 0; x < xmax; x++){
-			for(z = 0; z < zmax_ff; z++){
-				fprintf(HZ2, "%e\t", field_xz[x][z]);
-			}
-			fprintf(HZ2, "\n");
-		}
-	}
-
-	// ???f?????z?X?g????M
+	
+	// モデルをホストに送信
 	else{
 		if(irank != IRANK_MAX){
-			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ?m?[?h0??O??m?[?h???m?[?h0??d???E????????D
-			MPI_Send(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD);
+			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ノード0以外のノードがノード0に電磁界成分を送る．
 		}
 		if(irank == IRANK_MAX){
-			MPI_Send(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ?m?[?h0??O??m?[?h???m?[?h0??d???E????????D
-			MPI_Send(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ?m?[?h0??O??m?[?h???m?[?h0??d???E????????D
+			MPI_Send(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ノード0以外のノードがノード0に電磁界成分を送る．
 		}
 	}
 
-	// ?e?m?[?h?????XY???????E???z??o??
-	sprintf(fname, "/Field_Hz_XY_%d_%d_01.txt", irank, n);
-	HZ1_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
+	// 各ノードごとにXY平面の磁界分布の出力
+	sprintf(fname1, "/Field_Hz_XY_%d_%d_01.txt", irank, n);
+	HZ1_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname1), "w"); 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
-			fprintf(HZ1_NODE, "%e\t", field_xy[x][y]);
+			fprintf(HZ1_NODE, "%e\t", field_xy[x][y]); 
 		}
-		fprintf(HZ1_NODE, "\n");
+		fprintf(HZ1_NODE, "\n"); 
 	}
 
-	// ?e?m?[?h?????XY???????E???z??o??
-	sprintf(fname, "/Field_Hz_XZ_%d_%d_01.txt", irank, n);
-	HZ2_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
-	for(x = 0; x < xmax; x++){
-		for(z = 0; z < zmax_ff; z++){
-			fprintf(HZ2_NODE, "%e\t", field_xz[x][z]);
-		}
-		fprintf(HZ2_NODE, "\n");
-	}
+	
 
-	// ???M???????f???????S???f??????
+	// 受信したモデルから全モデルを作成
 	if(irank == IRANK_MIN){
-		for(node = 1; node < ISIZE; node++){		// ?m?[?h0???m?[?h1??????f?[?^????????o?????????D
-			if(node == IRANK_MAX){					// ?m?[?hisize-1???1?Z????????????????????????????
-				MPI_Recv(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
-				MPI_Recv(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
+		for(node = 1; node < ISIZE; node++){		// ノード0がノード1から順にデータを受け取り出力していく．
+			if(node == IRANK_MAX){					// ノードisize-1のみ1セル小さく設定しているため条件文で分岐
+				MPI_Recv(&field_xy[0][0], (xmax-1)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status); 
 				for(x = 1; x < xmax-1; x++){
 					for(y = 0; y < ymax; y++){
-						fprintf(HZ1, "%e\t", field_xy[x][y]);
+						fprintf(HZ1, "%e\t", field_xy[x][y]); 
 					}
-					fprintf(HZ1, "\n");
-				}
-				for(x = 1; x < xmax-1; x++){
-					for(z = 0; z < zmax_ff; z++){
-						fprintf(HZ2, "%e\t", field_xz[x][z]);
-					}
-					fprintf(HZ2, "\n");
+					fprintf(HZ1, "\n"); 
 				}
 			}
 			else{
-				MPI_Recv(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
-				MPI_Recv(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
+				MPI_Recv(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status); 
+				for(x = 1; x < xmax; x++){
+					for(y = 0; y < ymax; y++){
+						fprintf(HZ1, "%e\t", field_xy[x][y]); 
+					}
+					fprintf(HZ1, "\n"); 
+				}
+
+			}
+		}
+
+		// ファイルポインタを閉じる
+		fclose(HZ1);
+
+	}
+
+
+	for(x = 0; x < xmax; x++){
+		for(z = 0; z < zmax_ff; z++){
+			field_xz[x][z] = Hz[x][YMAX][z]; 	//全てのノードで電磁界成分を2次元配列に格納する．
+		}
+	}
+	
+	// モデル出力ファイルポインタの初期化
+	if(irank == IRANK_MIN){
+		sprintf(fname2, "/Field_Hz_XZ_%d_01.txt", n);
+		HZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w"); 
+		for(x = 0; x < xmax; x++){
+			for(z = 0; z < zmax_ff; z++){
+				fprintf(HZ2, "%e\t", field_xz[x][z]); 
+			}
+			fprintf(HZ2, "\n"); 
+		}	
+	}else{
+		if(irank != IRANK_MAX){
+			MPI_Send(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD);		// ノード0以外のノードがノード0に電磁界成分を送る．
+		}
+		if(irank == IRANK_MAX){
+			MPI_Send(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ノード0以外のノードがノード0に電磁界成分を送る．
+		}
+	}
+
+	// 各ノードごとにXZ平面の磁界分布の出力
+	sprintf(fname2, "/Field_Hz_XZ_%d_%d_01.txt", irank, n);
+	HZ2_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w"); 
+	for(x = 0; x < xmax; x++){
+		for(z = 0; z < zmax_ff; z++){
+			fprintf(HZ2_NODE, "%e\t", field_xz[x][z]); 
+		}
+		fprintf(HZ2_NODE, "\n"); 
+	}
+
+	
+
+	// 受信したモデルから全モデルを作成
+	if(irank == IRANK_MIN){
+		for(node = 1; node < ISIZE; node++){		// ノード0がノード1から順にデータを受け取り出力していく．
+			if(node == IRANK_MAX){					// ノードisize-1のみ1セル小さく設定しているため条件文で分岐 
+				MPI_Recv(&field_xz[0][0], (xmax-1)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status); 
+				for(x = 1; x < xmax-1; x++){
+					for(z = 0; z < zmax_ff; z++){
+						fprintf(HZ2, "%e\t", field_xz[x][z]); 
+					}
+					fprintf(HZ2, "\n"); 
+				}
+			}
+			else{
+				MPI_Recv(&field_xz[0][0], (xmax)*(zmax_ff), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status); 
 				for(x = 1; x < xmax; x++){
 					for(z = 0; z < zmax_ff; z++){
-						fprintf(HZ2, "%e\t", field_xz[x][z]);
+						fprintf(HZ2, "%e\t", field_xz[x][z]); 
 					}
-					fprintf(HZ2, "\n");
+					fprintf(HZ2, "\n"); 
 				}
 			}
 		}
 
-		// ?t?@?C???|?C???^???????
-		fclose(HZ1);
+		// ファイルポインタを閉じる
 		fclose(HZ2);
+
 	}
 
 
 
 
-
-	// YZ?????d?E???z??o??
+	// YZ平面の電界分布の出力
 	/*int x;
 	double E_yz;
 	FILE *EYZ1, *EYZ2, *EYZ3;
 	char fname2[40], fname3[40], fname4[40];*/
 
-	/*if(irank == intObseInPortNum){ //????
+	/*if(irank == intObseInPortNum){ //入射
 		x = intObseLenPart1;
 		sprintf(fname2, "/Field_E_YZ_%d_01.txt", n);
-		EYZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w");
+		EYZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w"); 
 
-		for(int y = 0; y < ymax; y++){ //???`???g?H?f??Y??ｹｶ?f
-			for(int z = 0; z < zmax; z++){		// ???`???g?H?f??Z??ｹｶ?f
+		for(int y = 0; y < ymax; y++){ //矩形導波路断面Y領域判断
+			for(int z = 0; z < zmax; z++){		// 矩形導波路断面Z領域判断
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ1, "%e\t", E_yz);
 			}
@@ -2773,13 +2805,13 @@ void output_field_write(char *dir_name_def){
 		fclose(EYZ1);
 	}
 
-	if(irank == intObseOutPortNum){			// ?o??
+	if(irank == intObseOutPortNum){			// 出射
 		x = intObseLenPart4;
 		sprintf(fname3, "/Field_E_YZ_%d_04.txt", n);
-		EYZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
+		EYZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w"); 
 
-		for(int y = 0; y < ymax; y++){ //???`???g?H?f??Y??ｹｶ?f
-			for(int z = 0; z < zmax; z++){		// ???`???g?H?f??Z??ｹｶ?f
+		for(int y = 0; y < ymax; y++){ //矩形導波路断面Y領域判断
+			for(int z = 0; z < zmax; z++){		// 矩形導波路断面Z領域判断
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ2, "%e\t", E_yz);
 			}
@@ -2788,13 +2820,13 @@ void output_field_write(char *dir_name_def){
 		fclose(EYZ2);
 	}
 
-	if(irank == intObseCenPortNum){			// ?o??
+	if(irank == intObseCenPortNum){			// 出射
 		x = intObseLenPart7;
 		sprintf(fname4, "/Field_E_YZ_%d_07.txt", n);
-		EYZ3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname4), "w");
+		EYZ3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname4), "w"); 
 
-		for(int y = 0; y < ymax; y++){ //???`???g?H?f??Y??ｹｶ?f
-			for(int z = 0; z < zmax; z++){		// ???`???g?H?f??Z??ｹｶ?f
+		for(int y = 0; y < ymax; y++){ //矩形導波路断面Y領域判断
+			for(int z = 0; z < zmax; z++){		// 矩形導波路断面Z領域判断
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ3, "%e\t", E_yz);
 			}
@@ -2805,25 +2837,25 @@ void output_field_write(char *dir_name_def){
 
 }
 
-//?t?@?C???o??
+//ファイル出力
 void output_field(char *dir_name_def){
 
 	if(n <= Nmax - Fcut){
-		// ?????m?F??????t?@?C???o??
+		// 動作確認のためのファイル出力
 		if(n == Ncheck){
-			output_field_write (dir_name_def);
+			output_field_write (dir_name_def); 
 		}
 
-		// ?????I??t?@?C???o??
+		// 定期的なファイル出力
 		if(n % Ncutfield == 0){
-			output_field_write (dir_name_def);
+			output_field_write (dir_name_def); 
 		}
 	}
 	if((n >= Nmax - Fcut) && (n <= Nmax)){
 
-		// ?????_???t?@?C???o??
+		// 安定点でのファイル出力
 		if(n % Ncutfield2 == 0){
-			output_field_write (dir_name_def);
+			output_field_write (dir_name_def); 
 		}
 	}
 }
@@ -2831,85 +2863,85 @@ void output_field(char *dir_name_def){
 
 void mcircle(int x_circ, int y_circ, int z_circ, int type){
 
-	double R;
-	double Rs,Rb;
+	double R; 
+	double Rs,Rb; 
 
 	Rs = ((dblRadius_s*1.0e10)/(dx*1.0e10));
 	Rb = ((dblRadius_b*1.0e10)/(dx*1.0e10));
 
-	//???a?Z??????v?Z
-	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//?v?Z?????h?????????･ｰ????????
-	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10));
-	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10));
-	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10));
-	else if(type == 6)	R = ((dblRadius6*1.0e10)/(dx*1.0e10));
-	else if(type == 7)	R = ((dblRadius7*1.0e10)/(dx*1.0e10));
-	else if(type == 8)	R = ((dblRadius8*1.0e10)/(dx*1.0e10));
-	else			R = ((dblRadius4*1.0e10)/(dx*1.0e10));
+	//半径セル数の計算
+	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//計算誤差を防ぐために桁上げしています
+	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10)); 
+	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10)); 
+	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10)); 
+	else if(type == 6)	R = ((dblRadius6*1.0e10)/(dx*1.0e10)); 
+	else if(type == 7)	R = ((dblRadius7*1.0e10)/(dx*1.0e10)); 
+	else if(type == 8)	R = ((dblRadius8*1.0e10)/(dx*1.0e10)); 
+	else			R = ((dblRadius4*1.0e10)/(dx*1.0e10)); 
 
 
 
 	if(flag_2r == 0){
-		rightquartercircle1(x_circ, y_circ, z_circ, type, R);
-		leftquartercircle1(x_circ-1, y_circ, z_circ, type, R);
-		rightquartercircle2(x_circ, y_circ-1, z_circ, type, R);
-		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, R);
+		rightquartercircle1(x_circ, y_circ, z_circ, type, R); 
+		leftquartercircle1(x_circ-1, y_circ, z_circ, type, R); 
+		rightquartercircle2(x_circ, y_circ-1, z_circ, type, R); 
+		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, R); 
 	}else if(flag_2r == 2){
-		rightquartercircle1(x_circ, y_circ, z_circ, type, Rs);
-		leftquartercircle1(x_circ-1, y_circ, z_circ, type, Rs);
-		rightquartercircle2(x_circ, y_circ-1, z_circ, type, Rs);
-		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, Rs);
+		rightquartercircle1(x_circ, y_circ, z_circ, type, Rs); 
+		leftquartercircle1(x_circ-1, y_circ, z_circ, type, Rs); 
+		rightquartercircle2(x_circ, y_circ-1, z_circ, type, Rs); 
+		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, Rs); 
 	}else if(flag_2r == 1){
-		rightquartercircle1(x_circ, y_circ, z_circ, type, Rb);
-		leftquartercircle1(x_circ-1, y_circ, z_circ, type, Rb);
-		rightquartercircle2(x_circ, y_circ-1, z_circ, type, Rb);
-		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, Rb);
+		rightquartercircle1(x_circ, y_circ, z_circ, type, Rb); 
+		leftquartercircle1(x_circ-1, y_circ, z_circ, type, Rb); 
+		rightquartercircle2(x_circ, y_circ-1, z_circ, type, Rb); 
+		leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, Rb); 
 	}
 }
 
 
 void halfcircle(int x_circ, int y_circ, int z_circ, int type){
 
-	double R;
+	double R; 
 
-	//???a?Z??????v?Z
-	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//?v?Z?????h?????????･ｰ????????
-	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10));
-	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10));
-	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10));
-	else if(type == 6)	R = ((dblRadius6*1.0e10)/(dx*1.0e10));
-	else if(type == 7)	R = ((dblRadius7*1.0e10)/(dx*1.0e10));
-	else if(type == 8)	R = ((dblRadius8*1.0e10)/(dx*1.0e10));
-	else			R = ((dblRadius4*1.0e10)/(dx*1.0e10));
+	//半径セル数の計算
+	if(type == 1)	R = ((dblRadius*1.0e10)/(dx*1.0e10)); 		//計算誤差を防ぐために桁上げしています
+	else if(type == 2)	R = ((dblRadius2*1.0e10)/(dx*1.0e10)); 
+	else if(type == 3)	R = ((dblRadius3*1.0e10)/(dx*1.0e10)); 
+	else if(type == 5)	R = ((dblRadius5*1.0e10)/(dx*1.0e10)); 
+	else if(type == 6)	R = ((dblRadius6*1.0e10)/(dx*1.0e10)); 
+	else if(type == 7)	R = ((dblRadius7*1.0e10)/(dx*1.0e10)); 
+	else if(type == 8)	R = ((dblRadius8*1.0e10)/(dx*1.0e10)); 
+	else			R = ((dblRadius4*1.0e10)/(dx*1.0e10)); 
 
-	rightquartercircle2(x_circ, y_circ-1, z_circ, type, R);
-	leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, R);
+	rightquartercircle2(x_circ, y_circ-1, z_circ, type, R); 
+	leftquartercircle2(x_circ-1, y_circ-1, z_circ, type, R); 
 }
 
 
 void rightquartercircle1(int x_circ, int y_circ, int z_circ, int type, double R){
 
-	int x, y, Ie, Je;
-	double r;
+	int x, y, Ie, Je; 
+	double r; 
 
-	Ie = (int) (x_circ+R-1);
-	Je = (int) (y_circ+R-1);
+	Ie = (int) (x_circ+R-1); 
+	Je = (int) (y_circ+R-1); 
 	for(x = x_circ; x <= Ie; x++){
 		for(y = y_circ; y <= Je; y++){
-			r = sqrt(double((x-x_circ+1) * (x-x_circ+1) + (y-y_circ+1) * (y-y_circ+1)) ) - 0.5;
+			r = sqrt(double((x-x_circ+1) * (x-x_circ+1) + (y-y_circ+1) * (y-y_circ+1)) ) - 0.5; 
 			if(r <= R){
 				if(type == 1 || type == 3|| type == 5 || type == 6 || type == 7 || type == 8){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else if(type == 2){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else{
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3; 
 				}
 			}
 		}
@@ -2919,27 +2951,27 @@ void rightquartercircle1(int x_circ, int y_circ, int z_circ, int type, double R)
 
 void leftquartercircle1(int x_circ, int y_circ, int z_circ, int type, double R){
 
-	int x, y, Ie, Je;
-	double r;
+	int x, y, Ie, Je; 
+	double r; 
 
-	Ie = (int) (x_circ-R+1);
-	Je = (int) (y_circ+R-1);
+	Ie = (int) (x_circ-R+1); 
+	Je = (int) (y_circ+R-1); 
 	for(x = x_circ; x >= Ie; x--){
 		for(y = y_circ; y <= Je; y++){
-			r = sqrt(double((x-x_circ-1) * (x-x_circ-1) + (y-y_circ+1) * (y-y_circ+1)) ) - 0.5;
+			r = sqrt(double((x-x_circ-1) * (x-x_circ-1) + (y-y_circ+1) * (y-y_circ+1)) ) - 0.5; 
 			if(r <= R){
 				if(type == 1 || type == 3|| type == 5 || type == 6 || type == 7 || type == 8){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else if(type == 2){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else{
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3; 
 				}
 			}
 		}
@@ -2949,27 +2981,27 @@ void leftquartercircle1(int x_circ, int y_circ, int z_circ, int type, double R){
 
 void rightquartercircle2(int x_circ, int y_circ, int z_circ, int type, double R){
 
-	int x, y, Ie, Je;
-	double r;
+	int x, y, Ie, Je; 
+	double r; 
 
-	Ie = (int) (x_circ+R-1);
-	Je = (int) (y_circ-R+1);
+	Ie = (int) (x_circ+R-1); 
+	Je = (int) (y_circ-R+1); 
 	for(x = x_circ; x <= Ie; x++){
 		for(y = y_circ; y >= Je; y--){
-			r = sqrt(double((x-x_circ+1) * (x-x_circ+1) + (y-y_circ-1) * (y-y_circ-1)) ) - 0.5;
+			r = sqrt(double((x-x_circ+1) * (x-x_circ+1) + (y-y_circ-1) * (y-y_circ-1)) ) - 0.5; 
 			if(r <= R){
 				if(type == 1 || type == 3|| type == 5 || type == 6 || type == 7 || type == 8){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else if(type == 2){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else{
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3; 
 				}
 			}
 		}
@@ -2978,27 +3010,27 @@ void rightquartercircle2(int x_circ, int y_circ, int z_circ, int type, double R)
 
 void leftquartercircle2(int x_circ, int y_circ, int z_circ, int type, double R){
 
-	int x, y, Ie, Je;
-	double r;
+	int x, y, Ie, Je; 
+	double r; 
 
-	Ie = (int) (x_circ-R+1);
-	Je = (int) (y_circ-R+1);
+	Ie = (int) (x_circ-R+1); 
+	Je = (int) (y_circ-R+1); 
 	for(x = x_circ; x >= Ie; x--){
 		for(y = y_circ; y >= Je; y--){
-			r = sqrt(double((x-x_circ-1) * (x-x_circ-1) + (y-y_circ-1) * (y-y_circ-1)) ) - 0.5;
+			r = sqrt(double((x-x_circ-1) * (x-x_circ-1) + (y-y_circ-1) * (y-y_circ-1)) ) - 0.5; 
 			if(r <= R){
 				if(type == 1 || type == 3 || type == 5 || type == 6 || type == 7 || type == 8){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else if(type == 2){
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2;
-					ALL_epsilonx[x][y][z_circ] = epsilon2;
-					ALL_epsilony[x][y][z_circ] = epsilon2;
-					ALL_epsilonz[x][y][z_circ] = epsilon2;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX2; 
+					ALL_epsilonx[x][y][z_circ] = epsilon2; 
+					ALL_epsilony[x][y][z_circ] = epsilon2; 
+					ALL_epsilonz[x][y][z_circ] = epsilon2; 
 				}else{
-					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3;
+					ALL_cell[x][y][z_circ] = CIRCLE_REF_INDEX3; 
 				}
 			}
 		}
