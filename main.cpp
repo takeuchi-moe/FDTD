@@ -2675,14 +2675,14 @@ void output_field_write(char *dir_name_def){
 	}
 
 	// 各ノードごとにXY平面の磁界分布の出力
-	sprintf(fname1, "/Field_Hz_XY_%d_%d_01.txt", irank, n);
+/*	sprintf(fname1, "/Field_Hz_XY_%d_%d_01.txt", irank, n);
 	HZ1_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname1), "w");
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			fprintf(HZ1_NODE, "%e\t", field_xy[x][y]);
 		}
 		fprintf(HZ1_NODE, "\n");
-	}
+	}*/
 
 
 
@@ -2742,14 +2742,14 @@ void output_field_write(char *dir_name_def){
 	}
 
 	// 各ノードごとにXZ平面の磁界分布の出力
-	sprintf(fname2, "/Field_Hz_XZ_%d_%d_01.txt", irank, n);
+/*	sprintf(fname2, "/Field_Hz_XZ_%d_%d_01.txt", irank, n);
 	HZ2_NODE = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w");
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax_ff; z++){
 			fprintf(HZ2_NODE, "%e\t", field_xz[x][z]);
 		}
 		fprintf(HZ2_NODE, "\n");
-	}
+	}*/
 
 
 
