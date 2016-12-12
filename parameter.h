@@ -43,7 +43,7 @@
 #define SLAB_HEIGHT 210		// スラブ厚
 #define CLAD_HEIGHT1 2100	// 上部クラッド高さ +21*95までは大丈夫
 #define CLAD_HEIGHT2 0		// 下部クラッド高さ
-#define AIR_HEIGHT 0//21*500		// 空気層高さ
+#define AIR_HEIGHT 50*21//21*500		// 空気層高さ
 
 #define RADIUS 105			// PCの標準円孔半径
 #define RADIUS_S 80		// PCの標準円孔半径（小さい）
