@@ -46,8 +46,8 @@
 #define AIR_HEIGHT 50*21//21*500		// 空気層高さ
 
 #define RADIUS 105			// PCの標準円孔半径
-#define RADIUS_S 80		// PCの標準円孔半径（小さい）
-#define RADIUS_B 130		// PCの標準円孔半径（大きい）
+#define RADIUS_S 84		// PCの標準円孔半径（小さい）
+#define RADIUS_B 126		// PCの標準円孔半径（大きい）
 #define SX3 80				// 伝搬(X)方向の3列目格子シフト量(SX2,SX4=0でないと使えない要改善!!mainの1380行目)
 #define SX1 0				// 伝搬(X)方向の1列目格子シフト量
 #define SX2 0				// 伝搬(X)方向の2列目格子シフト量(SX3,SX4=0でないと使えない要改善!!mainの1380行目)
@@ -212,7 +212,7 @@ static const double inv_dz = 1/dz;
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 38e-18; 			// 時間ステップ[s]
-static const int Nmax = 100000; 				// 最終時間ステップ
+static const int Nmax = 100; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
@@ -222,11 +222,11 @@ static const int Nmax = 100000; 				// 最終時間ステップ
 //static const int Nmax = 250000; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:21nm --------------------*/
 
-static const int Ncut = 1000; 				// 時間ステップ数を表示させる間隔
+static const int Ncut = 10; 				// 時間ステップ数を表示させる間隔
 
 static const int Tcut = 1000; 				// パワーの平均の算出を開始する時間ステップ  (最終計算ステップからの差)
 //static const int Fcut = 500; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-static const int Fcut = 1000; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
+static const int Fcut = 20; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
 #else
 
 static const double dt = 67e-18; 			// 時間ステップ[s]
@@ -268,7 +268,7 @@ static const int Nmax = 1; 			// 最終時間ステップ
 static const int Ncheck = 10; 					// 動作確認用のフィールドを出力する時間ステップ
 static const int Ncutfield = Ncut; 			// フィールドを出力する時間ステップ
 //static const int Ncutfield2 = 10; 			// 安定状態でのフィールドを出力する時間ステップ間隔
-static const int Ncutfield2 = 100; 			// 安定状態でのフィールドを出力する時間ステップ間隔
+static const int Ncutfield2 = 5; 			// 安定状態でのフィールドを出力する時間ステップ間隔
 
 /*****************************************************************************/
 // 物理量[MKSA系]
