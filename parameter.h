@@ -212,7 +212,7 @@ static const double inv_dz = 1/dz;
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 38e-18; 			// 時間ステップ[s]
-static const int Nmax = 100; 				// 最終時間ステップ
+static const int Nmax = 100000; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
