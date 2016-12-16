@@ -27,54 +27,155 @@
 #if _PROGRAM_TEST
 
 #if PCW_Air_Or_SiO2
+/****************************** –{”Ô—p(Air-brige) ******************************/
+
+/*-------------------- CELL_SIZE:15nm --------------------*/
+#define CELL_SIZE 15			// ƒZƒ‹ƒTƒCƒY
+#define PITCH 450				// PC ŠiŽq’è”
+#define PITCH_SHIFT_MAX 450 //480		// ŠiŽq’è”•Ï‰»PCW‚ÌPCŠiŽq’è”‚ÌÅ‘å’l
+
+#define SLAB_HEIGHT 210		// ƒXƒ‰ƒuŒú
+#define CLAD_HEIGHT1 525	// ã•”ƒNƒ‰ƒbƒh‚‚³
+#define CLAD_HEIGHT2 0		// ‰º•”ƒNƒ‰ƒbƒh‚‚³
+#define AIR_HEIGHT 0		// ‹ó‹C‘w‚‚³
+
+#define RADIUS 155			// PC‚Ì•W€‰~E”¼Œa
+#define SX1 0				// “`”À(X)•ûŒü‚Ì1—ñ–ÚŠiŽqƒVƒtƒg—Ê
+#define SX3 90				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
+#define SY 0				// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê
+
+#define EXCT_LEN 840					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+#define EXCT_OBSE_LEN 975				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
+#define OBSE_WIRE_LEN 2540				// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
+//#define OBSE_INTER (2 * PITCH)		// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+#define OBSE_INTER (PITCH)				// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+#define WIRE_OUTPUT_LEN (EXCT_LEN + 105)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
+#define WIRE_OUTPUT_OFFSET 0			// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
+#define WIRE_WID_OFFSET 0				// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+#define PCW_SiSLAB_TERMINATION_LEN 255	// PCW‰¡‚ÌCOREƒXƒ‰ƒuI’[‚Ì’·‚³
+#define PCW_SiSLAB_OFFSET 0				// PCWc‚ÌCOREƒXƒ‰ƒu‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+#define PCW_WIDTH_CHIRP 0				// PCW•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+
+// ‚±‚êˆÈ‰º‚ÍŽüŠú”
+#define NORM_PCW_PER 0				// ’ÊíPCWŽüŠú”
+#define CHIRP_3RD_LS_PER 0			// 3—ñ–ÚŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒvLSPCWŽüŠú”
+#define PITCH_SHIFT_PER 5			// ŠiŽq’è”•Ï‰»PCW‚ÌŽüŠú”
+#define LSPCW_SHIFT_DESCRETE FALSE			// ŠiŽq’è”•Ï‰»PCW‚Ì‚Æ‚«C‚Í‚¶‚ß‚©‚çLSPCW‚É‚·‚éê‡‚ÍFALSE@‚µ‚È‚¢ê‡‚ÍTRUE
+#define PITCH_SHIFT_CHIRP_PER 0		// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
+#define LSPCW_PER 20				// LSPCWŽüŠú”
+#define PCW_WID 6					// PCW‚Ì—ñ”
+// ‚±‚êˆÈã‚ÍŽüŠú”
+#define LSPCW_ROW 3					// “±”g˜H‚©‚ç”‚¦‚Ä‰½—ñ–Ú‚ÌŠiŽq“_‚ð“`”À•ûŒü‚ÉƒVƒtƒg‚³‚¹‚é‚©D
+
+#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ’ÊíPCW’·
+#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ƒ`ƒƒ[ƒvLSPCW’·
+#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW’·
+#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
+
+#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// “üŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)
+
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// “üŽË×ü’·
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// oŽË×ü’·
+#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW’·
+/*-------------------- CELL_SIZE:15nm --------------------*/
+
+/*-------------------- CELL_SIZE:21nm --------------------*/
+//#define CELL_SIZE 21			// ƒZƒ‹ƒTƒCƒY
+//#define PITCH 441				// PC ŠiŽq’è”
+//#define PITCH_SHIFT_MAX 441 //480		// ŠiŽq’è”•Ï‰»PCW‚ÌPCŠiŽq’è”‚ÌÅ‘å’l
+//
+//#define SLAB_HEIGHT 210		// ƒXƒ‰ƒuŒú
+//#define CLAD_HEIGHT1 525	// ã•”ƒNƒ‰ƒbƒh‚‚³
+//#define CLAD_HEIGHT2 0		// ‰º•”ƒNƒ‰ƒbƒh‚‚³
+//#define AIR_HEIGHT 0		// ‹ó‹C‘w‚‚³
+//
+//#define RADIUS 147			// PC‚Ì•W€‰~E”¼Œa
+//#define SX3 105				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
+//#define SY 0				// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê
+//
+//#define EXCT_LEN 840					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+//#define EXCT_OBSE_LEN 966				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
+//#define OBSE_WIRE_LEN 2541				// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
+////#define OBSE_INTER (2 * PITCH)		// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+//#define OBSE_INTER (PITCH)				// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+//#define WIRE_OUTPUT_LEN (EXCT_LEN + 0)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
+//#define WIRE_OUTPUT_OFFSET 0			// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
+//#define WIRE_WID_OFFSET 0				// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+//#define PCW_SiSLAB_TERMINATION_LEN 252	// PCW‰¡‚ÌCOREƒXƒ‰ƒuI’[‚Ì’·‚³
+//#define PCW_SiSLAB_OFFSET 0				// PCWc‚ÌCOREƒXƒ‰ƒu‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+//#define PCW_WIDTH_CHIRP 0				// PCW•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+//
+//// ‚±‚êˆÈ‰º‚ÍŽüŠú”
+//#define NORM_PCW_PER 0				// ’ÊíPCWŽüŠú”
+//#define CHIRP_3RD_LS_PER 0			// 3—ñ–ÚŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒvLSPCWŽüŠú”
+//#define PITCH_SHIFT_PER 5			// ŠiŽq’è”•Ï‰»PCW‚ÌŽüŠú”
+//#define PITCH_SHIFT_CHIRP_PER 0		// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
+//#define LSPCW_PER 20				// LSPCWŽüŠú”
+//#define PCW_WID 6					// PCW‚Ì—ñ”
+//// ‚±‚êˆÈã‚ÍŽüŠú”
+//
+//#define LSPCW_ROW 3					// “±”g˜H‚©‚ç”‚¦‚Ä‰½—ñ–Ú‚ÌŠiŽq“_‚ð“`”À•ûŒü‚ÉƒVƒtƒg‚³‚¹‚é‚©D
+//
+//#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ’ÊíPCW’·
+//#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ƒ`ƒƒ[ƒvLSPCW’·
+//#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW’·
+//#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
+//
+//#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// “üŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+//#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)
+//
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// “üŽË×ü’·
+//#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// oŽË×ü’·
+//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW’·
+/*-------------------- CELL_SIZE:21nm --------------------*/
+
+/****************************** –{”Ô—p(Air-brige) ******************************/
 #else
 
 /****************************** –{”Ô—p(SiO2) ******************************/
 
 #if PCW_S1S3_Shift
 
-#else
-
-/****************************** 3—ñ–ÚŠiŽqƒVƒtƒg\‘¢ ******************************/
-#define CELL_SIZE 21			// ƒZƒ‹ƒTƒCƒY
-#define PITCH 399				// PC ŠiŽq’è”
-#define PITCH_SHIFT_MAX 399 //480		// ŠiŽq’è”•Ï‰»PCW‚ÌPCŠiŽq’è”‚ÌÅ‘å’l
+/****************************** 1,3—ñ–ÚŠiŽqƒVƒtƒg\‘¢ ******************************/
+#define CELL_SIZE 15			// ƒZƒ‹ƒTƒCƒY
+#define PITCH 405				// PC ŠiŽq’è”
+#define PITCH_SHIFT_MAX 495 //480		// ŠiŽq’è”•Ï‰»PCW‚ÌPCŠiŽq’è”‚ÌÅ‘å’l
 
 #define SLAB_HEIGHT 210		// ƒXƒ‰ƒuŒú
-#define CLAD_HEIGHT1 2100	// ã•”ƒNƒ‰ƒbƒh‚‚³ +21*95‚Ü‚Å‚Í‘åä•v
+#define CLAD_HEIGHT1 750	// ã•”ƒNƒ‰ƒbƒh‚‚³
+//#define CLAD_HEIGHT1 990	// ã•”ƒNƒ‰ƒbƒh‚‚³
 #define CLAD_HEIGHT2 0		// ‰º•”ƒNƒ‰ƒbƒh‚‚³
-#define AIR_HEIGHT 500*21//21*500		// ‹ó‹C‘w‚‚³
+#define AIR_HEIGHT 0		// ‹ó‹C‘w‚‚³
 
-#define RADIUS 105			// PC‚Ì•W€‰~E”¼Œa
-#define RADIUS_S 95		// PC‚Ì•W€‰~E”¼Œai¬‚³‚¢j
-#define RADIUS_B 115		// PC‚Ì•W€‰~E”¼Œai‘å‚«‚¢j
-#define SX3 80				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX2,SX4=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
+#define RADIUS 110			// PC‚Ì•W€‰~E”¼Œa
+//#define SX3 90				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
+//#define SX1 0				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
+//#define SX3 90				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
+//#define SX1 120				// “`”À(X)•ûŒü‚Ì1—ñ–ÚŠiŽqƒVƒtƒg—Ê
+#define SX3 0				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
 #define SX1 0				// “`”À(X)•ûŒü‚Ì1—ñ–ÚŠiŽqƒVƒtƒg—Ê
-#define SX2 0				// “`”À(X)•ûŒü‚Ì2—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX3,SX4=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
-#define SX4 0				//“`”À(X)•ûŒü‚Ì4—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX2,SX3=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
-#define SY 0				// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê(‘ÎÌ‹«ŠE‚ðŽg—p‚µ‚Ä‚¢‚é‚Ì‚ÅŽÀÛ‚É‚Í‚±‚Ì”{)
+#define SY 15				// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê(‘ÎÌ‹«ŠE‚ðŽg—p‚µ‚Ä‚¢‚é‚Ì‚ÅŽÀÛ‚É‚Í‚±‚Ì”{)
 
-#define EXCT_LEN 42*CELL_SIZE					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
-#define EXCT_OBSE_LEN 35*CELL_SIZE				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
-#define OBSE_WIRE_LEN 15*CELL_SIZE //2540				// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
+#define EXCT_LEN 840					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+#define EXCT_OBSE_LEN 975				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
+#define OBSE_WIRE_LEN 2540				// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
 //#define OBSE_INTER (2 * PITCH)		// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
 #define OBSE_INTER (PITCH)				// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
-#define WIRE_OUTPUT_LEN 70*21 //(EXCT_LEN + 45)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
+#define WIRE_OUTPUT_LEN (EXCT_LEN + 60)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
 #define WIRE_OUTPUT_OFFSET 0			// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
-#define WIRE_WID_OFFSET 180				// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê‚Ì”¼•ª(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
-#define PCW_SiSLAB_TERMINATION_LEN 255	// PCW‰¡‚ÌCOREƒXƒ‰ƒuI’[‚Ì’·‚³
+#define WIRE_WID_OFFSET 0				// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+#define PCW_SiSLAB_TERMINATION_LEN 240	// PCW‰¡‚ÌCOREƒXƒ‰ƒuI’[‚Ì’·‚³
 #define PCW_SiSLAB_OFFSET 0				// PCWc‚ÌCOREƒXƒ‰ƒu‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
-#define PCW_WIDTH_CHIRP 180				// PCW•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+#define PCW_WIDTH_CHIRP 0				// PCW•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
 
 // ‚±‚êˆÈ‰º‚ÍŽüŠú”
 #define NORM_PCW_PER 0				// ’ÊíPCWŽüŠú”
-#define CHIRP_3RD_LS_PER 0			// 3—ñ–ÚŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒvLSPCWŽüŠú”D 2~4—ñ–Ú‚Ü‚Å‘Î‰žD¦ƒVƒtƒg—Ê/ŽüŠú”<cellsize‚¾‚Æƒ`ƒƒ[ƒv‚µ‚È‚¢
-#define CHIRP_2ND_LS_PER 0			//“±”g˜H•ƒ`ƒƒ[ƒv‚ÆƒVƒtƒg—Êƒ`ƒƒ[ƒv‚ð“¯Žž‚És‚¤Û‚Ìƒ`ƒƒ[ƒvLSPCWŽüŠú”DPITCH_SHIFT_PER‚æ‚è¬‚³‚­‚È‚¢‚Æƒ_ƒ?@2,3—ñ–Ú‚Ì‚Ý‘Î‰žD¦ƒVƒtƒg—Ê/ŽüŠú”<cellsize‚¾‚Æƒ`ƒƒ[ƒv‚µ‚È‚¢
-#define PITCH_SHIFT_PER 7				// “±”g˜H•ƒ`ƒƒ[ƒv‚ÌŽüŠú”
-#define LSPCW_SHIFT_DESCRETE FALSE			// ŠiŽq’è”•Ï‰»PCW‚Ì‚Æ‚«C‚Í‚¶‚ß‚©‚çLSPCW‚É‚·‚éê‡‚ÍFALSE@‚µ‚È‚¢ê‡‚ÍTRUE
-#define PITCH_SHIFT_CHIRP_PER 0		// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
-#define LSPCW_PER 12				// LSPCWŽüŠú”
-#define PCW_WID 8				// PCW‚Ì—ñ”
+#define CHIRP_3RD_LS_PER 0			// 3—ñ–ÚŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒvLSPCWŽüŠú”
+#define PITCH_SHIFT_PER 0			// ŠiŽq’è”•Ï‰»PCW‚ÌŽüŠú”
+#define PITCH_SHIFT_CHIRP_PER 5	// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
+#define LSPCW_PER 5				// LSPCWŽüŠú”
+#define PCW_WID 6					// PCW‚Ì—ñ”
 // ‚±‚êˆÈã‚ÍŽüŠú”
 
 //#define LSPCW_ROW 3					// “±”g˜H‚©‚ç”‚¦‚Ä‰½—ñ–Ú‚ÌŠiŽq“_‚ð“`”À•ûŒü‚ÉƒVƒtƒg‚³‚¹‚é‚©D
@@ -88,7 +189,87 @@
 #define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)
 
 #define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// “üŽË×ü’·
-#define WIRE_LEN2 (WIRE_LEN1-2*CELL_SIZE) //(OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// oŽË×ü’·
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// oŽË×ü’·
+//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW’·
+
+/****************************** 1,3—ñ–ÚŠiŽqƒVƒtƒg\‘¢ ******************************/
+
+#else
+
+/****************************** 3—ñ–ÚŠiŽqƒVƒtƒg\‘¢ ******************************/
+#define CELL_SIZE 21			// ƒZƒ‹ƒTƒCƒY   15
+#define PITCH 399				// PC ŠiŽq’è”   405
+#define PITCH_SHIFT_MAX 399 //480		// ŠiŽq’è”•Ï‰»PCW‚ÌPCŠiŽq’è”‚ÌÅ‘å’l
+#define PITCH_SHIFT_MAX2 399 //™ƒ`ƒƒ[ƒv‚ÌÅ¬’l ‚±‚±‚Ì‚Ý‚¢‚¶‚é
+
+#define SLAB_HEIGHT 210		// ƒXƒ‰ƒuŒú
+#define CLAD_HEIGHT1 1995	// ã•”ƒNƒ‰ƒbƒh‚‚³   750
+//#define CLAD_HEIGHT1 990	// ã•”ƒNƒ‰ƒbƒh‚‚³
+#define CLAD_HEIGHT2 0		// ‰º•”ƒNƒ‰ƒbƒh‚‚³
+#define AIR_HEIGHT 0		// ‹ó‹C‘w‚‚³
+
+#define RADIUS 110			// PC‚Ì•W€‰~E”¼Œa      120
+#define SX3 84				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX2,SX4=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
+#define SX1 0				// “`”À(X)•ûŒü‚Ì1—ñ–ÚŠiŽqƒVƒtƒg—Ê
+#define SX2 0				// “`”À(X)•ûŒü‚Ì2—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX3,SX4=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
+#define SX4 0				//“`”À(X)•ûŒü‚Ì4—ñ–ÚŠiŽqƒVƒtƒg—Ê(SX2,SX3=0‚Å‚È‚¢‚ÆŽg‚¦‚È‚¢—v‰ü‘P!!main‚Ì1380s–Ú)
+#define SY -588				//-588 //™™‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê(‘ÎÌ‹«ŠE‚ðŽg—p‚µ‚Ä‚¢‚é‚Ì‚ÅŽÀÛ‚É‚Í‚±‚Ì”{)@-588‚©‚ç+‚Å•L
+
+#define EXCT_LEN 840			//840		// ™—ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£) ‚±‚ê‚ÍŠî–{•Ï‚¦‚È‚¢D
+#define EXCT_OBSE_LEN 3000-420		//975 		// ™™—ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£  ‚±‚ê‚àŠî–{•Ï‚¦‚È‚¢  3000//15/12/25
+//OBSE_WIRE_LEN‚ð+a‚µ‚½‚Æ‚«‚É‚Í‚±‚ê‚ð-a‚·‚é
+#define OBSE_WIRE_LEN 5815		//2540(121 ƒZƒ‹) 2750(131ƒZƒ‹) 5080(242ƒZƒ‹)//  5500(262ƒZƒ‹)2/23 //5815(297ƒZƒ‹) 35ƒZƒ‹‘‚â‚µ‚½ 2/24  ‚³‚ç‚É’·ŽÚ‰»(by”nêæ¶) ™(oŽË)ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H’[‚Ü‚Å‚Ì‹——£
+//‚±‚ê‚ð+a‚·‚é‚ÆCƒ‚ƒjƒ^‚ÆPCW’[‚Ì‹——£‚ª+aCƒ‚ƒjƒ^‚ÆoŽË’[‚Ì‹——£‚ª-2a‚³‚ê‚éDoŽË‚Ì×ü‹——£‚Í-a‚É‚È‚é.“üŽËƒ‚ƒjƒ^‚ÆPCW’[‚Æ‚Ì‹——£‚à+a
+//#define OBSE_INTER (2 * PITCH)		// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+#define OBSE_INTER (PITCH)				// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+#define WIRE_OUTPUT_LEN (EXCT_LEN + 45)	// oŽË×ü“±”g˜H‚Ì’·‚³(’¼‘Å‚¿‚Ì”Žš‚ÍƒZƒ‹ƒTƒCƒY‚ðNODE”‚Ì®””{‚É‚·‚é‚½‚ß‚ÉŽg—p)
+#define WIRE_OUTPUT_OFFSET 0			// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
+#define WIRE_WID_OFFSET 168 //168				// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê‚Ì”¼•ª(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+#define WIRE_WID_OFFSET_OUT 168//168
+#define PCW_SiSLAB_TERMINATION_LEN 255	//255 // ™PCW‰¡‚ÌCOREƒXƒ‰ƒuI’[‚Ì’·‚³@+‚É‚·‚é‚Æ‰~E‚Ì‚Ý’†S•ûŒü‚É‚¸‚ê‚é (”Žš‚Ì’PˆÊ‚Ínm)
+#define PCW_SiSLAB_OFFSET 0 //0				// ™PCWc‚ÌCOREƒXƒ‰ƒu‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)2
+//“`”À•ûŒüƒVƒtƒg
+#define PCW_WIDTH_CHIRP 168//168				// PCW•‚ÌƒIƒtƒZƒbƒg—Ê(ƒvƒ‰ƒX‘¤‚ª•L) (•‰”‚Ìê‡‚É‚ÍC1ƒZƒ‹•ª‘å‚«‚­Ý’è‚µ‚È‚¢‚ÆŠÛ‚ßŒë·”­¶)
+#define PCW_WIDTH_CHIRP_OUT 168//168
+#define PCW_WIDTH_Para 1
+
+//™“±”g˜H•ƒ`ƒƒ[ƒv—Ê‚Ìƒpƒ‰ƒ[ƒ^‘S‚Ä(4‚Â)‚ð0‚É‚·‚é‚ÆƒoƒO‚ª¶‚¶‚é‚Ì‚Å•Ö‹X“I‚É‘S‚Ä1‚É‚·‚é
+
+// ‚±‚êˆÈ‰º‚ÍŽüŠú”
+#define NORM_PCW_PER 0				// 160722 ‚±‚ê‚Í0ŒÅ’è ’ÊíPCWŽüŠú”
+#define CHIRP_3RD_LS_PER 0			// 160722 ‚±‚ê‚Í0ŒÅ’è 3—ñ–ÚŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒvLSPCWŽüŠú”D 2~4—ñ–Ú‚Ü‚Å‘Î‰žD¦ƒVƒtƒg—Ê/ŽüŠú”<cellsize‚¾‚Æƒ`ƒƒ[ƒv‚µ‚È‚¢
+#define CHIRP_2ND_LS_PER 7//5			//™“±”g˜H•ƒ`ƒƒ[ƒv‚ÆƒVƒtƒg—Êƒ`ƒƒ[ƒv‚ð“¯Žž‚És‚¤Û‚Ìƒ`ƒƒ[ƒvLSPCWŽüŠú”DPITCH_SHIFT_PER‚æ‚è¬‚³‚­‚È‚¢‚Æƒ_ƒ?@2,3—ñ–Ú‚Ì‚Ý‘Î‰žD¦ƒVƒtƒg—Ê/ŽüŠú”<cellsize‚¾‚Æƒ`ƒƒ[ƒv‚µ‚È‚¢
+#define CHIRP_2ND_LS_PER_OUT 7//5 ™
+#define PITCH_SHIFT_PER 7//5				//™™“±”g˜H•ƒ`ƒƒ[ƒv‚ÌŽüŠú”@16/7/22 ‚±‚ê‚ª7ˆÈã‚¾‚Æƒ_ƒ‚© (6‚ÍOK)
+#define PITCH_SHIFT_PER_OUT 7//5 ™™
+#define PITCH_SHIFT_CHIRP_PER2 7//5		// ™ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”(“±”g˜H•ƒ`ƒƒ[ƒv‚Æ“¯Žž)
+#define PITCH_SHIFT_CHIRP_PER2_OUT 7//™5
+#define LSPCW_SHIFT_DESCRETE FALSE			// ŠiŽq’è”•Ï‰»PCW‚Ì‚Æ‚«C‚Í‚¶‚ß‚©‚çLSPCW‚É‚·‚éê‡‚ÍFALSE@‚µ‚È‚¢ê‡‚ÍTRUE
+#define PITCH_SHIFT_CHIRP_PER 0		// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
+#define LSPCW_PER 16 //LSPCWŽüŠú”
+#define PCW_WID 8 //8 PCW‚Ì—ñ” //SIWG‚Å‚Í1
+// ‚±‚êˆÈã‚ÍŽüŠú”
+				//
+//#define LSPCW_ROW 3					// “±”g˜H‚©‚ç”‚¦‚Ä‰½—ñ–Ú‚ÌŠiŽq“_‚ð“`”À•ûŒü‚ÉƒVƒtƒg‚³‚¹‚é‚©D
+
+#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ’ÊíPCW’·
+#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ƒ`ƒƒ[ƒvLSPCW’·
+#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW’·
+#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// oŽË×ü“±”g˜H‚ÌƒXƒ‰ƒuI’[‚Ì’·‚³
+
+#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// “üŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+//#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN - 210)	// ™@oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)@‚±‚ê‚ÍŽÀÛ‚Ì’·‚³(nm)
+//‚±‚ÌˆÊ’u‚Í‚¨‚»‚ç‚­}‚É‚Í•\Ž¦‚³‚ê‚È‚¢@?intObseLenPart4‚Æ‚ÍŒü‚«‚ª‹t
+//PS.15/12/22 ‚±‚ê‚Í‹@”\‚µ‚Ä‚È‚¢
+
+
+
+#define WIRE_LEN1 (OBSE_LEN1 + 3696)			// ™“üŽË×ü’·@//2541 ’·ŽÚ //2961@‚³‚ç‚É’·ŽÚ2/23 //‚³‚ç‚É’·ŽÚ2 3696 2/24
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)@//Œ³‚ÌƒvƒƒOƒ‰ƒ€
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)
+
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN) // ™™ oŽË×ü’· ”Žš‚Ínm@oŽË’[‚©‚çoŽËƒ‚ƒjƒ^‚Ì‹——£
+//ƒ‚ƒjƒ^[‚ðŒã‚ë‚É‚·‚éê‡‚ÍƒIƒtƒZƒbƒg137*21
 //#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW’·
 
 /****************************** 3—ñ–ÚŠiŽqƒVƒtƒg\‘¢ ******************************/
@@ -153,6 +334,42 @@
 /****************************** ‰ðÍ—ÌˆæŒˆ’è—p ******************************/
 
 
+/****************************** “®ìŠm”F—p ******************************/
+
+//#define CELL_SIZE 100		// ƒZƒ‹ƒTƒCƒY
+//#define PITCH 400			// PC ŠiŽq’è”
+//
+//#define SLAB_HEIGHT 200		// ƒXƒ‰ƒuŒú
+//#define CLAD_HEIGHT1 700	// ã•”ƒNƒ‰ƒbƒh‚‚³
+//#define CLAD_HEIGHT2 0		// ‰º•”ƒNƒ‰ƒbƒh‚‚³
+//#define AIR_HEIGHT 0		// ‹ó‹C‘w‚‚³
+//
+//#define RADIUS 100			// PC‚Ì•W€‰~E”¼Œa
+//#define SX3 100				// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—Ê
+//#define SY 0				// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—Ê
+//
+//#define NORM_PCW_PER 5			// ’ÊíPCWŽüŠú”
+//#define CHIRP_3RD_LS_PER 1			// ƒ`ƒƒ[ƒvLSPCWŽüŠú”
+//#define LSPCW_PER 5				// LSPCWŽüŠú”
+//#define PCW_WID 6					// PCW‚Ì—ñ”
+//#define LSPCW_ROW 3					// “±”g˜H‚©‚ç”‚¦‚Ä‰½—ñ–Ú‚ÌŠiŽq“_‚ð“`”À•ûŒü‚ÉƒVƒtƒg‚³‚¹‚é‚©D
+//#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)		// ’ÊíPCW’·
+//#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ƒ`ƒƒ[ƒvLSPCW’·
+//#define LSPCW_LEN (LSPCW_PER * PITCH)			// LSPCW’·
+//
+//#define EXCT_LEN 800					// —ãU“_ (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+//#define EXCT_OBSE_LEN 1900				// —ãU“_‚©‚çŠÏ‘ª–Ê‚Ì’†S‚Ü‚Å‚Ì‹——£
+//#define OBSE_WIRE_LEN EXCT_OBSE_LEN		// ŠÏ‘ª–Ê‚Ì’†S‚©‚ç×ü“±”g˜H‚Ü‚Å‚Ì‹——£
+//#define OBSE_INTER (2 * PITCH)			// ŠÏ‘ª–Ê‚Ì’·‚³(“§‰ß—¦C”½ŽË—¦‚ð‹‚ß‚é‚½‚ß‚ÉŽg—p)
+//#define OBSE_LEN1 (EXCT_LEN + OBSE_INTER / 2 + EXCT_OBSE_LEN)	// “üŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì¶’[‚©‚ç‚Ì‹——£)
+//#define OBSE_LEN5 (EXCT_LEN + OBSE_INTER / 2)		// oŽËŠÏ‘ª–Ê‚Ì’†SÀ•W (ƒ‚ƒfƒ‹‚Ì‰E’[‚©‚ç‚Ì‹——£)
+//
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)	// “üŽË×ü’·
+//#define WIRE_LEN2 (OBSE_LEN5 + OBSE_WIRE_LEN)	// oŽË×ü’·
+//#define WIRE_WID_OFFSET 0		// ×ü•‚ÌƒIƒtƒZƒbƒg—Ê
+
+/****************************** “®ìŠm”F—p ******************************/
+
 #endif
 
 /*****************************************************************************/
@@ -161,16 +378,29 @@
 #if _PROGRAM_TEST
 
 #if PCW_Air_Or_SiO2
+/*-------------------- CELL_SIZE:15nm --------------------*/
+#define XMAX_ALL 1440	// SiO2 1340, Air 1440
+#define YMAX_ALL 183	// SiO2 163 Air 183
+#define ZMAX_ALL 42
+/*-------------------- CELL_SIZE:15nm --------------------*/
 #else
 #if PCW_S1S3_Shift
+/*-------------------- CELL_SIZE:15nm --------------------*/
+#define XMAX_ALL 1725	// SiO2 1340
+#define YMAX_ALL 180	// PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
+#define ZMAX_ALL 57		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
+//#define ZMAX_ALL 73	// CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
+/*-------------------- CELL_SIZE:15nm --------------------*/
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
-#define XMAX_ALL 228*3 //522   //1342//1612		// SiO2 1340
-#define YMAX_ALL 113+46-14	//163 PCW_WID:6/163  PCW_WID:8/209  PCW_WID:10/255
-#define ZMAX_ALL (CLAD_HEIGHT1 + SLAB_HEIGHT/2)/CELL_SIZE		// CLAD_HEIGHT1:525/42  CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
-#define ZMAX_ALL_FF (CLAD_HEIGHT1 + SLAB_HEIGHT/2 + AIR_HEIGHT)/CELL_SIZE
-#define Z_AIR AIR_HEIGHT/CELL_SIZE
-
+//™15nm‚Í‹C‚É‚µ‚È‚­‚Ä—Ç‚¢D
+#define XMAX_ALL 1335 //948(2015/11/11) //1250(2015/11/19) 1250-165=1085(2015/12/16) 1250-165-16=1069(2015/12/24) 1069+151-55=1165(2015/12/25)“üŽË’·ŽÚ‰»  1220 ‚Æ‚·‚é‚Æ1206‚É‚È‚é(2065/2/23)“üŽË’·ŽÚ‰»1
+//1222 ‚Å 1220 //1240 ‚Å 1235 //1260 ‚Å 1235 //1270 ‚Å 1235 1240‚æ‚è‘å‚«‚­‚µ‚Ä‚àˆÓ–¡‚È‚¢‚Ì‚ÅŠî–{1240
+//1235+(6*400*2)/21=1235+230=1465
+//1225 BOUNDARYLINE 41, 42(16/10/21)
+//1245(1236) (16/10/24)
+#define YMAX_ALL 172	//10—ñ‚Å‚Í145+32(‚±‚Ìê‡XMAX‚ð50’ö“xŒ¸‚ç‚·•K—v‚ ‚è)D8—ñ‚Å‚Í145.’·ŽÚ‚Å‚Í172
+#define ZMAX_ALL 100	//15/12/16 70(—e—Ê•s‘«‚Ì‚½‚ß) ]—ˆ100
 //#define ZMAX_ALL 73	// CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
@@ -188,6 +418,13 @@
 #define YMAX_ALL 95
 #define ZMAX_ALL 18
 
+//#define XMAX_ALL 950
+//#define YMAX_ALL 114
+//#define ZMAX_ALL 38
+
+//#define XMAX_ALL 162
+//#define YMAX_ALL 19
+//#define ZMAX_ALL 8
 
 #endif
 
@@ -209,10 +446,15 @@ static const double inv_dz = 1/dz;
 
 #if _PROGRAM_TEST
 #if PCW_Air_Or_SiO2
-#else
 /*-------------------- CELL_SIZE:15nm --------------------*/
+static const double dt = 28e-18; 			// ŽžŠÔƒXƒeƒbƒv[s]
+static const int Nmax = 100; 				// ÅIŽžŠÔƒXƒeƒbƒv
+/*-------------------- CELL_SIZE:15nm --------------------*/
+#else
+/*-------------------- CELL_SIZE:15nm --------------------*/ //™
 static const double dt = 38e-18; 			// ŽžŠÔƒXƒeƒbƒv[s]
-static const int Nmax = 50000; 				// ÅIŽžŠÔƒXƒeƒbƒv
+static const int Nmax = 100; //150000 				// ™ÅIŽžŠÔƒXƒeƒbƒv
+//static const int Nmaxp = 5000;  				// ™€ÅIŽžŠÔƒXƒeƒbƒv
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
@@ -222,11 +464,13 @@ static const int Nmax = 50000; 				// ÅIŽžŠÔƒXƒeƒbƒv
 //static const int Nmax = 250000; 				// ÅIŽžŠÔƒXƒeƒbƒv
 /*-------------------- CELL_SIZE:21nm --------------------*/
 
-static const int Ncut = 1000; 				// ŽžŠÔƒXƒeƒbƒv”‚ð•\Ž¦‚³‚¹‚éŠÔŠu
 
-static const int Tcut = 1000; 				// ƒpƒ[‚Ì•½‹Ï‚ÌŽZo‚ðŠJŽn‚·‚éŽžŠÔƒXƒeƒbƒv  (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
+static const int Ncut = 50000; //50000				// ™ŽžŠÔƒXƒeƒbƒv”‚ð•\Ž¦‚³‚¹‚éŠÔŠu
+
+static const int Tcut = 1000; 	//1000			//@™™ƒpƒ[‚Ì•½‹Ï‚ÌŽZo‚ðŠJŽn‚·‚éŽžŠÔƒXƒeƒbƒv  (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
 //static const int Fcut = 500; 				// ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv” (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
-static const int Fcut = 10000; 				// ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv” (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
+static const int Fcut = 200; 				//200 ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv” (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
+//ŽžŠÔƒXƒeƒbƒv”‚ª10000‚¾‚ÆC
 #else
 
 static const double dt = 67e-18; 			// ŽžŠÔƒXƒeƒbƒv[s]
@@ -260,15 +504,20 @@ static const int Nmax = 1000; 			// ÅIŽžŠÔƒXƒeƒbƒv
 #else
 static const double dt = 2.8e-17; 			// ŽžŠÔƒXƒeƒbƒv[s]
 static const int Ncut = 5; 				// ŽžŠÔƒXƒeƒbƒv”‚ð•\Ž¦‚³‚¹‚éŠÔŠu
-static const int Tcut = 30; 			// ƒGƒlƒ‹ƒM[‚Ì•½‹Ï‚ÌŽZo‚ðŠJŽn‚·‚éŽžŠÔƒXƒeƒbƒv
+static const int Tcut = 30; //30			// ™ƒGƒlƒ‹ƒM[‚Ì•½‹Ï‚ÌŽZo‚ðŠJŽn‚·‚éŽžŠÔƒXƒeƒbƒv
+
 static const int Fcut = 30; 			// ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv” (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
 static const int Nmax = 1; 			// ÅIŽžŠÔƒXƒeƒbƒv
 #endif
 
-static const int Ncheck = 1000; 					// “®ìŠm”F—p‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv
+//PoyntingPower
+
+static const int Ncheck = 10; //10					// ™“®ìŠm”F—p‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv
+// ‚±‚ê‚Í‰‚ß‚É‚ ‚é‚â‚Â
 static const int Ncutfield = Ncut; 			// ƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒv
 //static const int Ncutfield2 = 10; 			// ˆÀ’èó‘Ô‚Å‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒvŠÔŠu
-static const int Ncutfield2 = 1000; 			// ˆÀ’èó‘Ô‚Å‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒvŠÔŠu
+static const int Ncutfield2 = 5; 			// ™ˆÀ’èó‘Ô‚Å‚ÌƒtƒB[ƒ‹ƒh‚ðo—Í‚·‚éŽžŠÔƒXƒeƒbƒvŠÔŠu
+//‚±‚ê‚Í149800`150000‚Ü‚Å5‚Ý‚Åo—Í‚·‚é
 
 /*****************************************************************************/
 // •¨——Ê[MKSAŒn]
@@ -287,13 +536,13 @@ static const double dblCladHeight1 = CLAD_HEIGHT1 * 1.0e-9; 				// ã•”ƒNƒ‰ƒbƒh‘
 static const int	intSlabHeigPer = INT_DIV (dblSlabHeig/2.0, dblCellSize); 				//ƒXƒ‰ƒu—ñ”(‘ÎÌ‹«ŠEðŒ‚ðŽg—p‚µ‚Ä‚¢‚é‚Ì‚ÅCƒXƒ‰ƒuŒú‚ð1/2)
 static const int	intCladHeight1 = INT_DIV (CLAD_HEIGHT1, CELL_SIZE); 				//ã•”ƒNƒ‰ƒbƒh—ñ”
 static const int	air_hc = 	(int)((0.0e-6*1e10)/(dz*1e10)); 					//ƒNƒ‰ƒbƒhã•”‹ó‹C‘wŒú
-static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer +Z_AIR; 			//Šˆ«‘w’†SƒZƒ‹(+1‚Í[intSlabHeigPer]‚ªŠï”ƒZƒ‹”‚Ì‚Æ‚«‚É’†‰›’l‚É‚·‚é‚½‚ß)
+static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer; 			//Šˆ«‘w’†SƒZƒ‹(+1‚Í[intSlabHeigPer]‚ªŠï”ƒZƒ‹”‚Ì‚Æ‚«‚É’†‰›’l‚É‚·‚é‚½‚ß)
 
 
 /*****************************************************************************/
 // ƒtƒHƒgƒjƒbƒNŒ‹»“±”g˜H
 /*****************************************************************************/
-static const double dblPitchCellComp = dblCellSize/2.0; 			// ŠiŽq’è”‚ÌŠÛ‚ß
+static const double dblPitchCellComp = dblCellSize / 2.0; 			// ŠiŽq’è”‚ÌŠÛ‚ß
 static const double dblPitch = PITCH * 1e-9; 					// ‰~EŠiŽq’è”
 
 static const double dblRadius = RADIUS * 1e-9; 					// ‰~E”¼Œa
@@ -304,32 +553,49 @@ static const double dblRadius5 = 0.06e-6; 						//’†‰›‰~E—ñæ’[‰~E”¼Œa
 static const double dblRadius6 = 0.10e-6; 						//’†‰›‰~E—ñæ’[‰~E”¼Œa
 static const double dblRadius7 = 0.14e-6; 						//’†‰›‰~E—ñæ’[‰~E”¼Œa
 static const double dblRadius8 = 0.16e-6; 						//’†‰›‰~E—ñæ’[‰~E”¼Œa
+
+static const double dblRadius9 = 0.078e-6; 						//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/27
+static const double dblRadius10 = 0.08e-6; 						//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/27
+static const double dblRadius11 = 0.08e-6; 					//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/27
+static const double dblRadius12 = 0.084e-6; 						//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/27
+static const double dblRadius13 = 0.084e-6; 					//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/27
+static const double dblRadius14 = 0.10e-6; 					//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/29 168
+static const double dblRadius15 = 0.10e-6; 					//ƒe[ƒp—p‰~EƒTƒCƒY 16/08/29 180
+
 static const double dblDiamter = 2.0 * dblRadius; 				// ‰~E’¼Œa
 
-static const double dblRadius_s = RADIUS_S * 1e-9; 					// ‰~E”¼Œai¬‚³‚¢j
-static const double dblRadius_b = RADIUS_B * 1e-9; 					// ‰~E”¼Œai‘å‚«‚¢j
+static const int intPitchX = INT_DIV(PITCH, CELL_SIZE); 		// ŠiŽq’è”‚ÌƒZƒ‹ƒTƒCƒY(X•ûŒü)
+static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0) / 2 + 0.5), CELL_SIZE)); 		// ŠiŽq’è”‚ÌƒZƒ‹ƒTƒCƒY(Y•ûŒü)	+0.5‚ÍŽlŽÌŒÜ“ü‚Ì‚½‚ß
+static const int intRadius = INT_DIV(RADIUS, CELL_SIZE); 		// ‰~E”¼Œa
 
-static const int intPitchX = INT_DIV (PITCH, CELL_SIZE); 		// ŠiŽq’è”‚ÌƒZƒ‹ƒTƒCƒY(X•ûŒü)
-static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0)/2 + 0.5), CELL_SIZE)); 		// ŠiŽq’è”‚ÌƒZƒ‹ƒTƒCƒY(Y•ûŒü)	+0.5‚ÍŽlŽÌŒÜ“ü‚Ì‚½‚ß
-static const int intRadius = INT_DIV (RADIUS, CELL_SIZE); 		// ‰~E”¼Œa
 
-static const int intRadius_s = INT_DIV (RADIUS_S, CELL_SIZE); 		// ‰~E”¼Œai¬‚³‚¢j
-static const int intRadius_b = INT_DIV (RADIUS_B, CELL_SIZE); 		// ‰~E”¼Œai‘å‚«‚¢j
+//static const int intPcwWid = 9; 		// ‰~Es”(‘wŒú•ûŒü)(Ex.13)
+//static const int intPcwLen = 51; 		// ‰~E—ñ”(“±”g˜H•ûŒü)(Ex.10)
+//static const int intPcwStartX = 8; 		// ‰~’Œ”z’u‚ÌŠJŽnXÀ•W(“±”g˜H•ûŒüCƒZƒ‹”“ü—Í)(Ex.105)
+//static const int intPcwStartY = 8; 		// ‰~’Œ”z’u‚ÌŠJŽnYÀ•W(••ûŒüCƒZƒ‹”“ü—Í)(Ex.4)
+//static const int PCmargin = 6; 		//ƒtƒHƒgƒjƒbƒNŒ‹»—Ìˆæƒ}[ƒWƒ“D‚±‚Ì’·‚³‚¾‚¯ÅŠO‰~E‚Ì’†S‚©‚ç“`”À•ûŒü‚ÉƒXƒy[ƒX‚ðÝ‚¯‚é(ƒZƒ‹”“ü—ÍC"0" = ŠE–ÊŠÔŠu0.08um)
 
 static const int intNormPcwPer = NORM_PCW_PER; 				// PCW—ñ”
-static const int intPitchShiftPcwPer = PITCH_SHIFT_PER;				// ŠiŽq’è”•Ï‰»PCW‚ÌŽüŠú”
+static const int intPitchShiftPcwPer = PITCH_SHIFT_PER;				// ™ŠiŽq’è”•Ï‰»PCW‚ÌŽüŠú”
+static const int intPitchShiftPcwPerOut = PITCH_SHIFT_PER_OUT; //™
 static const int intPitchShiftChirpPcwPer = PITCH_SHIFT_CHIRP_PER;	// ŠiŽq’è”•Ï‰»ƒ`ƒƒ[ƒvPCW‚ÌŽüŠú”
 
 static const int intChirp3rdLsPer = CHIRP_3RD_LS_PER; 		// ƒ`ƒƒ[ƒvLSPCW—ñ”
 static const int intChirp2ndLsPer = CHIRP_2ND_LS_PER; 		// ƒ`ƒƒ[ƒvLSPCW—ñ”
+static const int intChirp2ndLsPerOut = CHIRP_2ND_LS_PER_OUT;
 static const int intLspcwPer = LSPCW_PER; 					// LSPCW—ñ”
-static const int intPcwPer = 2 * (intNormPcwPer + intChirp3rdLsPer + intPitchShiftPcwPer + intPitchShiftChirpPcwPer) + intLspcwPer; 	// ‘SPCW—ñ”
+static const int intPcwPer = 2 * (intNormPcwPer + intChirp3rdLsPer + intPitchShiftChirpPcwPer) + intPitchShiftPcwPer + intPitchShiftPcwPerOut + intLspcwPer; 	// ™‘SPCW—ñ”
 static const int intSx4Per = INT_DIV (SX4, CELL_SIZE); 		// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—ñ”
 static const int intSx3Per = INT_DIV (SX3, CELL_SIZE); 		// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—ñ”
 static const int intSx2Per = INT_DIV (SX2, CELL_SIZE); 		// “`”À(X)•ûŒü‚Ì3—ñ–ÚŠiŽqƒVƒtƒg—ñ”
 static const int intSx1Per = INT_DIV (SX1, CELL_SIZE); 		// “`”À(X)•ûŒü‚Ì1—ñ–ÚŠiŽqƒVƒtƒg—ñ”
 static const int intSyPer = INT_DIV (SY, CELL_SIZE); 		// ‰¡(Y)•ûŒü‚Ì“±”g˜H‘S‘ÌŠiŽqƒVƒtƒg—ñ”
 
+
+//static const int intNormPcwLen = INT_DIV (NORM_PCW_LEN, CELL_SIZE); 				// PCW—ñ”
+//static const int intChirpLsLen = INT_DIV (CHIRP_3RD_LS_LEN, CELL_SIZE); 				// ƒ`ƒƒ[ƒvLSPCW—ñ”
+//static const int intLspcwLen = INT_DIV (LSPCW_LEN, CELL_SIZE); 					// LSPCW—ñ”
+//static const int intPcwLen = 2 * (intNormPcwLen + intChirpLsLen) + intLspcwLen; 	// ‘SPCW—ñ”
 static const int intPcwWid = PCW_WID; 											// ‰¡•ûŒü‚ÌPCW—ñ”
 static const int intPcwStartX = intRadius; 										// ‰~’Œ”z’u‚ÌŠJŽnX—ñ”
 static const int intPcwStartY = intRadius + INT_DIV (PCW_SiSLAB_TERMINATION_LEN, CELL_SIZE);	// ‰~’Œ”z’u‚ÌŠJŽnY—ñ”
@@ -344,8 +610,14 @@ static const double dblWireLen2 = WIRE_LEN2 * 1e-9; 		// oŽË
 static const int intWireLen1 = INT_DIV(WIRE_LEN1, CELL_SIZE); 		// “üŽË
 static const int intWireLen2 = INT_DIV(WIRE_LEN2, CELL_SIZE); 		// oŽË
 int intWirePer2, intWirePer3; 		// oŽË
-static const int intWireWid_2 = intPitchY + INT_DIV(WIRE_WID_OFFSET, CELL_SIZE) + INT_DIV(SY, CELL_SIZE); 		// ×ü•‚Ì”¼•ª‚ÌƒZƒ‹”
-static const int intWireWid = intWireWid_2 * 2; 		// ×ü•
+static const int intWireWid_2 = intPitchY + INT_DIV(WIRE_WID_OFFSET, CELL_SIZE) + INT_DIV(SY, CELL_SIZE); 		// ×ü•‚Ì”¼•ª‚ÌƒZƒ‹”™
+static const int intWireWid_2_Out = intPitchY + INT_DIV(WIRE_WID_OFFSET_OUT, CELL_SIZE) + INT_DIV(SY, CELL_SIZE);
+static const int intWireWid = intWireWid_2 * 2; 		// ×ü•™
+
+//#define taper_x		INT_DIV (0.0e-6, dx)		//ƒe[ƒp‹——£(“±”g˜H•ûŒü) Ex: (int)((0.44e-6*1e10)/(dx*1e10))
+//#define taper_y		INT_DIV (0.0e-6, dx)		//ƒe[ƒp‹——£(••ûŒü) Ex: (int)((0.24e-6*1e10)/(dy*1e10))
+//#define taper		INT_DIV (0.0e-6, dx)		//ƒe[ƒp‹——£(“±”g˜HE••ûŒü‚É“™‹——£‚Ìê‡) Ex: (int)((0.44e-6*1e10)/(dx*1e10))
+
 
 /*****************************************************************************/
 // Þ—¿‚Ì‹üÜ—¦‚Æ—U“d—¦
@@ -368,52 +640,76 @@ static const double epsilon2 = EPSILON0 * SQ(n_clad); 		// ƒNƒ‰ƒbƒh‚Ì—U“d—¦
 
 
 /*****************************************************************************/
-// —ãUŠÖ”
+// —ãUŠÖ”//1000
 /*****************************************************************************/
 #if _FDTD
 #if _EXITATION_FUNC
 #if _PROGRAM_TEST
 #if PCW_Air_Or_SiO2
+//char *dir_name[] = {"1525","1545"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1525","1545"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1525","1545","1565","1585"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1585","1588","1582","1555"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1582","1565","1575"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+char *dir_name[] = {"1565","1575"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1565"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1582"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
 #else
 #if PCW_S1S3_Shift
+//char *dir_name[] = {"1485","1525"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1575","1565","1555","1545","1535","1525"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1565","1568","1571","1574"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1559","1556","1553","1550"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1547","1544","1541","1538"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1580","1570","1560","1550","1540"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+//char *dir_name[] = {"1573","1575","1567"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+char *dir_name[] = {"1570"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
 #else
 //char *dir_name[] = {"1530", "1535"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
 //char *dir_name[] = {"1545", "1550"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
-char *dir_name[] = {"1555"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+char *dir_name[] = {"1580"}; 		// —ãUŠÖ”‚Ì”g’· [nm]™ŒvŽZŽž
 #endif
-#endif
-#else
-char *dir_name[] = {"1600"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
 #endif
 #else
 char *dir_name[] = {"1550"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
 #endif
 #else
 char *dir_name[] = {"1550"}; 		// —ãUŠÖ”‚Ì”g’· [nm]
+#endif
+#else
+char *dir_name[] = {"1580"}; 		// —ãUŠÖ”‚Ì”g’· [nm]™“f‚«o‚µŽž
 #endif
 
 static const double delta_omega = 0.05; 						// ’†SŽü”g”‚Å‹KŠi‚µ‚½”¼’l‘S•
 static const int Npeak = 500; 								// ƒs[ƒNƒXƒeƒbƒv”
 
-// —ãU“_‚ÌÀ•W
-static const int ex_y_st = YMAX_ALL - intWireWid_2; 		// “±”g˜H’f–ÊŽnƒZƒ‹”(‰¡) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(Šù‚É1/2’l‚É‚È‚Á‚Ä‚¢‚é)‚ðˆø‚¢‚Ä‚¢‚é
+// —ãU“_‚ÌÀ•W™™
+static const int ex_y_st = YMAX_ALL -24 ; 	//™-intWireWid_2	// “±”g˜H’f–ÊŽnƒZƒ‹”(‰¡) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(Šù‚É1/2’l‚É‚È‚Á‚Ä‚¢‚é)‚ðˆø‚¢‚Ä‚¢‚é™™
 static const int ex_y_ed = YMAX_ALL; 					// “±”g˜H’f–ÊIƒZƒ‹”(‰¡)
-static const int ex_z_st = ZMAX_ALL_FF - intSlabHeigPer; 	// “±”g˜H’f–ÊŽnƒZƒ‹”(c) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(‚Ì1/2’l)‚ðˆø‚¢‚Ä‚¢‚é
-static const int ex_z_ed = ZMAX_ALL_FF; 			// “±”g˜H’f–ÊIƒZƒ‹”(c)
+static const int ex_z_st = ZMAX_ALL - intSlabHeigPer; 	// “±”g˜H’f–ÊŽnƒZƒ‹”(c) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(‚Ì1/2’l)‚ðˆø‚¢‚Ä‚¢‚é
+static const int ex_z_ed = ZMAX_ALL; 			// “±”g˜H’f–ÊIƒZƒ‹”(c)
+//static const int ex_y_st = YMAX_ALL - 26; 		// “±”g˜H’f–ÊŽnƒZƒ‹”(‰¡) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(Šù‚É1/2’l‚É‚È‚Á‚Ä‚¢‚é)‚ðˆø‚¢‚Ä‚¢‚é
+//static const int ex_y_ed = YMAX_ALL; 			// “±”g˜H’f–ÊIƒZƒ‹”(‰¡)
+//static const int ex_z_st = ZMAX_ALL - 7; 		// “±”g˜H’f–ÊŽnƒZƒ‹”(c) ©‰ðÍ‹óŠÔ‚Ì’†ŠÔƒZƒ‹À•W‚©‚ç“±”g˜H•(‚Ì1/2’l)‚ðˆø‚¢‚Ä‚¢‚é
+//static const int ex_z_ed = ZMAX_ALL; 			// “±”g˜H’f–ÊIƒZƒ‹”(c)
 
 
+
+static const int y_zx = YMAX_ALL - 1;
 /*****************************************************************************/
 // ŠÏ‘ª“_‚Æ—ãU“_‚ÌÝ’è (ŒvŽZŒë·‚ð–h‚®‚½‚ß‚ÉŒ…ã‚°‚µ‚ÄŒvŽZ)
 /*****************************************************************************/
 
 // •ªŠ„‘O‚Ì—ãU“_CŠÏ‘ª–Ê (•ªŠ„Œã‚ÍƒvƒƒOƒ‰ƒ€’†‚Åˆ—)
-static const int intExctLen = INT_DIV (EXCT_LEN, CELL_SIZE); //—ãU“_ •ªŠ„‘O‚Ì—ãU“_
+static const int intExctLen = INT_DIV (EXCT_LEN, CELL_SIZE); //—ãU“_ •ªŠ„‘O‚Ì—ãU“_™
 static const int intObseLen1 = INT_DIV (OBSE_LEN1, CELL_SIZE); //ŠÏ‘ª“_1
-static const int intObseLen5 = XMAX_ALL - INT_DIV (OBSE_LEN5, CELL_SIZE); //ŠÏ‘ª“_3
+//static const int intObseLen5 = XMAX_ALL - INT_DIV (OBSE_LEN5, CELL_SIZE); //™ŠÏ‘ª“_3 //ŠÏ‘ª“_5‚ÌŠÔˆá‚¦‚Å‚ÍHH
+//‚±‚ê‚Í‘½•ª‹@”\‚µ‚Ä‚È‚¢
 
 // •ªŠ„‘O‚Ì—ãU“_CŠÏ‘ª–Ê (•ªŠ„Œã‚ÍƒvƒƒOƒ‰ƒ€’†‚Åˆ—)
 
 /****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/20) ******************************/
+//static const int intObseWid = 2 * intWireWid_2; // ŠÏ‘ª–Ê‚Ì•(Y•ûŒü)
 static const int intObseWid = 2 * intPitchY; // ŠÏ‘ª–Ê‚Ì•(Y•ûŒü)
 static const int intObseHeig = 2 * intSlabHeigPer; // ŠÏ‘ª–Ê‚Ì‚‚³(Z•ûŒü)
 /****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/20) ******************************/
@@ -435,9 +731,18 @@ int intObseLenPart4; // oŽË ŠÏ‘ª“_(Žn“_)
 int intObseLenPart5; // oŽË ŠÏ‘ª“_(I“_)
 int intObseLenPart6; // oŽË ŠÏ‘ª“_(’†“_)
 int intObseLenPart7; // ’†S ŠÏ‘ª“_(’†“_)
+//int intObseLenPart8; // ’†S ŠÏ‘ª“_(’†“_)
+//int intObseLenPart9; // ’†S ŠÏ‘ª“_(’†“_)
 
 // Ž¥ŠE‚ÌŠÏ‘ª–Ê
 int intObseLenPartHz1; 		// “üŽË ŠÏ‘ª“_
 int intObseLenPartHz5; 		// oŽË ŠÏ‘ª“_
+
+// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ÌÅ‘å’l‚ÌŽZo—p
+//static const int intObseLenPart2 = (int)((3.84e-6*1e10)/(dx*1e10)); //intObseLenPart1‚©‚çŠiŽq’è”1ŽüŠú‚¸‚ê
+//static const int intObseLenPart2 = (int) INT_DIV ((2.7e-6 + dblPitch*2), dx); //intObseLenPart1‚©‚çŠiŽq’è”2ŽüŠú‚¸‚ê
+//static const int intObseLenPart5 = (int)((1.32e-6*1e10)/(dx*1e10)); //intObseLenPart4‚©‚çŠiŽq’è”1ŽüŠú‚¸‚ê
+//static const int intObseLenPart5 = (int)((1.3e-6*1e10 + dblPitch*2*1e10)/(dx*1e10)); //intObseLenPart4‚©‚çŠiŽq’è”2ŽüŠú‚¸‚ê NODE 6
+//static const int intObseLenPart5 = (int) INT_DIV ((9.3e-6 + dblPitch*2), dx); //intObseLenPart4‚©‚çŠiŽq’è”2ŽüŠú‚¸‚ê NODE 2
 
 static const int WGlength = (int)((2.00e-6*1e10)/(dx*1e10)); //‹éŒ`“±”g˜H’·(“üŽË‘¤DƒZƒ‹”‚É•ÏŠ·)
