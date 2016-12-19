@@ -2666,7 +2666,13 @@ void output_field_write(char *dir_name_def){
 	pj1 = y_cen;
 	pk1 = z_cen;
 
-	printf("n = %d\n", n);
+	//baba lab
+	//printf("n = %d\n", n);
+
+	//kuramitsu lab
+	if(irank == 0){
+			printf("n = %d\n", n);
+	}
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
