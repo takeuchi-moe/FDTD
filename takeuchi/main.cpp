@@ -39,11 +39,11 @@ Norihiro ISHIKURA (October, 2012)
 #include <time.h>
 
 //baba lab
-#include <direct.h>
+//#include <direct.h>
 
 //kuramitsu lab
-//#include<sys/stat.h>
-//#include<sys/types.h>
+#include<sys/stat.h>
+#include<sys/types.h>
 
 
 
@@ -221,10 +221,10 @@ void file_open(char* dir_name_def){
 	sprintf(name_xz, "/Model_xz_%d.txt", irank);
 
 	//baba lab
-	_mkdir(strcpy(dir_name, dir_name_def)); 		// 振り分けできるかテスト
+	//_mkdir(strcpy(dir_name, dir_name_def)); 		// 振り分けできるかテスト
 
 	//kuramitsu lab
-	//mkdir(strcpy(dir_name, dir_name_def), 0755); 		// 振り分けできるかテスト
+	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// 振り分けできるかテスト
 
 
 
