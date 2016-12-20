@@ -2,7 +2,7 @@
 // 並列計算時の計算機の台数
 /*****************************************************************************/
 #if _FDTD
-#define NODE 4
+#define NODE 10
 #else
 #define NODE 1
 #endif
@@ -43,7 +43,7 @@
 #define SLAB_HEIGHT 210		// スラブ厚
 #define CLAD_HEIGHT1 2100	// 上部クラッド高さ +21*95までは大丈夫
 #define CLAD_HEIGHT2 0		// 下部クラッド高さ
-#define AIR_HEIGHT 200*21//21*500		// 空気層高さ
+#define AIR_HEIGHT 500*21//21*500		// 空気層高さ
 
 #define RADIUS 105			// PCの標準円孔半径
 #define RADIUS_S 95		// PCの標準円孔半径（小さい）
@@ -212,7 +212,7 @@ static const double inv_dz = 1/dz;
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
 static const double dt = 38e-18; 			// 時間ステップ[s]
-static const int Nmax = 5000; 				// 最終時間ステップ
+static const int Nmax = 50000; 				// 最終時間ステップ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
@@ -224,9 +224,9 @@ static const int Nmax = 5000; 				// 最終時間ステップ
 
 static const int Ncut = 1000; 				// 時間ステップ数を表示させる間隔
 
-static const int Tcut = 100; 				// パワーの平均の算出を開始する時間ステップ  (最終計算ステップからの差)
+static const int Tcut = 1000; 				// パワーの平均の算出を開始する時間ステップ  (最終計算ステップからの差)
 //static const int Fcut = 500; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-static const int Fcut = 2000; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
+static const int Fcut = 10000; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
 #else
 
 static const double dt = 67e-18; 			// 時間ステップ[s]
@@ -379,7 +379,7 @@ static const double epsilon2 = EPSILON0 * SQ(n_clad); 		// クラッドの誘電率
 #else
 //char *dir_name[] = {"1530", "1535"}; 		// 励振関数の波長 [nm]
 //char *dir_name[] = {"1545", "1550"}; 		// 励振関数の波長 [nm]
-char *dir_name[] = {"1555"}; 		// 励振関数の波長 [nm]   //used
+char *dir_name[] = {"1555"}; 		// 励振関数の波長 [nm]
 #endif
 #endif
 #else

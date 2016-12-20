@@ -119,8 +119,8 @@ int main(int argc, char **argv){
 		// 計算開始時刻の出力
 		if (irank == IRANK_MIN){
 			//_strtime(time);
-			//fprintf(fpparameter, "Start Time:\t %s\n", time);
-			//s_time = MPI_Wtime();
+			fprintf(fpparameter, "Start Time:\t %s\n", time);
+			s_time = MPI_Wtime();
 		}
 
 		// 電磁界計算
@@ -129,8 +129,8 @@ int main(int argc, char **argv){
 			// 時間ステップ数の表示
 			if(n % Ncut == 0){
 				//_strtime(time);
-				//printf("n = %d, \t\t", n);
-				//printf("time = %s\n", time);
+				printf("n = %d, \t\t", n);
+				printf("time = %s\n", time);
 			}
 
 			// 励振関数の設定
@@ -194,10 +194,10 @@ int main(int argc, char **argv){
 
 		if (irank == IRANK_MIN){
 			//_strtime(time);
-			//fprintf(fpparameter, "End Time:\t %s\n", time); 	/*計算終了時刻の出力*/
+			fprintf(fpparameter, "End Time:\t %s\n", time); 	/*計算終了時刻の出力*/
 			//時刻の出力
-			//e_time = MPI_Wtime();
-			//printf ("\ntime = %f\n", e_time - s_time);
+			e_time = MPI_Wtime();
+			printf ("\ntime = %f\n", e_time - s_time);
 		}
 
 		file_close(); 			// ファイルを閉じる
@@ -1534,8 +1534,8 @@ void set_epsilon(){
 			fprintf (fpepsilonx, "\n");
 		}
 	}
-
 	if(irank != IRANK_MIN){
+
 		MPI_Send (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, 0, tag1, MPI_COMM_WORLD);
 
 		for(x = 1; x<xmax; x++){
@@ -1547,6 +1547,7 @@ void set_epsilon(){
 	}
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
+
 			MPI_Recv (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, node, tag1, MPI_COMM_WORLD, &status);
 
 			if(node == IRANK_MAX){
@@ -2483,17 +2484,7 @@ void output_model(){
 		fclose(model_xz);
 	}
 
-	// YZ平面
-	if(irank == NODE/2){
-		for(y = 0; y < ymax; y++){
-			for(z = 0; z < zmax_ff; z++){
-				cell_yz[y][z] = cell[10][y][z];
-				fprintf(model_yz, "%d\t", cell_yz[y][z]);
-			}
-			fprintf(model_yz, "\n");
-		}
-		fclose(model_yz);
-	}
+
 
 
 	// それぞれ分割部のモデル
@@ -2507,37 +2498,6 @@ void output_model(){
 		}
 		fclose(model_xy);
 	}
-
-
-	if(irank == IRANK_MIN){
-		for(node = 1; node < ISIZE; node++){
-			if(node == IRANK_MAX){
-
-				// 最終段は"のりしろ"が無いので，x方向を-1する
-				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
-				for(x = 1; x < xmax-1; x++){
-					for(y = 0; y < ymax; y++){
-						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
-					}
-					fprintf(allmodel_xy, "\n");
-				}
-			}
-			else{
-
-				MPI_Recv(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
-				for(x = 1; x < xmax; x++){
-					for(y = 0; y < ymax; y++){
-						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
-					}
-					fprintf(allmodel_xy, "\n");
-				}
-			}
-		}
-		fclose(allmodel_xy);
-	}
-
-
-
 
 	if(irank != IRANK_MIN){
 		MPI_Send(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, 0, tag2, MPI_COMM_WORLD);
@@ -2554,7 +2514,16 @@ void output_model(){
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
 			if(node == IRANK_MAX){
+
 				// 最終段は"のりしろ"が無いので，x方向を-1する
+				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
+				for(x = 1; x < xmax-1; x++){
+					for(y = 0; y < ymax; y++){
+						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
+					}
+					fprintf(allmodel_xy, "\n");
+				}
+
 				MPI_Recv(&cell_xz[0][0], (xmax-1)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 				for(x = 1; x < xmax-1; x++){
 					for(z = 0; z < zmax_ff; z++){
@@ -2564,6 +2533,15 @@ void output_model(){
 				}
 			}
 			else{
+
+				MPI_Recv(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
+				for(x = 1; x < xmax; x++){
+					for(y = 0; y < ymax; y++){
+						fprintf(allmodel_xy, "%d\t", cell_xy[x][y]);
+					}
+					fprintf(allmodel_xy, "\n");
+				}
+
 				MPI_Recv(&cell_xz[0][0], (xmax)*(zmax_ff), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 				for(x = 1; x < xmax; x++){
 					for(z = 0; z < zmax_ff; z++){
@@ -2573,6 +2551,7 @@ void output_model(){
 				}
 			}
 		}
+		fclose(allmodel_xy);
 		fclose(allmodel_xz);
 	}
 
@@ -2651,27 +2630,20 @@ void output_model(){
 
 void output_field_write(char *dir_name_def){
 
-	char fname1[40], fname2[40], fname3[40], dir_name[50]; 	//ファイル名格納変数
+	char fname1[40], fname2[40], dir_name[50]; 	//ファイル名格納変数
 	int node;
 	int tag3 = 3;
 	int pi1, pj1, pk1;
 	MPI_Status status;
 	FILE *HZ1, *HZ1_NODE;
 	FILE *HZ2, *HZ2_NODE;
-	FILE *HZ3;
 	//FILE *HZ1, *HZ2;
 
 	pi1 = x_cen;
 	pj1 = y_cen;
 	pk1 = z_cen;
 
-	//baba lab
-	//printf("n = %d\n", n);
-
-	//kuramitsu lab
-	if(irank == 0){
-			printf("n = %d\n", n);
-	}
+	printf("n = %d\n", n);
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
@@ -2691,6 +2663,7 @@ void output_field_write(char *dir_name_def){
 			fprintf(HZ1, "\n");
 		}
 	}
+
 	// モデルをホストに送信
 	else{
 		if(irank != IRANK_MAX){
@@ -2736,8 +2709,10 @@ void output_field_write(char *dir_name_def){
 
 			}
 		}
+
 		// ファイルポインタを閉じる
 		fclose(HZ1);
+
 	}
 
 
@@ -2776,6 +2751,8 @@ void output_field_write(char *dir_name_def){
 		fprintf(HZ2_NODE, "\n");
 	}*/
 
+
+
 	// 受信したモデルから全モデルを作成
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){		// ノード0がノード1から順にデータを受け取り出力していく．
@@ -2798,27 +2775,13 @@ void output_field_write(char *dir_name_def){
 				}
 			}
 		}
+
 		// ファイルポインタを閉じる
 		fclose(HZ2);
+
 	}
 
 
-	if(irank == NODE/2){
-		for(y = 0; y < ymax; y++){
-			for(z = 0; z < zmax_ff; z++){
-				field_yz[y][z] = Hz[10][y][z]; 	//全てのノードで電磁界成分を2次元配列に格納する．
-			}
-		}
-
-		sprintf(fname3, "/Field_Hz_YZ_%d_01.txt", n);
-		HZ3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
-		for(y = 0; y < ymax; y++){
-			for(z = 0; z < zmax_ff; z++){
-				fprintf(HZ3, "%e\t", field_yz[y][z]);
-			}
-			fprintf(HZ3, "\n");
-		}
-	}
 
 
 	// YZ平面の電界分布の出力
