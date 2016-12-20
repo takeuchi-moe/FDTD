@@ -1534,8 +1534,8 @@ void set_epsilon(){
 			fprintf (fpepsilonx, "\n");
 		}
 	}
-	if(irank != IRANK_MIN){
 
+	if(irank != IRANK_MIN){
 		MPI_Send (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, 0, tag1, MPI_COMM_WORLD);
 
 		for(x = 1; x<xmax; x++){
@@ -1547,7 +1547,6 @@ void set_epsilon(){
 	}
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
-
 			MPI_Recv (&epsilon_xy[0][0], (XMAX+1)*(YMAX+1), MPI_DOUBLE, node, tag1, MPI_COMM_WORLD, &status);
 
 			if(node == IRANK_MAX){
