@@ -6399,7 +6399,7 @@ void output_field_write(char *dir_name_def) {
 
 
 	// モデル出力ファイルポインタの初期化
-	if (irank == IRANK_MIN) {
+	/*if (irank == IRANK_MIN) {
 		sprintf(fname, "/Field_Hz_ZX_%d_01.txt", n);
 		HY1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
 		for (x = 0; x < xmax; x++) {
@@ -6418,10 +6418,10 @@ void output_field_write(char *dir_name_def) {
 		if (irank == IRANK_MAX) {
 			MPI_Send(&field_zx_Hz[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ノード0以外のノードがノード0に電磁界成分を送る．
 		}
-	}
+	}*/
 
 	// 受信したモデルから全モデルを作成
-	if (irank == IRANK_MIN) {
+/*	if (irank == IRANK_MIN) {
 		for (node = 1; node < ISIZE; node++) {		// ノード0がノード1から順にデータを受け取り出力していく．
 			if (node == IRANK_MAX) {					// ノードisize-1のみ1セル小さく設定しているため条件文で分岐
 				MPI_Recv(&field_zx_Hz[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
@@ -6445,7 +6445,7 @@ void output_field_write(char *dir_name_def) {
 
 		// ファイルポインタを閉じる
 		fclose(HY1);
-	}
+	}*/
 
 
 	/*
@@ -6505,7 +6505,7 @@ void output_field_write(char *dir_name_def) {
 	FILE *EYZ1, *EYZ2, *EYZ3;
 	char fname2[40], fname3[40], fname4[40];
 
-	if (irank == intObseInPortNum) { //入射
+/*	if (irank == intObseInPortNum) { //入射
 		x = intObseLenPart1;
 		sprintf(fname2, "/Field_E_YZ_%d_01.txt", n);
 		EYZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w");
@@ -6520,9 +6520,9 @@ void output_field_write(char *dir_name_def) {
 			fprintf(EYZ1, "\n");
 		}
 		fclose(EYZ1);
-	}
+	}*/
 
-	if (irank == intObseOutPortNum) {			// 出射
+/*	if (irank == intObseOutPortNum) {			// 出射
 		x = intObseLenPart4;
 		sprintf(fname3, "/Field_E_YZ_%d_04.txt", n);
 		EYZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
@@ -6550,7 +6550,7 @@ void output_field_write(char *dir_name_def) {
 			fprintf(EYZ3, "\n");
 		}
 		fclose(EYZ3);
-	}
+	}*/
 
 	// 2013/01/22 最終ステップでのYZ平面のHz成分を出力
 	//if (n == Nmax){
@@ -6582,7 +6582,7 @@ void output_field_write(char *dir_name_def) {
 
 //☆☆☆ZX平面の電界分布の出力16/1/5 プログラム作成開始 ここで別のモニタとして機能
 
-	double E_zx;
+/*	double E_zx;
 	char fname10[40];
 	FILE *EZX1, *EZX2, *EZX3;
 
@@ -6636,7 +6636,7 @@ void output_field_write(char *dir_name_def) {
 	fclose(EZX3);
 	}
 
-
+*/
 
 	//// 2013/01/22 最終ステップでのYZ平面のHz成分を出力
 	//if (n == Nmax){
