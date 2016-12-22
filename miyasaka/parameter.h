@@ -1,379 +1,379 @@
 /*****************************************************************************/
-// 並列計算時の計算機の台数
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ?ｿｽ?ｿｽﾌ計?ｿｽZ?ｿｽ@?ｿｽﾌ台数
 /*****************************************************************************/
 #if _FDTD
-#define NODE 20
+#define NODE 10
 #else
 #define NODE 1
 #endif
 
-// PCWの構造
+// PCW?ｿｽﾌ構?ｿｽ?ｿｽ
 #define PCW_Air_Or_SiO2	0		// 0:SiO2, 1:Air-brige
-#define PCW_S1S3_Shift	0		// 0:3列目格子シフト構造, 1:1,3列目格子シフト構造
+#define PCW_S1S3_Shift	0		// 0:3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ\?ｿｽ?ｿｽ, 1:1,3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ\?ｿｽ?ｿｽ
 
-// 並列計算時の計算機のランク
-#define IRANK_MAX (NODE-1)		// 最大値
-#define IRANK_MIN 0				// 最小値(この数字の割り当てられた計算機に結果が入る)
-#define ISIZE NODE				// サイズ
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ?ｿｽ?ｿｽﾌ計?ｿｽZ?ｿｽ@?ｿｽﾌ??ｿｽ?ｿｽ?ｿｽ?ｿｽN
+#define IRANK_MAX (NODE-1)		// ?ｿｽﾅ托ｿｽ?ｿｽl
+#define IRANK_MIN 0				// ?ｿｽﾅ擾ｿｽ?ｿｽl(?ｿｽ?ｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ奇ｿｽ?ｿｽ闢厄ｿｽﾄゑｿｽ?ｿｽ黷ｽ?ｿｽv?ｿｽZ?ｿｽ@?ｿｽﾉ鯉ｿｽ?ｿｽﾊゑｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+#define ISIZE NODE				// ?ｿｽT?ｿｽC?ｿｽY
 
 #define TRUE 1
 #define FALSE 0
 /*****************************************************************************/
-// 計算パラメータ		単位はnm
-// (配列の定義やプリプロセッサで使用するため，マクロ化)
-// 各値はセルサイズの整数倍になっていること!!
+// ?ｿｽv?ｿｽZ?ｿｽp?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[?ｿｽ^		?ｿｽP?ｿｽﾊゑｿｽnm
+// (?ｿｽz?ｿｽ?ｿｽ?ｿｽﾌ抵ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽv?ｿｽ?ｿｽ?ｿｽv?ｿｽ?ｿｽ?ｿｽZ?ｿｽb?ｿｽT?ｿｽﾅ使?ｿｽp?ｿｽ?ｿｽ?ｿｽ驍ｽ?ｿｽﾟ，?ｿｽ}?ｿｽN?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+// ?ｿｽe?ｿｽl?ｿｽﾍセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽ{?ｿｽﾉなゑｿｽ?ｿｽﾄゑｿｽ?ｿｽ驍ｱ?ｿｽ?ｿｽ!!
 /*****************************************************************************/
 
 #if _PROGRAM_TEST
 
 #if PCW_Air_Or_SiO2
-/****************************** 本番用(Air-brige) ******************************/
+/****************************** ?ｿｽ{?ｿｽﾔ用(Air-brige) ******************************/
 
 /*-------------------- CELL_SIZE:15nm --------------------*/
-#define CELL_SIZE 15			// セルサイズ
-#define PITCH 450				// PC 格子定数
-#define PITCH_SHIFT_MAX 450 //480		// 格子定数変化PCWのPC格子定数の最大値
+#define CELL_SIZE 15			// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY
+#define PITCH 450				// PC ?ｿｽi?ｿｽq?ｿｽ關?
+#define PITCH_SHIFT_MAX 450 //480		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽ?ｿｽPC?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌ最托ｿｽ?ｿｽl
 
-#define SLAB_HEIGHT 210		// スラブ厚
-#define CLAD_HEIGHT1 525	// 上部クラッド高さ
-#define CLAD_HEIGHT2 0		// 下部クラッド高さ
-#define AIR_HEIGHT 0		// 空気層高さ
+#define SLAB_HEIGHT 210		// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+#define CLAD_HEIGHT1 525	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CLAD_HEIGHT2 0		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define AIR_HEIGHT 0		// ?ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define RADIUS 155			// PCの標準円孔半径
-#define SX1 0				// 伝搬(X)方向の1列目格子シフト量
-#define SX3 90				// 伝搬(X)方向の3列目格子シフト量
-#define SY 0				// 横(Y)方向の導波路全体格子シフト量
+#define RADIUS 155			// PC?ｿｽﾌ標?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+#define SX1 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ1?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SX3 90				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SY 0				// ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
 
-#define EXCT_LEN 840					// 励振点 (モデルの左端からの距離)
-#define EXCT_OBSE_LEN 975				// 励振点から観測面の中心までの距離
-#define OBSE_WIRE_LEN 2540				// 観測面の中心から細線導波路端までの距離
-//#define OBSE_INTER (2 * PITCH)		// 観測面の長さ(透過率，反射率を求めるために使用)
-#define OBSE_INTER (PITCH)				// 観測面の長さ(透過率，反射率を求めるために使用)
-#define WIRE_OUTPUT_LEN (EXCT_LEN + 105)	// 出射細線導波路の長さ(直打ちの数字はセルサイズをNODE数の整数倍にするために使用)
-#define WIRE_OUTPUT_OFFSET 0			// 出射細線導波路のスラブ終端の長さ
-#define WIRE_WID_OFFSET 0				// 細線幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-#define PCW_SiSLAB_TERMINATION_LEN 255	// PCW横のCOREスラブ終端の長さ
-#define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-#define PCW_WIDTH_CHIRP 0				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
+#define EXCT_LEN 840					// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+#define EXCT_OBSE_LEN 975				// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+#define OBSE_WIRE_LEN 2540				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ[?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+//#define OBSE_INTER (2 * PITCH)		// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define OBSE_INTER (PITCH)				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_LEN (EXCT_LEN + 105)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾅゑｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾍセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY?ｿｽ?ｿｽNODE?ｿｽ?ｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽ{?ｿｽﾉゑｿｽ?ｿｽ驍ｽ?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_OFFSET 0			// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define WIRE_WID_OFFSET 0				// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+#define PCW_SiSLAB_TERMINATION_LEN 255	// PCW?ｿｽ?ｿｽ?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define PCW_SiSLAB_OFFSET 0				// PCW?ｿｽc?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+#define PCW_WIDTH_CHIRP 0				// PCW?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
 
-// これ以下は周期数
-#define NORM_PCW_PER 0				// 通常PCW周期数
-#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数
-#define PITCH_SHIFT_PER 5			// 格子定数変化PCWの周期数
-#define LSPCW_SHIFT_DESCRETE FALSE			// 格子定数変化PCWのとき，はじめからLSPCWにする場合はFALSE　しない場合はTRUE
-#define PITCH_SHIFT_CHIRP_PER 0		// 格子定数変化チャープPCWの周期数
-#define LSPCW_PER 20				// LSPCW周期数
-#define PCW_WID 6					// PCWの列数
-// これ以上は周期数
-#define LSPCW_ROW 3					// 導波路から数えて何列目の格子点を伝搬方向にシフトさせるか．
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ会ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define NORM_PCW_PER 0				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_PER 0			// 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽﾊチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_PER 5			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define LSPCW_SHIFT_DESCRETE FALSE			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌとゑｿｽ?ｿｽC?ｿｽﾍゑｿｽ?ｿｽﾟゑｿｽ?ｿｽ?ｿｽLSPCW?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ?ｿｽ鼾??ｿｽ?ｿｽFALSE?ｿｽ@?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽ鼾??ｿｽ?ｿｽTRUE
+#define PITCH_SHIFT_CHIRP_PER 0		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define LSPCW_PER 20				// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PCW_WID 6					// PCW?ｿｽﾌ暦ｿｽ?ｿｽ?ｿｽ
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ擾ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define LSPCW_ROW 3					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ逅費ｿｽ?ｿｽ?ｿｽﾄ会ｿｽ?ｿｽ?ｿｽ?ｿｽﾚの格?ｿｽq?ｿｽ_?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉシ?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ驍ｩ?ｿｽD
 
-#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// 通常PCW長
-#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
-#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW長
-#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// 出射細線導波路のスラブ終端の長さ
+#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ
+#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW?ｿｽ?ｿｽ
+#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
 
-#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
-#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// 出射観測面の中心座標 (モデルの右端からの距離)
+#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// ?ｿｽo?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ右?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長
-#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// 出射細線長
-#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW長
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW?ｿｽ?ｿｽ
 /*-------------------- CELL_SIZE:15nm --------------------*/
 
 /*-------------------- CELL_SIZE:21nm --------------------*/
-//#define CELL_SIZE 21			// セルサイズ
-//#define PITCH 441				// PC 格子定数
-//#define PITCH_SHIFT_MAX 441 //480		// 格子定数変化PCWのPC格子定数の最大値
+//#define CELL_SIZE 21			// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY
+//#define PITCH 441				// PC ?ｿｽi?ｿｽq?ｿｽ關?
+//#define PITCH_SHIFT_MAX 441 //480		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽ?ｿｽPC?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌ最托ｿｽ?ｿｽl
 //
-//#define SLAB_HEIGHT 210		// スラブ厚
-//#define CLAD_HEIGHT1 525	// 上部クラッド高さ
-//#define CLAD_HEIGHT2 0		// 下部クラッド高さ
-//#define AIR_HEIGHT 0		// 空気層高さ
+//#define SLAB_HEIGHT 210		// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+//#define CLAD_HEIGHT1 525	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define CLAD_HEIGHT2 0		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define AIR_HEIGHT 0		// ?ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 //
-//#define RADIUS 147			// PCの標準円孔半径
-//#define SX3 105				// 伝搬(X)方向の3列目格子シフト量
-//#define SY 0				// 横(Y)方向の導波路全体格子シフト量
+//#define RADIUS 147			// PC?ｿｽﾌ標?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+//#define SX3 105				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+//#define SY 0				// ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
 //
-//#define EXCT_LEN 840					// 励振点 (モデルの左端からの距離)
-//#define EXCT_OBSE_LEN 966				// 励振点から観測面の中心までの距離
-//#define OBSE_WIRE_LEN 2541				// 観測面の中心から細線導波路端までの距離
-////#define OBSE_INTER (2 * PITCH)		// 観測面の長さ(透過率，反射率を求めるために使用)
-//#define OBSE_INTER (PITCH)				// 観測面の長さ(透過率，反射率を求めるために使用)
-//#define WIRE_OUTPUT_LEN (EXCT_LEN + 0)	// 出射細線導波路の長さ(直打ちの数字はセルサイズをNODE数の整数倍にするために使用)
-//#define WIRE_OUTPUT_OFFSET 0			// 出射細線導波路のスラブ終端の長さ
-//#define WIRE_WID_OFFSET 0				// 細線幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-//#define PCW_SiSLAB_TERMINATION_LEN 252	// PCW横のCOREスラブ終端の長さ
-//#define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-//#define PCW_WIDTH_CHIRP 0				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
+//#define EXCT_LEN 840					// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+//#define EXCT_OBSE_LEN 966				// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+//#define OBSE_WIRE_LEN 2541				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ[?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+////#define OBSE_INTER (2 * PITCH)		// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+//#define OBSE_INTER (PITCH)				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+//#define WIRE_OUTPUT_LEN (EXCT_LEN + 0)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾅゑｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾍセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY?ｿｽ?ｿｽNODE?ｿｽ?ｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽ{?ｿｽﾉゑｿｽ?ｿｽ驍ｽ?ｿｽﾟに使?ｿｽp)
+//#define WIRE_OUTPUT_OFFSET 0			// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+//#define WIRE_WID_OFFSET 0				// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+//#define PCW_SiSLAB_TERMINATION_LEN 252	// PCW?ｿｽ?ｿｽ?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+//#define PCW_SiSLAB_OFFSET 0				// PCW?ｿｽc?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+//#define PCW_WIDTH_CHIRP 0				// PCW?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
 //
-//// これ以下は周期数
-//#define NORM_PCW_PER 0				// 通常PCW周期数
-//#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数
-//#define PITCH_SHIFT_PER 5			// 格子定数変化PCWの周期数
-//#define PITCH_SHIFT_CHIRP_PER 0		// 格子定数変化チャープPCWの周期数
-//#define LSPCW_PER 20				// LSPCW周期数
-//#define PCW_WID 6					// PCWの列数
-//// これ以上は周期数
+//// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ会ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define NORM_PCW_PER 0				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define CHIRP_3RD_LS_PER 0			// 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽﾊチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define PITCH_SHIFT_PER 5			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define PITCH_SHIFT_CHIRP_PER 0		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define LSPCW_PER 20				// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define PCW_WID 6					// PCW?ｿｽﾌ暦ｿｽ?ｿｽ?ｿｽ
+//// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ擾ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 //
-//#define LSPCW_ROW 3					// 導波路から数えて何列目の格子点を伝搬方向にシフトさせるか．
+//#define LSPCW_ROW 3					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ逅費ｿｽ?ｿｽ?ｿｽﾄ会ｿｽ?ｿｽ?ｿｽ?ｿｽﾚの格?ｿｽq?ｿｽ_?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉシ?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ驍ｩ?ｿｽD
 //
-//#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// 通常PCW長
-//#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
-//#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW長
-//#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// 出射細線導波路のスラブ終端の長さ
+//#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ
+//#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ
+//#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW?ｿｽ?ｿｽ
+//#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
 //
-//#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
-//#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// 出射観測面の中心座標 (モデルの右端からの距離)
+//#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+//#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// ?ｿｽo?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ右?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
 //
-//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長
-//#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// 出射細線長
-//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW長
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+//#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW?ｿｽ?ｿｽ
 /*-------------------- CELL_SIZE:21nm --------------------*/
 
-/****************************** 本番用(Air-brige) ******************************/
+/****************************** ?ｿｽ{?ｿｽﾔ用(Air-brige) ******************************/
 #else
 
-/****************************** 本番用(SiO2) ******************************/
+/****************************** ?ｿｽ{?ｿｽﾔ用(SiO2) ******************************/
 
 #if PCW_S1S3_Shift
 
-/****************************** 1,3列目格子シフト構造 ******************************/
-#define CELL_SIZE 15			// セルサイズ
-#define PITCH 405				// PC 格子定数
-#define PITCH_SHIFT_MAX 495 //480		// 格子定数変化PCWのPC格子定数の最大値
+/****************************** 1,3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ\?ｿｽ?ｿｽ ******************************/
+#define CELL_SIZE 15			// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY
+#define PITCH 405				// PC ?ｿｽi?ｿｽq?ｿｽ關?
+#define PITCH_SHIFT_MAX 495 //480		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽ?ｿｽPC?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌ最托ｿｽ?ｿｽl
 
-#define SLAB_HEIGHT 210		// スラブ厚
-#define CLAD_HEIGHT1 750	// 上部クラッド高さ
-//#define CLAD_HEIGHT1 990	// 上部クラッド高さ
-#define CLAD_HEIGHT2 0		// 下部クラッド高さ
-#define AIR_HEIGHT 0		// 空気層高さ
+#define SLAB_HEIGHT 210		// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+#define CLAD_HEIGHT1 750	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define CLAD_HEIGHT1 990	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CLAD_HEIGHT2 0		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define AIR_HEIGHT 0		// ?ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define RADIUS 110			// PCの標準円孔半径
-//#define SX3 90				// 伝搬(X)方向の3列目格子シフト量
-//#define SX1 0				// 伝搬(X)方向の3列目格子シフト量
-//#define SX3 90				// 伝搬(X)方向の3列目格子シフト量
-//#define SX1 120				// 伝搬(X)方向の1列目格子シフト量
-#define SX3 0				// 伝搬(X)方向の3列目格子シフト量
-#define SX1 0				// 伝搬(X)方向の1列目格子シフト量
-#define SY 15				// 横(Y)方向の導波路全体格子シフト量(対称境界を使用しているので実際にはこの倍)
+#define RADIUS 110			// PC?ｿｽﾌ標?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+//#define SX3 90				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+//#define SX1 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+//#define SX3 90				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+//#define SX1 120				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ1?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SX3 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SX1 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ1?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SY 15				// ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ(?ｿｽﾎ称具ｿｽ?ｿｽE?ｿｽ?ｿｽ?ｿｽg?ｿｽp?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ?ｿｽﾌで趣ｿｽ?ｿｽﾛにはゑｿｽ?ｿｽﾌ倍)
 
-#define EXCT_LEN 840					// 励振点 (モデルの左端からの距離)
-#define EXCT_OBSE_LEN 975				// 励振点から観測面の中心までの距離
-#define OBSE_WIRE_LEN 2540				// 観測面の中心から細線導波路端までの距離
-//#define OBSE_INTER (2 * PITCH)		// 観測面の長さ(透過率，反射率を求めるために使用)
-#define OBSE_INTER (PITCH)				// 観測面の長さ(透過率，反射率を求めるために使用)
-#define WIRE_OUTPUT_LEN (EXCT_LEN + 60)	// 出射細線導波路の長さ(直打ちの数字はセルサイズをNODE数の整数倍にするために使用)
-#define WIRE_OUTPUT_OFFSET 0			// 出射細線導波路のスラブ終端の長さ
-#define WIRE_WID_OFFSET 0				// 細線幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-#define PCW_SiSLAB_TERMINATION_LEN 240	// PCW横のCOREスラブ終端の長さ
-#define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-#define PCW_WIDTH_CHIRP 0				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
+#define EXCT_LEN 840					// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+#define EXCT_OBSE_LEN 975				// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+#define OBSE_WIRE_LEN 2540				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ[?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+//#define OBSE_INTER (2 * PITCH)		// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define OBSE_INTER (PITCH)				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_LEN (EXCT_LEN + 60)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾅゑｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾍセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY?ｿｽ?ｿｽNODE?ｿｽ?ｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽ{?ｿｽﾉゑｿｽ?ｿｽ驍ｽ?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_OFFSET 0			// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define WIRE_WID_OFFSET 0				// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+#define PCW_SiSLAB_TERMINATION_LEN 240	// PCW?ｿｽ?ｿｽ?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define PCW_SiSLAB_OFFSET 0				// PCW?ｿｽc?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+#define PCW_WIDTH_CHIRP 0				// PCW?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
 
-// これ以下は周期数
-#define NORM_PCW_PER 0				// 通常PCW周期数
-#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数
-#define PITCH_SHIFT_PER 0			// 格子定数変化PCWの周期数
-#define PITCH_SHIFT_CHIRP_PER 5	// 格子定数変化チャープPCWの周期数
-#define LSPCW_PER 5				// LSPCW周期数
-#define PCW_WID 6					// PCWの列数
-// これ以上は周期数
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ会ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define NORM_PCW_PER 0				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_PER 0			// 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽﾊチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_PER 0			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_CHIRP_PER 5	// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define LSPCW_PER 5				// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PCW_WID 6					// PCW?ｿｽﾌ暦ｿｽ?ｿｽ?ｿｽ
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ擾ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-//#define LSPCW_ROW 3					// 導波路から数えて何列目の格子点を伝搬方向にシフトさせるか．
+//#define LSPCW_ROW 3					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ逅費ｿｽ?ｿｽ?ｿｽﾄ会ｿｽ?ｿｽ?ｿｽ?ｿｽﾚの格?ｿｽq?ｿｽ_?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉシ?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ驍ｩ?ｿｽD
 
-#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// 通常PCW長
-#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
-#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW長
-#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// 出射細線導波路のスラブ終端の長さ
+#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ
+#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW?ｿｽ?ｿｽ
+#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
 
-#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
-#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// 出射観測面の中心座標 (モデルの右端からの距離)
+#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)	// ?ｿｽo?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ右?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// 入射細線長
-#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// 出射細線長
-//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW長
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)		// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW?ｿｽ?ｿｽ
 
-/****************************** 1,3列目格子シフト構造 ******************************/
+/****************************** 1,3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ\?ｿｽ?ｿｽ ******************************/
 
 #else
 
-/****************************** 3列目格子シフト構造 ******************************/
-#define CELL_SIZE 21			// セルサイズ   15
-#define PITCH 399				// PC 格子定数   405
-#define PITCH_SHIFT_MAX 399 //480		// 格子定数変化PCWのPC格子定数の最大値
-#define PITCH_SHIFT_MAX2 399 //☆チャープの最小値 ここのみいじる
+/****************************** 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ\?ｿｽ?ｿｽ ******************************/
+#define CELL_SIZE 21			// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY   15
+#define PITCH 399				// PC ?ｿｽi?ｿｽq?ｿｽ關?   405
+#define PITCH_SHIFT_MAX 399 //480		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽ?ｿｽPC?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌ最托ｿｽ?ｿｽl
+#define PITCH_SHIFT_MAX2 399 //?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽﾌ最擾ｿｽ?ｿｽl ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌみゑｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define SLAB_HEIGHT 210		// スラブ厚
-#define CLAD_HEIGHT1 1995	// 上部クラッド高さ   750
-//#define CLAD_HEIGHT1 990	// 上部クラッド高さ
-#define CLAD_HEIGHT2 0		// 下部クラッド高さ
-#define AIR_HEIGHT 0		// 空気層高さ
+#define SLAB_HEIGHT 210		// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+#define CLAD_HEIGHT1 1995	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ   750
+//#define CLAD_HEIGHT1 990	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CLAD_HEIGHT2 0		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define AIR_HEIGHT 0		// ?ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define RADIUS 110			// PCの標準円孔半径      120
-#define SX3 84				// 伝搬(X)方向の3列目格子シフト量(SX2,SX4=0でないと使えない要改善!!mainの1380行目)
-#define SX1 0				// 伝搬(X)方向の1列目格子シフト量
-#define SX2 0				// 伝搬(X)方向の2列目格子シフト量(SX3,SX4=0でないと使えない要改善!!mainの1380行目)
-#define SX4 0				//伝搬(X)方向の4列目格子シフト量(SX2,SX3=0でないと使えない要改善!!mainの1380行目)
-#define SY -588				//-588 //☆☆横(Y)方向の導波路全体格子シフト量(対称境界を使用しているので実際にはこの倍)　-588から+で幅広
+#define RADIUS 110			// PC?ｿｽﾌ標?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa      120
+#define SX3 84				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ(SX2,SX4=0?ｿｽﾅなゑｿｽ?ｿｽﾆ使?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽv?ｿｽ?ｿｽ?ｿｽP!!main?ｿｽ?ｿｽ1380?ｿｽs?ｿｽ?ｿｽ)
+#define SX1 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ1?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SX2 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ2?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ(SX3,SX4=0?ｿｽﾅなゑｿｽ?ｿｽﾆ使?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽv?ｿｽ?ｿｽ?ｿｽP!!main?ｿｽ?ｿｽ1380?ｿｽs?ｿｽ?ｿｽ)
+#define SX4 0				//?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ4?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ(SX2,SX3=0?ｿｽﾅなゑｿｽ?ｿｽﾆ使?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽv?ｿｽ?ｿｽ?ｿｽP!!main?ｿｽ?ｿｽ1380?ｿｽs?ｿｽ?ｿｽ)
+#define SY -588				//-588 //?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ(?ｿｽﾎ称具ｿｽ?ｿｽE?ｿｽ?ｿｽ?ｿｽg?ｿｽp?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ?ｿｽﾌで趣ｿｽ?ｿｽﾛにはゑｿｽ?ｿｽﾌ倍)?ｿｽ@-588?ｿｽ?ｿｽ?ｿｽ?ｿｽ+?ｿｽﾅ包ｿｽ?ｿｽL
 
-#define EXCT_LEN 840			//840		// ☆励振点 (モデルの左端からの距離) これは基本変えない．
-#define EXCT_OBSE_LEN 3000-420		//975 		// ☆☆励振点から観測面の中心までの距離  これも基本変えない  3000//15/12/25
-//OBSE_WIRE_LENを+aしたときにはこれを-aする
-#define OBSE_WIRE_LEN 5815		//2540(121 セル) 2750(131セル) 5080(242セル)//  5500(262セル)2/23 //5815(297セル) 35セル増やした 2/24  さらに長尺化(by馬場先生) ☆(出射)観測面の中心から細線導波路端までの距離
-//これを+aすると，モニタとPCW端の距離が+a，モニタと出射端の距離が-2aされる．出射の細線距離は-aになる.入射モニタとPCW端との距離も+a
-//#define OBSE_INTER (2 * PITCH)		// 観測面の長さ(透過率，反射率を求めるために使用)
-#define OBSE_INTER (PITCH)				// 観測面の長さ(透過率，反射率を求めるために使用)
-#define WIRE_OUTPUT_LEN (EXCT_LEN + 45)	// 出射細線導波路の長さ(直打ちの数字はセルサイズをNODE数の整数倍にするために使用)
-#define WIRE_OUTPUT_OFFSET 0			// 出射細線導波路のスラブ終端の長さ
-#define WIRE_WID_OFFSET 168 //168				// 細線幅のオフセット量の半分(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
+#define EXCT_LEN 840			//840		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ) ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ奇ｿｽ?ｿｽ{?ｿｽﾏゑｿｽ?ｿｽﾈゑｿｽ?ｿｽD
+#define EXCT_OBSE_LEN 3000-420		//975 		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ  ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ{?ｿｽﾏゑｿｽ?ｿｽﾈゑｿｽ  3000//15/12/25
+//OBSE_WIRE_LEN?ｿｽ?ｿｽ+a?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾆゑｿｽ?ｿｽﾉはゑｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ-a?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define OBSE_WIRE_LEN 5815		//2540(121 ?ｿｽZ?ｿｽ?ｿｽ) 2750(131?ｿｽZ?ｿｽ?ｿｽ) 5080(242?ｿｽZ?ｿｽ?ｿｽ)//  5500(262?ｿｽZ?ｿｽ?ｿｽ)2/23 //5815(297?ｿｽZ?ｿｽ?ｿｽ) 35?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ竄ｵ?ｿｽ?ｿｽ 2/24  ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉ抵ｿｽ?ｿｽﾚ会ｿｽ(by?ｿｽn?ｿｽ?ｿｽ?ｿｽ謳ｶ) ?ｿｽ?ｿｽ(?ｿｽo?ｿｽ?ｿｽ)?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ[?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ+a?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾆ，?ｿｽ?ｿｽ?ｿｽj?ｿｽ^?ｿｽ?ｿｽPCW?ｿｽ[?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ+a?ｿｽC?ｿｽ?ｿｽ?ｿｽj?ｿｽ^?ｿｽﾆ出?ｿｽﾋ端?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ-2a?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽD?ｿｽo?ｿｽﾋの細撰ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ-a?ｿｽﾉなゑｿｽ.?ｿｽ?ｿｽ?ｿｽﾋ??ｿｽ?ｿｽj?ｿｽ^?ｿｽ?ｿｽPCW?ｿｽ[?ｿｽﾆの具ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ+a
+//#define OBSE_INTER (2 * PITCH)		// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define OBSE_INTER (PITCH)				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_LEN (EXCT_LEN + 45)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾅゑｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾍセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY?ｿｽ?ｿｽNODE?ｿｽ?ｿｽ?ｿｽﾌ撰ｿｽ?ｿｽ?ｿｽ?ｿｽ{?ｿｽﾉゑｿｽ?ｿｽ驍ｽ?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_OFFSET 0			// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define WIRE_WID_OFFSET 168 //168				// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽﾊの費ｿｽ?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
 #define WIRE_WID_OFFSET_OUT 168//168
-#define PCW_SiSLAB_TERMINATION_LEN 255	//255 // ☆PCW横のCOREスラブ終端の長さ　+にすると円孔のみ中心方向にずれる (数字の単位はnm)
-#define PCW_SiSLAB_OFFSET 0 //0				// ☆PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)2
-//伝搬方向シフト
-#define PCW_WIDTH_CHIRP 168//168				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
+#define PCW_SiSLAB_TERMINATION_LEN 255	//255 // ?ｿｽ?ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ?ｿｽ@+?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ?ｿｽﾆ円?ｿｽE?ｿｽﾌみ抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ単?ｿｽﾊゑｿｽnm)
+#define PCW_SiSLAB_OFFSET 0 //0				// ?ｿｽ?ｿｽPCW?ｿｽc?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)2
+//?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽV?ｿｽt?ｿｽg
+#define PCW_WIDTH_CHIRP 168//168				// PCW?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
 #define PCW_WIDTH_CHIRP_OUT 168//168
 #define PCW_WIDTH_Para 1
 
-//☆導波路幅チャープ量のパラメータ全て(4つ)を0にするとバグが生じるので便宜的に全て1にする
+//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽﾊのパ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[?ｿｽ^?ｿｽS?ｿｽ?ｿｽ(4?ｿｽ?ｿｽ)?ｿｽ?ｿｽ0?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ?ｿｽﾆバ?ｿｽO?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌで便宜?ｿｽI?ｿｽﾉ全?ｿｽ?ｿｽ1?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ
 
-// これ以下は周期数
-#define NORM_PCW_PER 0				// 160722 これは0固定 通常PCW周期数
-#define CHIRP_3RD_LS_PER 0			// 160722 これは0固定 3列目格子シフト量チャープLSPCW周期数． 2~4列目まで対応．※シフト量/周期数<cellsizeだとチャープしない
-#define CHIRP_2ND_LS_PER 7//5			//☆導波路幅チャープとシフト量チャープを同時に行う際のチャープLSPCW周期数．PITCH_SHIFT_PERより小さくないとダメ?　2,3列目のみ対応．※シフト量/周期数<cellsizeだとチャープしない
-#define CHIRP_2ND_LS_PER_OUT 7//5 ☆
-#define PITCH_SHIFT_PER 7//5				//☆☆導波路幅チャープの周期数　16/7/22 これが7以上だとダメか (6はOK)
-#define PITCH_SHIFT_PER_OUT 7//5 ☆☆
-#define PITCH_SHIFT_CHIRP_PER2 7//5		// ☆格子定数変化チャープPCWの周期数(導波路幅チャープと同時)
-#define PITCH_SHIFT_CHIRP_PER2_OUT 7//☆5
-#define LSPCW_SHIFT_DESCRETE FALSE			// 格子定数変化PCWのとき，はじめからLSPCWにする場合はFALSE　しない場合はTRUE
-#define PITCH_SHIFT_CHIRP_PER 0		// 格子定数変化チャープPCWの周期数
-#define LSPCW_PER 16 //LSPCW周期数
-#define PCW_WID 8 //8 PCWの列数 //SIWGでは1
-// これ以上は周期数
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ会ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define NORM_PCW_PER 0				// 160722 ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ0?ｿｽﾅ抵ｿｽ ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_PER 0			// 160722 ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ0?ｿｽﾅ抵ｿｽ 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽﾊチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽD 2~4?ｿｽ?ｿｽ?ｿｽﾚまで対会ｿｽ?ｿｽD?ｿｽ?ｿｽ?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ/?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ<cellsize?ｿｽ?ｿｽ?ｿｽﾆチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ
+#define CHIRP_2ND_LS_PER 7//5			//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽﾆシ?ｿｽt?ｿｽg?ｿｽﾊチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽ?ｯ趣ｿｽ?ｿｽﾉ行?ｿｽ?ｿｽ?ｿｽﾛのチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽDPITCH_SHIFT_PER?ｿｽ?ｿｽ?ｿｽ闖ｬ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽﾆダ?ｿｽ?ｿｽ??ｿｽ@2,3?ｿｽ?ｿｽ?ｿｽﾚのみ対会ｿｽ?ｿｽD?ｿｽ?ｿｽ?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ/?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ<cellsize?ｿｽ?ｿｽ?ｿｽﾆチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ
+#define CHIRP_2ND_LS_PER_OUT 7//5 ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_PER 7//5				//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ@16/7/22 ?ｿｽ?ｿｽ?ｿｽ黷ｪ7?ｿｽﾈ上だ?ｿｽﾆダ?ｿｽ?ｿｽ?ｿｽ?ｿｽ (6?ｿｽ?ｿｽOK)
+#define PITCH_SHIFT_PER_OUT 7//5 ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_CHIRP_PER2 7//5		// ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽv?ｿｽﾆ難ｿｽ?ｿｽ?ｿｽ)
+#define PITCH_SHIFT_CHIRP_PER2_OUT 7//?ｿｽ?ｿｽ5
+#define LSPCW_SHIFT_DESCRETE FALSE			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌとゑｿｽ?ｿｽC?ｿｽﾍゑｿｽ?ｿｽﾟゑｿｽ?ｿｽ?ｿｽLSPCW?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ?ｿｽ鼾??ｿｽ?ｿｽFALSE?ｿｽ@?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽ鼾??ｿｽ?ｿｽTRUE
+#define PITCH_SHIFT_CHIRP_PER 0		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define LSPCW_PER 16 //LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PCW_WID 8 //8 PCW?ｿｽﾌ暦ｿｽ?ｿｽ?ｿｽ //SIWG?ｿｽﾅゑｿｽ1
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ擾ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 				//
-//#define LSPCW_ROW 3					// 導波路から数えて何列目の格子点を伝搬方向にシフトさせるか．
+//#define LSPCW_ROW 3					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ逅費ｿｽ?ｿｽ?ｿｽﾄ会ｿｽ?ｿｽ?ｿｽ?ｿｽﾚの格?ｿｽq?ｿｽ_?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉシ?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ驍ｩ?ｿｽD
 
-#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// 通常PCW長
-#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
-#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW長
-#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// 出射細線導波路のスラブ終端の長さ
+#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ
+#define LSPCW_LEN (LSPCW_PER * PITCH)					// LSPCW?ｿｽ?ｿｽ
+#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
 
-#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// 入射観測面の中心座標 (モデルの左端からの距離)
-//#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN - 210)	// ☆　出射観測面の中心座標 (モデルの右端からの距離)　これは実際の長さ(nm)
-//この位置はおそらく図には表示されない　?intObseLenPart4とは向きが逆
-//PS.15/12/22 これは機能してない
+#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)			// ?ｿｽ?ｿｽ?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+//#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN - 210)	// ?ｿｽ?ｿｽ?ｿｽ@?ｿｽo?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ右?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)?ｿｽ@?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽﾛの抵ｿｽ?ｿｽ?ｿｽ(nm)
+//?ｿｽ?ｿｽ?ｿｽﾌ位置?ｿｽﾍゑｿｽ?ｿｽ?ｿｽ?ｿｽ轤ｭ?ｿｽ}?ｿｽﾉは表?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽ@?intObseLenPart4?ｿｽﾆは鯉ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽt
+//PS.15/12/22 ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ機?ｿｽ\?ｿｽ?ｿｽ?ｿｽﾄなゑｿｽ
 
 
 
-#define WIRE_LEN1 (OBSE_LEN1 + 3696)			// ☆入射細線長　//2541 長尺 //2961　さらに長尺2/23 //さらに長尺2 3696 2/24
-//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)　//元のプログラム
+#define WIRE_LEN1 (OBSE_LEN1 + 3696)			// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽ@//2541 ?ｿｽ?ｿｽ?ｿｽ?ｿｽ //2961?ｿｽ@?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉ抵ｿｽ?ｿｽ?ｿｽ2/23 //?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉ抵ｿｽ?ｿｽ?ｿｽ2 3696 2/24
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)?ｿｽ@//?ｿｽ?ｿｽ?ｿｽﾌプ?ｿｽ?ｿｽ?ｿｽO?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 //#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)
 
-#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN) // ☆☆ 出射細線長 数字はnm　出射端から出射モニタの距離
-//モニターを後ろにする場合はオフセット137*21
-//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW長
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN) // ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽnm?ｿｽ@?ｿｽo?ｿｽﾋ端?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽo?ｿｽﾋ??ｿｽ?ｿｽj?ｿｽ^?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ
+//?ｿｽ?ｿｽ?ｿｽj?ｿｽ^?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉゑｿｽ?ｿｽ?ｿｽ?ｿｽ鼾??ｿｽﾍオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg137*21
+//#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW?ｿｽ?ｿｽ
 
-/****************************** 3列目格子シフト構造 ******************************/
+/****************************** 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ\?ｿｽ?ｿｽ ******************************/
 
 #endif
-/****************************** 本番用(SiO2) ******************************/
+/****************************** ?ｿｽ{?ｿｽﾔ用(SiO2) ******************************/
 #endif
 
 #else
 
-/****************************** 解析領域決定用 ******************************/
+/****************************** ?ｿｽ?ｿｽ?ｿｽﾍ領域決?ｿｽ?ｿｽ?ｿｽp ******************************/
 
-#define CELL_SIZE 35		// セルサイズ
-#define PITCH 455			// PC 格子定数
-#define PITCH_SHIFT_MAX 455 // 格子定数変化PCWのPC格子定数の最大値
+#define CELL_SIZE 35		// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY
+#define PITCH 455			// PC ?ｿｽi?ｿｽq?ｿｽ關?
+#define PITCH_SHIFT_MAX 455 // ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽ?ｿｽPC?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌ最托ｿｽ?ｿｽl
 
-#define SLAB_HEIGHT 210		// スラブ厚
-#define CLAD_HEIGHT1 525	// 上部クラッド高さ
-#define CLAD_HEIGHT2 0		// 下部クラッド高さ
-#define AIR_HEIGHT 0		// 空気層高さ
+#define SLAB_HEIGHT 210		// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+#define CLAD_HEIGHT1 525	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CLAD_HEIGHT2 0		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define AIR_HEIGHT 0		// ?ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define RADIUS 160			// PCの標準円孔半径
-#define SX3 105				// 伝搬(X)方向の3列目格子シフト量
-#define SX1 0				// 伝搬(X)方向の3列目格子シフト量
-#define SY 0				// 横(Y)方向の導波路全体格子シフト量
+#define RADIUS 160			// PC?ｿｽﾌ標?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+#define SX3 105				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SX1 0				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+#define SY 0				// ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
 
-#define EXCT_LEN 840					// 励振点 (モデルの左端からの距離)
-#define EXCT_OBSE_LEN 980				// 励振点から観測面の中心までの距離
-#define OBSE_WIRE_LEN 2520				// 観測面の中心から細線導波路端までの距離
-#define OBSE_INTER (2 * PITCH)			// 観測面の長さ(透過率，反射率を求めるために使用)
-#define WIRE_OUTPUT_LEN EXCT_LEN		// 出射細線導波路の長さ
-#define WIRE_OUTPUT_OFFSET 0			// 出射細線導波路のスラブ終端の長さ
-#define WIRE_WID_OFFSET 0				// 細線幅のオフセット量(プラス側が幅広)
-#define PCW_SiSLAB_TERMINATION_LEN 105	// PCW横のCOREスラブ終端の長さ
-#define PCW_SiSLAB_OFFSET 0				// PCW縦のCOREスラブのオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
-#define PCW_WIDTH_CHIRP 0				// PCW幅のオフセット量(プラス側が幅広) (負数の場合には，1セル分大きく設定しないと丸め誤差発生)
+#define EXCT_LEN 840					// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+#define EXCT_OBSE_LEN 980				// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+#define OBSE_WIRE_LEN 2520				// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ[?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+#define OBSE_INTER (2 * PITCH)			// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+#define WIRE_OUTPUT_LEN EXCT_LEN		// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define WIRE_OUTPUT_OFFSET 0			// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define WIRE_WID_OFFSET 0				// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL)
+#define PCW_SiSLAB_TERMINATION_LEN 105	// PCW?ｿｽ?ｿｽ?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+#define PCW_SiSLAB_OFFSET 0				// PCW?ｿｽc?ｿｽ?ｿｽCORE?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+#define PCW_WIDTH_CHIRP 0				// PCW?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ(?ｿｽv?ｿｽ?ｿｽ?ｿｽX?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽL) (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合?ｿｽﾉは，1?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽﾝ定し?ｿｽﾈゑｿｽ?ｿｽﾆ丸め誤差?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
 
-// これ以下は周期数
-#define NORM_PCW_PER 0				// 通常PCW周期数
-#define CHIRP_3RD_LS_PER 0			// 3列目格子シフト量チャープLSPCW周期数
-#define PITCH_SHIFT_PER 5			// 格子定数変化PCWの周期数
-#define PITCH_SHIFT_CHIRP_PER 0		// 格子定数変化チャープPCWの周期数
-#define LSPCW_PER 20				// LSPCW周期数
-#define PCW_WID 8					// PCWの列数
-// これ以上は周期数
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ会ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define NORM_PCW_PER 0				// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_PER 0			// 3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽﾊチ?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_PER 5			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PITCH_SHIFT_CHIRP_PER 0		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define LSPCW_PER 20				// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+#define PCW_WID 8					// PCW?ｿｽﾌ暦ｿｽ?ｿｽ?ｿｽ
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ擾ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define LSPCW_ROW 3					// 導波路から数えて何列目の格子点を伝搬方向にシフトさせるか．
+#define LSPCW_ROW 3					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ逅費ｿｽ?ｿｽ?ｿｽﾄ会ｿｽ?ｿｽ?ｿｽ?ｿｽﾚの格?ｿｽq?ｿｽ_?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉシ?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ驍ｩ?ｿｽD
 
-#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)		// 通常PCW長
-#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
-#define LSPCW_LEN (LSPCW_PER * PITCH)			// LSPCW長
-#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)			// 出射細線導波路のスラブ終端の長さ
-// これ以上は周期数
+#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)		// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ
+#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ
+#define LSPCW_LEN (LSPCW_PER * PITCH)			// LSPCW?ｿｽ?ｿｽ
+#define WIRE_OUTPUT_OFFSET_PER INT_DIV(WIRE_OUTPUT_OFFSET, CELL_SIZE)			// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾌス?ｿｽ?ｿｽ?ｿｽu?ｿｽI?ｿｽ[?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈ擾ｿｽ?ｿｽﾍ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)	// 入射観測面の中心座標 (モデルの左端からの距離)
-#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)		// 出射観測面の中心座標 (モデルの右端からの距離)
+#define OBSE_LEN1 (EXCT_LEN + EXCT_OBSE_LEN)	// ?ｿｽ?ｿｽ?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+#define OBSE_LEN5 (WIRE_OUTPUT_OFFSET + EXCT_OBSE_LEN)		// ?ｿｽo?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ右?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
 
-#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)						// 入射細線長
-#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)					// 出射細線長
-#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW長
+#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)						// ?ｿｽ?ｿｽ?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+#define WIRE_LEN2 (OBSE_WIRE_LEN + WIRE_OUTPUT_LEN)					// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+#define PCW_LEN (NORM_PCW_LEN * 2 + CHIRP_3RD_LS_LEN * 2 + LSPCW_LEN)	// PCW?ｿｽ?ｿｽ
 
-/****************************** 解析領域決定用 ******************************/
+/****************************** ?ｿｽ?ｿｽ?ｿｽﾍ領域決?ｿｽ?ｿｽ?ｿｽp ******************************/
 
 
-/****************************** 動作確認用 ******************************/
+/****************************** ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽm?ｿｽF?ｿｽp ******************************/
 
-//#define CELL_SIZE 100		// セルサイズ
-//#define PITCH 400			// PC 格子定数
+//#define CELL_SIZE 100		// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY
+//#define PITCH 400			// PC ?ｿｽi?ｿｽq?ｿｽ關?
 //
-//#define SLAB_HEIGHT 200		// スラブ厚
-//#define CLAD_HEIGHT1 700	// 上部クラッド高さ
-//#define CLAD_HEIGHT2 0		// 下部クラッド高さ
-//#define AIR_HEIGHT 0		// 空気層高さ
+//#define SLAB_HEIGHT 200		// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+//#define CLAD_HEIGHT1 700	// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define CLAD_HEIGHT2 0		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define AIR_HEIGHT 0		// ?ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 //
-//#define RADIUS 100			// PCの標準円孔半径
-//#define SX3 100				// 伝搬(X)方向の3列目格子シフト量
-//#define SY 0				// 横(Y)方向の導波路全体格子シフト量
+//#define RADIUS 100			// PC?ｿｽﾌ標?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+//#define SX3 100				// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
+//#define SY 0				// ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ
 //
-//#define NORM_PCW_PER 5			// 通常PCW周期数
-//#define CHIRP_3RD_LS_PER 1			// チャープLSPCW周期数
-//#define LSPCW_PER 5				// LSPCW周期数
-//#define PCW_WID 6					// PCWの列数
-//#define LSPCW_ROW 3					// 導波路から数えて何列目の格子点を伝搬方向にシフトさせるか．
-//#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)		// 通常PCW長
-//#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// チャープLSPCW長
-//#define LSPCW_LEN (LSPCW_PER * PITCH)			// LSPCW長
+//#define NORM_PCW_PER 5			// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define CHIRP_3RD_LS_PER 1			// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define LSPCW_PER 5				// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//#define PCW_WID 6					// PCW?ｿｽﾌ暦ｿｽ?ｿｽ?ｿｽ
+//#define LSPCW_ROW 3					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ逅費ｿｽ?ｿｽ?ｿｽﾄ会ｿｽ?ｿｽ?ｿｽ?ｿｽﾚの格?ｿｽq?ｿｽ_?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉシ?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ驍ｩ?ｿｽD
+//#define NORM_PCW_LEN (NORM_PCW_PER * PITCH)		// ?ｿｽﾊ擾ｿｽPCW?ｿｽ?ｿｽ
+//#define CHIRP_3RD_LS_LEN (CHIRP_3RD_LS_PER * PITCH)		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ
+//#define LSPCW_LEN (LSPCW_PER * PITCH)			// LSPCW?ｿｽ?ｿｽ
 //
-//#define EXCT_LEN 800					// 励振点 (モデルの左端からの距離)
-//#define EXCT_OBSE_LEN 1900				// 励振点から観測面の中心までの距離
-//#define OBSE_WIRE_LEN EXCT_OBSE_LEN		// 観測面の中心から細線導波路までの距離
-//#define OBSE_INTER (2 * PITCH)			// 観測面の長さ(透過率，反射率を求めるために使用)
-//#define OBSE_LEN1 (EXCT_LEN + OBSE_INTER / 2 + EXCT_OBSE_LEN)	// 入射観測面の中心座標 (モデルの左端からの距離)
-//#define OBSE_LEN5 (EXCT_LEN + OBSE_INTER / 2)		// 出射観測面の中心座標 (モデルの右端からの距離)
+//#define EXCT_LEN 800					// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+//#define EXCT_OBSE_LEN 1900				// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+//#define OBSE_WIRE_LEN EXCT_OBSE_LEN		// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾜでの具ｿｽ?ｿｽ?ｿｽ
+//#define OBSE_INTER (2 * PITCH)			// ?ｿｽﾏ托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾟ暦ｿｽ?ｿｽC?ｿｽ?ｿｽ?ｿｽﾋ暦ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟるた?ｿｽﾟに使?ｿｽp)
+//#define OBSE_LEN1 (EXCT_LEN + OBSE_INTER / 2 + EXCT_OBSE_LEN)	// ?ｿｽ?ｿｽ?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
+//#define OBSE_LEN5 (EXCT_LEN + OBSE_INTER / 2)		// ?ｿｽo?ｿｽﾋ観托ｿｽ?ｿｽﾊの抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽW (?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽﾌ右?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽ?ｿｽ)
 //
-//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)	// 入射細線長
-//#define WIRE_LEN2 (OBSE_LEN5 + OBSE_WIRE_LEN)	// 出射細線長
-//#define WIRE_WID_OFFSET 0		// 細線幅のオフセット量
+//#define WIRE_LEN1 (OBSE_LEN1 + OBSE_WIRE_LEN)	// ?ｿｽ?ｿｽ?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+//#define WIRE_LEN2 (OBSE_LEN5 + OBSE_WIRE_LEN)	// ?ｿｽo?ｿｽﾋ細撰ｿｽ?ｿｽ?ｿｽ
+//#define WIRE_WID_OFFSET 0		// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌオ?ｿｽt?ｿｽZ?ｿｽb?ｿｽg?ｿｽ?ｿｽ
 
-/****************************** 動作確認用 ******************************/
+/****************************** ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽm?ｿｽF?ｿｽp ******************************/
 
 #endif
 
 /*****************************************************************************/
-// 全解析領域
+// ?ｿｽS?ｿｽ?ｿｽ?ｿｽﾍ領茨ｿｽ
 /*****************************************************************************/
 #if _PROGRAM_TEST
 
@@ -393,14 +393,14 @@
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #else
 /*-------------------- CELL_SIZE:15nm --------------------*/
-//☆15nmは気にしなくて良い．
-#define XMAX_ALL 1335 //948(2015/11/11) //1250(2015/11/19) 1250-165=1085(2015/12/16) 1250-165-16=1069(2015/12/24) 1069+151-55=1165(2015/12/25)入射長尺化  1220 とすると1206になる(2065/2/23)入射長尺化1
-//1222 で 1220 //1240 で 1235 //1260 で 1235 //1270 で 1235 1240より大きくしても意味ないので基本1240
+//?ｿｽ?ｿｽ15nm?ｿｽﾍ気?ｿｽﾉゑｿｽ?ｿｽﾈゑｿｽ?ｿｽﾄ良ゑｿｽ?ｿｽD
+#define XMAX_ALL 1335 //948(2015/11/11) //1250(2015/11/19) 1250-165=1085(2015/12/16) 1250-165-16=1069(2015/12/24) 1069+151-55=1165(2015/12/25)?ｿｽ?ｿｽ?ｿｽﾋ抵ｿｽ?ｿｽﾚ会ｿｽ  1220 ?ｿｽﾆゑｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ1206?ｿｽﾉなゑｿｽ(2065/2/23)?ｿｽ?ｿｽ?ｿｽﾋ抵ｿｽ?ｿｽﾚ会ｿｽ1
+//1222 ?ｿｽ?ｿｽ 1220 //1240 ?ｿｽ?ｿｽ 1235 //1260 ?ｿｽ?ｿｽ 1235 //1270 ?ｿｽ?ｿｽ 1235 1240?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ蛯ｫ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽﾓ厄ｿｽ?ｿｽﾈゑｿｽ?ｿｽﾌで奇ｿｽ?ｿｽ{1240
 //1235+(6*400*2)/21=1235+230=1465
 //1225 BOUNDARYLINE 41, 42(16/10/21)
 //1245(1236) (16/10/24)
-#define YMAX_ALL 172	//10列では145+32(この場合XMAXを50程度減らす必要あり)．8列では145.長尺では172
-#define ZMAX_ALL 100	//15/12/16 70(容量不足のため) 従来100
+#define YMAX_ALL 172	//10?ｿｽ?ｿｽ?ｿｽﾅゑｿｽ145+32(?ｿｽ?ｿｽ?ｿｽﾌ場合XMAX?ｿｽ?ｿｽ50?ｿｽ?ｿｽ?ｿｽx?ｿｽ?ｿｽ?ｿｽ轤ｷ?ｿｽK?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ)?ｿｽD8?ｿｽ?ｿｽ?ｿｽﾅゑｿｽ145.?ｿｽ?ｿｽ?ｿｽﾚでゑｿｽ172
+#define ZMAX_ALL 100	//15/12/16 70(?ｿｽe?ｿｽﾊ不?ｿｽ?ｿｽ?ｿｽﾌゑｿｽ?ｿｽ?ｿｽ) ?ｿｽ]?ｿｽ?ｿｽ100
 //#define ZMAX_ALL 73	// CLAD_HEIGHT1:750/57  CLAD_HEIGHT1:990/73
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
@@ -429,7 +429,7 @@
 #endif
 
 /*****************************************************************************/
-// セルサイズ [m]
+// ?ｿｽZ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY [m]
 /*****************************************************************************/
 static const double dblCellSize = CELL_SIZE * 1e-9;
 static const double dx = dblCellSize;
@@ -440,309 +440,309 @@ static const double inv_dy = 1/dy;
 static const double inv_dz = 1/dz;
 
 /*****************************************************************************/
-// 時間ステップ (クーラントの安定条件などに注意)
+// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv (?ｿｽN?ｿｽ[?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽﾌ茨ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈどに抵ｿｽ?ｿｽ?ｿｽ)
 /*****************************************************************************/
 #if _FDTD
 
 #if _PROGRAM_TEST
 #if PCW_Air_Or_SiO2
 /*-------------------- CELL_SIZE:15nm --------------------*/
-static const double dt = 28e-18; 			// 時間ステップ[s]
-static const int Nmax = 150000; 				// 最終時間ステップ
+static const double dt = 28e-18; 			// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv[s]
+static const int Nmax = 100; 				// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #else
-/*-------------------- CELL_SIZE:15nm --------------------*/ //☆
-static const double dt = 38e-18; 			// 時間ステップ[s]
-static const int Nmax = 150000; //150000 				// ☆最終時間ステップ
-//static const int Nmaxp = 5000;  				// ☆準最終時間ステップ
+/*-------------------- CELL_SIZE:15nm --------------------*/ //?ｿｽ?ｿｽ
+static const double dt = 38e-18; 			// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv[s]
+static const int Nmax = 100; //150000 				// ?ｿｽ?ｿｽ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Nmaxp = 5000;  				// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 /*-------------------- CELL_SIZE:15nm --------------------*/
 #endif
 
 /*-------------------- CELL_SIZE:21nm --------------------*/
-//static const double dt = 39e-18; 			// 時間ステップ[s]
-//static const int Nmax = 130000; 				// 最終時間ステップ
-//static const int Nmax = 250000; 				// 最終時間ステップ
+//static const double dt = 39e-18; 			// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv[s]
+//static const int Nmax = 130000; 				// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Nmax = 250000; 				// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 /*-------------------- CELL_SIZE:21nm --------------------*/
 
 
-static const int Ncut = 50000; //50000				// ☆時間ステップ数を表示させる間隔
+static const int Ncut = 10; //50000				// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ\?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔ隔
 
-static const int Tcut = 1000; 	//1000			//　☆☆パワーの平均の算出を開始する時間ステップ  (最終計算ステップからの差)
-//static const int Fcut = 500; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-static const int Fcut = 200; 				//200 フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-//時間ステップ数が10000だと，
+static const int Tcut = 1000; 	//1000			//?ｿｽ@?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽp?ｿｽ?ｿｽ?ｿｽ[?ｿｽﾌ包ｿｽ?ｿｽﾏの算?ｿｽo?ｿｽ?ｿｽ?ｿｽJ?ｿｽn?ｿｽ?ｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv  (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+//static const int Fcut = 500; 				// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+static const int Fcut = 10; 				//200 ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+//?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ10000?ｿｽ?ｿｽ?ｿｽﾆ，
 #else
 
-static const double dt = 67e-18; 			// 時間ステップ[s]
+static const double dt = 67e-18; 			// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv[s]
 
-/******************** すごく短く (<<1min) ********************/
-//static const int Ncut = 5; 				// 時間ステップ数を表示させる間隔
-//static const int Tcut = 30; 			// エネルギーの平均の算出を開始する時間ステップ
-//static const int Fcut = 99; 			// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-//static const int Nmax = 100; 			// 最終時間ステップ
+/******************** ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽZ?ｿｽ?ｿｽ (<<1min) ********************/
+//static const int Ncut = 5; 				// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ\?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔ隔
+//static const int Tcut = 30; 			// ?ｿｽG?ｿｽl?ｿｽ?ｿｽ?ｿｽM?ｿｽ[?ｿｽﾌ包ｿｽ?ｿｽﾏの算?ｿｽo?ｿｽ?ｿｽ?ｿｽJ?ｿｽn?ｿｽ?ｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Fcut = 99; 			// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+//static const int Nmax = 100; 			// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 
-/******************** それなり短く (<5min) ********************/
-static const int Ncut = 500; 			// 時間ステップ数を表示させる間隔
-static const int Tcut = 200; 			// エネルギーの平均の算出を開始する時間ステップ
-static const int Fcut = 200; 			// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-static const int Nmax = 1000; 			// 最終時間ステップ
+/******************** ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ?ｿｽZ?ｿｽ?ｿｽ (<5min) ********************/
+static const int Ncut = 500; 			// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ\?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔ隔
+static const int Tcut = 200; 			// ?ｿｽG?ｿｽl?ｿｽ?ｿｽ?ｿｽM?ｿｽ[?ｿｽﾌ包ｿｽ?ｿｽﾏの算?ｿｽo?ｿｽ?ｿｽ?ｿｽJ?ｿｽn?ｿｽ?ｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+static const int Fcut = 200; 			// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+static const int Nmax = 1000; 			// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 
-/******************** やや短く (<10min) ********************/
-//static const int Ncut = 500; 				// 時間ステップ数を表示させる間隔
-//static const int Tcut = 3000; 			// エネルギーの平均の算出を開始する時間ステップ
-//static const int Fcut = 500; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-//static const int Nmax = 10000; 			// 最終時間ステップ
+/******************** ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽZ?ｿｽ?ｿｽ (<10min) ********************/
+//static const int Ncut = 500; 				// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ\?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔ隔
+//static const int Tcut = 3000; 			// ?ｿｽG?ｿｽl?ｿｽ?ｿｽ?ｿｽM?ｿｽ[?ｿｽﾌ包ｿｽ?ｿｽﾏの算?ｿｽo?ｿｽ?ｿｽ?ｿｽJ?ｿｽn?ｿｽ?ｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Fcut = 500; 				// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+//static const int Nmax = 10000; 			// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 
-/******************** 長く********************/
-//static const int Ncut = 20000; 				// 時間ステップ数を表示させる間隔
-//static const int Nmax = 100000; 			// 最終時間ステップ
-//static const int Tcut = Nmax - 100; 			// エネルギーの平均の算出を開始する時間ステップ
-//static const int Fcut = 200; 				// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
+/******************** ?ｿｽ?ｿｽ?ｿｽ?ｿｽ********************/
+//static const int Ncut = 20000; 				// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ\?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔ隔
+//static const int Nmax = 100000; 			// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Tcut = Nmax - 100; 			// ?ｿｽG?ｿｽl?ｿｽ?ｿｽ?ｿｽM?ｿｽ[?ｿｽﾌ包ｿｽ?ｿｽﾏの算?ｿｽo?ｿｽ?ｿｽ?ｿｽJ?ｿｽn?ｿｽ?ｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Fcut = 200; 				// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
 
 #endif
 
 #else
-static const double dt = 2.8e-17; 			// 時間ステップ[s]
-static const int Ncut = 5; 				// 時間ステップ数を表示させる間隔
-static const int Tcut = 30; //30			// ☆エネルギーの平均の算出を開始する時間ステップ
+static const double dt = 2.8e-17; 			// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv[s]
+static const int Ncut = 5; 				// ?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ\?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔ隔
+static const int Tcut = 30; //30			// ?ｿｽ?ｿｽ?ｿｽG?ｿｽl?ｿｽ?ｿｽ?ｿｽM?ｿｽ[?ｿｽﾌ包ｿｽ?ｿｽﾏの算?ｿｽo?ｿｽ?ｿｽ?ｿｽJ?ｿｽn?ｿｽ?ｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 
-static const int Fcut = 30; 			// フィールドを出力する時間ステップ数 (最終計算ステップからの差)
-static const int Nmax = 1; 			// 最終時間ステップ
+static const int Fcut = 30; 			// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ (?ｿｽﾅ終?ｿｽv?ｿｽZ?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ搾ｿｽ)
+static const int Nmax = 1; 			// ?ｿｽﾅ終?ｿｽ?ｿｽ?ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
 #endif
 
 //PoyntingPower
 
-static const int Ncheck = 10; //10					// ☆動作確認用のフィールドを出力する時間ステップ
-// これは初めにあるやつ
-static const int Ncutfield = Ncut; 			// フィールドを出力する時間ステップ
-//static const int Ncutfield2 = 10; 			// 安定状態でのフィールドを出力する時間ステップ間隔
-static const int Ncutfield2 = 5; 			// ☆安定状態でのフィールドを出力する時間ステップ間隔
-//これは149800～150000まで5刻みで出力する
+static const int Ncheck = 10; //10					// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽm?ｿｽF?ｿｽp?ｿｽﾌフ?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ擾ｿｽ?ｿｽﾟにゑｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int Ncutfield = Ncut; 			// ?ｿｽt?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv
+//static const int Ncutfield2 = 10; 			// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔでのフ?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽﾔ隔
+static const int Ncutfield2 = 10; 			// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾔでのフ?ｿｽB?ｿｽ[?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽo?ｿｽﾍゑｿｽ?ｿｽ骼橸ｿｽﾔス?ｿｽe?ｿｽb?ｿｽv?ｿｽﾔ隔
+//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ149800?ｿｽ`150000?ｿｽﾜゑｿｽ5?ｿｽ?ｿｽ?ｿｽﾝで出?ｿｽﾍゑｿｽ?ｿｽ?ｿｽ
 
 /*****************************************************************************/
-// 物理量[MKSA系]
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[MKSA?ｿｽn]
 /*****************************************************************************/
 #define PI 3.141592
-#define C0 2.997924e8			// 真空中の光速 [m/s]
-#define EPSILON0 8.854e-12		// 真空中の誘電率 [F/m]
-#define MU0 (PI*(4.0e-7))		// 真空中の透磁率 [N/A^2]
+#define C0 2.997924e8			// ?ｿｽ^?ｿｽ??の鯉ｿｽ?ｿｽ?ｿｽ [m/s]
+#define EPSILON0 8.854e-12		// ?ｿｽ^?ｿｽ??の誘?ｿｽd?ｿｽ?ｿｽ [F/m]
+#define MU0 (PI*(4.0e-7))		// ?ｿｽ^?ｿｽ??の難ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ [N/A^2]
 
 
 /*****************************************************************************/
-// スラブと解析領域
+// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽﾆ会ｿｽ?ｿｽﾍ領茨ｿｽ
 /*****************************************************************************/
-static const double dblSlabHeig = SLAB_HEIGHT * 1.0e-9; 				// スラブ厚
-static const double dblCladHeight1 = CLAD_HEIGHT1 * 1.0e-9; 				// 上部クラッド層厚
-static const int	intSlabHeigPer = INT_DIV (dblSlabHeig/2.0, dblCellSize); 				//スラブ列数(対称境界条件を使用しているので，スラブ厚を1/2)
-static const int	intCladHeight1 = INT_DIV (CLAD_HEIGHT1, CELL_SIZE); 				//上部クラッド列数
-static const int	air_hc = 	(int)((0.0e-6*1e10)/(dz*1e10)); 					//クラッド上部空気層厚
-static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer; 			//活性層中心セル(+1は[intSlabHeigPer]が奇数セル数のときに中央値にするため)
+static const double dblSlabHeig = SLAB_HEIGHT * 1.0e-9; 				// ?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ
+static const double dblCladHeight1 = CLAD_HEIGHT1 * 1.0e-9; 				// ?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽw?ｿｽ?ｿｽ
+static const int	intSlabHeigPer = INT_DIV (dblSlabHeig/2.0, dblCellSize); 				//?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽﾎ称具ｿｽ?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽp?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ?ｿｽﾌで，?ｿｽX?ｿｽ?ｿｽ?ｿｽu?ｿｽ?ｿｽ?ｿｽ?ｿｽ1/2)
+static const int	intCladHeight1 = INT_DIV (CLAD_HEIGHT1, CELL_SIZE); 				//?ｿｽ纒費ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int	air_hc = 	(int)((0.0e-6*1e10)/(dz*1e10)); 					//?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ纒費ｿｽ?ｿｽ?ｿｽC?ｿｽw?ｿｽ?ｿｽ
+static const int	intSlabCen = air_hc + intCladHeight1 + intSlabHeigPer; 			//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽw?ｿｽ?ｿｽ?ｿｽS?ｿｽZ?ｿｽ?ｿｽ(+1?ｿｽ?ｿｽ[intSlabHeigPer]?ｿｽ?ｿｽ?ｿｽ?数?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌとゑｿｽ?ｿｽﾉ抵ｿｽ?ｿｽ?ｿｽ?ｿｽl?ｿｽﾉゑｿｽ?ｿｽ驍ｽ?ｿｽ?ｿｽ)
 
 
 /*****************************************************************************/
-// フォトニック結晶導波路
+// ?ｿｽt?ｿｽH?ｿｽg?ｿｽj?ｿｽb?ｿｽN?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH
 /*****************************************************************************/
-static const double dblPitchCellComp = dblCellSize / 2.0; 			// 格子定数の丸め
-static const double dblPitch = PITCH * 1e-9; 					// 円孔格子定数
+static const double dblPitchCellComp = dblCellSize / 2.0; 			// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌ丸ゑｿｽ
+static const double dblPitch = PITCH * 1e-9; 					// ?ｿｽ~?ｿｽE?ｿｽi?ｿｽq?ｿｽ關?
 
-static const double dblRadius = RADIUS * 1e-9; 					// 円孔半径
-static const double dblRadius2 = 0.18e-6; 					// 大円孔半径
-static const double dblRadius3 = 0.12e-6; 					// 入射部円孔の半径
-static const double dblRadius4 = 0.04e-6; 					// 場所確認用ドットの半径
-static const double dblRadius5 = 0.06e-6; 						//中央円孔列先端円孔半径
-static const double dblRadius6 = 0.10e-6; 						//中央円孔列先端円孔半径
-static const double dblRadius7 = 0.14e-6; 						//中央円孔列先端円孔半径
-static const double dblRadius8 = 0.16e-6; 						//中央円孔列先端円孔半径
+static const double dblRadius = RADIUS * 1e-9; 					// ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+static const double dblRadius2 = 0.18e-6; 					// ?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+static const double dblRadius3 = 0.12e-6; 					// ?ｿｽ?ｿｽ?ｿｽﾋ包ｿｽ?ｿｽ~?ｿｽE?ｿｽﾌ費ｿｽ?ｿｽa
+static const double dblRadius4 = 0.04e-6; 					// ?ｿｽ齒奇ｿｽm?ｿｽF?ｿｽp?ｿｽh?ｿｽb?ｿｽg?ｿｽﾌ費ｿｽ?ｿｽa
+static const double dblRadius5 = 0.06e-6; 						//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+static const double dblRadius6 = 0.10e-6; 						//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+static const double dblRadius7 = 0.14e-6; 						//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
+static const double dblRadius8 = 0.16e-6; 						//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ[?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
 
-static const double dblRadius9 = 0.078e-6; 						//テーパ用円孔サイズ 16/08/27
-static const double dblRadius10 = 0.08e-6; 						//テーパ用円孔サイズ 16/08/27
-static const double dblRadius11 = 0.08e-6; 					//テーパ用円孔サイズ 16/08/27
-static const double dblRadius12 = 0.084e-6; 						//テーパ用円孔サイズ 16/08/27
-static const double dblRadius13 = 0.084e-6; 					//テーパ用円孔サイズ 16/08/27
-static const double dblRadius14 = 0.10e-6; 					//テーパ用円孔サイズ 16/08/29 168
-static const double dblRadius15 = 0.10e-6; 					//テーパ用円孔サイズ 16/08/29 180
+static const double dblRadius9 = 0.078e-6; 						//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/27
+static const double dblRadius10 = 0.08e-6; 						//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/27
+static const double dblRadius11 = 0.08e-6; 					//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/27
+static const double dblRadius12 = 0.084e-6; 						//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/27
+static const double dblRadius13 = 0.084e-6; 					//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/27
+static const double dblRadius14 = 0.10e-6; 					//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/29 168
+static const double dblRadius15 = 0.10e-6; 					//?ｿｽe?ｿｽ[?ｿｽp?ｿｽp?ｿｽ~?ｿｽE?ｿｽT?ｿｽC?ｿｽY 16/08/29 180
 
-static const double dblDiamter = 2.0 * dblRadius; 				// 円孔直径
+static const double dblDiamter = 2.0 * dblRadius; 				// ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
 
-static const int intPitchX = INT_DIV(PITCH, CELL_SIZE); 		// 格子定数のセルサイズ(X方向)
-static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0) / 2 + 0.5), CELL_SIZE)); 		// 格子定数のセルサイズ(Y方向)	+0.5は四捨五入のため
-static const int intRadius = INT_DIV(RADIUS, CELL_SIZE); 		// 円孔半径
+static const int intPitchX = INT_DIV(PITCH, CELL_SIZE); 		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY(X?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+static const int intPitchY = (INT_DIV((PITCH * sqrt(3.0) / 2 + 0.5), CELL_SIZE)); 		// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾌセ?ｿｽ?ｿｽ?ｿｽT?ｿｽC?ｿｽY(Y?ｿｽ?ｿｽ?ｿｽ?ｿｽ)	+0.5?ｿｽﾍ四?ｿｽﾌ五難ｿｽ?ｿｽﾌゑｿｽ?ｿｽ?ｿｽ
+static const int intRadius = INT_DIV(RADIUS, CELL_SIZE); 		// ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽa
 
 
-//static const int intPcwWid = 9; 		// 円孔行数(層厚方向)(Ex.13)
-//static const int intPcwLen = 51; 		// 円孔列数(導波路方向)(Ex.10)
-//static const int intPcwStartX = 8; 		// 円柱配置の開始X座標(導波路方向，セル数入力)(Ex.105)
-//static const int intPcwStartY = 8; 		// 円柱配置の開始Y座標(幅方向，セル数入力)(Ex.4)
-//static const int PCmargin = 6; 		//フォトニック結晶領域マージン．この長さだけ最外円孔の中心から伝搬方向にスペースを設ける(セル数入力，"0" = 界面間隔0.08um)
+//static const int intPcwWid = 9; 		// ?ｿｽ~?ｿｽE?ｿｽs?ｿｽ?ｿｽ(?ｿｽw?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ)(Ex.13)
+//static const int intPcwLen = 51; 		// ?ｿｽ~?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ?ｿｽ)(Ex.10)
+//static const int intPcwStartX = 8; 		// ?ｿｽ~?ｿｽ?ｿｽ?ｿｽz?ｿｽu?ｿｽﾌ開?ｿｽnX?ｿｽ?ｿｽ?ｿｽW(?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽC?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ)(Ex.105)
+//static const int intPcwStartY = 8; 		// ?ｿｽ~?ｿｽ?ｿｽ?ｿｽz?ｿｽu?ｿｽﾌ開?ｿｽnY?ｿｽ?ｿｽ?ｿｽW(?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽC?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ)(Ex.4)
+//static const int PCmargin = 6; 		//?ｿｽt?ｿｽH?ｿｽg?ｿｽj?ｿｽb?ｿｽN?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ茨ｿｽ?ｿｽ}?ｿｽ[?ｿｽW?ｿｽ?ｿｽ?ｿｽD?ｿｽ?ｿｽ?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾅ外?ｿｽ~?ｿｽE?ｿｽﾌ抵ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉス?ｿｽy?ｿｽ[?ｿｽX?ｿｽ?ｿｽ?ｿｽﾝゑｿｽ?ｿｽ?ｿｽ(?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ，"0" = ?ｿｽE?ｿｽﾊ間隔0.08um)
 
-static const int intNormPcwPer = NORM_PCW_PER; 				// PCW列数
-static const int intPitchShiftPcwPer = PITCH_SHIFT_PER;				// ☆格子定数変化PCWの周期数
-static const int intPitchShiftPcwPerOut = PITCH_SHIFT_PER_OUT; //☆
-static const int intPitchShiftChirpPcwPer = PITCH_SHIFT_CHIRP_PER;	// 格子定数変化チャープPCWの周期数
+static const int intNormPcwPer = NORM_PCW_PER; 				// PCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intPitchShiftPcwPer = PITCH_SHIFT_PER;				// ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intPitchShiftPcwPerOut = PITCH_SHIFT_PER_OUT; //?ｿｽ?ｿｽ
+static const int intPitchShiftChirpPcwPer = PITCH_SHIFT_CHIRP_PER;	// ?ｿｽi?ｿｽq?ｿｽ關費ｿｽﾏ会ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvPCW?ｿｽﾌ趣ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-static const int intChirp3rdLsPer = CHIRP_3RD_LS_PER; 		// チャープLSPCW列数
-static const int intChirp2ndLsPer = CHIRP_2ND_LS_PER; 		// チャープLSPCW列数
+static const int intChirp3rdLsPer = CHIRP_3RD_LS_PER; 		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intChirp2ndLsPer = CHIRP_2ND_LS_PER; 		// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 static const int intChirp2ndLsPerOut = CHIRP_2ND_LS_PER_OUT;
-static const int intLspcwPer = LSPCW_PER; 					// LSPCW列数
-static const int intPcwPer = 2 * (intNormPcwPer + intChirp3rdLsPer + intPitchShiftChirpPcwPer) + intPitchShiftPcwPer + intPitchShiftPcwPerOut + intLspcwPer; 	// ☆全PCW列数
-static const int intSx4Per = INT_DIV (SX4, CELL_SIZE); 		// 伝搬(X)方向の3列目格子シフト列数
-static const int intSx3Per = INT_DIV (SX3, CELL_SIZE); 		// 伝搬(X)方向の3列目格子シフト列数
-static const int intSx2Per = INT_DIV (SX2, CELL_SIZE); 		// 伝搬(X)方向の3列目格子シフト列数
-static const int intSx1Per = INT_DIV (SX1, CELL_SIZE); 		// 伝搬(X)方向の1列目格子シフト列数
-static const int intSyPer = INT_DIV (SY, CELL_SIZE); 		// 横(Y)方向の導波路全体格子シフト列数
+static const int intLspcwPer = LSPCW_PER; 					// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intPcwPer = 2 * (intNormPcwPer + intChirp3rdLsPer + intPitchShiftChirpPcwPer) + intPitchShiftPcwPer + intPitchShiftPcwPerOut + intLspcwPer; 	// ?ｿｽ?ｿｽ?ｿｽSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intSx4Per = INT_DIV (SX4, CELL_SIZE); 		// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intSx3Per = INT_DIV (SX3, CELL_SIZE); 		// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intSx2Per = INT_DIV (SX2, CELL_SIZE); 		// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ3?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intSx1Per = INT_DIV (SX1, CELL_SIZE); 		// ?ｿｽ`?ｿｽ?ｿｽ(X)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ1?ｿｽ?ｿｽ?ｿｽﾚ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intSyPer = INT_DIV (SY, CELL_SIZE); 		// ?ｿｽ?ｿｽ(Y)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ難ｿｽ?ｿｽg?ｿｽH?ｿｽS?ｿｽﾌ格?ｿｽq?ｿｽV?ｿｽt?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
 
-//static const int intNormPcwLen = INT_DIV (NORM_PCW_LEN, CELL_SIZE); 				// PCW列数
-//static const int intChirpLsLen = INT_DIV (CHIRP_3RD_LS_LEN, CELL_SIZE); 				// チャープLSPCW列数
-//static const int intLspcwLen = INT_DIV (LSPCW_LEN, CELL_SIZE); 					// LSPCW列数
-//static const int intPcwLen = 2 * (intNormPcwLen + intChirpLsLen) + intLspcwLen; 	// 全PCW列数
-static const int intPcwWid = PCW_WID; 											// 横方向のPCW列数
-static const int intPcwStartX = intRadius; 										// 円柱配置の開始X列数
-static const int intPcwStartY = intRadius + INT_DIV (PCW_SiSLAB_TERMINATION_LEN, CELL_SIZE);	// 円柱配置の開始Y列数
+//static const int intNormPcwLen = INT_DIV (NORM_PCW_LEN, CELL_SIZE); 				// PCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//static const int intChirpLsLen = INT_DIV (CHIRP_3RD_LS_LEN, CELL_SIZE); 				// ?ｿｽ`?ｿｽ?ｿｽ?ｿｽ[?ｿｽvLSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//static const int intLspcwLen = INT_DIV (LSPCW_LEN, CELL_SIZE); 					// LSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//static const int intPcwLen = 2 * (intNormPcwLen + intChirpLsLen) + intLspcwLen; 	// ?ｿｽSPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intPcwWid = PCW_WID; 											// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽPCW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intPcwStartX = intRadius; 										// ?ｿｽ~?ｿｽ?ｿｽ?ｿｽz?ｿｽu?ｿｽﾌ開?ｿｽnX?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intPcwStartY = intRadius + INT_DIV (PCW_SiSLAB_TERMINATION_LEN, CELL_SIZE);	// ?ｿｽ~?ｿｽ?ｿｽ?ｿｽz?ｿｽu?ｿｽﾌ開?ｿｽnY?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
 
 /*****************************************************************************/
-// フォトニック結晶導波路接続用 細線導波路
+// ?ｿｽt?ｿｽH?ｿｽg?ｿｽj?ｿｽb?ｿｽN?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽﾚ托ｿｽ?ｿｽp ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽg?ｿｽH
 /*****************************************************************************/
-static const double dblWireLen1 = WIRE_LEN1 * 1e-9; 		// 入射
-static const double dblWireLen2 = WIRE_LEN2 * 1e-9; 		// 出射
+static const double dblWireLen1 = WIRE_LEN1 * 1e-9; 		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const double dblWireLen2 = WIRE_LEN2 * 1e-9; 		// ?ｿｽo?ｿｽ?ｿｽ
 
-static const int intWireLen1 = INT_DIV(WIRE_LEN1, CELL_SIZE); 		// 入射
-static const int intWireLen2 = INT_DIV(WIRE_LEN2, CELL_SIZE); 		// 出射
-int intWirePer2, intWirePer3; 		// 出射
-static const int intWireWid_2 = intPitchY + INT_DIV(WIRE_WID_OFFSET, CELL_SIZE) + INT_DIV(SY, CELL_SIZE); 		// 細線幅の半分のセル数☆
+static const int intWireLen1 = INT_DIV(WIRE_LEN1, CELL_SIZE); 		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intWireLen2 = INT_DIV(WIRE_LEN2, CELL_SIZE); 		// ?ｿｽo?ｿｽ?ｿｽ
+int intWirePer2, intWirePer3; 		// ?ｿｽo?ｿｽ?ｿｽ
+static const int intWireWid_2 = intPitchY + INT_DIV(WIRE_WID_OFFSET, CELL_SIZE) + INT_DIV(SY, CELL_SIZE); 		// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ費ｿｽ?ｿｽ?ｿｽ?ｿｽﾌセ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 static const int intWireWid_2_Out = intPitchY + INT_DIV(WIRE_WID_OFFSET_OUT, CELL_SIZE) + INT_DIV(SY, CELL_SIZE);
-static const int intWireWid = intWireWid_2 * 2; 		// 細線幅☆
+static const int intWireWid = intWireWid_2 * 2; 		// ?ｿｽﾗ撰ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-//#define taper_x		INT_DIV (0.0e-6, dx)		//テーパ距離(導波路方向) Ex: (int)((0.44e-6*1e10)/(dx*1e10))
-//#define taper_y		INT_DIV (0.0e-6, dx)		//テーパ距離(幅方向) Ex: (int)((0.24e-6*1e10)/(dy*1e10))
-//#define taper		INT_DIV (0.0e-6, dx)		//テーパ距離(導波路・幅方向に等距離の場合) Ex: (int)((0.44e-6*1e10)/(dx*1e10))
+//#define taper_x		INT_DIV (0.0e-6, dx)		//?ｿｽe?ｿｽ[?ｿｽp?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ?ｿｽ?ｿｽ) Ex: (int)((0.44e-6*1e10)/(dx*1e10))
+//#define taper_y		INT_DIV (0.0e-6, dx)		//?ｿｽe?ｿｽ[?ｿｽp?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ) Ex: (int)((0.24e-6*1e10)/(dy*1e10))
+//#define taper		INT_DIV (0.0e-6, dx)		//?ｿｽe?ｿｽ[?ｿｽp?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽE?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉ難ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ場合) Ex: (int)((0.44e-6*1e10)/(dx*1e10))
 
 
 /*****************************************************************************/
-// 材料の屈折率と誘電率
+// ?ｿｽﾞ暦ｿｽ?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ?ｿｽﾆ誘?ｿｽd?ｿｽ?ｿｽ
 /*****************************************************************************/
-static const double nw = 4.5; //量子井戸層の屈折率
-static const double nsch1 = 3.265; //SCH1層の屈折率 3.265:バンドギャップ波長1100nm
-static const double nsch2 = 3.292; //SCH2層の屈折率 3.292:バンドギャップ波長1150nm
-static const double nsch3 = 3.32; //SCH3層の屈折率 3.32:バンドギャップ波長1200nm
-static const double np = 3.17; //支柱の屈折率
-//static const double n_core = 3.5; 		// コアの屈折率(CORE)
-static const double n_core = 3.43; 		// コアの屈折率(CORE)
+static const double nw = 4.5; //?ｿｽﾊ子?ｿｽ?ｿｽ?ｿｽﾋ層?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ
+static const double nsch1 = 3.265; //SCH1?ｿｽw?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ 3.265:?ｿｽo?ｿｽ?ｿｽ?ｿｽh?ｿｽM?ｿｽ?ｿｽ?ｿｽb?ｿｽv?ｿｽg?ｿｽ?ｿｽ1100nm
+static const double nsch2 = 3.292; //SCH2?ｿｽw?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ 3.292:?ｿｽo?ｿｽ?ｿｽ?ｿｽh?ｿｽM?ｿｽ?ｿｽ?ｿｽb?ｿｽv?ｿｽg?ｿｽ?ｿｽ1150nm
+static const double nsch3 = 3.32; //SCH3?ｿｽw?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ 3.32:?ｿｽo?ｿｽ?ｿｽ?ｿｽh?ｿｽM?ｿｽ?ｿｽ?ｿｽb?ｿｽv?ｿｽg?ｿｽ?ｿｽ1200nm
+static const double np = 3.17; //?ｿｽx?ｿｽ?ｿｽ?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ
+//static const double n_core = 3.5; 		// ?ｿｽR?ｿｽA?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ(CORE)
+static const double n_core = 3.43; 		// ?ｿｽR?ｿｽA?ｿｽﾌ具ｿｽ?ｿｽﾜ暦ｿｽ(CORE)
 #if PCW_Air_Or_SiO2
-static const double n_clad = 1.0; 		// クラッド屈折率(真空)
+static const double n_clad = 1.0; 		// ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽﾜ暦ｿｽ(?ｿｽ^?ｿｽ?ｿｽ)
 #else
-static const double n_clad = 1.444; 		// クラッド屈折率(SiO2)
+static const double n_clad = 1.444; 		// ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽ?ｿｽ?ｿｽﾜ暦ｿｽ(SiO2)
 #endif
-static const double epsilon0 = EPSILON0; 					// 真空の誘電率
-static const double epsilon1 = EPSILON0 * SQ(n_core); 		// コアの誘電率
-static const double epsilon2 = EPSILON0 * SQ(n_clad); 		// クラッドの誘電率
+static const double epsilon0 = EPSILON0; 					// ?ｿｽ^?ｿｽ?ｿｽ?ｿｽﾌ誘?ｿｽd?ｿｽ?ｿｽ
+static const double epsilon1 = EPSILON0 * SQ(n_core); 		// ?ｿｽR?ｿｽA?ｿｽﾌ誘?ｿｽd?ｿｽ?ｿｽ
+static const double epsilon2 = EPSILON0 * SQ(n_clad); 		// ?ｿｽN?ｿｽ?ｿｽ?ｿｽb?ｿｽh?ｿｽﾌ誘?ｿｽd?ｿｽ?ｿｽ
 
 
 /*****************************************************************************/
-// 励振関数//1000
+// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ//1000
 /*****************************************************************************/
 #if _FDTD
 #if _EXITATION_FUNC
 #if _PROGRAM_TEST
 #if PCW_Air_Or_SiO2
-//char *dir_name[] = {"1525","1545"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1525","1545"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1525","1545","1565","1585"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1585","1588","1582","1555"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1582","1565","1575"}; 		// 励振関数の波長 [nm]
-char *dir_name[] = {"1565","1575"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1565"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1582"}; 		// 励振関数の波長 [nm]
+//char *dir_name[] = {"1525","1545"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1525","1545"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1525","1545","1565","1585"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1585","1588","1582","1555"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1582","1565","1575"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+char *dir_name[] = {"1565","1575"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1565"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1582"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
 #else
 #if PCW_S1S3_Shift
-//char *dir_name[] = {"1485","1525"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1575","1565","1555","1545","1535","1525"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1565","1568","1571","1574"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1559","1556","1553","1550"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1547","1544","1541","1538"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1580","1570","1560","1550","1540"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1573","1575","1567"}; 		// 励振関数の波長 [nm]
-char *dir_name[] = {"1570"}; 		// 励振関数の波長 [nm]
+//char *dir_name[] = {"1485","1525"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1575","1565","1555","1545","1535","1525"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1565","1568","1571","1574"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1559","1556","1553","1550"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1547","1544","1541","1538"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1580","1570","1560","1550","1540"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1573","1575","1567"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+char *dir_name[] = {"1570"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
 #else
-//char *dir_name[] = {"1530", "1535"}; 		// 励振関数の波長 [nm]
-//char *dir_name[] = {"1545", "1550"}; 		// 励振関数の波長 [nm]
-char *dir_name[] = {"1580"}; 		// 励振関数の波長 [nm]☆計算時
+//char *dir_name[] = {"1530", "1535"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+//char *dir_name[] = {"1545", "1550"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
+char *dir_name[] = {"1580"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ?ｿｽ
 #endif
 #endif
 #else
-char *dir_name[] = {"1550"}; 		// 励振関数の波長 [nm]
+char *dir_name[] = {"1550"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
 #endif
 #else
-char *dir_name[] = {"1550"}; 		// 励振関数の波長 [nm]
+char *dir_name[] = {"1550"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]
 #endif
 #else
-char *dir_name[] = {"1580"}; 		// 励振関数の波長 [nm]☆吐き出し時
+char *dir_name[] = {"1580"}; 		// ?ｿｽ?ｿｽ?ｿｽU?ｿｽﾖ撰ｿｽ?ｿｽﾌ波?ｿｽ?ｿｽ [nm]?ｿｽ?ｿｽ?ｿｽf?ｿｽ?ｿｽ?ｿｽo?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 #endif
 
-static const double delta_omega = 0.05; 						// 中心周波数で規格した半値全幅
-static const int Npeak = 500; 								// ピークステップ数
+static const double delta_omega = 0.05; 						// ?ｿｽ?ｿｽ?ｿｽS?ｿｽ?ｿｽ?ｿｽg?ｿｽ?ｿｽ?ｿｽﾅ規?ｿｽi?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽl?ｿｽS?ｿｽ?ｿｽ
+static const int Npeak = 500; 								// ?ｿｽs?ｿｽ[?ｿｽN?ｿｽX?ｿｽe?ｿｽb?ｿｽv?ｿｽ?ｿｽ
 
-// 励振点の座標☆☆
-static const int ex_y_st = YMAX_ALL -24 ; 	//☆-intWireWid_2	// 導波路断面始セル数(横) ←解析空間の中間セル座標から導波路幅(既に1/2値になっている)を引いている☆☆
-static const int ex_y_ed = YMAX_ALL; 					// 導波路断面終セル数(横)
-static const int ex_z_st = ZMAX_ALL - intSlabHeigPer; 	// 導波路断面始セル数(縦) ←解析空間の中間セル座標から導波路幅(の1/2値)を引いている
-static const int ex_z_ed = ZMAX_ALL; 			// 導波路断面終セル数(縦)
-//static const int ex_y_st = YMAX_ALL - 26; 		// 導波路断面始セル数(横) ←解析空間の中間セル座標から導波路幅(既に1/2値になっている)を引いている
-//static const int ex_y_ed = YMAX_ALL; 			// 導波路断面終セル数(横)
-//static const int ex_z_st = ZMAX_ALL - 7; 		// 導波路断面始セル数(縦) ←解析空間の中間セル座標から導波路幅(の1/2値)を引いている
-//static const int ex_z_ed = ZMAX_ALL; 			// 導波路断面終セル数(縦)
+// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽﾌ搾ｿｽ?ｿｽW?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int ex_y_st = YMAX_ALL -24 ; 	//?ｿｽ?ｿｽ-intWireWid_2	// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ始?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ) ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ具ｿｽ?ｿｽﾔの抵ｿｽ?ｿｽﾔセ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽW?ｿｽ?ｿｽ?ｿｽ逑ｱ?ｿｽg?ｿｽH?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽ?ｿｽ1/2?ｿｽl?ｿｽﾉなゑｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ驕呻ｿｽ?ｿｽ
+static const int ex_y_ed = YMAX_ALL; 					// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ終?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ)
+static const int ex_z_st = ZMAX_ALL - intSlabHeigPer; 	// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ始?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽc) ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ具ｿｽ?ｿｽﾔの抵ｿｽ?ｿｽﾔセ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽW?ｿｽ?ｿｽ?ｿｽ逑ｱ?ｿｽg?ｿｽH?ｿｽ?ｿｽ(?ｿｽ?ｿｽ1/2?ｿｽl)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ
+static const int ex_z_ed = ZMAX_ALL; 			// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ終?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽc)
+//static const int ex_y_st = YMAX_ALL - 26; 		// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ始?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ) ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ具ｿｽ?ｿｽﾔの抵ｿｽ?ｿｽﾔセ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽW?ｿｽ?ｿｽ?ｿｽ逑ｱ?ｿｽg?ｿｽH?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽ?ｿｽ1/2?ｿｽl?ｿｽﾉなゑｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ
+//static const int ex_y_ed = YMAX_ALL; 			// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ終?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽ?ｿｽ)
+//static const int ex_z_st = ZMAX_ALL - 7; 		// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ始?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽc) ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ具ｿｽ?ｿｽﾔの抵ｿｽ?ｿｽﾔセ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽW?ｿｽ?ｿｽ?ｿｽ逑ｱ?ｿｽg?ｿｽH?ｿｽ?ｿｽ(?ｿｽ?ｿｽ1/2?ｿｽl)?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽ
+//static const int ex_z_ed = ZMAX_ALL; 			// ?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽf?ｿｽﾊ終?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ(?ｿｽc)
 
 
 
 static const int y_zx = YMAX_ALL - 1;
 /*****************************************************************************/
-// 観測点と励振点の設定 (計算誤差を防ぐために桁上げして計算)
+// ?ｿｽﾏ托ｿｽ?ｿｽ_?ｿｽﾆ暦ｿｽ?ｿｽU?ｿｽ_?ｿｽﾌ設抵ｿｽ (?ｿｽv?ｿｽZ?ｿｽ?差?ｿｽ?ｿｽ?ｿｽh?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾟに鯉ｿｽ?ｿｽ繧ｰ?ｿｽ?ｿｽ?ｿｽﾄ計?ｿｽZ)
 /*****************************************************************************/
 
-// 分割前の励振点，観測面 (分割後はプログラム中で処理)
-static const int intExctLen = INT_DIV (EXCT_LEN, CELL_SIZE); //励振点 分割前の励振点☆
-static const int intObseLen1 = INT_DIV (OBSE_LEN1, CELL_SIZE); //観測点1
-//static const int intObseLen5 = XMAX_ALL - INT_DIV (OBSE_LEN5, CELL_SIZE); //☆観測点3 //観測点5の間違えでは？？
-//これは多分機能してない
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽO?ｿｽﾌ暦ｿｽ?ｿｽU?ｿｽ_?ｿｽC?ｿｽﾏ托ｿｽ?ｿｽ?ｿｽ (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍプ?ｿｽ?ｿｽ?ｿｽO?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾅ擾ｿｽ?ｿｽ?ｿｽ)
+static const int intExctLen = INT_DIV (EXCT_LEN, CELL_SIZE); //?ｿｽ?ｿｽ?ｿｽU?ｿｽ_ ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽO?ｿｽﾌ暦ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ
+static const int intObseLen1 = INT_DIV (OBSE_LEN1, CELL_SIZE); //?ｿｽﾏ托ｿｽ?ｿｽ_1
+//static const int intObseLen5 = XMAX_ALL - INT_DIV (OBSE_LEN5, CELL_SIZE); //?ｿｽ?ｿｽ?ｿｽﾏ托ｿｽ?ｿｽ_3 //?ｿｽﾏ托ｿｽ?ｿｽ_5?ｿｽﾌ間違え?ｿｽﾅは？?ｿｽH
+//?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍ托ｿｽ?ｿｽ?ｿｽ?ｿｽ@?ｿｽ\?ｿｽ?ｿｽ?ｿｽﾄなゑｿｽ
 
-// 分割前の励振点，観測面 (分割後はプログラム中で処理)
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽO?ｿｽﾌ暦ｿｽ?ｿｽU?ｿｽ_?ｿｽC?ｿｽﾏ托ｿｽ?ｿｽ?ｿｽ (?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾍプ?ｿｽ?ｿｽ?ｿｽO?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾅ擾ｿｽ?ｿｽ?ｿｽ)
 
-/****************************** 観測面の修正(2013/8/20) ******************************/
-//static const int intObseWid = 2 * intWireWid_2; // 観測面の幅(Y方向)
-static const int intObseWid = 2 * intPitchY; // 観測面の幅(Y方向)
-static const int intObseHeig = 2 * intSlabHeigPer; // 観測面の高さ(Z方向)
-/****************************** 観測面の修正(2013/8/20) ******************************/
+/****************************** ?ｿｽﾏ托ｿｽ?ｿｽﾊの修?ｿｽ?ｿｽ(2013/8/20) ******************************/
+//static const int intObseWid = 2 * intWireWid_2; // ?ｿｽﾏ托ｿｽ?ｿｽﾊの包ｿｽ(Y?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+static const int intObseWid = 2 * intPitchY; // ?ｿｽﾏ托ｿｽ?ｿｽﾊの包ｿｽ(Y?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+static const int intObseHeig = 2 * intSlabHeigPer; // ?ｿｽﾏ托ｿｽ?ｿｽﾊの搾ｿｽ?ｿｽ?ｿｽ(Z?ｿｽ?ｿｽ?ｿｽ?ｿｽ)
+/****************************** ?ｿｽﾏ托ｿｽ?ｿｽﾊの修?ｿｽ?ｿｽ(2013/8/20) ******************************/
 
-// ポインティングパワーの最大値，最小値の計算区間
-static const int intObseInter = INT_DIV (OBSE_INTER, CELL_SIZE); 	// 観測区間
+// ?ｿｽ|?ｿｽC?ｿｽ?ｿｽ?ｿｽe?ｿｽB?ｿｽ?ｿｽ?ｿｽO?ｿｽp?ｿｽ?ｿｽ?ｿｽ[?ｿｽﾌ最托ｿｽ?ｿｽl?ｿｽC?ｿｽﾅ擾ｿｽ?ｿｽl?ｿｽﾌ計?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+static const int intObseInter = INT_DIV (OBSE_INTER, CELL_SIZE); 	// ?ｿｽﾏ托ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
 
-// 分割後の励振点，観測面
-int intExctPortNum;	// 励振点がある計算機の番号
-int intObseInPortNum;	// 入射 観測点がある計算機の番号
-int intObseOutPortNum;	// 出射 観測点がある計算機の番号
-int intObseCenPortNum;	// 中央 観測点がある計算機の番号
+// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌ暦ｿｽ?ｿｽU?ｿｽ_?ｿｽC?ｿｽﾏ托ｿｽ?ｿｽ?ｿｽ
+int intExctPortNum;	// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ@?ｿｽﾌ番搾ｿｽ
+int intObseInPortNum;	// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ@?ｿｽﾌ番搾ｿｽ
+int intObseOutPortNum;	// ?ｿｽo?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ@?ｿｽﾌ番搾ｿｽ
+int intObseCenPortNum;	// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽv?ｿｽZ?ｿｽ@?ｿｽﾌ番搾ｿｽ
 
-int intExctLenPart;	// 励振点
-int intObseLenPart1; // 入射 観測点(始点)
-int intObseLenPart2; // 入射 観測点(終点)
-int intObseLenPart3; // 入射 観測点(中点)
-int intObseLenPart4; // 出射 観測点(始点)
-int intObseLenPart5; // 出射 観測点(終点)
-int intObseLenPart6; // 出射 観測点(中点)
-int intObseLenPart7; // 中心 観測点(中点)
-//int intObseLenPart8; // 中心 観測点(中点)
-//int intObseLenPart9; // 中心 観測点(中点)
+int intExctLenPart;	// ?ｿｽ?ｿｽ?ｿｽU?ｿｽ_
+int intObseLenPart1; // ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽn?ｿｽ_)
+int intObseLenPart2; // ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽI?ｿｽ_)
+int intObseLenPart3; // ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽ?ｿｽ?ｿｽ_)
+int intObseLenPart4; // ?ｿｽo?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽn?ｿｽ_)
+int intObseLenPart5; // ?ｿｽo?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽI?ｿｽ_)
+int intObseLenPart6; // ?ｿｽo?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽ?ｿｽ?ｿｽ_)
+int intObseLenPart7; // ?ｿｽ?ｿｽ?ｿｽS ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽ?ｿｽ?ｿｽ_)
+//int intObseLenPart8; // ?ｿｽ?ｿｽ?ｿｽS ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽ?ｿｽ?ｿｽ_)
+//int intObseLenPart9; // ?ｿｽ?ｿｽ?ｿｽS ?ｿｽﾏ托ｿｽ?ｿｽ_(?ｿｽ?ｿｽ?ｿｽ_)
 
-// 磁界の観測面
-int intObseLenPartHz1; 		// 入射 観測点
-int intObseLenPartHz5; 		// 出射 観測点
+// ?ｿｽ?ｿｽ?ｿｽE?ｿｽﾌ観托ｿｽ?ｿｽ?ｿｽ
+int intObseLenPartHz1; 		// ?ｿｽ?ｿｽ?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_
+int intObseLenPartHz5; 		// ?ｿｽo?ｿｽ?ｿｽ ?ｿｽﾏ托ｿｽ?ｿｽ_
 
-// ポインティングパワーの最大値の算出用
-//static const int intObseLenPart2 = (int)((3.84e-6*1e10)/(dx*1e10)); //intObseLenPart1から格子定数1周期ずれ
-//static const int intObseLenPart2 = (int) INT_DIV ((2.7e-6 + dblPitch*2), dx); //intObseLenPart1から格子定数2周期ずれ
-//static const int intObseLenPart5 = (int)((1.32e-6*1e10)/(dx*1e10)); //intObseLenPart4から格子定数1周期ずれ
-//static const int intObseLenPart5 = (int)((1.3e-6*1e10 + dblPitch*2*1e10)/(dx*1e10)); //intObseLenPart4から格子定数2周期ずれ NODE 6
-//static const int intObseLenPart5 = (int) INT_DIV ((9.3e-6 + dblPitch*2), dx); //intObseLenPart4から格子定数2周期ずれ NODE 2
+// ?ｿｽ|?ｿｽC?ｿｽ?ｿｽ?ｿｽe?ｿｽB?ｿｽ?ｿｽ?ｿｽO?ｿｽp?ｿｽ?ｿｽ?ｿｽ[?ｿｽﾌ最托ｿｽ?ｿｽl?ｿｽﾌ算?ｿｽo?ｿｽp
+//static const int intObseLenPart2 = (int)((3.84e-6*1e10)/(dx*1e10)); //intObseLenPart1?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關?1?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//static const int intObseLenPart2 = (int) INT_DIV ((2.7e-6 + dblPitch*2), dx); //intObseLenPart1?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關?2?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//static const int intObseLenPart5 = (int)((1.32e-6*1e10)/(dx*1e10)); //intObseLenPart4?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關?1?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ
+//static const int intObseLenPart5 = (int)((1.3e-6*1e10 + dblPitch*2*1e10)/(dx*1e10)); //intObseLenPart4?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關?2?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ NODE 6
+//static const int intObseLenPart5 = (int) INT_DIV ((9.3e-6 + dblPitch*2), dx); //intObseLenPart4?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽi?ｿｽq?ｿｽ關?2?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ NODE 2
 
-static const int WGlength = (int)((2.00e-6*1e10)/(dx*1e10)); //矩形導波路長(入射側．セル数に変換)
+static const int WGlength = (int)((2.00e-6*1e10)/(dx*1e10)); //?ｿｽ?ｿｽ?ｿｽ`?ｿｽ?ｿｽ?ｿｽg?ｿｽH?ｿｽ?ｿｽ(?ｿｽ?ｿｽ?ｿｽﾋ托ｿｽ?ｿｽD?ｿｽZ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉ変奇ｿｽ)
