@@ -248,14 +248,14 @@ int main(int argc, char **argv){
 			for(var_i = 0; var_i <= xmax; var_i++) {
 				for(var_j = 0; var_j <= ymax; var_j++) {
 					for(var_k = 0; var_k <= zmax; var_k++) {
-						printf("(%e %e %e)", Ex[var_i][var_j][var_k], Ey[var_i][var_j][var_k], Ez[var_i][var_j][var_k]);
+						printf("(%.10f %.10f %.10f)", Ex[var_i][var_j][var_k], Ey[var_i][var_j][var_k], Ez[var_i][var_j][var_k]);
 					}
 					puts("");
 				}
 				puts("");
 			}
 			puts("");
-			
+
 			// “dŠE‚Ì•Û‘¶
 			saving_electric_field();
 
