@@ -209,7 +209,7 @@ int main(int argc, char **argv){
 			// 時間ステップ数の表示
 			if(n % Ncut == 0){
 				//_strtime(time);
-				//printf("n = %d, \t\t", n);
+				printf("n = %d, \t\t", n);
 				//printf("time = %s\n", time);
 
 			}
@@ -6317,7 +6317,9 @@ void output_field_write(char *dir_name_def) {
 	pj1 = y_cen;
 	pk1 = z_cen;
 
-	printf("n = %d\n", n);
+	if(irank == 0){
+		printf("n = %d\n", n);
+	}
 
 	for (x = 0; x < xmax; x++) {
 		for (y = 0; y < ymax; y++) {
