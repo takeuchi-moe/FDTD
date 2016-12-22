@@ -244,6 +244,18 @@ int main(int argc, char **argv){
 			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
 				&Ez[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
 
+			int var_i, var_j, var_k;
+			for(var_i = 0; var_i <= xmax; var_i++) {
+				for(var_j = 0; var_j <= ymax; var_j++) {
+					for(var_k = 0; var_k <= zmax; var_k++) {
+						printf("(%e %e %e)", Ex[var_i][var_j][var_k], Ey[var_i][var_j][var_k], Ez[var_i][var_j][var_k]);
+					}
+					puts("");
+				}
+				puts("");
+			}
+			puts("");
+			
 			// “dŠE‚Ì•Û‘¶
 			saving_electric_field();
 
