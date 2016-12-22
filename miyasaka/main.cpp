@@ -1,5 +1,5 @@
 /*
-3ŽŸŒ³_FDTD–@‚É‚æ‚é“dŽ¥ŠE‰ðÍ ver. 2.01
+3æ¬¡å…ƒ_FDTDæ³•ã«ã‚ˆã‚‹é›»ç£ç•Œè§£æž ver. 2.01
 From September, 2000;
 Designed by Atsushi SAKAI;
 supported by
@@ -18,79 +18,79 @@ Norihiro ISHIKURA (October, 2012)
 //PITCH_SHIFT_PER
 //intPitchShiftPcwPer
 
-#define _FDTD 1// FDTDŒvŽZ			0 : ƒ‚ƒfƒ‹‘|‚«o‚µ(ƒvƒŠƒvƒƒZƒbƒT‚ÅƒRƒ“ƒpƒCƒ‹‚ð•ÏX‚³‚¹‚é)
-//									1 : ŒvŽZŽÀs
+#define _FDTD 1// FDTDè¨ˆç®—			0 : ãƒ¢ãƒ‡ãƒ«æŽƒãå‡ºã—(ãƒ—ãƒªãƒ—ãƒ­ã‚»ãƒƒã‚µã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚’å¤‰æ›´ã•ã›ã‚‹)
+//									1 : è¨ˆç®—å®Ÿè¡Œ
 
-#define _BAND_CALCULATION 0			// ŒvŽZ‚ÌŽí—Þ ƒoƒ“ƒhŒvŽZ
-#define _PROPAGATION_CALCULATION 1	// ŒvŽZ‚ÌŽí—Þ “`”ÀŒvŽZ
+#define _BAND_CALCULATION 0			// è¨ˆç®—ã®ç¨®é¡ž ãƒãƒ³ãƒ‰è¨ˆç®—
+#define _PROPAGATION_CALCULATION 1	// è¨ˆç®—ã®ç¨®é¡ž ä¼æ¬è¨ˆç®—
 
-#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// ŒvŽZ‚ÌŽí—Þ
+#define _CALCULATION_TYPE _PROPAGATION_CALCULATION	// è¨ˆç®—ã®ç¨®é¡ž
 
-#define _EXITATION_FUNC 1	// —ãUŠÖ”‚ÌŽí—Þ		0 : Gaussian
+#define _EXITATION_FUNC 1	// åŠ±æŒ¯é–¢æ•°ã®ç¨®é¡ž		0 : Gaussian
 //													1 : CW
 
-#define _PROGRAM_TEST 1		// ƒvƒƒOƒ‰ƒ€‚Ì“®ìƒeƒXƒg	0: TEST(ÅIŒvŽZƒXƒeƒbƒvCo—Íƒtƒ@ƒCƒ‹‚ð’Z‚­)
-//															1: –{”Ô
+#define _PROGRAM_TEST 1		// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®å‹•ä½œãƒ†ã‚¹ãƒˆ	0: TEST(æœ€çµ‚è¨ˆç®—ã‚¹ãƒ†ãƒƒãƒ—ï¼Œå‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’çŸ­ã)
+//															1: æœ¬ç•ª
 
-#define _MODEL_ALL_EPSILON 0 	// XY’f–Ê‚ðƒ‚ƒfƒ‹‘S‘Ì‚Ìo—Í	0: ‚È‚µ
-//																1: ‚ ‚è
+#define _MODEL_ALL_EPSILON 0 	// XYæ–­é¢ã‚’ãƒ¢ãƒ‡ãƒ«å…¨ä½“ã®å‡ºåŠ›	0: ãªã—
+//																1: ã‚ã‚Š
 
-#define _CRT_SECURE_NO_WARNINGS //	Œx‚ð”­¶‚³‚¹‚È‚¢‚æ‚¤‚É‚·‚é
+#define _CRT_SECURE_NO_WARNINGS //	è­¦å‘Šã‚’ç™ºç”Ÿã•ã›ãªã„ã‚ˆã†ã«ã™ã‚‹
 
-#define BOUNDARYLINE 31//SiWG‚ÆPWW‚Ì‹«ŠEðŒ 0 : ]—ˆWG\‘¢ 2015/11/11™
-//											 1 : WGƒe[ƒp‰~E1—ñ–Ú(üŒ`) 2015/11/19
-//	@@@@							     2 : WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü)
-//										     3 : WGƒe[ƒp‰~E1—ñ–Ú(‹t•ú•¨ü)2015/11/24
-//										     4 : WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü‰ü)2015/11/25@ oŽË‚Ìƒe[ƒpŠÉ‚â‚©@–¢ŒvŽZ
-//										     5 : WGƒe[ƒp‰~E1—ñ–Ú(üŒ`‰ü)2015/11/25@@
-//										     6 : WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü‰ü2)2015/11/25@“üoŽË‚Ìƒe[ƒpŠÉ‚â‚©‚É
-//										     7 : WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü‰ü3)2015/11/26@“üoŽË‚ð¬‚³‚­
-//										     8 : ƒe[ƒp2015/12/7 š •ªæ¶ 12/14‚±‚ê‚Í•Û—¯
-//										     9 : WGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý)2015/12/14@
-//										    10 : ‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý)2015/12/14
-//										    11 : PCW‹ßÚƒIƒtƒZƒbƒgŒ“‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý)2015/12/15
-//										    12 : PCW‹ßÚƒIƒtƒZƒbƒg[‚­Œ“‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý)2015/12/15
-//										    13 : 12+“üŽË•ú•¨ü2015/12/15
-//										    14 : 12+ƒ‚ƒjƒ^[Œã‚ë
-//										    141 : ƒ‚ƒjƒ^[Œã‚ë‚Ì‚Ý 2015/12/16
-//										    15 : 14+ƒe[ƒp•Ï‰» 2015/12/16
-//										    16 : 14+ƒe[ƒp•Ï‰»2 2015/12/16
-//										    17 : 14+ƒe[ƒp•Ï‰»3 2015/12/24 ŒX‚«0.2
-//										    18 : 14+ƒe[ƒp•Ï‰»4 2015/12/24 ŒX‚«0.12
-//										    19 : 14+ƒe[ƒp•Ï‰»5 2015/12/25 ŒX‚«0.10
-//										    20 : 14+ƒe[ƒp•Ï‰»6 2015/12/25 ŒX‚«0.08
-//										    21 : 20 + oŽË•ú•¨üƒe[ƒp 2016/1/4 ŒX‚«0.08
-//										    22 : 14+ƒe[ƒp•Ï‰»7 2016/1/6 ŒX‚«0.12
-//										    23 : 14+ƒe[ƒp•Ï‰»8 2016/1/6 ŒX‚«0.16
-//										    24 : 14+ƒe[ƒp•Ï‰»9 2016/1/6 ŒX‚«0.20
-//										    25 : 14+ƒe[ƒp•Ï‰»10 2016/1/7 ŒX‚«0.24
-//										    26 : 14+ƒe[ƒp•Ï‰»11 2016/1/7 ŒX‚«0.04
-//										    27 : 14+ƒe[ƒp•Ï‰»12 2016/1/7 ŒX‚«0.02 ŽÀÛ‚Íƒm[ƒe[ƒp[(ƒe[ƒp‚Í¶‚¶‚È‚¢‚Ì‚Å)
-//										    28 : ƒm[ƒe[ƒp[@2016/2/5y•ûŒü’·ŽÚ(Ymax=155CSY =-231‚É‚·‚é•K—v‚ ‚è) ]—ˆ‚æ‚è10ƒZƒ‹•ªpcw’[‚ÌƒXƒy[ƒX(14)
-//										    29 : ƒm[ƒe[ƒp[@2016/2/5y•ûŒü’·ŽÚ(Ymax=157CSY =-273‚É‚·‚é•K—v‚ ‚è) ]—ˆ‚æ‚è12ƒZƒ‹•ªpcw’[‚ÌƒXƒy[ƒX(16)
-//										    30 : 2016/2/8 (‚±‚ê‚Í—e—Ê‚ª‘å‚«‚¢‚Ì‚Åƒ‚ƒfƒ‹‚ðŒ©‚é‚É‚ÍXmax‚ðŒ¸‚ç‚·•K—v‚ ‚è)ƒm[ƒe[ƒp[@y•ûŒü’·ŽÚ(Ymax=162CSY =-378‚É‚·‚é•K—v‚ ‚è) ]—ˆ‚æ‚è17ƒZƒ‹•ªpcw’[‚ÌƒXƒy[ƒX(21)
-//										    31 : 2016/2/8 (?)ƒm[ƒe[ƒp[ y•ûŒü’·ŽÚ(Ymax=172CSY =-588)‚É‚·‚é•K—v‚ ‚è) ]—ˆ‚æ‚è27ƒZƒ‹•ªpcw’[‚ÌƒXƒy[ƒX(31)@™‚±‚ê‚¾‚Æ‰¡‚Ì•ª•z‚ª—Ç‚­Œ©‚¦‚é
-//										    32 : 2016/2/16 31+ oŽË”÷¬ƒe[ƒp
-//										    33 : 2016/3/3 31+ “üŽË”÷¬ƒe[ƒp(’·ŽÚ“±”g˜H)
-//34 : 2016/10/11“üoŽË‰~ó\‘¢ dtaper = 168 nm, Ymax = 172CSY = -588‚ÉŒÅ’è ŒX‚«0.08 WIRE_WID_OFFSET, OUT = 315 (24¨31 nm‚É–ñ30%L‚°‚é) N = 7 ƒe[ƒp0.08
-//35 : 34+ ƒe[ƒp0.06
-//36 : 34+ ƒe[ƒp0.04
-//									    37 : 2016/10/18 ŽÎ‚ßPCW“üŽË
-//38 : 2016/10/18 ŽÎ‚ßPCW“üŽË •ƒe[ƒp(168 nm)
-//39 : 2016/10/20 ŽÎ‚ßPCW“üoŽË
-//40 : 2016/10/20 ŽÎ‚ßPCW“üoŽË ‚æ‚è’áŒX‚«
-//41 : 2016/10/21 ŽÎ‚ßPCW“üo(39) ‰~EˆÊ’u’²ß ŠO‘¤ÚG(y•ûŒü2.5ŽüŠú) ˜_•¶‚Æ“¯—l‚Ì\‘¢
-//42 : 2016/10/21 ŽÎ‚ßPCW“üo(39) ‰~EˆÊ’u’²ß ’†SÚG(y•ûŒü2.5ŽüŠú)
-//43 : 2016/10/21 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2.5ŽüŠú)
-//44 : 2016/10/24 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2ŽüŠú)
-//45 : 2016/10/25 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü1.5ŽüŠú)
-//46 : 2016/10/25 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü1ŽüŠú)–¢ì¬¨•Û—¯
-//47 : 2016/10/25 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2.5ŽüŠú) PCWŽüŠú”@x•ûŒü8ŽüŠú (41`46‚Í7ŽüŠú)
-//48 : 2016/10/25 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2.5ŽüŠú) PCWŽüŠú”@x•ûŒü9ŽüŠú (41`46‚Í7ŽüŠú)
-//49 : 2016/11/4 ×ü•]‰¿—p  ƒm[ƒe[ƒp[(31) + PCW_WID 1
-//50 : 2016/11/9 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2.5ŽüŠú) •ƒ`ƒƒ(168 nm)•¹—p N = 7
-//51 : 2016/11/9 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2.5ŽüŠú) •ƒ`ƒƒ(168 nm)•¹—p N = 9
-//52 : 2016/11/9 ŽÎ‚ßPCW“üo(41) ‰~EˆÊ’u’²ß ŠO‘¤ÚG ˆø‚«—£‚µ(y•ûŒü2.5ŽüŠú) •ƒ`ƒƒ(168 nm)•¹—p N = 9 •ƒ`ƒƒ“r’†‚©‚ç
+#define BOUNDARYLINE 31//SiWGã¨PWWã®å¢ƒç•Œæ¡ä»¶ 0 : å¾“æ¥WGæ§‹é€  2015/11/11â˜†
+//											 1 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(ç·šå½¢) 2015/11/19
+//	ã€€ã€€ã€€ã€€							     2 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·š)
+//										     3 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(é€†æ”¾ç‰©ç·š)2015/11/24
+//										     4 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·šæ”¹)2015/11/25ã€€ å‡ºå°„ã®ãƒ†ãƒ¼ãƒ‘ç·©ã‚„ã‹ã€€æœªè¨ˆç®—
+//										     5 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(ç·šå½¢æ”¹)2015/11/25ã€€ã€€
+//										     6 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·šæ”¹2)2015/11/25ã€€å…¥å‡ºå°„ã®ãƒ†ãƒ¼ãƒ‘ç·©ã‚„ã‹ã«
+//										     7 : WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·šæ”¹3)2015/11/26ã€€å…¥å‡ºå°„ã‚’å°ã•ã
+//										     8 : ãƒ†ãƒ¼ãƒ‘2015/12/7 åœ‹åˆ†å…ˆç”Ÿ 12/14ã“ã‚Œã¯ä¿ç•™
+//										     9 : WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿)2015/12/14ã€€
+//										    10 : ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿)2015/12/14
+//										    11 : PCWè¿‘æŽ¥ã‚ªãƒ•ã‚»ãƒƒãƒˆå…¼ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿)2015/12/15
+//										    12 : PCWè¿‘æŽ¥ã‚ªãƒ•ã‚»ãƒƒãƒˆæ·±ãå…¼ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿)2015/12/15
+//										    13 : 12+å…¥å°„æ”¾ç‰©ç·š2015/12/15
+//										    14 : 12+ãƒ¢ãƒ‹ã‚¿ãƒ¼å¾Œã‚
+//										    141 : ãƒ¢ãƒ‹ã‚¿ãƒ¼å¾Œã‚ã®ã¿ 2015/12/16
+//										    15 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
+//										    16 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–2 2015/12/16
+//										    17 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–3 2015/12/24 å‚¾ã0.2
+//										    18 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–4 2015/12/24 å‚¾ã0.12
+//										    19 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–5 2015/12/25 å‚¾ã0.10
+//										    20 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–6 2015/12/25 å‚¾ã0.08
+//										    21 : 20 + å‡ºå°„æ”¾ç‰©ç·šãƒ†ãƒ¼ãƒ‘ 2016/1/4 å‚¾ã0.08
+//										    22 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–7 2016/1/6 å‚¾ã0.12
+//										    23 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–8 2016/1/6 å‚¾ã0.16
+//										    24 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–9 2016/1/6 å‚¾ã0.20
+//										    25 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–10 2016/1/7 å‚¾ã0.24
+//										    26 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–11 2016/1/7 å‚¾ã0.04
+//										    27 : 14+ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–12 2016/1/7 å‚¾ã0.02 å®Ÿéš›ã¯ãƒŽãƒ¼ãƒ†ãƒ¼ãƒ‘ãƒ¼(ãƒ†ãƒ¼ãƒ‘ã¯ç”Ÿã˜ãªã„ã®ã§)
+//										    28 : ãƒŽãƒ¼ãƒ†ãƒ¼ãƒ‘ãƒ¼ã€€2016/2/5yæ–¹å‘é•·å°º(Ymax=155ï¼ŒSY =-231ã«ã™ã‚‹å¿…è¦ã‚ã‚Š) å¾“æ¥ã‚ˆã‚Š10ã‚»ãƒ«åˆ†pcwç«¯ã®ã‚¹ãƒšãƒ¼ã‚¹(14)
+//										    29 : ãƒŽãƒ¼ãƒ†ãƒ¼ãƒ‘ãƒ¼ã€€2016/2/5yæ–¹å‘é•·å°º(Ymax=157ï¼ŒSY =-273ã«ã™ã‚‹å¿…è¦ã‚ã‚Š) å¾“æ¥ã‚ˆã‚Š12ã‚»ãƒ«åˆ†pcwç«¯ã®ã‚¹ãƒšãƒ¼ã‚¹(16)
+//										    30 : 2016/2/8 (ã“ã‚Œã¯å®¹é‡ãŒå¤§ãã„ã®ã§ãƒ¢ãƒ‡ãƒ«ã‚’è¦‹ã‚‹ã«ã¯Xmaxã‚’æ¸›ã‚‰ã™å¿…è¦ã‚ã‚Š)ãƒŽãƒ¼ãƒ†ãƒ¼ãƒ‘ãƒ¼ã€€yæ–¹å‘é•·å°º(Ymax=162ï¼ŒSY =-378ã«ã™ã‚‹å¿…è¦ã‚ã‚Š) å¾“æ¥ã‚ˆã‚Š17ã‚»ãƒ«åˆ†pcwç«¯ã®ã‚¹ãƒšãƒ¼ã‚¹(21)
+//										    31 : 2016/2/8 (?)ãƒŽãƒ¼ãƒ†ãƒ¼ãƒ‘ãƒ¼ yæ–¹å‘é•·å°º(Ymax=172ï¼ŒSY =-588)ã«ã™ã‚‹å¿…è¦ã‚ã‚Š) å¾“æ¥ã‚ˆã‚Š27ã‚»ãƒ«åˆ†pcwç«¯ã®ã‚¹ãƒšãƒ¼ã‚¹(31)ã€€â˜†ã“ã‚Œã ã¨æ¨ªã®åˆ†å¸ƒãŒè‰¯ãè¦‹ãˆã‚‹
+//										    32 : 2016/2/16 31+ å‡ºå°„å¾®å°ãƒ†ãƒ¼ãƒ‘
+//										    33 : 2016/3/3 31+ å…¥å°„å¾®å°ãƒ†ãƒ¼ãƒ‘(é•·å°ºå°Žæ³¢è·¯)
+//34 : 2016/10/11å…¥å‡ºå°„å††éŒçŠ¶æ§‹é€  dtaper = 168 nm, Ymax = 172ï¼ŒSY = -588ã«å›ºå®š å‚¾ã0.08 WIRE_WID_OFFSET, OUT = 315 (24â†’31 nmã«ç´„30%åºƒã’ã‚‹) N = 7 ãƒ†ãƒ¼ãƒ‘0.08
+//35 : 34+ ãƒ†ãƒ¼ãƒ‘0.06
+//36 : 34+ ãƒ†ãƒ¼ãƒ‘0.04
+//									    37 : 2016/10/18 æ–œã‚PCWå…¥å°„
+//38 : 2016/10/18 æ–œã‚PCWå…¥å°„ å¹…ãƒ†ãƒ¼ãƒ‘(168 nm)
+//39 : 2016/10/20 æ–œã‚PCWå…¥å‡ºå°„
+//40 : 2016/10/20 æ–œã‚PCWå…¥å‡ºå°„ ã‚ˆã‚Šä½Žå‚¾ã
+//41 : 2016/10/21 æ–œã‚PCWå…¥å‡º(39) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦(yæ–¹å‘2.5å‘¨æœŸ) è«–æ–‡ã¨åŒæ§˜ã®æ§‹é€ 
+//42 : 2016/10/21 æ–œã‚PCWå…¥å‡º(39) å††å­”ä½ç½®èª¿ç¯€ ä¸­å¿ƒæŽ¥è§¦(yæ–¹å‘2.5å‘¨æœŸ)
+//43 : 2016/10/21 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2.5å‘¨æœŸ)
+//44 : 2016/10/24 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2å‘¨æœŸ)
+//45 : 2016/10/25 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘1.5å‘¨æœŸ)
+//46 : 2016/10/25 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘1å‘¨æœŸ)æœªä½œæˆâ†’ä¿ç•™
+//47 : 2016/10/25 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2.5å‘¨æœŸ) PCWå‘¨æœŸæ•°ã€€xæ–¹å‘8å‘¨æœŸ (41ï½ž46ã¯7å‘¨æœŸ)
+//48 : 2016/10/25 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2.5å‘¨æœŸ) PCWå‘¨æœŸæ•°ã€€xæ–¹å‘9å‘¨æœŸ (41ï½ž46ã¯7å‘¨æœŸ)
+//49 : 2016/11/4 ç´°ç·šè©•ä¾¡ç”¨  ãƒŽãƒ¼ãƒ†ãƒ¼ãƒ‘ãƒ¼(31) + PCW_WID 1
+//50 : 2016/11/9 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2.5å‘¨æœŸ) å¹…ãƒãƒ£(168 nm)ä½µç”¨ N = 7
+//51 : 2016/11/9 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2.5å‘¨æœŸ) å¹…ãƒãƒ£(168 nm)ä½µç”¨ N = 9
+//52 : 2016/11/9 æ–œã‚PCWå…¥å‡º(41) å††å­”ä½ç½®èª¿ç¯€ å¤–å´æŽ¥è§¦ å¼•ãé›¢ã—(yæ–¹å‘2.5å‘¨æœŸ) å¹…ãƒãƒ£(168 nm)ä½µç”¨ N = 9 å¹…ãƒãƒ£é€”ä¸­ã‹ã‚‰
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -112,7 +112,7 @@ Norihiro ISHIKURA (October, 2012)
 #include "parameter.h"
 #include "module0.h"
 
-//ƒTƒuƒ‹[ƒeƒBƒ“
+//ã‚µãƒ–ãƒ«ãƒ¼ãƒ†ã‚£ãƒ³
 void file_open(char*);
 void file_close();
 void parameter(char*);
@@ -144,27 +144,28 @@ int main(int argc, char **argv){
 	char stime[9];
 	char etime[9];
 	int tag_send = 0, tag_recv = 0;
+	int tag4 = 4, tag5 = 5, tag6 = 6, tag7 = 7, tag8 = 8, tag9 = 9, tag10 = 10;
 	int right, left;
 	int namelen;
 
 
 	MPI_Status status;
 
-	// MPI‚É‚æ‚é’ÊM‚ÌŠJŽn
+	// MPIã«ã‚ˆã‚‹é€šä¿¡ã®é–‹å§‹
 	MPI_Init (&argc, &argv);
 	MPI_Comm_size (MPI_COMM_WORLD, &isize);
 	MPI_Comm_rank (MPI_COMM_WORLD, &irank);
 	MPI_Get_processor_name (processor_name, &namelen);
 
 	if (isize != ISIZE){
-		printf ("MPI‚ÅÝ’è‚µ‚½ŒvŽZ‹@‚Ì‘ä”(%d)‚ªƒvƒƒOƒ‰ƒ€’†‚Ì’l‚Æˆê’v‚µ‚Ü‚¹‚ñD\nI—¹‚µ‚Ü‚·\n", ISIZE);
+		printf ("MPIã§è¨­å®šã—ãŸè¨ˆç®—æ©Ÿã®å°æ•°(%d)ãŒãƒ—ãƒ­ã‚°ãƒ©ãƒ ä¸­ã®å€¤ã¨ä¸€è‡´ã—ã¾ã›ã‚“ï¼Ž\nçµ‚äº†ã—ã¾ã™\n", ISIZE);
 		return 0;
 	}
 
-	printf ("%d•ªŠ„•À—ñˆ—ƒXƒ^[ƒg\n", isize);
+	printf ("%dåˆ†å‰²ä¸¦åˆ—å‡¦ç†ã‚¹ã‚¿ãƒ¼ãƒˆ\n", isize);
 	printf ("Process %d on %s\n", irank, processor_name);
 
-	// —×‚ÌŒvŽZ‹@‚Ì”Ô†‚ÌŽw’è
+	// éš£ã®è¨ˆç®—æ©Ÿã®ç•ªå·ã®æŒ‡å®š
 	left = irank - 1;
 	if(irank == IRANK_MIN){
 		left = MPI_PROC_NULL;
@@ -174,22 +175,22 @@ int main(int argc, char **argv){
 		right = MPI_PROC_NULL;
 	}
 
-	// dir_name (—ãU”g’·) ‚Ì”z—ñ’·‚¾‚¯ŒJ‚è•Ô‚µ
+	// dir_name (åŠ±æŒ¯æ³¢é•·) ã®é…åˆ—é•·ã ã‘ç¹°ã‚Šè¿”ã—
 	for(int dir_count = 0; dir_count < (sizeof(dir_name) / sizeof(dir_name[0]) ); dir_count++){
 
-		initialize_matrix(); 						// ”z—ñ‚Ì‰Šú‰»
-		modeling(); 								// ƒ‚ƒfƒ‹‚ÌÝ’è
-		file_open(dir_name[dir_count]); 			// ƒtƒ@ƒCƒ‹‚ðŠJ‚­
-		parameter(dir_name[dir_count]); 			// ƒpƒ‰ƒ[ƒ^‚ÌÝ’è‚Æo—Í
+		initialize_matrix(); 						// é…åˆ—ã®åˆæœŸåŒ–
+		modeling(); 								// ãƒ¢ãƒ‡ãƒ«ã®è¨­å®š
+		file_open(dir_name[dir_count]); 			// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
+		parameter(dir_name[dir_count]); 			// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®šã¨å‡ºåŠ›
 
 
-		// ŒvŽZŠJŽnŽž‚Ìo—Í
+		// è¨ˆç®—é–‹å§‹æ™‚åˆ»ã®å‡ºåŠ›
 		if (irank == IRANK_MIN){
 			//_strtime(time);
 			//fprintf(fpparameter, "Start Time:\t %s\n", time);
 			//fprintf("Start Time:\t %s\n", time);
 
-			//stime[0] == 0;//™ŒvŽZŠJŽnŽž‚ðƒz[ƒ‹ƒh@“®ì‚µ‚È‚¢
+			//stime[0] == 0;//â˜†è¨ˆç®—é–‹å§‹æ™‚åˆ»ã‚’ãƒ›ãƒ¼ãƒ«ãƒ‰ã€€å‹•ä½œã—ãªã„
 			/*stime[1] == 0;
 			stime[2] == 0;
 			stime[3] == 0;
@@ -198,15 +199,15 @@ int main(int argc, char **argv){
 			stime[6] == 0;
 			stime[7] == 0;
 			stime[8] == 0;
-			stime[9] == 0;*/ //1s‹ó‚¯‚é‚Í‚¸
+			stime[9] == 0;*/ //1è¡Œç©ºã‘ã‚‹ã¯ãš
 
 			//s_time = MPI_Wtime();
 			//fprintf(fpparameter, "Start Time1:\t %s\n", s_time);
 		}
-		// “dŽ¥ŠEŒvŽZ
+		// é›»ç£ç•Œè¨ˆç®—
 		for(n = 1 ; n <= Nmax; n++){
 
-			// ŽžŠÔƒXƒeƒbƒv”‚Ì•\Ž¦
+			// æ™‚é–“ã‚¹ãƒ†ãƒƒãƒ—æ•°ã®è¡¨ç¤º
 			if(n % Ncut == 0){
 				//_strtime(time);
 				printf("n = %d, \t\t", n);
@@ -214,24 +215,24 @@ int main(int argc, char **argv){
 
 			}
 
-			// —ãUŠÖ”‚ÌÝ’è
+			// åŠ±æŒ¯é–¢æ•°ã®è¨­å®š
 			source_func();
 
 #if _FDTD
 
-			// ˆê“x“¯Šú‚ð‚Æ‚é(“¯Šú‚Íƒm[ƒhŠÔ‚Å‘¬“x‚É‚Î‚ç‚Â‚«‚ª¶‚¶‚éì‹Æ)
+			// ä¸€åº¦åŒæœŸã‚’ã¨ã‚‹(åŒæœŸã¯ãƒŽãƒ¼ãƒ‰é–“ã§é€Ÿåº¦ã«ã°ã‚‰ã¤ããŒç”Ÿã˜ã‚‹ä½œæ¥­)
 			MPI_Barrier (MPI_COMM_WORLD);
 
-			// “dŠE‚ÌŒvŽZ
+			// é›»ç•Œã®è¨ˆç®—
 			calc_efield();
 
-			// ‹zŽû‹«ŠEðŒ‚É‚æ‚é’[–Ê‚ÌŒvŽZ
+			// å¸åŽå¢ƒç•Œæ¡ä»¶ã«ã‚ˆã‚‹ç«¯é¢ã®è¨ˆç®—
 			absorpt_bound_condition();
 
-			// ˆê“x“¯Šú‚ð‚Æ‚é
+			// ä¸€åº¦åŒæœŸã‚’ã¨ã‚‹
 			MPI_Barrier(MPI_COMM_WORLD);
 
-			int var_i, var_j, var_k;
+		/*	int var_i, var_j, var_k;
 			for(var_i = 0; var_i <= xmax; var_i++) {
 				for(var_j = 0; var_j <= ymax; var_j++) {
 					for(var_k = 0; var_k <= zmax; var_k++) {
@@ -241,68 +242,68 @@ int main(int argc, char **argv){
 				}
 				puts("");
 			}
-			puts("");
+			puts("");  */
 
 			MPI_Sendrecv( &Ex[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_send,
 				&Ex[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ey[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_send,
-				&Ey[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ez[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_send,
-				&Ez[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ex[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Ex[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ey[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Ey[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Ez[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ey[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag4,
+				&Ey[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag4, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ez[1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag5,
+				&Ez[xmax][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag5, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ex[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag6,
+				&Ex[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag6, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ey[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag7,
+				&Ey[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag7, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Ez[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag8,
+				&Ez[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag8, MPI_COMM_WORLD, &status);
 
-			// “dŠE‚Ì•Û‘¶
+			// é›»ç•Œã®ä¿å­˜
 			saving_electric_field();
 
-			// Ž¥ŠE‚ÌŒvŽZ
+			// ç£ç•Œã®è¨ˆç®—
 			calc_hfield();
 
-			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Hy[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
-			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag_send,
-				&Hz[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag_recv, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Hy[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag9,
+				&Hy[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag9, MPI_COMM_WORLD, &status);
+			MPI_Sendrecv( &Hz[xmax-1][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, right, tag10,
+				&Hz[0][0][0], (ymax+1)*(zmax+1), MPI_DOUBLE, left, tag10, MPI_COMM_WORLD, &status);
 
-			// ƒtƒB[ƒ‹ƒh‚Ìo—Í
+			// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å‡ºåŠ›
 			output_field (dir_name[dir_count]);
 
-			// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[ŒvŽZ‚Æo—Í
+			// ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼è¨ˆç®—ã¨å‡ºåŠ›
 #if _EXITATION_FUNC
 			calc_poynting_power();
 #else
 			calc_poynting_powerHz();
 #endif
 
-			// ˆê“x“¯Šú‚ð‚Æ‚é
+			// ä¸€åº¦åŒæœŸã‚’ã¨ã‚‹
 			MPI_Barrier(MPI_COMM_WORLD);
 #endif
 			if(n == 1) {
-				observation_func(); 	// ŠÏ‘ª“_‚ÌÝ’è
-				output_model(); 		// ƒ‚ƒfƒ‹‚Ìo—Í
-				set_epsilon(); 			// —U“d—¦‚ÌŠ„‚è“–‚Ä
+				observation_func(); 	// è¦³æ¸¬ç‚¹ã®è¨­å®š
+				output_model(); 		// ãƒ¢ãƒ‡ãƒ«ã®å‡ºåŠ›
+				set_epsilon(); 			// èª˜é›»çŽ‡ã®å‰²ã‚Šå½“ã¦
 			}
 		}
 
 		if (irank == IRANK_MIN){
 			//_strtime(time);
-			//etime == time;//™ŒvŽZI—¹Žž‚ðƒz[ƒ‹ƒh
-			//fprintf(fpparameter, "End Time:\t %s\n", time); 	//ŒvŽZI—¹Žž‚Ìo—Í
-			//fprintf(fpparameter, "Calculation Time:\t %s\n", time-stime); 	//™ŒvŽZŽžŠÔ‚Ìo—Í
+			//etime == time;//â˜†è¨ˆç®—çµ‚äº†æ™‚åˆ»ã‚’ãƒ›ãƒ¼ãƒ«ãƒ‰
+			//fprintf(fpparameter, "End Time:\t %s\n", time); 	//è¨ˆç®—çµ‚äº†æ™‚åˆ»ã®å‡ºåŠ›
+			//fprintf(fpparameter, "Calculation Time:\t %s\n", time-stime); 	//â˜†è¨ˆç®—æ™‚é–“ã®å‡ºåŠ›
 
-			//Žž‚Ìo—Í
+			//æ™‚åˆ»ã®å‡ºåŠ›
 		//	e_time = MPI_Wtime();
 			//printf ("\ntime = %f\n", e_time - s_time);
 			//fprintf(fpparameter, "Calculation Time:\t %s\n", time);
 		}
 
-		file_close(); 			// ƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é
+		file_close(); 			// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 	}
 
-	//MPI_Finalize(); 			// MPI‚ðI—¹‚·‚é
+	//MPI_Finalize(); 			// MPIã‚’çµ‚äº†ã™ã‚‹
 #elif _CALCULATION_TYPE == _BAND_CALCULATION
 
 #endif
@@ -310,15 +311,15 @@ int main(int argc, char **argv){
 
 
 
-// o—Í—pƒtƒ@ƒCƒ‹‚ðŠJ‚­
+// å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 void file_open(char* dir_name_def){
 	char dir_name[40];
 
 	//baba lab
-	//_mkdir(strcpy(dir_name, dir_name_def)); 		// ?U?•“????????e?X?g
+	//_mkdir(strcpy(dir_name, dir_name_def)); 		// ?U?è•ª????????e?X?g
 
 	//kuramitsu lab
-	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// ?U?•“????????e?X?g
+	mkdir(strcpy(dir_name, dir_name_def), 0755); 		// ?U?è•ª????????e?X?g
 
 
 	if (irank == IRANK_MIN){
@@ -327,17 +328,17 @@ void file_open(char* dir_name_def){
 		fpallepsilonx = fopen (strcat(strcpy(dir_name, dir_name_def), "/All_Epsilon_xy.txt"), "w");
 	}
 
-	if(irank == intObseInPortNum){ // “üŽË
+	if(irank == intObseInPortNum){ // å…¥å°„
 		allmodel_yz1 = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_yz1.txt"), "w");
 	}
-	if(irank == intObseOutPortNum){ // oŽË
+	if(irank == intObseOutPortNum){ // å‡ºå°„
 		allmodel_yz4 = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_yz4.txt"), "w");
 	}
-	if(irank == intObseCenPortNum){			// ’†‰›
+	if(irank == intObseCenPortNum){			// ä¸­å¤®
 		allmodel_yz7 = fopen (strcat(strcpy(dir_name, dir_name_def), "/AllModel_yz7.txt"), "w");
 	}
 
-	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_xy.txt"), "w"); 		// U‚è•ª‚¯‚Å‚«‚é‚©ƒeƒXƒg
+	model_xy = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_xy.txt"), "w"); 		// æŒ¯ã‚Šåˆ†ã‘ã§ãã‚‹ã‹ãƒ†ã‚¹ãƒˆ
 	model_xy2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_xy2.txt"), "w");
 	model_yz = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_yz.txt"), "w");
 	model_xz = fopen (strcat(strcpy(dir_name, dir_name_def), "/Model_xz.txt"), "w");
@@ -377,26 +378,26 @@ void file_open(char* dir_name_def){
 		avpoynt5 = fopen (strcat(strcpy(dir_name, dir_name_def), "/AveragePoyntingPower5.txt"), "w");
 		fpHz5 = fopen (strcat(strcpy(dir_name, dir_name_def), "/Hz05.txt"), "w");
 	}
-	//fppoynt6 = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower6.txt"), "w"); //ƒ|ƒCƒ“ƒeƒBƒ“
+	//fppoynt6 = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower6.txt"), "w"); //ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³
 	//fppoynt1h = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower1h.txt"), "w");
 	//fppoynt2h = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower2h.txt"), "w");
 	//fppoynt3h = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower3h.txt"), "w");
 	//fppoynt4h = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower4h.txt"), "w");
 	//fppoynt5h = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower5h.txt"), "w");
 	//fppoynt6h = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPower6h.txt"), "w");
-	//fppoynt_para = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPara.txt"), "w"); 		//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ‰ƒ[ƒ^•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz1 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz1.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz2.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz3 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz3.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz4 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz4.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz5 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz5.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz6 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz6.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz1h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz1h.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz2h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz2h.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz3h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz3h.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz4h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz4h.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz5h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz5h.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
-	//fppowerHz6h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz6h.txt"), "w"); 		//Hz•Û‘¶ƒtƒ@ƒCƒ‹
+	//fppoynt_para = fopen(strcat(strcpy(dir_name, dir_name_def), "/PoyntingPara.txt"), "w"); 		//ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz1 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz1.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz2 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz2.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz3 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz3.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz4 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz4.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz5 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz5.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz6 = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz6.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz1h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz1h.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz2h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz2h.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz3h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz3h.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz4h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz4h.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz5h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz5h.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
+	//fppowerHz6h = fopen (strcat(strcpy(dir_name, dir_name_def), "/PowerHz6h.txt"), "w"); 		//Hzä¿å­˜ãƒ•ã‚¡ã‚¤ãƒ«
 
 	//avhz1 = fopen (strcat(strcpy(dir_name, dir_name_def), "/AveragePowerHz1.txt"), "w");
 	//avhz5 = fopen (strcat(strcpy(dir_name, dir_name_def), "/AveragePowerHz5.txt"), "w");
@@ -408,7 +409,7 @@ void file_open(char* dir_name_def){
 }
 
 
-/*o—Í—pƒtƒ@ƒCƒ‹‚ð•Â‚¶‚é*/
+/*å‡ºåŠ›ç”¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹*/
 void file_close(){
 
 	if (irank == IRANK_MIN){
@@ -441,7 +442,7 @@ void file_close(){
 }
 
 
-// ŒvŽZ—pƒpƒ‰ƒ[ƒ^‚ÌÝ’è‚Æo—Í
+// è¨ˆç®—ç”¨ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®šã¨å‡ºåŠ›
 void parameter(char* dir_name){
 
 	if (irank == IRANK_MIN){
@@ -451,17 +452,17 @@ void parameter(char* dir_name){
 		//printf("Time Step[s] = %e\n", dt);
 		//printf("Final Time Step: %d\n", Nmax);
 
-		//ˆÈ‰ºparameter.txt‚Ì’†g
+		//ä»¥ä¸‹parameter.txtã®ä¸­èº«
 		fprintf(fpparameter, "XMAX_ALL = %d\n", XMAX_ALL);
 		fprintf(fpparameter, "YMAX_ALL = %d\n", YMAX_ALL);
 		fprintf(fpparameter, "ZMAX_ALL = %d\n", ZMAX_ALL);
-		fprintf(fpparameter, "BOUNDARYLINE = %d\n", BOUNDARYLINE);//15/12/24‹{â
+		fprintf(fpparameter, "BOUNDARYLINE = %d\n", BOUNDARYLINE);//15/12/24å®®å‚
 		fprintf(fpparameter, "Nodes = %d\n", NODE);
 		fprintf(fpparameter, "Cell Size [nm] = %d\n", CELL_SIZE);
 		fprintf(fpparameter, "Time Step [s] = %e\n", dt);
 		fprintf(fpparameter, "Final Time Step = %d\n", Nmax);
 		fprintf(fpparameter, "Final Time [s] = %e\n", (double) Nmax * dt);
-		//™™ƒpƒ[‚Ì•½‹Ï‚ÌŽZo‚ðŠJŽn‚·‚éŽžŠÔƒXƒeƒbƒv  (ÅIŒvŽZƒXƒeƒbƒv‚©‚ç‚Ì·)
+		//â˜†â˜†ãƒ‘ãƒ¯ãƒ¼ã®å¹³å‡ã®ç®—å‡ºã‚’é–‹å§‹ã™ã‚‹æ™‚é–“ã‚¹ãƒ†ãƒƒãƒ—  (æœ€çµ‚è¨ˆç®—ã‚¹ãƒ†ãƒƒãƒ—ã‹ã‚‰ã®å·®)
 		fprintf(fpparameter, "The starting time of poyinting vector =%e\n",(double) (Nmax- Tcut)*dt);
 
 		//printf("Slab Height [nm] = %d\n", SLAB_HEIGHT);
@@ -489,7 +490,7 @@ void parameter(char* dir_name){
 		//fprintf(fpparameter, "%d-row Shift [nm] = %d\n", LSPCW_ROW, SX3);
 		fprintf(fpparameter, "Normal PCW Period = %d\n", NORM_PCW_PER);
 		fprintf(fpparameter, "Chirped LSPCW Period = %d\n", CHIRP_3RD_LS_PER);
-		fprintf(fpparameter, "Pitch Shift PCW Period = %d\n", PITCH_SHIFT_PER);//™
+		fprintf(fpparameter, "Pitch Shift PCW Period = %d\n", PITCH_SHIFT_PER);//â˜†
 		fprintf(fpparameter, "Pitch Shift Chirp PCW Period = %d\n", PITCH_SHIFT_CHIRP_PER);
 		fprintf(fpparameter, "LSPCW Period = %d\n", LSPCW_PER);
 		fprintf(fpparameter, "Hole Column[y] = %d \n", intPcwWid);
@@ -515,14 +516,14 @@ void parameter(char* dir_name){
 		else{
 			fprintf(fpparameter, "PCW Slab Offset = %d nm (%d cell)\n", PCW_SiSLAB_OFFSET, PCW_SiSLAB_OFFSET/CELL_SIZE);
 		}
-		if(PCW_WIDTH_CHIRP < 0){//“üoŽË //•‰‚É‚È‚é‚±‚Æ‚ÍŠî–{‚È‚¢‚Í‚¸‚Å‚ ‚é‚ªH
+		if(PCW_WIDTH_CHIRP < 0){//å…¥å‡ºå°„ //è² ã«ãªã‚‹ã“ã¨ã¯åŸºæœ¬ãªã„ã¯ãšã§ã‚ã‚‹ãŒï¼Ÿ
 			fprintf(fpparameter, "PCW Width Chirp_IN, OUT = %d nm (%d cell), %d nm (%d cell)\n", PCW_WIDTH_CHIRP + CELL_SIZE, (PCW_WIDTH_CHIRP + CELL_SIZE)/CELL_SIZE, PCW_WIDTH_CHIRP_OUT+CELL_SIZE, (PCW_WIDTH_CHIRP_OUT + CELL_SIZE)/CELL_SIZE);
 		}
 		else{
 			fprintf(fpparameter, "PCW Width Chirp_IN, OUT = %d nm (%d cell), %d nm (%d cell)\n", PCW_WIDTH_CHIRP, PCW_WIDTH_CHIRP/CELL_SIZE, PCW_WIDTH_CHIRP_OUT, PCW_WIDTH_CHIRP_OUT/CELL_SIZE);
 		}
 
-		/*if (PCW_WIDTH_CHIRP_OUT < 0) {//oŽË//“üoŽË‚Ü‚Æ‚ß‚½‚Ì‚Å—v‚ç‚È‚¢
+		/*if (PCW_WIDTH_CHIRP_OUT < 0) {//å‡ºå°„//å…¥å‡ºå°„ã¾ã¨ã‚ãŸã®ã§è¦ã‚‰ãªã„
 			fprintf(fpparameter, "PCW Width Chirp_OUT = %d nm (%d cell),", PCW_WIDTH_CHIRP_OUT + CELL_SIZE, (PCW_WIDTH_CHIRP_OUT + CELL_SIZE)/CELL_SIZE);
 		}
 		else {
@@ -549,40 +550,40 @@ void parameter(char* dir_name){
 		fprintf(fpparameter, "\n");
 	}
 
-	// —ãUŠÖ”’è”‚ÌÝ’è
+	// åŠ±æŒ¯é–¢æ•°å®šæ•°ã®è¨­å®š
 	lambda = atof(dir_name) * 1e-9;
 	omega0 = 2.0*PI*C0/lambda;
 	sigma = omega0 * delta_omega;
 } //420
 
-/*”z—ñ‚Ì‰Šú‰»*/
+/*é…åˆ—ã®åˆæœŸåŒ–*/
 void initialize_matrix(){
 
-	//Šeƒm[ƒh‚ÌÀ•W
+	//å„ãƒŽãƒ¼ãƒ‰ã®åº§æ¨™
 	if(irank != IRANK_MAX){
 		xmax = XMAX;
 		ymax = YMAX;
 		zmax = ZMAX;
 	}
 
-	//ÅŒã‚Ìƒm[ƒh‚¾‚¯‚Ì‚è‚µ‚ë•s—v‚È‚Ì‚Åx•ûŒü‚É1ƒZƒ‹¬‚³‚¢
+	//æœ€å¾Œã®ãƒŽãƒ¼ãƒ‰ã ã‘ã®ã‚Šã—ã‚ä¸è¦ãªã®ã§xæ–¹å‘ã«1ã‚»ãƒ«å°ã•ã„
 	if(irank == IRANK_MAX){
 		xmax = XMAX - 1;
 		ymax = YMAX;
 		zmax = ZMAX;
 	}
 
-	// ‰ðÍ‹óŠÔ‚ÌÅ‘å’l
+	// è§£æžç©ºé–“ã®æœ€å¤§å€¤
 	xmax_all = XMAX_ALL;
 	ymax_all = YMAX_ALL;
 	zmax_all = ZMAX_ALL;
 
-	// ‰ðÍ‹óŠÔ‚Ì’†SÀ•W
+	// è§£æžç©ºé–“ã®ä¸­å¿ƒåº§æ¨™
 	x_cen = xmax/2;
 	y_cen = ymax/2;
 	z_cen = zmax/2;
 
-	//ƒ‚ƒfƒ‹‚Ì’†S‚Æ‰ðÍ‹óŠÔ‚Ì’†S‚Í‚PƒZƒ‹•ª‚¸‚ê‚Ä‚¢‚é‚Ì‚Å—v’ˆÓ
+	//ãƒ¢ãƒ‡ãƒ«ã®ä¸­å¿ƒã¨è§£æžç©ºé–“ã®ä¸­å¿ƒã¯ï¼‘ã‚»ãƒ«åˆ†ãšã‚Œã¦ã„ã‚‹ã®ã§è¦æ³¨æ„
 	x_model_cen = x_cen + 1;
 	y_model_cen = y_cen + 1;
 
@@ -591,12 +592,12 @@ void initialize_matrix(){
 	for (x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// “dŠE
+				// é›»ç•Œ
 				Ex[x][y][z] = 0.0;
 				Ey[x][y][z] = 0.0;
 				Ez[x][y][z] = 0.0;
 
-				// Ž¥ŠE
+				// ç£ç•Œ
 				Hx[x][y][z] = 0.0;
 				Hy[x][y][z] = 0.0;
 				Hz[x][y][z] = 0.0;
@@ -607,7 +608,7 @@ void initialize_matrix(){
 	for (x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// —U“d—¦
+				// èª˜é›»çŽ‡
 				ALL_epsilonx[x][y][z] = EPSILON0;
 				ALL_epsilony[x][y][z] = EPSILON0;
 				ALL_epsilonz[x][y][z] = EPSILON0;
@@ -618,7 +619,7 @@ void initialize_matrix(){
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// —U“d—¦(•ªŠ„‚·‚é•K—v‚ª‚È‚¢‚æ‚¤‚ÈDDD)
+				// èª˜é›»çŽ‡(åˆ†å‰²ã™ã‚‹å¿…è¦ãŒãªã„ã‚ˆã†ãªï¼Žï¼Žï¼Ž)
 				epsilonx[x][y][z] = EPSILON0;
 				epsilony[x][y][z] = EPSILON0;
 				epsilonz[x][y][z] = EPSILON0;
@@ -629,7 +630,7 @@ void initialize_matrix(){
 	for(x = 0; x < xmax_all; x++){
 		for(y = 0; y < ymax+1; y++){
 			for(z = 0; z < zmax+1; z++){
-				// ƒZƒ‹‚Ì–Úˆó
+				// ã‚»ãƒ«ã®ç›®å°
 				ALL_cell[x][y][z] = CLAD;
 			}
 		}
@@ -639,14 +640,14 @@ void initialize_matrix(){
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
-				// ƒZƒ‹‚Ì–Úˆó
+				// ã‚»ãƒ«ã®ç›®å°
 				cell[x][y][z] = 0;
 			}
 		}
 	}
 
 
-	/****************************** Mur‚Ì‹zŽû‹«ŠEðŒ ******************************/
+	/****************************** Murã®å¸åŽå¢ƒç•Œæ¡ä»¶ ******************************/
 
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax+1; z++){
@@ -721,17 +722,17 @@ void initialize_matrix(){
 		}
 	}
 
-	/****************************** Mur‚Ì‹zŽû‹«ŠEðŒ ******************************/
+	/****************************** Murã®å¸åŽå¢ƒç•Œæ¡ä»¶ ******************************/
 }
 
 
-// ƒ‚ƒfƒ‹‚ÌÝ’è
+// ãƒ¢ãƒ‡ãƒ«ã®è¨­å®š
 void modeling(){
 
-	int n_temp; 		//‹üÜ—¦‚Ì’l•Û‘¶—p
-	double epsilon_temp; 		//—U“d—¦‚Ì’l•Û‘¶—p
+	int n_temp; 		//å±ˆæŠ˜çŽ‡ã®å€¤ä¿å­˜ç”¨
+	double epsilon_temp; 		//èª˜é›»çŽ‡ã®å€¤ä¿å­˜ç”¨
 
-	/****************************** ƒXƒ‰ƒu‚ÌŒ`¬ ******************************/
+	/****************************** ã‚¹ãƒ©ãƒ–ã®å½¢æˆ ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(y = 0; y < ymax_all; y++){
@@ -742,11 +743,11 @@ void modeling(){
 				n_temp = CLAD;
 				epsilon_temp = epsilon2;
 
-				if(z < air_hc){			//‹ó‹C‘w‚ÉÝ’è
+				if(z < air_hc){			//ç©ºæ°—å±¤ã«è¨­å®š
 				}
-				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//ã•”ƒNƒ‰ƒbƒh‚ÉÝ’è
+				if(z >= air_hc && z < (air_hc + intCladHeight1) ){			//ä¸Šéƒ¨ã‚¯ãƒ©ãƒƒãƒ‰ã«è¨­å®š
 				}
-				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// ƒXƒ‰ƒu‚ÉÝ’è
+				if(z >= (air_hc + intCladHeight1) && z < (air_hc + intCladHeight1 + intSlabHeigPer)){	// ã‚¹ãƒ©ãƒ–ã«è¨­å®š
 					n_temp = CORE;
 					epsilon_temp = epsilon1;
 				}
@@ -758,53 +759,53 @@ void modeling(){
 			}
 		}
 	}
-	/****************************** ƒXƒ‰ƒu‚ÌŒ`¬ ******************************/
+	/****************************** ã‚¹ãƒ©ãƒ–ã®å½¢æˆ ******************************/
 
 
-	/****************************** ƒtƒHƒgƒjƒbƒNŒ‹» ******************************/
+	/****************************** ãƒ•ã‚©ãƒˆãƒ‹ãƒƒã‚¯çµæ™¶ ******************************/
 
-	int s_x3; 		// ƒ`ƒƒ[ƒvLSPCW‚ÌƒVƒtƒg—Ê
+	int s_x3; 		// ãƒãƒ£ãƒ¼ãƒ—LSPCWã®ã‚·ãƒ•ãƒˆé‡
 	int s_x2;
 	int s_x4;
-	int z_end; 				// ‰~E‚ÌI—¹À•W
+	int z_end; 				// å††å­”ã®çµ‚äº†åº§æ¨™
 
 	if (intPcwPer == 0){
-		intWirePer2 = intWireLen1 - 1;									// oŽËCOREƒXƒ‰ƒu‚ÌŠJŽn“_
-		intWirePer3 = intWirePer2 + intWireLen2;						// oŽËCOREƒXƒ‰ƒu‚ÌI—¹“_
+		intWirePer2 = intWireLen1 - 1;									// å‡ºå°„COREã‚¹ãƒ©ãƒ–ã®é–‹å§‹ç‚¹
+		intWirePer3 = intWirePer2 + intWireLen2;						// å‡ºå°„COREã‚¹ãƒ©ãƒ–ã®çµ‚äº†ç‚¹
 	}
 
 	else{
 
-		//struct PNUM Pnum[intPcwWid*10][intPcwPer*10]; 	// ‰~’Œ‚Ì’†SÀ•W
-		struct PNUM Pnum[100][10]; 	// ‰~’Œ‚Ì’†SÀ•W
-		struct PNUM Pnum_Init[1][10]; 		// ‰~’Œ‚Ì•W€ŠiŽq’è”‚É‚æ‚é’†SÀ•W
+		//struct PNUM Pnum[intPcwWid*10][intPcwPer*10]; 	// å††æŸ±ã®ä¸­å¿ƒåº§æ¨™
+		struct PNUM Pnum[100][10]; 	// å††æŸ±ã®ä¸­å¿ƒåº§æ¨™
+		struct PNUM Pnum_Init[1][10]; 		// å††æŸ±ã®æ¨™æº–æ ¼å­å®šæ•°ã«ã‚ˆã‚‹ä¸­å¿ƒåº§æ¨™
 
-		z_end = zmax_all; 		// ‰~E‚ªŠÑ’Ê‚µ‚Ä‚¢‚éê‡‚ðl‚¦‚é
-		Pnum_Init[0][0].Y = intPcwStartY; 	// ‰~’Œ‚ð”z’u‚·‚éÅ‰‚ÌYÀ•W
+		z_end = zmax_all; 		// å††å­”ãŒè²«é€šã—ã¦ã„ã‚‹å ´åˆã‚’è€ƒãˆã‚‹
+		Pnum_Init[0][0].Y = intPcwStartY; 	// å††æŸ±ã‚’é…ç½®ã™ã‚‹æœ€åˆã®Yåº§æ¨™
 
 		if(intPcwWid % 2 == 1){		// if y:even
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		}
-		else{						// if y:odd 0.5A‚¸‚ç‚·
-			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		else{						// if y:odd 0.5Aãšã‚‰ã™
+			Pnum_Init[0][intPcwWid-1].X = intWireLen1 + intPcwStartX - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		}
 
 		if(y != 0){
-			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+			Pnum_Init[0][intPcwWid-1].Y = Pnum_Init[0][0].Y + intPitchY * (intPcwWid - 1); 		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 		}
 
 		for(z = 0; z < z_end; z++){
 			for(y = 0; y < intPcwWid; y++){
 
 				//if(y % 2 == 1){		// if y:even
-				//	Pnum[0][y].X = intWireLen1 + intPcwStartX - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				//	Pnum[0][y].X = intWireLen1 + intPcwStartX - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 				//}
-				//else{				// if y:odd 0.5A‚¸‚ç‚·
-				//	Pnum[0][y].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				//else{				// if y:odd 0.5Aãšã‚‰ã™
+				//	Pnum[0][y].X = intWireLen1 + intPcwStartX + INT_DIV (intPitchX, 2.0) - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 				//}
 
 				//if(y != 0){
-				//	Pnum[0][y].Y = Pnum[0][y-1].Y + intPitchY; 		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+				//	Pnum[0][y].Y = Pnum[0][y-1].Y + intPitchY; 		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 				//}
 				int input_NormPcw_Xend;
 				int input_PitchShiftPcw_Xend;
@@ -822,9 +823,9 @@ void modeling(){
 				else{
 					input_NormPcw_Xend = 0;
 				}
-				/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
-				input_PitchShiftPcw_Xend = input_NormPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer; //N‚É‘Š“–
-				input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend; //N‚É‘Š“–
+				/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
+				input_PitchShiftPcw_Xend = input_NormPcw_Xend + intPitchShiftPcwPer + intPitchShiftChirpPcwPer; //Nã«ç›¸å½“
+				input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend; //Nã«ç›¸å½“
 				//input_PitchShiftPcw_Xend = input_NormPcw_Xend + intPitchShiftPcwPer;
 				//if (intPitchShiftChirpPcwPer > 0){
 				//	input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend + (intPitchShiftChirpPcwPer - 1);
@@ -832,7 +833,7 @@ void modeling(){
 				//else{
 				//	input_PitchShiftChirpPcw_Xend = input_PitchShiftPcw_Xend;
 				//}
-				/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 				if (intChirp3rdLsPer > 0){
 					input_Chirp_Ls_Xend = input_PitchShiftChirpPcw_Xend + (intChirp3rdLsPer);
@@ -840,15 +841,15 @@ void modeling(){
 				else{
 					input_Chirp_Ls_Xend = input_PitchShiftChirpPcw_Xend;
 				}
-				Lspcw_Xend = input_Chirp_Ls_Xend + intLspcwPer + 1; //ƒe[ƒpŽüŠú+LSPCWŽüŠú+1
+				Lspcw_Xend = input_Chirp_Ls_Xend + intLspcwPer + 1; //ãƒ†ãƒ¼ãƒ‘å‘¨æœŸ+LSPCWå‘¨æœŸ+1
 				if (intChirp3rdLsPer > 0){
 					output_Chirp_Ls_Xend = Lspcw_Xend + (intChirp3rdLsPer - 1);
 				}
 				else{
 					output_Chirp_Ls_Xend = Lspcw_Xend;
 				}
-				/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
-				output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend; //ƒe[ƒpŽüŠú+LSPCWŽüŠú
+				/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
+				output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend; //ãƒ†ãƒ¼ãƒ‘å‘¨æœŸ+LSPCWå‘¨æœŸ
 				output_PitchShiftPcw_Xend = output_PitchShiftChirpPcw_Xend + intPitchShiftPcwPerOut + intPitchShiftChirpPcwPer;
 				//if (intPitchShiftChirpPcwPer > 0){
 				//	output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend + (intPitchShiftChirpPcwPer - 1);
@@ -857,7 +858,7 @@ void modeling(){
 				//	output_PitchShiftChirpPcw_Xend = output_Chirp_Ls_Xend;
 				//}
 				//output_PitchShiftPcw_Xend = output_PitchShiftChirpPcw_Xend + intPitchShiftPcwPer;
-				/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 				output_PCW_Xend = output_Chirp_Ls_Xend + intNormPcwPer;
 
@@ -869,16 +870,16 @@ void modeling(){
 				int intNowPCWwidthOffset;
 				int intNowPCWwidthOffset2;
 
-				/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 				double dblPitchShiftChirpX, dblPitchShiftChirpY, dblPitchShiftChirpY2;
 				int intPitchShiftChirpX, intPitchShiftChirpX2, intPitchShiftChirpY;
-				/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+				/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 
 
 
 				/****************************** LSPCW ******************************/
-						for (x = 0; x < intPcwPer; x++) {//{}‚ÌI‚í‚è‚Í1740•t‹ß ‰~Es1, 2, 3c‚Íx = 0, 1, 2c‚É‘Î‰ž
+						for (x = 0; x < intPcwPer; x++) {//{}ã®çµ‚ã‚ã‚Šã¯1740ä»˜è¿‘ å††å­”è¡Œ1, 2, 3â€¦ã¯x = 0, 1, 2â€¦ã«å¯¾å¿œ
 
 
 					int y2, y_poo, y_poo2;
@@ -886,76 +887,76 @@ void modeling(){
 					s_x3 = 0;
 					s_x2 = 0;
 					s_x4 = 0;
-					// “üŽË ’ÊíPCW
+					// å…¥å°„ é€šå¸¸PCW
 					if (x < input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aãšã‚‰ã™
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
-								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);//™‚±‚±‚à•Ï‚í‚ç‚È‚¢
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
+								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);//â˜†ã“ã“ã‚‚å¤‰ã‚ã‚‰ãªã„
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
-								for (y2 = intPcwWid - 1; y2 >= 0; y2--) {//™‚±‚±‚à•Ï‚í‚ç‚È‚¢
+								for (y2 = intPcwWid - 1; y2 >= 0; y2--) {//â˜†ã“ã“ã‚‚å¤‰ã‚ã‚‰ãªã„
 								Pnum[x][y2].Y = Pnum[x-1][y2].Y;
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;
 							}
 						}
 					}
 
-					// “üŽË ŠiŽq’è”•Ï‰»PCW
+					// å…¥å°„ æ ¼å­å®šæ•°å¤‰åŒ–PCW
 					else if (x < input_PitchShiftPcw_Xend && x >= input_NormPcw_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchShiftX * x - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aãšã‚‰ã™
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchShiftX * x + INT_DIV (intPitchX, 2.0) - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
 
 
 
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯1åˆ—ç›®ã‚·ãƒ•ãƒˆæ§‹é€ (2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 									//Pnum[x][y2].X -= INT_DIV( (SX1 + (SX1 * (double)(intPitchShiftX / intPitchX) * (x - intPitchShiftChirpPcwPer) / (double) intPitchShiftChirpPcwPer)), CELL_SIZE)-3;
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 								}
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯1åˆ—ç›®ã‚·ãƒ•ãƒˆæ§‹é€ (2013/7/12) ********************/
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
 
 								y_poo++;
 
-								///‚±‚ê‚ð‚¢‚ê‚é‚Æ‚¨‚©‚µ‚­‚È‚é
+								///ã“ã‚Œã‚’ã„ã‚Œã‚‹ã¨ãŠã‹ã—ããªã‚‹
 								/*
 							if (y2 == intPcwWid - 2) {
-									Pnum[x][y2].Y = Pnum[x - 1][intPcwWid - 1].Y - (int)(((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid - 1 - y2)) + 1;//	™‚±‚±“®‚©‚·‚Æ•Ï‚í‚é@y•ûŒü‚É“®‚©‚µ‚½‚¢ƒZƒ‹”
+									Pnum[x][y2].Y = Pnum[x - 1][intPcwWid - 1].Y - (int)(((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid - 1 - y2)) + 1;//	â˜†ã“ã“å‹•ã‹ã™ã¨å¤‰ã‚ã‚‹ã€€yæ–¹å‘ã«å‹•ã‹ã—ãŸã„ã‚»ãƒ«æ•°
 								}
 								*/
 							}
 						}
 						else{
-							/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+							/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 							intPitchShiftChirpX = intPitchShiftX; //19
 							intPitchShiftChirpY = 0;
 
@@ -973,10 +974,10 @@ void modeling(){
 										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - (int) ( ((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid-1 - y2));//
 
 
-										if (y2 == intPcwWid - 2) {//™ -‚Ì‚ ‚Æ‚É“®‚©‚µ‚½‚¢PCW‚Ì—ñ(’†S‚ª1) 1‚¾‚Æ“®ì‚µ‚È‚¢
+										if (y2 == intPcwWid - 2) {//â˜† -ã®ã‚ã¨ã«å‹•ã‹ã—ãŸã„PCWã®åˆ—(ä¸­å¿ƒãŒ1) 1ã ã¨å‹•ä½œã—ãªã„
 
-											if(x == 3){//™ ==‚Ì‚ ‚Æ‚É“®‚©‚µ‚½‚¢PCW‚Ìs(Žè‘O‚ª0)D‚½‚¾0‚Ìê‡‚Í‚±‚±‚Å‚Í‚Å‚«‚È‚¢
-												Pnum[x][y2].Y = Pnum[x - 1][intPcwWid - 1].Y - (int)(((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid - 1 - y2))  ;//	™‚±‚±“®‚©‚·‚Æ•Ï‚í‚é@y•ûŒü‚É“®‚©‚µ‚½‚¢ƒZƒ‹”
+											if(x == 3){//â˜† ==ã®ã‚ã¨ã«å‹•ã‹ã—ãŸã„PCWã®è¡Œ(æ‰‹å‰ãŒ0)ï¼ŽãŸã 0ã®å ´åˆã¯ã“ã“ã§ã¯ã§ããªã„
+												Pnum[x][y2].Y = Pnum[x - 1][intPcwWid - 1].Y - (int)(((double)intPitchShiftY - dblPitchShiftChirpY * (x - intPitchShiftPcwPer)) * (intPcwWid - 1 - y2))  ;//	â˜†ã“ã“å‹•ã‹ã™ã¨å¤‰ã‚ã‚‹ã€€yæ–¹å‘ã«å‹•ã‹ã—ãŸã„ã‚»ãƒ«æ•°
 											}
 										}
 
@@ -984,34 +985,34 @@ void modeling(){
 
 									}
 									else{
-										Pnum[x][y2].Y = Pnum[x-1][y2].Y;//™‚±‚±“®‚©‚·‚Æ•Ï‚í‚é
+										Pnum[x][y2].Y = Pnum[x-1][y2].Y;//â˜†ã“ã“å‹•ã‹ã™ã¨å¤‰ã‚ã‚‹
 									}
 								}
 								else{
 									if (y2 < intPcwWid-1){
-										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchY * (intPcwWid-1 - y2);//™
+										Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchY * (intPcwWid-1 - y2);//â˜†
 									}
 									else{
-										Pnum[x][y2].Y = Pnum[x - 1][y2].Y; //™
+										Pnum[x][y2].Y = Pnum[x - 1][y2].Y; //â˜†
 									}
 								}
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftChirpX;
 							}
-							/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+							/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 						}
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 2—ñ–ÚŠiŽqƒVƒtƒg
+							// 2åˆ—ç›®æ ¼å­ã‚·ãƒ•ãƒˆ
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
-							// 3—ñ–ÚŠiŽqƒVƒtƒg
+							// 3åˆ—ç›®æ ¼å­ã‚·ãƒ•ãƒˆ
 							if (y == intPcwWid - 3){
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
 								//s_x3 = INT_DIV( (SX3 + (SX3 * (double)(intPitchShiftX / intPitchX) * (x - intPitchShiftChirpPcwPer) / (double) intPitchShiftChirpPcwPer)), CELL_SIZE);
 								//s_x3 = INT_DIV( (SX3 * (double)(intPitchShiftX / intPitchX)), CELL_SIZE);
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 							}
 							if (y == intPcwWid - 4){
@@ -1020,43 +1021,43 @@ void modeling(){
 						}
 					}
 
-					// “üŽË ƒ`ƒƒ[ƒvLSPCW ™™1/27 “üoŽË‚Ì‰~E‚ð­‚µ“®‚©‚µ‚Ä‚Ý‚é
+					// å…¥å°„ ãƒãƒ£ãƒ¼ãƒ—LSPCW â˜†â˜†1/27 å…¥å‡ºå°„ã®å††å­”ã‚’å°‘ã—å‹•ã‹ã—ã¦ã¿ã‚‹
 					else if (x >= input_NormPcw_Xend && x < input_Chirp_Ls_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; //™		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; //â˜†		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 
 
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aãšã‚‰ã™
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
-								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE)+100; //™‚±‚±‚à•Ï‚í‚ç‚È‚¢
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
+								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE)+100; //â˜†ã“ã“ã‚‚å¤‰ã‚ã‚‰ãªã„
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
 						else{
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum[x-1][y2].Y;//‚±‚±‚ð‚¢‚¶‚Á‚Ä‚à•Ï‚í‚ç‚È‚¢D
+								Pnum[x][y2].Y = Pnum[x-1][y2].Y;//ã“ã“ã‚’ã„ã˜ã£ã¦ã‚‚å¤‰ã‚ã‚‰ãªã„ï¼Ž
 								Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchX;//
 
 								/*
-								if (y2 == 1) {//™
+								if (y2 == 1) {//â˜†
 									Pnum[x][y2].Y = Pnum[x - 1][y2].Y +10;
 								}*/
 							}
 
 							if (y == intPcwWid - 3){
 								if (intChirp3rdLsPer == 0){
-									s_x3 = 0;//™‚±‚ê‚ð‚¢‚¶‚Á‚Ä‚à~
+									s_x3 = 0;//â˜†ã“ã‚Œã‚’ã„ã˜ã£ã¦ã‚‚Ã—
 								}
 								else{
 									s_x3 = INT_DIV (intSx3Per, intChirp3rdLsPer) * (x - input_NormPcw_Xend);
@@ -1082,39 +1083,39 @@ void modeling(){
 					}
 
 
-					// oŽË ŠiŽq’è”•Ï‰»PCW
+					// å‡ºå°„ æ ¼å­å®šæ•°å¤‰åŒ–PCW
 					else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 
-						// ŠiŽq’è”•Ï‰»PCW‚Æ‚Ì“üŽËÚ‘±•”
+						// æ ¼å­å®šæ•°å¤‰åŒ–PCWã¨ã®å…¥å°„æŽ¥ç¶šéƒ¨
 						if (x == output_PitchShiftChirpPcw_Xend){
 							y_poo = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
-								//Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
+								//Pnum[x][y2].Y = Pnum[x-1][intPcwWid-1].Y - intPitchShiftY * y_poo; 		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 
 								//if(y2 % 2 == 1){		// if y:even
-								//	Pnum[x][y2].X = Pnum[x-1][intPcwWid-1].X + intPitchShiftX;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+								//	Pnum[x][y2].X = Pnum[x-1][intPcwWid-1].X + intPitchShiftX;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								//}
-								//else{				// if y:odd 0.5A‚¸‚ç‚·
-								//	Pnum[x][y2].X = Pnum[x-1][intPcwWid-1].X + intPitchShiftX + INT_DIV (intPitchX, 2.0);	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+								//else{				// if y:odd 0.5Aãšã‚‰ã™
+								//	Pnum[x][y2].X = Pnum[x-1][intPcwWid-1].X + intPitchShiftX + INT_DIV (intPitchX, 2.0);	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								//}
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯1åˆ—ç›®ã‚·ãƒ•ãƒˆæ§‹é€ (2013/7/12) ********************/
 								if (y2 != intPcwWid - 1){
-									/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 									Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
 									//Pnum[x][y2].X -= INT_DIV( (SX1 + (SX1 * (double)(intPitchShiftX / intPitchX) * (x - output_PitchShiftChirpPcw_Xend) / (double) intPitchShiftChirpPcwPer)), CELL_SIZE);
 									//Pnum[x][y2].X -= INT_DIV(SX1, CELL_SIZE);
-									/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 								}
-								/******************** “±”g˜H1—ñ–ÚƒVƒtƒg\‘¢(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯1åˆ—ç›®ã‚·ãƒ•ãƒˆæ§‹é€ (2013/7/12) ********************/
 
 								y_poo++;
 							}
 						}
-						/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 						intPitchShiftChirpX = intPitchX;
 						intPitchShiftChirpY = 0;
 						dblPitchShiftChirpY = 0;
@@ -1224,10 +1225,10 @@ void modeling(){
 						////	Pnum[x][y2].X = Pnum[x-1][y2].X + intPitchShiftX;
 						////}
 						////}
-						/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 						if (LSPCW_SHIFT_DESCRETE == FALSE){
-							// 3—ñ–ÚŠiŽqƒVƒtƒg
+							// 3åˆ—ç›®æ ¼å­ã‚·ãƒ•ãƒˆ
 							if (y == intPcwWid - 2){
 								s_x2 = INT_DIV(SX2, CELL_SIZE);
 							}
@@ -1236,16 +1237,16 @@ void modeling(){
 							}
 							if (y == intPcwWid - 3){
 
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 								s_x3 = INT_DIV(SX3, CELL_SIZE);
 								//s_x3 = INT_DIV( (SX3 + (SX3 * (double)(intPitchShiftX / intPitchX) * (x - output_PitchShiftChirpPcw_Xend) / (double) intPitchShiftChirpPcwPer)) , CELL_SIZE);
 								//s_x3 = INT_DIV( (SX3 * (double)(intPitchShiftX / intPitchX)), CELL_SIZE);
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 							}
 						}
 					}
 
-					// oŽË ƒ`ƒƒ[ƒvLSPCW
+					// å‡ºå°„ ãƒãƒ£ãƒ¼ãƒ—LSPCW
 					else if (x >= Lspcw_Xend && x < output_Chirp_Ls_Xend){
 						for (y2 = intPcwWid-1; y2 >= 0; y2--){
 							Pnum[x][y2].Y = Pnum[x-1][y2].Y;
@@ -1279,23 +1280,23 @@ void modeling(){
 					}
 
 
-					// oŽË ’ÊíPCW
+					// å‡ºå°„ é€šå¸¸PCW
 					else if (x >= output_Chirp_Ls_Xend && x < output_PCW_Xend){
 						if (x == 0){
 							y_poo = 0; y_poo2 = 0;
 							for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//‚™À•W‚ð(root3)/2*intPitchX‚¾‚¯‚¸‚ç‚·
+								Pnum[x][y2].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchY * y_poo; 		//ï½™åº§æ¨™ã‚’(root3)/2*intPitchXã ã‘ãšã‚‰ã™
 
 								if(y2 % 2 == 1){		// if y:even
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X + intPitchX * x - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
-								else{				// if y:odd 0.5A‚¸‚ç‚·
-									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+								else{				// if y:odd 0.5Aãšã‚‰ã™
+									Pnum[x][y2].X = Pnum_Init[0][intPcwWid-1].X+ intPitchX * x + INT_DIV (intPitchX, 2.0) - 1;	// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 								}
 
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
 								Pnum[x][y2].Y -= INT_DIV(SY, CELL_SIZE);
-								/******************** “±”g˜H—ñ‘S‘ÌƒVƒtƒg(2013/7/12) ********************/
+								/******************** å°Žæ³¢è·¯åˆ—å…¨ä½“ã‚·ãƒ•ãƒˆ(2013/7/12) ********************/
 
 								y_poo++;
 							}
@@ -1308,7 +1309,7 @@ void modeling(){
 						}
 					}
 
-					// ’ÊíŠiŽq’è”PCW or LSPCW
+					// é€šå¸¸æ ¼å­å®šæ•°PCW or LSPCW
 					else{
 						if (x != 0){
 							y_poo = 0;
@@ -1318,8 +1319,8 @@ void modeling(){
 								y_poo++;
 							}
 						}
-						///******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
-						////// ŠiŽq’è”•Ï‰»PCW‚Æ‚ÌoŽËÚ‘±•”
+						///******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
+						////// æ ¼å­å®šæ•°å¤‰åŒ–PCWã¨ã®å‡ºå°„æŽ¥ç¶šéƒ¨
 						//if (x == output_Chirp_Ls_Xend - 1){
 						//	intPitchShiftChirpX = intPitchX;
 						//	intPitchShiftChirpY = 0;
@@ -1354,10 +1355,10 @@ void modeling(){
 						//	//		y_poo++;
 						//	//	}
 						//}
-						///******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						///******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 
-						// 3—ñ–ÚŠiŽqƒVƒtƒg
+						// 3åˆ—ç›®æ ¼å­ã‚·ãƒ•ãƒˆ
 						if (y == intPcwWid - 3){
 							s_x3 = intSx3Per;
 						}
@@ -1369,12 +1370,12 @@ void modeling(){
 						}
 					}
 					//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-					// “±”g˜H•ƒ`ƒƒ[ƒv
+					// å°Žæ³¢è·¯å¹…ãƒãƒ£ãƒ¼ãƒ—
 					Pnum[x][y2].X += 1;
 					if (PCW_WIDTH_CHIRP != 0){
-						if (x < input_PitchShiftPcw_Xend){ //ƒe[ƒpŽüŠú”‚ÍN‚æ‚è1¬‚³‚¢
+						if (x < input_PitchShiftPcw_Xend){ //ãƒ†ãƒ¼ãƒ‘å‘¨æœŸæ•°ã¯Nã‚ˆã‚Š1å°ã•ã„
 
-							/////ŠiŽq’è”ƒ`ƒƒ[ƒv“üŽË‚±‚±‚©‚ç(“c‘º)
+							/////æ ¼å­å®šæ•°ãƒãƒ£ãƒ¼ãƒ—å…¥å°„ã“ã“ã‹ã‚‰(ç”°æ‘)
 							if(PITCH_SHIFT_CHIRP_PER2 > 0 && x >= 0){
 								if(PITCH_SHIFT_CHIRP_PER2 >= x){
 									y_poo = 0;
@@ -1392,11 +1393,11 @@ void modeling(){
 									}
 								}
 							}
-							/////ŠiŽq’è”ƒ`ƒƒ[ƒv“üŽË‚±‚±‚Ü‚Å
+							/////æ ¼å­å®šæ•°ãƒãƒ£ãƒ¼ãƒ—å…¥å°„ã“ã“ã¾ã§
 
-							////////“üŽËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚©‚ç(“c‘º)
+							////////å…¥å°„ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—ã“ã“ã‹ã‚‰(ç”°æ‘)
 							if(intChirp2ndLsPer != 0){
-							//3—ñ–Ú
+							//3åˆ—ç›®
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
@@ -1408,7 +1409,7 @@ void modeling(){
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2—ñ–Ú
+							//2åˆ—ç›®
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
@@ -1421,27 +1422,27 @@ void modeling(){
 								}
 							}
 							}
-							////////“üŽËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚Ü‚Å
-							if (x == 0){ //‰~E1s–Ú
-								intNowPCWwidthOffset = intPCWwidthChirp; //wtaper‚ÌƒZƒ‹”
+							////////å…¥å°„ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—ã“ã“ã¾ã§
+							if (x == 0){ //å††å­”1è¡Œç›®
+								intNowPCWwidthOffset = intPCWwidthChirp; //wtaperã®ã‚»ãƒ«æ•°
 								for (y2 = intPcwWid-1; y2 >= 0; y2--){
 									Pnum[x][y2].Y -= intNowPCWwidthOffset;
 								}
-								intPreviousPCWwidthOffset = intNowPCWwidthOffset; //wtaper‚ÌƒZƒ‹”
+								intPreviousPCWwidthOffset = intNowPCWwidthOffset; //wtaperã®ã‚»ãƒ«æ•°
 							}
-							else{ //‰~E2s–ÚˆÈ~
-								// PCW_WIDTH_CHIRP—p”÷’²®™™ 11/9 ‚±‚±‚ª‚¨‚»‚ç‚­•ƒ`ƒƒ
-								intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * (x / (double) (input_PitchShiftPcw_Xend-1)));// ‰E•Ó = wtaper‚ÌƒZƒ‹”(1 - x/N-1)
-								intNowPCWwidthOffset2 = intPCWwidthChirp - (int)(intPCWwidthChirp * (x / (double)(input_PitchShiftPcw_Xend -2.5)));//‰ºŽ®‚É‚æ‚èƒe[ƒp‚Ì•ªŠ„‚ª4+1‚É‚È‚é //N =9‚Å2.5
+							else{ //å††å­”2è¡Œç›®ä»¥é™
+								// PCW_WIDTH_CHIRPç”¨å¾®èª¿æ•´â˜†â˜† 11/9 ã“ã“ãŒãŠãã‚‰ãå¹…ãƒãƒ£
+								intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * (x / (double) (input_PitchShiftPcw_Xend-1)));// å³è¾º = wtaperã®ã‚»ãƒ«æ•°(1 - x/N-1)
+								intNowPCWwidthOffset2 = intPCWwidthChirp - (int)(intPCWwidthChirp * (x / (double)(input_PitchShiftPcw_Xend -2.5)));//ä¸‹å¼ã«ã‚ˆã‚Šãƒ†ãƒ¼ãƒ‘ã®åˆ†å‰²ãŒ4+1ã«ãªã‚‹ //N =9ã§2.5
 
 								//intNowPCWwidthOffset = intPCWwidthChirp - (int) (intPCWwidthChirp * ((x + 1) / (double) (input_PitchShiftPcw_Xend-1)));
-								if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){ //intPreviousPCWwidthOffset‚Í‘½•ªã‚Ìif•¶‚ÌintNowPCWwidthOffset(wtaper‚ÌƒZƒ‹”)‚É‘Š“–
-									//¨x = 0ˆÈŠO‚Å‚Íif•¶‚ð’Ê‰ß‚Å‚«‚é‚Í‚¸
+								if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){ //intPreviousPCWwidthOffsetã¯å¤šåˆ†ä¸Šã®ifæ–‡ã®intNowPCWwidthOffset(wtaperã®ã‚»ãƒ«æ•°)ã«ç›¸å½“
+									//â†’x = 0ä»¥å¤–ã§ã¯ifæ–‡ã‚’é€šéŽã§ãã‚‹ã¯ãš
 									for (y2 = intPcwWid-1; y2 >= 0; y2--){
-								Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset); // (1/6)wtaper‚¸‚Â //ƒIƒŠƒWƒiƒ‹
+								Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset); // (1/6)wtaperãšã¤ //ã‚ªãƒªã‚¸ãƒŠãƒ«
 
-									//// 2016/11/9ì¬
-									//	if (x >= input_PitchShiftPcw_Xend -4) { //x„N-4‚Å•ƒ`ƒƒ[ƒv‚ð“K—p
+									//// 2016/11/9ä½œæˆ
+									//	if (x >= input_PitchShiftPcw_Xend -4) { //xï¼žN-4ã§å¹…ãƒãƒ£ãƒ¼ãƒ—ã‚’é©ç”¨
 									//		Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset2);
 									//	}else{
 									//		Pnum[x][y2].Y = Pnum[x][y2].Y;
@@ -1454,7 +1455,7 @@ void modeling(){
 						}
 						else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 
-							/////ŠiŽq’è”ƒ`ƒƒ[ƒvoŽË‚±‚±‚©‚ç(“c‘ºŽ)
+							/////æ ¼å­å®šæ•°ãƒãƒ£ãƒ¼ãƒ—å‡ºå°„ã“ã“ã‹ã‚‰(ç”°æ‘æ°)
 							if(PITCH_SHIFT_CHIRP_PER2_OUT > 0 && x >= 0){
 								if(PITCH_SHIFT_CHIRP_PER2_OUT + output_PitchShiftChirpPcw_Xend+1 >= x){
 									y_poo = 0;
@@ -1475,11 +1476,11 @@ void modeling(){
 							}
 
 
-							/////ŠiŽq’è”ƒ`ƒƒ[ƒvo‚éŽË‚±‚±‚Ü‚Å
+							/////æ ¼å­å®šæ•°ãƒãƒ£ãƒ¼ãƒ—å‡ºã‚‹å°„ã“ã“ã¾ã§
 
-							////////oŽËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚©‚ç(“c‘º)
+							////////å‡ºå°„ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—ã“ã“ã‹ã‚‰(ç”°æ‘)
 							if(intChirp2ndLsPer != 0){
-							//3—ñ–Ú
+							//3åˆ—ç›®
 							if (y == intPcwWid - 3){
 								if (intChirp2ndLsPer == 0){
 									s_x3 = 0;
@@ -1491,7 +1492,7 @@ void modeling(){
 									s_x3 = INT_DIV(SX3,CELL_SIZE);
 								}
 							}
-							//2—ñ–Ú
+							//2åˆ—ç›®
 							if (y == intPcwWid - 2){
 								if (intChirp2ndLsPer == 0){
 									s_x2 = 0;
@@ -1504,9 +1505,9 @@ void modeling(){
 								}
 							}
 							}
-						//////////oŽËƒVƒtƒg—Êƒ`ƒƒ[ƒv‚±‚±‚Ü‚Å
+						//////////å‡ºå°„ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—ã“ã“ã¾ã§
 
-							if (x == output_PitchShiftChirpPcw_Xend){ //‘SLSPCWs” 30`
+							if (x == output_PitchShiftChirpPcw_Xend){ //å…¨LSPCWè¡Œæ•° 30ï½ž
 								//for (y2 = intPcwWid-1; y2 >= 0; y2--){
 								//	Pnum[x][y2].Y -= intNowPCWwidthOffset;
 								//}
@@ -1515,7 +1516,7 @@ void modeling(){
 								intNowPCWwidthOffset = (int) (intPCWwidthChirpOut * ((x - output_PitchShiftChirpPcw_Xend + 1) / (double) (intPitchShiftPcwPerOut-1)) + 0.9);
 								if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){
 									for (y2 = intPcwWid-1; y2 >= 0; y2--){
-										if (y2 % 2 == 0){//‚±‚ê‚ð•t‚¯‚È‚¢‚ÆoŽË’[‚ÌˆÊ’u‚ª‚¸‚ê‚é
+										if (y2 % 2 == 0){//ã“ã‚Œã‚’ä»˜ã‘ãªã„ã¨å‡ºå°„ç«¯ã®ä½ç½®ãŒãšã‚Œã‚‹
 											Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset);
 										}
 									}
@@ -1524,7 +1525,7 @@ void modeling(){
 								intPreviousPCWwidthOffset = 0;
 							}
 							else{
-								// PCW_WIDTH_CHIRP—p”÷’²®
+								// PCW_WIDTH_CHIRPç”¨å¾®èª¿æ•´
 								//intNowPCWwidthOffset = (int) (intPCWwidthChirp * ((x - output_PitchShiftChirpPcw_Xend) / (double) (input_PitchShiftPcw_Xend-1)) + 0.8);
 
 
@@ -1541,9 +1542,9 @@ void modeling(){
 
 
 									if ( abs(intPreviousPCWwidthOffset) != abs(intNowPCWwidthOffset) ){
-										Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset); //ƒIƒŠƒWƒiƒ‹
+										Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset); //ã‚ªãƒªã‚¸ãƒŠãƒ«
 
-										//// 16/11/10ì¬
+										//// 16/11/10ä½œæˆ
 										//if (x<= output_PitchShiftChirpPcw_Xend+4) {
 										//	Pnum[x][y2].Y -= (-intPreviousPCWwidthOffset + intNowPCWwidthOffset2);
 										//	if (y2 % 2 == 0) {
@@ -1576,10 +1577,10 @@ void modeling(){
 									}
 								}
 								//intPreviousPCWwidthOffset = (int) (intPCWwidthChirpOut * ((x - output_PitchShiftChirpPcw_Xend) / (double) (intPitchShiftPcwPerOut-1)) + 0.9);
-								intPreviousPCWwidthOffset = (int)(intPCWwidthChirpOut * ((x - output_PitchShiftChirpPcw_Xend) / (double)(intPitchShiftPcwPerOut - 1)) + 0.9);//‚±‚ê‚Í•Ï‚¦‚È‚¢
+								intPreviousPCWwidthOffset = (int)(intPCWwidthChirpOut * ((x - output_PitchShiftChirpPcw_Xend) / (double)(intPitchShiftPcwPerOut - 1)) + 0.9);//ã“ã‚Œã¯å¤‰ãˆãªã„
 							}
 						}
-					}//•ƒ`ƒƒ+Šiƒ`ƒƒI
+					}//å¹…ãƒãƒ£+æ ¼ãƒãƒ£çµ‚
 
 
 
@@ -1628,21 +1629,21 @@ void modeling(){
 
 					//}
 
-					// ’ÊíPCW‚ ‚è
+					// é€šå¸¸PCWã‚ã‚Š
 					//else{
 					//	if (x != 0){
-					//		Pnum[x][y].X = Pnum[x-1][y].X + intPitchX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
-					//		Pnum[x][y].Y = Pnum[x-1][y].Y; 					// “¯‚¶YÀ•W‚É’u‚­
+					//		Pnum[x][y].X = Pnum[x-1][y].X + intPitchX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
+					//		Pnum[x][y].Y = Pnum[x-1][y].Y; 					// åŒã˜Yåº§æ¨™ã«ç½®ã
 					//	}
 
 					//	s_x3 = 0;
 
 					//	if (y == intPcwWid - LSPCW_ROW){
 
-					//		// “üŽË ’ÊíPCW
+					//		// å…¥å°„ é€šå¸¸PCW
 					//		if (intNormPcwPer != 0 && x < input_NormPcw_Xend + 1){
 					//		}
-					//		// “üŽË ƒ`ƒƒ[ƒvLSPCW
+					//		// å…¥å°„ ãƒãƒ£ãƒ¼ãƒ—LSPCW
 					//		if (x >= input_NormPcw_Xend && x < input_Chirp_Ls_Xend + 1){
 					//			if (intChirp3rdLsPer == 0){
 					//				s_x3 = 0;
@@ -1655,7 +1656,7 @@ void modeling(){
 					//		if (x >= input_Chirp_Ls_Xend && x < Lspcw_Xend){
 					//			s_x3 = intSx3Per;
 					//		}
-					//		// oŽË ƒ`ƒƒ[ƒvLSPCW
+					//		// å‡ºå°„ ãƒãƒ£ãƒ¼ãƒ—LSPCW
 					//		if (x >= Lspcw_Xend && x < output_Chirp_Ls_Xend){
 					//			if (intChirp3rdLsPer == 0){
 					//				s_x3 = 0;
@@ -1664,60 +1665,60 @@ void modeling(){
 					//				s_x3 = INT_DIV (intSx3Per, intChirp3rdLsPer) * (output_Chirp_Ls_Xend - x);
 					//			}
 					//		}
-					//		// “üŽË ’ÊíPCW
+					//		// å…¥å°„ é€šå¸¸PCW
 					//		if (x >= output_Chirp_Ls_Xend && x < output_PCW_Xend){
 					//		}
 					//	}
 					//}
 
-					/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+					/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 					if (PITCH_SHIFT_MAX > PITCH && intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
-						//// “üŽË ŠiŽq’è”•Ï‰»PCW
+						//// å…¥å°„ æ ¼å­å®šæ•°å¤‰åŒ–PCW
 						//if (x < input_PitchShiftPcw_Xend){
 						//	if (y == 0){
-						//		continue;	// ‰ðÍ—Ìˆæ‚Ì“s‡ãCŠiŽq’è”•Ï‰»‚Å‚ÍPCW—ñ”‚ðintPcwWid-1‚É
+						//		continue;	// è§£æžé ˜åŸŸã®éƒ½åˆä¸Šï¼Œæ ¼å­å®šæ•°å¤‰åŒ–ã§ã¯PCWåˆ—æ•°ã‚’intPcwWid-1ã«
 						//	}
 						//}
-						//// oŽË ŠiŽq’è”•Ï‰»PCW
+						//// å‡ºå°„ æ ¼å­å®šæ•°å¤‰åŒ–PCW
 						//else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 						//	if (y == 0){
-						//		continue;	// ‰ðÍ—Ìˆæ‚Ì“s‡ãCŠiŽq’è”•Ï‰»‚Å‚ÍPCW—ñ”‚ðintPcwWid-1‚É
+						//		continue;	// è§£æžé ˜åŸŸã®éƒ½åˆä¸Šï¼Œæ ¼å­å®šæ•°å¤‰åŒ–ã§ã¯PCWåˆ—æ•°ã‚’intPcwWid-1ã«
 						//	}
 						//}
-						// ŠiŽq’è”•Ï‰»PCW‚Æ‚ÌoŽËÚ‘±•”
+						// æ ¼å­å®šæ•°å¤‰åŒ–PCWã¨ã®å‡ºå°„æŽ¥ç¶šéƒ¨
 						//if (x <= 0 + 1 || x >= intPcwPer - (1+1) ){
 						//	if (y == 0){
-						//		continue;	// ‰ðÍ—Ìˆæ‚Ì“s‡ãCŠiŽq’è”•Ï‰»‚Å‚ÍPCW—ñ”‚ðintPcwWid-1‚É
+						//		continue;	// è§£æžé ˜åŸŸã®éƒ½åˆä¸Šï¼Œæ ¼å­å®šæ•°å¤‰åŒ–ã§ã¯PCWåˆ—æ•°ã‚’intPcwWid-1ã«
 						//	}
 						//}
 
-						//// “üŽË ŠiŽq’è”•Ï‰»PCW
+						//// å…¥å°„ æ ¼å­å®šæ•°å¤‰åŒ–PCW
 						//if (x < input_PitchShiftPcw_Xend){
 						//	if (y == 0){
-						//		continue;	// ‰ðÍ—Ìˆæ‚Ì“s‡ãCŠiŽq’è”•Ï‰»‚Å‚ÍPCW—ñ”‚ðintPcwWid-1‚É
+						//		continue;	// è§£æžé ˜åŸŸã®éƒ½åˆä¸Šï¼Œæ ¼å­å®šæ•°å¤‰åŒ–ã§ã¯PCWåˆ—æ•°ã‚’intPcwWid-1ã«
 						//	}
 						//}
-						//// oŽË ŠiŽq’è”•Ï‰»PCW
+						//// å‡ºå°„ æ ¼å­å®šæ•°å¤‰åŒ–PCW
 						//else if (x >= output_PitchShiftChirpPcw_Xend && x < output_PitchShiftPcw_Xend){
 						//	if (y == 0){
-						//		continue;	// ‰ðÍ—Ìˆæ‚Ì“s‡ãCŠiŽq’è”•Ï‰»‚Å‚ÍPCW—ñ”‚ðintPcwWid-1‚É
+						//		continue;	// è§£æžé ˜åŸŸã®éƒ½åˆä¸Šï¼Œæ ¼å­å®šæ•°å¤‰åŒ–ã§ã¯PCWåˆ—æ•°ã‚’intPcwWid-1ã«
 						//	}
 						//}
-						//// ŠiŽq’è”•Ï‰»PCW‚Æ‚ÌoŽËÚ‘±•”
+						//// æ ¼å­å®šæ•°å¤‰åŒ–PCWã¨ã®å‡ºå°„æŽ¥ç¶šéƒ¨
 						//if (x == output_Chirp_Ls_Xend - 1){
 						//	if (y == 0){
-						//		continue;	// ‰ðÍ—Ìˆæ‚Ì“s‡ãCŠiŽq’è”•Ï‰»‚Å‚ÍPCW—ñ”‚ðintPcwWid-1‚É
+						//		continue;	// è§£æžé ˜åŸŸã®éƒ½åˆä¸Šï¼Œæ ¼å­å®šæ•°å¤‰åŒ–ã§ã¯PCWåˆ—æ•°ã‚’intPcwWid-1ã«
 						//	}
 						//}
 
-						//// “üoŽË‘ÎÛ\‘¢
+						//// å…¥å‡ºå°„å¯¾è±¡æ§‹é€ 
 						//if (x == output_PitchShiftChirpPcw_Xend - 1) {
 						//	if (y % 2 == 1){
 						//		continue;
 						//	}
 						//}
 					}
-					/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+					/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 					if (SX2 == 0 && SX4 == 0) {
 						mcircle(Pnum[x][y].X + s_x3, Pnum[x][y].Y, z, 1);
@@ -1804,56 +1805,56 @@ void modeling(){
 						mcircle(Pnum[x][y].X + s_x4, Pnum[x][y].Y, z, 1);
 					}
 
-					// oŽËCORE×ü“±”g˜H‚Æ‚ÌÚ‘±•”•ª‚Ì’²®
+					// å‡ºå°„COREç´°ç·šå°Žæ³¢è·¯ã¨ã®æŽ¥ç¶šéƒ¨åˆ†ã®èª¿æ•´
 					if(x == intPcwPer - 1){
-						// ŠiŽq’è”•Ï‰»PCW‚ ‚è
-						/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+						// æ ¼å­å®šæ•°å¤‰åŒ–PCWã‚ã‚Š
+						/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 						if (intNormPcwPer == 0 && intPitchShiftPcwPer + intPitchShiftChirpPcwPer != 0){
 							//if (intNormPcwPer == 0 && intPitchShiftPcwPer != 0){
-							/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+							/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 							if(y % 2 == 1){
-								//								//Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+								//								//Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								//#if PCW_Air_Or_SiO2
-								//								Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+								//								Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								//#else
-								//								Pnum[x][y].X += intPitchX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+								//								Pnum[x][y].X += intPitchX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								//#endif
 
 								if (Pnum[x][y].X > 0){
-									/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 									if (PITCH_SHIFT_MAX == PITCH){
 										Pnum[x][y].X += intPitchX;
 									}
 									else{
-										//Pnum[x][y].X += intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
-										//Pnum[x][y].X += (int) ((intPitchShiftX - intPitchX) / (double) (intPitchShiftChirpPcwPer-1)); 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+										//Pnum[x][y].X += intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
+										//Pnum[x][y].X += (int) ((intPitchShiftX - intPitchX) / (double) (intPitchShiftChirpPcwPer-1)); 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 										//Pnum[x][y].X += (int) ((INT_DIV(PITCH_SHIFT_MAX2,CELL_SIZE) - intPitchX) );// (double) (PITCH_SHIFT_CHIRP_PER2-1));
 									}
-									/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+									/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 								}
 								else if (Pnum[x-1][y].X > 0){
-									//Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									//Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								}
 								else if (Pnum[x-2][y].X > 0){
-									//Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									//Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								}
 
 								int poo = 0;
 
 								if (PCW_WIDTH_CHIRP != 0){
-									// PCW_WIDTH_CHIRP—p”÷’²®
+									// PCW_WIDTH_CHIRPç”¨å¾®èª¿æ•´
 									//Pnum[x][y].Y -= 0;
 									poo = INT_DIV (PCW_WIDTH_CHIRP_OUT, CELL_SIZE);
 									Pnum[x][y].Y -= INT_DIV(poo, (intPitchShiftPcwPerOut-1));
 								}
 
 
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 								if (PITCH_SHIFT_MAX != PITCH){
 									//Pnum[x][y].Y = Pnum_Init[0][intPcwWid-1].Y - intPitchShiftY * (intPcwWid-1 - y) - intPCWwidthChirp;
 								}
-								/******************** ŠiŽqƒVƒtƒg—Êƒ`ƒƒ[ƒv(2013/7/19) ********************/
+								/******************** æ ¼å­ã‚·ãƒ•ãƒˆé‡ãƒãƒ£ãƒ¼ãƒ—(2013/7/19) ********************/
 
 								if (PITCH_SHIFT_MAX2 != PITCH){
 									//for (y2 = intPcwWid-1; y2 >= 0; y2--){
@@ -1881,24 +1882,24 @@ void modeling(){
 						}
 						else{
 							if(y % 2 == 1){
-								//								//Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+								//								//Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								//#if PCW_Air_Or_SiO2
-								//								Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+								//								Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								//#else
-								//								Pnum[x][y].X += intPitchX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+								//								Pnum[x][y].X += intPitchX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								//#endif
 								if (Pnum[x][y].X > 0){
-									Pnum[x][y].X += intPitchX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X += intPitchX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								}
 								else if (Pnum[x-1][y].X > 0){
-									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X = Pnum[x-1][y].X + 2 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								}
 								else if (Pnum[x-2][y].X > 0){
-									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchX‚¾‚¯+XÀ•W‚É’u‚­
+									Pnum[x][y].X = Pnum[x-2][y].X + 3 * intPitchShiftX; 		// intPitchXã ã‘+Xåº§æ¨™ã«ç½®ã
 								}
 
 								if (PCW_WIDTH_CHIRP != 0){
-									// PCW_WIDTH_CHIRP—p”÷’²®
+									// PCW_WIDTH_CHIRPç”¨å¾®èª¿æ•´
 									//Pnum[x][y].Y -= 0;
 									int poo;
 									poo = INT_DIV (PCW_WIDTH_CHIRP, CELL_SIZE);
@@ -1915,7 +1916,7 @@ void modeling(){
 						}
 					}
 
-					// üŒ‡Š×‚©‚ç”‚¦‚½‹ô”—ñ‰~E‚Ì’[‚ð”z’u‚·‚éê‡‚ÉŽg—p
+					// ç·šæ¬ é™¥ã‹ã‚‰æ•°ãˆãŸå¶æ•°åˆ—å††å­”ã®ç«¯ã‚’é…ç½®ã™ã‚‹å ´åˆã«ä½¿ç”¨
 					//if(y % 2 == 0){
 					//	if(x == 0){
 					//		mcircle(Pnum[x][y].X - intPitchShiftX, Pnum[x][y].Y, z, 1);
@@ -1925,22 +1926,22 @@ void modeling(){
 					//	}
 					//}
 
-				} //™
+				} //â˜†
 				/****************************** LSPCW ******************************/
 
 			}
 		}
-		// CORE×ü“±”g˜H‚ÌˆÊ’u‚ðŒvŽZ
-		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// oŽËCOREƒXƒ‰ƒu‚ÌŠJŽn“_
-		intWirePer3 = intWirePer2 + intWireLen2;						// oŽËCOREƒXƒ‰ƒu‚ÌI—¹“_
+		// COREç´°ç·šå°Žæ³¢è·¯ã®ä½ç½®ã‚’è¨ˆç®—
+		intWirePer2 = Pnum[intPcwPer-1][intPcwWid-1].X + intRadius;		// å‡ºå°„COREã‚¹ãƒ©ãƒ–ã®é–‹å§‹ç‚¹
+		intWirePer3 = intWirePer2 + intWireLen2;						// å‡ºå°„COREã‚¹ãƒ©ãƒ–ã®çµ‚äº†ç‚¹
 
 	}
-	/****************************** ƒtƒHƒgƒjƒbƒNŒ‹» ******************************/ //739
+	/****************************** ãƒ•ã‚©ãƒˆãƒ‹ãƒƒã‚¯çµæ™¶ ******************************/ //739
 
-	/****************************** “üoŽË×ü“±”g˜H ******************************/
+	/****************************** å…¥å‡ºå°„ç´°ç·šå°Žæ³¢è·¯ ******************************/
 	int intPcwSislabOffset;
 
-	// ‘S–ÊƒXƒ‰ƒu‚É‚È‚Á‚Ä‚¢‚é‚Ì‚ÅC×üˆÈŠO‚Ì•”•ª‚ð‹ó‹C‚É•ÏX
+	// å…¨é¢ã‚¹ãƒ©ãƒ–ã«ãªã£ã¦ã„ã‚‹ã®ã§ï¼Œç´°ç·šä»¥å¤–ã®éƒ¨åˆ†ã‚’ç©ºæ°—ã«å¤‰æ›´
 	if (PCW_SiSLAB_OFFSET != 0) {
 		intPcwSislabOffset = INT_DIV(PCW_SiSLAB_OFFSET, CELL_SIZE);
 	}
@@ -1950,14 +1951,14 @@ void modeling(){
 
 	for (z = zmax_all - intSlabHeigPer; z < (zmax_all + 1); z++) {
 
-		if (BOUNDARYLINE == 0) {//]—ˆ\‘¢
-								// “üŽË
+		if (BOUNDARYLINE == 0) {//å¾“æ¥æ§‹é€ 
+								// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
 				if (PCW_SiSLAB_OFFSET != 0) {
 					//intPcwSislabOffset;
 				}
-				//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -1967,10 +1968,10 @@ void modeling(){
 				}
 			}
 
-			//oŽË
+			//å‡ºå°„
 			for (y = 0; y < ymax_all - intWireWid_2_Out; y++) {
 				/*if (PCW_SiSLAB_OFFSET != 0) {
-				//intPcwSislabOffset--;		//“üoŽË“¯ˆê\‘¢‚É‚·‚é‚½‚ß‚Ì‚¨‚Ü‚¶‚È‚¢@
+				//intPcwSislabOffset--;		//å…¥å‡ºå°„åŒä¸€æ§‹é€ ã«ã™ã‚‹ãŸã‚ã®ãŠã¾ã˜ãªã„ã€€
 				}*/
 				for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 					//for (x = intWirePer2 + intPcwSislabOffset+8; x < intWirePer3-8; x++){	//nondoped
@@ -1982,11 +1983,11 @@ void modeling(){
 				}
 			}
 		}
-		else if (BOUNDARYLINE == 1) {//WGƒe[ƒp‰~E1—ñ–Ú(üŒ`)
+		else if (BOUNDARYLINE == 1) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(ç·šå½¢)
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - WG_chirp_in; y++) {
 					ALL_cell[x][y][z] = CLAD;
@@ -2000,7 +2001,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y; y++) {
 
@@ -2016,11 +2017,11 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 2) {//WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü)
+		else if (BOUNDARYLINE == 2) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·š)
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 					ALL_cell[x][y][z] = CLAD;
@@ -2034,7 +2035,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y; y++) {
 
@@ -2051,13 +2052,13 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 3) {//WGƒe[ƒp‰~E1—ñ–Ú(‹t•ú•¨ü) 2015/11/24
+		else if (BOUNDARYLINE == 3) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(é€†æ”¾ç‰©ç·š) 2015/11/24
 			double WG_chirp_in = 0;
 			double WG_chirp_in_dash = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out_dash = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 
@@ -2077,13 +2078,13 @@ void modeling(){
 				}
 			}
 		}
-		else if (BOUNDARYLINE == 4) {//WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü‰ü) 2015/11/25
+		else if (BOUNDARYLINE == 4) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·šæ”¹) 2015/11/25
 			double WG_chirp_in = 0;
 			double WG_chirp_in_dash = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out_dash = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 
@@ -2099,11 +2100,11 @@ void modeling(){
 
 				/*if (x > (WG_chirp_off_in_x)) {
 				WG_chirp_in = -(x - WG_chirp_off_in_x)*(x - WG_chirp_off_in_x) / 17;
-				}*/ //Œ³
+				}*/ //å…ƒ
 
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 
 				/*if (x > 0) {
@@ -2139,11 +2140,11 @@ void modeling(){
 
 
 		}
-		else if (BOUNDARYLINE == 5) {//WGƒe[ƒp‰~E1—ñ–Ú(üŒ`‰ü)
+		else if (BOUNDARYLINE == 5) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(ç·šå½¢æ”¹)
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - WG_chirp_in; y++) {
 					ALL_cell[x][y][z] = CLAD;
@@ -2157,7 +2158,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y; y++) {
 
@@ -2173,13 +2174,13 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 6) {//WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü‰ü2) 2015/11/25
+		else if (BOUNDARYLINE == 6) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·šæ”¹2) 2015/11/25
 			double WG_chirp_in = 0;
 			double WG_chirp_in_dash = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out_dash = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 
@@ -2195,11 +2196,11 @@ void modeling(){
 
 				/*if (x > (WG_chirp_off_in_x)) {
 				WG_chirp_in = -(x - WG_chirp_off_in_x)*(x - WG_chirp_off_in_x) / 17;
-				}*/ //Œ³
+				}*/ //å…ƒ
 
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 
 				/*if (x > 0) {
@@ -2231,11 +2232,11 @@ void modeling(){
 
 			}
 		}
-		else if (BOUNDARYLINE == 7) {//WGƒe[ƒp‰~E1—ñ–Ú(•ú•¨ü‰ü3)
+		else if (BOUNDARYLINE == 7) {//WGãƒ†ãƒ¼ãƒ‘å††å­”1åˆ—ç›®(æ”¾ç‰©ç·šæ”¹3)
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 					ALL_cell[x][y][z] = CLAD;
@@ -2249,7 +2250,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y; y++) {
 
@@ -2266,11 +2267,11 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 8) {//š •ªæ¶‚Ì’ñˆÄ\‘¢
+		else if (BOUNDARYLINE == 8) {//åœ‹åˆ†å…ˆç”Ÿã®ææ¡ˆæ§‹é€ 
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 					ALL_cell[x][y][z] = CLAD;
@@ -2284,7 +2285,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y; y++) {
 
@@ -2301,12 +2302,12 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 9) { //WGŠÉ‚â‚©ƒe[ƒp1(oŽË‚Ì‚Ý)
+		else if (BOUNDARYLINE == 9) { //WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘1(å‡ºå°„ã®ã¿)
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2316,7 +2317,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9; y++) {
 
@@ -2332,12 +2333,12 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 10) { //WG‚³‚ç‚ÉŠÉ‚â‚©ƒe[ƒp1(oŽË‚Ì‚Ý)
+		else if (BOUNDARYLINE == 10) { //WGã•ã‚‰ã«ç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘1(å‡ºå°„ã®ã¿)
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2347,7 +2348,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9 + 4; y++) {
 
@@ -2363,12 +2364,12 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 11) { //•ú•¨üŒ“‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý)2015/12/15
+		else if (BOUNDARYLINE == 11) { //æ”¾ç‰©ç·šå…¼ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿)2015/12/15
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2378,7 +2379,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9 + 4; y++) {
 
@@ -2402,15 +2403,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient4;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 12) { //PCW‹ßÚƒIƒtƒZƒbƒg[‚­Œ“‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý)2015/12/15
+		else if (BOUNDARYLINE == 12) { //PCWè¿‘æŽ¥ã‚ªãƒ•ã‚»ãƒƒãƒˆæ·±ãå…¼ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿)2015/12/15
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2420,7 +2421,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9 + 4; y++) {
 
@@ -2448,14 +2449,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient4;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 13) { //12+oŽË•ú•¨ü2015/12/15
+		else if (BOUNDARYLINE == 13) { //12+å‡ºå°„æ”¾ç‰©ç·š2015/12/15
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 					ALL_cell[x][y][z] = CLAD;
@@ -2469,7 +2470,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9 + 4; y++) {
 
@@ -2497,16 +2498,16 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient4;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 
 		}
-		else if (BOUNDARYLINE == 14) { //PCW‹ßÚƒIƒtƒZƒbƒg[‚­Œ“‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý) + oŽËƒ‚ƒjƒ^[Œã‚ë2015/12/15
+		else if (BOUNDARYLINE == 14) { //PCWè¿‘æŽ¥ã‚ªãƒ•ã‚»ãƒƒãƒˆæ·±ãå…¼ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿) + å‡ºå°„ãƒ¢ãƒ‹ã‚¿ãƒ¼å¾Œã‚2015/12/15
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2516,7 +2517,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9 + 4 + 1; y++) {
 
@@ -2544,15 +2545,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient5;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 141) { //PCW‹ßÚƒIƒtƒZƒbƒg[‚­Œ“‚³‚ç‚ÉWGŠÉ‚â‚©ƒe[ƒp(oŽË‚Ì‚Ý) + oŽËƒ‚ƒjƒ^[Œã‚ë2015/12/15
+		else if (BOUNDARYLINE == 141) { //PCWè¿‘æŽ¥ã‚ªãƒ•ã‚»ãƒƒãƒˆæ·±ãå…¼ã•ã‚‰ã«WGç·©ã‚„ã‹ãƒ†ãƒ¼ãƒ‘(å‡ºå°„ã®ã¿) + å‡ºå°„ãƒ¢ãƒ‹ã‚¿ãƒ¼å¾Œã‚2015/12/15
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2562,7 +2563,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y + 9 + 7; y++) {
 
@@ -2574,15 +2575,15 @@ void modeling(){
 				}
 
 
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 15) { //ƒe[ƒp•Ï‰»2015/12/16
+		else if (BOUNDARYLINE == 15) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ–2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2592,7 +2593,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y15 + 9 + 4; y++) {
 
@@ -2613,15 +2614,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient6;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 16) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 16) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2631,7 +2632,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y16 + 9 + 4; y++) {
 
@@ -2648,15 +2649,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient7;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 17) { //ƒe[ƒp•Ï‰» 2015/12/24
+		else if (BOUNDARYLINE == 17) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/24
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2666,7 +2667,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y17 + 9 + 4; y++) {
 
@@ -2684,15 +2685,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient8;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 18) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 18) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2702,7 +2703,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y18 + 9 + 4; y++) {
 
@@ -2720,15 +2721,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient9;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
 		}
-		else if (BOUNDARYLINE == 19) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 19) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2738,7 +2739,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y19 + 9 + 4; y++) {
 
@@ -2756,14 +2757,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient10;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 20) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 20) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2773,7 +2774,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4; y++) {
 
@@ -2791,18 +2792,18 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient11;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 21) { //“üŽËƒe[ƒp 2016/1/4
+		else if (BOUNDARYLINE == 21) { //å…¥å°„ãƒ†ãƒ¼ãƒ‘ 2016/1/4
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 + WG_chirp_in; y++) {
 
 					//for (y = 0; y < ymax_all - intWireWid_2; y++) {
-					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 
@@ -2817,7 +2818,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y21 + 9 + 4; y++) {
 
@@ -2834,14 +2835,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient11;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 22) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 22) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2851,7 +2852,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4; y++) {
 
@@ -2869,14 +2870,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient12;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 23) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 23) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2886,7 +2887,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4; y++) {
 
@@ -2904,14 +2905,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient13;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 24) { //ƒe[ƒp•Ï‰» 2015/12/16
+		else if (BOUNDARYLINE == 24) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 2015/12/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2921,7 +2922,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4; y++) {
 
@@ -2939,14 +2940,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient14;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 25) { //ƒe[ƒp•Ï‰» 1/7
+		else if (BOUNDARYLINE == 25) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 1/7
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2956,7 +2957,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4; y++) {
 
@@ -2974,14 +2975,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient15;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 26) { //ƒe[ƒp•Ï‰» 1/7
+		else if (BOUNDARYLINE == 26) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 1/7
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -2991,7 +2992,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4; y++) {
 
@@ -3009,14 +3010,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient16;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 27) { //ƒe[ƒp•Ï‰» 1/7
+		else if (BOUNDARYLINE == 27) { //ãƒ†ãƒ¼ãƒ‘å¤‰åŒ– 1/7
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3026,7 +3027,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4 + 2; y++) {//16/1/26
 
@@ -3044,14 +3045,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 28) { //ƒe[ƒp‚È‚µ2/5
+		else if (BOUNDARYLINE == 28) { //ãƒ†ãƒ¼ãƒ‘ãªã—2/5
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2 - 10; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][ y][z] = CLAD;
@@ -3061,7 +3062,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 + 9 + 4 + 2; y++) {//16/1/26
 
@@ -3078,14 +3079,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 29) { //ƒe[ƒp‚È‚µ2/5
+		else if (BOUNDARYLINE == 29) { //ãƒ†ãƒ¼ãƒ‘ãªã—2/5
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2 - 10 - 2; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3095,7 +3096,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2; y++) {//16/1/26
 
@@ -3112,14 +3113,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 30) { //ƒe[ƒp‚È‚µ2/5
+		else if (BOUNDARYLINE == 30) { //ãƒ†ãƒ¼ãƒ‘ãªã—2/5
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2 - 10 - 2 - 5; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3129,7 +3130,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5; y++) {//16/1/26
 
@@ -3146,14 +3147,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 31) { //ƒe[ƒp‚È‚µ2/8
+		else if (BOUNDARYLINE == 31) { //ãƒ†ãƒ¼ãƒ‘ãªã—2/8
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2 - 10 - 2 - 5-10; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3163,7 +3164,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5-10; y++) {//16/1/26
 
@@ -3180,14 +3181,14 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 32) { //ƒe[ƒp‚È‚µ+ oŽËƒe[ƒp(21)2/16
+		else if (BOUNDARYLINE == 32) { //ãƒ†ãƒ¼ãƒ‘ãªã—+ å‡ºå°„ãƒ†ãƒ¼ãƒ‘(21)2/16
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (y = 0; y < ymax_all - intWireWid_2 - 10 - 2 - 5 - 10; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																						//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3197,7 +3198,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {//16/1/26
 
@@ -3214,13 +3215,13 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient11;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 33) { //ƒe[ƒp‚È‚µ+ “üŽËƒe[ƒp3/3
+		else if (BOUNDARYLINE == 33) { //ãƒ†ãƒ¼ãƒ‘ãªã—+ å…¥å°„ãƒ†ãƒ¼ãƒ‘3/3
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 10 - 2 - 5 - 10 + WG_chirp_in; y++) {
 
@@ -3235,7 +3236,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {//16/1/26
 
@@ -3252,15 +3253,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
-		}else if (BOUNDARYLINE == 34) { //SiWGƒe[ƒp ŒX‚«0.08
+			}//å‡ºå°„çµ‚
+		}else if (BOUNDARYLINE == 34) { //SiWGãƒ†ãƒ¼ãƒ‘ å‚¾ã0.08
 	double WG_chirp_in = 0;
 	double WG_chirp_out = 0;
 
-	// “üŽË
+	// å…¥å°„
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in; y++) {
-			// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+			// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 			//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 			//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 			ALL_cell[x][y][z] = CLAD;
@@ -3273,7 +3274,7 @@ void modeling(){
 		}
 	}
 
-	// oŽË
+	// å‡ºå°„
 	for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - 20 /*+WG_chirp_off_out_y20*/; y++) {//16/1/26
 
@@ -3289,15 +3290,15 @@ void modeling(){
 				WG_chirp_out = WG_chirp_out - 0.08;
 			}
 		}
-	}//oŽËI
-}else if (BOUNDARYLINE == 35) { //SiWGƒe[ƒp ŒX‚«0.06
+	}//å‡ºå°„çµ‚
+}else if (BOUNDARYLINE == 35) { //SiWGãƒ†ãƒ¼ãƒ‘ å‚¾ã0.06
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in+2; y++) {
-					// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+					// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3310,7 +3311,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - 20 /*+WG_chirp_off_out_y20*/; y++) {//16/1/26
 
@@ -3326,15 +3327,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out - 0.06;
 					}
 				}
-			}//oŽËI
-		}else if (BOUNDARYLINE == 36) { //SiWGƒe[ƒp ŒX‚«0.04
+			}//å‡ºå°„çµ‚
+		}else if (BOUNDARYLINE == 36) { //SiWGãƒ†ãƒ¼ãƒ‘ å‚¾ã0.04
 			double WG_chirp_in = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
+			// å…¥å°„
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in+3; y++) {
-					// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+					// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 					//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 					ALL_cell[x][y][z] = CLAD;
@@ -3347,7 +3348,7 @@ void modeling(){
 				}
 			}
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - 20 /*+WG_chirp_off_out_y20*/; y++) {//16/1/26
 
@@ -3363,15 +3364,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out - 0.04;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 37) { //SiWGƒe[ƒp
+		else if (BOUNDARYLINE == 37) { //SiWGãƒ†ãƒ¼ãƒ‘
 			double WG_chirp_in = 0;
 			double WG_chirp_in2 = 0;
 			double WG_chirp_out = 0;
 
-			// “üŽË
-			//“y‘ä•”
+			// å…¥å°„
+			//åœŸå°éƒ¨
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in ; y++) {
 
@@ -3386,9 +3387,9 @@ void modeling(){
 				}*/
 			}
 
-			//‰Â•Ï•”
+			//å¯å¤‰éƒ¨
 		for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 					ALL_cell[x][y][z] = CLAD;
 					ALL_epsilonx[x][y][z] = epsilon2;
@@ -3405,7 +3406,7 @@ void modeling(){
 
 
 
-			// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+			// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 			for (x = 0; x <431; x++) {
 				for (y = 0; y < ymax_all; y++) {
 
@@ -3419,7 +3420,7 @@ void modeling(){
 			}
 
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {//16/1/26
 
@@ -3435,17 +3436,17 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 		}
-		else if (BOUNDARYLINE == 38) { //SiWGƒe[ƒp •ƒe[ƒp168nm
+		else if (BOUNDARYLINE == 38) { //SiWGãƒ†ãƒ¼ãƒ‘ å¹…ãƒ†ãƒ¼ãƒ‘168nm
 
 			double WG_chirp_in = 0;
 			double WG_chirp_in2 = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out2 = 0;
 
-			// “üŽË
-			//“y‘ä•”
+			// å…¥å°„
+			//åœŸå°éƒ¨
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in; y++) {
 
@@ -3460,9 +3461,9 @@ void modeling(){
 				}*/
 			}
 
-			//‰Â•Ï•”
+			//å¯å¤‰éƒ¨
 			for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 					ALL_cell[x][y][z] = CLAD;
 					ALL_epsilonx[x][y][z] = epsilon2;
@@ -3479,7 +3480,7 @@ void modeling(){
 
 
 
-			// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+			// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 			for (x = 0; x <431; x++) {
 				for (y = 0; y < ymax_all; y++) {
 
@@ -3493,7 +3494,7 @@ void modeling(){
 			}
 
 
-			// oŽË
+			// å‡ºå°„
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {//16/1/26
 
@@ -3509,15 +3510,15 @@ void modeling(){
 						WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 					}
 				}
-			}//oŽËI
-		}else if (BOUNDARYLINE == 39) { //SiWGƒe[ƒp“üoŽË
+			}//å‡ºå°„çµ‚
+		}else if (BOUNDARYLINE == 39) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„
 			double WG_chirp_in = 0;
 			double WG_chirp_in2 = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out2 = 0;
 
-			// “üŽË
-			//“y‘ä•”
+			// å…¥å°„
+			//åœŸå°éƒ¨
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in; y++) {
 
@@ -3532,9 +3533,9 @@ void modeling(){
 				}*/
 			}
 
-			//‰Â•Ï•”
+			//å¯å¤‰éƒ¨
 			for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 					ALL_cell[x][y][z] = CLAD;
 					ALL_epsilonx[x][y][z] = epsilon2;
@@ -3551,7 +3552,7 @@ void modeling(){
 
 
 
-			// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+			// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 			for (x = 0; x <431; x++) {
 				for (y = 0; y < ymax_all; y++) {
 
@@ -3565,7 +3566,7 @@ void modeling(){
 			}
 
 
-			// oŽË “y‘ä
+			// å‡ºå°„ åœŸå°
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 
@@ -3574,9 +3575,9 @@ void modeling(){
 					ALL_epsilony[x][y][z] = epsilon2;
 					ALL_epsilonz[x][y][z] = epsilon2;
 					}
-				}//oŽËI
+				}//å‡ºå°„çµ‚
 
-			// oŽË‰Â•Ï•”
+			// å‡ºå°„å¯å¤‰éƒ¨
 			for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 			  for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2; x < intWirePer3; x++) {
 
@@ -3593,10 +3594,10 @@ void modeling(){
 					}
 				}
 			}
-			//oŽËI
+			//å‡ºå°„çµ‚
 
 
-			// oŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+			// å‡ºå°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 			for (x = 823; x <xmax_all; x++) {
 				for (y = 0; y < ymax_all; y++) {
 
@@ -3609,14 +3610,14 @@ void modeling(){
 				}
 			}
 
-		}else if (BOUNDARYLINE == 40) { //SiWGƒe[ƒp“üoŽË
+		}else if (BOUNDARYLINE == 40) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„
 			double WG_chirp_in = 0;
 			double WG_chirp_in2 = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out2 = 0;
 
-			// “üŽË
-			//“y‘ä•”
+			// å…¥å°„
+			//åœŸå°éƒ¨
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in; y++) {
 
@@ -3631,9 +3632,9 @@ void modeling(){
 				}*/
 			}
 
-			//‰Â•Ï•”
+			//å¯å¤‰éƒ¨
 			for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 4; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 					ALL_cell[x][y][z] = CLAD;
 					ALL_epsilonx[x][y][z] = epsilon2;
@@ -3650,7 +3651,7 @@ void modeling(){
 
 
 
-			// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+			// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 			for (x = 0; x <390; x++) {
 				for (y = 0; y < ymax_all; y++) {
 
@@ -3664,7 +3665,7 @@ void modeling(){
 			}
 
 
-			// oŽË “y‘ä
+			// å‡ºå°„ åœŸå°
 			for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 
@@ -3673,9 +3674,9 @@ void modeling(){
 					ALL_epsilony[x][y][z] = epsilon2;
 					ALL_epsilonz[x][y][z] = epsilon2;
 				}
-			}//oŽËI
+			}//å‡ºå°„çµ‚
 
-			 // oŽË‰Â•Ï•”
+			 // å‡ºå°„å¯å¤‰éƒ¨
 			for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 				for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2; x < intWirePer3; x++) {
 
@@ -3692,10 +3693,10 @@ void modeling(){
 					}
 				}
 			}
-			//oŽËI
+			//å‡ºå°„çµ‚
 
 
-			// oŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+			// å‡ºå°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 			for (x = 840; x <xmax_all; x++) {
 				for (y = 0; y < ymax_all; y++) {
 
@@ -3709,14 +3710,14 @@ void modeling(){
 			}
 
 		}
-		else if (BOUNDARYLINE == 41) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
+		else if (BOUNDARYLINE == 41) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦
 			double WG_chirp_in = 0;
 			double WG_chirp_in2 = 0;
 			double WG_chirp_out = 0;
 			double WG_chirp_out2 = 0;
 
-			// “üŽË
-			//“y‘ä•”
+			// å…¥å°„
+			//åœŸå°éƒ¨
 			for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-100; x++) {
 				for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in+5; y++) {
 
@@ -3727,9 +3728,9 @@ void modeling(){
 				}
 			}
 
-				//‰Â•Ï•”
+				//å¯å¤‰éƒ¨
 				for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-					for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1+5; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+					for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1+5; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 						ALL_cell[x][y][z] = CLAD;
 						ALL_epsilonx[x][y][z] = epsilon2;
@@ -3738,14 +3739,14 @@ void modeling(){
 					}
 
 					//if (x > 220) {
-					if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+					if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 						WG_chirp_in2 = WG_chirp_in2 + 1.33;
 						//}
 					}
 
-			//‰Â•Ï•”
-			for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+			//å¯å¤‰éƒ¨
+			for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+				for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 					ALL_cell[x][y][z] = CLAD;
 					ALL_epsilonx[x][y][z] = epsilon2;
@@ -3754,7 +3755,7 @@ void modeling(){
 				}
 			}
 
-			 // oŽË‰Â•Ï•”
+			 // å‡ºå°„å¯å¤‰éƒ¨
 			for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 				for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6+6-20+3; x < intWirePer3-20; x++) {
 
@@ -3771,8 +3772,8 @@ void modeling(){
 					}
 				//}
 			}
-			//‰Â•Ï•”
-			for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+			//å¯å¤‰éƒ¨
+			for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 				for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3+5; x < intWirePer3 - 20; x++) {
 
 					ALL_cell[x][y][z] = CLAD;
@@ -3784,7 +3785,7 @@ void modeling(){
 
 
 
-			//// oŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€ //‚±‚ê‚ÍŽg‚¤•K—v‚Í‚È‚¢
+			//// å‡ºå°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ  //ã“ã‚Œã¯ä½¿ã†å¿…è¦ã¯ãªã„
 			//for (x = 823; x <xmax_all; x++) {
 			//	for (y = 0; y < ymax_all; y++) {
 
@@ -3798,14 +3799,14 @@ void modeling(){
 			//}
 
 		}
-else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
+else if (BOUNDARYLINE == 42) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ ä¸­å¿ƒæŽ¥è§¦
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5-5; y++) {
 
@@ -3816,9 +3817,9 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -3827,14 +3828,14 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.33;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22-5; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1-5; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22-5; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1-5; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -3845,7 +3846,7 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 
 
 
-	// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+	// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 	for (x = 0; x <431; x++) {
 		for (y = 0; y < ymax_all; y++) {
 
@@ -3859,7 +3860,7 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 	}
 
 
-	// oŽË “y‘ä
+	// å‡ºå°„ åœŸå°
 	for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10-5; y++) {
 
@@ -3868,9 +3869,9 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 			ALL_epsilony[x][y][z] = epsilon2;
 			ALL_epsilonz[x][y][z] = epsilon2;
 		}
-	}//oŽËI
+	}//å‡ºå°„çµ‚
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3; x < intWirePer3 - 20; x++) {
 
@@ -3887,8 +3888,8 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22-5; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22-5; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -3900,7 +3901,7 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 
 
 
-	// oŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€
+	// å‡ºå°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 	for (x = 823; x <xmax_all; x++) {
 		for (y = 0; y < ymax_all; y++) {
 
@@ -3914,14 +3915,14 @@ else if (BOUNDARYLINE == 42) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ’†SÚG
 	}
 
 }
-else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
+else if (BOUNDARYLINE == 43) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 =0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -3932,9 +3933,9 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5-5-5; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5-5-5; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -3943,14 +3944,14 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.33;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10+2; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10+2; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -3961,7 +3962,7 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 
 
 
-	//// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€ //‚±‚ê‚ÍŽg‚¤•K—v‚Í‚È‚¢
+	//// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ  //ã“ã‚Œã¯ä½¿ã†å¿…è¦ã¯ãªã„
 	//for (x = 0; x <431; x++) {
 	//	for (y = 0; y < ymax_all; y++) {
 
@@ -3975,7 +3976,7 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 	//}
 
 
-	//// oŽË “y‘ä
+	//// å‡ºå°„ åœŸå°
 	//for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 	//	for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 
@@ -3984,9 +3985,9 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 	//		ALL_epsilony[x][y][z] = epsilon2;
 	//		ALL_epsilonz[x][y][z] = epsilon2;
 	//	}
-	//}//oŽËI
+	//}//å‡ºå°„çµ‚
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3+10; x < intWirePer3; x++) {
 
@@ -4003,8 +4004,8 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5+10-3; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4016,14 +4017,14 @@ else if (BOUNDARYLINE == 43) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG
 
 
 }
-else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
+else if (BOUNDARYLINE == 44) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦ 2å‘¨æœŸ
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4034,9 +4035,9 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5+10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5+10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4045,14 +4046,14 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 
 		//if (x > 220) {
-		if (y > 95) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 95) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.55;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2+9; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2+9; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4061,7 +4062,7 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 	}
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 10-7-3; x < intWirePer3; x++) {
 
@@ -4078,8 +4079,8 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 -9-3; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4088,14 +4089,14 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 			ALL_epsilonz[x][y][z] = epsilon2;
 		}
 	}
-}else if (BOUNDARYLINE == 45) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1.5ŽüŠú
+}else if (BOUNDARYLINE == 45) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦ 1.5å‘¨æœŸ
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4106,9 +4107,9 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4117,14 +4118,14 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 
 		//if (x > 220) {
-		if (y > 95+16) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 95+16) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 2.09;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 9+1; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 9+1; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4133,7 +4134,7 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 	}
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 10 - 7 - 3; x < intWirePer3; x++) {
 
@@ -4150,8 +4151,8 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 9 - 3-1; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4161,14 +4162,14 @@ else if (BOUNDARYLINE == 44) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 2ŽüŠú
 		}
 	}
 }
-else if (BOUNDARYLINE == 46) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1ŽüŠú
+else if (BOUNDARYLINE == 46) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦ 1å‘¨æœŸ
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4179,9 +4180,9 @@ else if (BOUNDARYLINE == 46) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1ŽüŠú
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4190,14 +4191,14 @@ else if (BOUNDARYLINE == 46) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1ŽüŠú
 		}
 
 		//if (x > 220) {
-		if (y > 95 + 16) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 95 + 16) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 2.09;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 9 + 1; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 9 + 1; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4206,7 +4207,7 @@ else if (BOUNDARYLINE == 46) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1ŽüŠú
 		}
 	}
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 10 - 7 - 3; x < intWirePer3; x++) {
 
@@ -4223,8 +4224,8 @@ else if (BOUNDARYLINE == 46) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1ŽüŠú
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 9 - 3 - 1; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4234,14 +4235,14 @@ else if (BOUNDARYLINE == 46) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG 1ŽüŠú
 		}
 	}
 }
-else if (BOUNDARYLINE == 47) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x=8a
+else if (BOUNDARYLINE == 47) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦(2.5å‘¨æœŸ) x=8a
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4252,9 +4253,9 @@ else if (BOUNDARYLINE == 47) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5+10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5+10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4263,14 +4264,14 @@ else if (BOUNDARYLINE == 47) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.45;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2+10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2+10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4279,7 +4280,7 @@ else if (BOUNDARYLINE == 47) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 	}
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3; x < intWirePer3; x++) {
 
@@ -4296,8 +4297,8 @@ else if (BOUNDARYLINE == 47) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 3-10; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4309,14 +4310,14 @@ else if (BOUNDARYLINE == 47) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 
 
 }
-else if (BOUNDARYLINE == 48) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x=9a
+else if (BOUNDARYLINE == 48) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦(2.5å‘¨æœŸ) x=9a
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4327,9 +4328,9 @@ else if (BOUNDARYLINE == 48) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4338,14 +4339,14 @@ else if (BOUNDARYLINE == 48) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.75;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 10-3; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 10-3; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4354,7 +4355,7 @@ else if (BOUNDARYLINE == 48) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 	}
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3; x < intWirePer3; x++) {
 
@@ -4371,8 +4372,8 @@ else if (BOUNDARYLINE == 48) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 155; y < ymax_all - intWireWid_2 - 22; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 3 - 10-3+6; x < intWirePer3 - 20-7; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4384,13 +4385,13 @@ else if (BOUNDARYLINE == 48) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG(2.5ŽüŠú) x
 
 
 }
-else if (BOUNDARYLINE == 49) { //ƒe[ƒp‚È‚µ11/4
+else if (BOUNDARYLINE == 49) { //ãƒ†ãƒ¼ãƒ‘ãªã—11/4
 	double WG_chirp_in = 0;
 	double WG_chirp_out = 0;
 
-	// “üŽË
+	// å…¥å°„
 	for (y = 0; y < ymax_all - intWireWid_2 - 10 - 2 - 5 - 10; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++) {		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 																				//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1-8; x++){		//nondoped
 																				//for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1+6; x++){		//doped
 			ALL_cell[x][y][z] = CLAD;
@@ -4400,9 +4401,9 @@ else if (BOUNDARYLINE == 49) { //ƒe[ƒp‚È‚µ11/4
 		}
 	}
 
-	//‰Â•Ï•”
-	for (y = 0; y < ymax_all - intWireWid_2 - 22-5; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in - 10 + 2 + 10 - 3+579; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 0; y < ymax_all - intWireWid_2 - 22-5; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in - 10 + 2 + 10 - 3+579; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4411,7 +4412,7 @@ else if (BOUNDARYLINE == 49) { //ƒe[ƒp‚È‚µ11/4
 		}
 	}
 
-	// oŽË
+	// å‡ºå°„
 	for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {//16/1/26
 
@@ -4428,17 +4429,17 @@ else if (BOUNDARYLINE == 49) { //ƒe[ƒp‚È‚µ11/4
 				WG_chirp_out = WG_chirp_out + WG_chirp_gradient17;
 			}
 		}
-	}//oŽËI
+	}//å‡ºå°„çµ‚
 }
-else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N =7
-//PCW1—ñ–Ú‚Íwtaper 21 nm‚É‘Š“–
+else if (BOUNDARYLINE == 50) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦ å¹…ãƒãƒ£æœ‰ N =7
+//PCW1åˆ—ç›®ã¯wtaper 21 nmã«ç›¸å½“
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4449,9 +4450,9 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27+5; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5+10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5+10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4460,14 +4461,14 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.25;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 153; y < ymax_all - intWireWid_2 - 22+6; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2+10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 153; y < ymax_all - intWireWid_2 - 22+6; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2+10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4478,7 +4479,7 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 
 
 
-	//// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€ //‚±‚ê‚ÍŽg‚¤•K—v‚Í‚È‚¢
+	//// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ  //ã“ã‚Œã¯ä½¿ã†å¿…è¦ã¯ãªã„
 	//for (x = 0; x <431; x++) {
 	//	for (y = 0; y < ymax_all; y++) {
 
@@ -4492,7 +4493,7 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 	//}
 
 
-	//// oŽË “y‘ä
+	//// å‡ºå°„ åœŸå°
 	//for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 	//	for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 
@@ -4501,9 +4502,9 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 	//		ALL_epsilony[x][y][z] = epsilon2;
 	//		ALL_epsilonz[x][y][z] = epsilon2;
 	//	}
-	//}//oŽËI
+	//}//å‡ºå°„çµ‚
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10+5; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3; x < intWirePer3; x++) {
 
@@ -4520,8 +4521,8 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 153; y < ymax_all - intWireWid_2 - 22+6; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 153; y < ymax_all - intWireWid_2 - 22+6; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 3-10; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4533,15 +4534,15 @@ else if (BOUNDARYLINE == 50) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 
 
 }
-else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N = 9 ƒe[ƒpŽüŠú‚ð6‰ÓŠ‘S‚Ä•ÏX (LSPCW_PER‚Í-4‚µ‚Ä12‚É•ÏX)
-//PCW1—ñ–Ú‚Íwtaper 63 nm‚É‘Š“–
+else if (BOUNDARYLINE == 51) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦ å¹…ãƒãƒ£æœ‰ N = 9 ãƒ†ãƒ¼ãƒ‘å‘¨æœŸã‚’6ç®‡æ‰€å…¨ã¦å¤‰æ›´ (LSPCW_PERã¯-4ã—ã¦12ã«å¤‰æ›´)
+//PCW1åˆ—ç›®ã¯wtaper 63 nmã«ç›¸å½“
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4552,9 +4553,9 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27 + 5; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4563,14 +4564,14 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.25;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6-1; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6-1; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4578,7 +4579,7 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 			ALL_epsilonz[x][y][z] = epsilon2;
 		}
 	}
-	//// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€ //‚±‚ê‚ÍŽg‚¤•K—v‚Í‚È‚¢
+	//// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ  //ã“ã‚Œã¯ä½¿ã†å¿…è¦ã¯ãªã„
 	//for (x = 0; x <431; x++) {
 	//	for (y = 0; y < ymax_all; y++) {
 
@@ -4592,7 +4593,7 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 	//}
 
 
-	//// oŽË “y‘ä
+	//// å‡ºå°„ åœŸå°
 	//for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 	//	for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 
@@ -4601,9 +4602,9 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 	//		ALL_epsilony[x][y][z] = epsilon2;
 	//		ALL_epsilonz[x][y][z] = epsilon2;
 	//	}
-	//}//oŽËI
+	//}//å‡ºå°„çµ‚
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10 + 5; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3; x < intWirePer3; x++) {
 
@@ -4620,8 +4621,8 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6-1; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6-1; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 3 - 10; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4633,15 +4634,15 @@ else if (BOUNDARYLINE == 51) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 
 
 }
-else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N = 9 ƒe[ƒpŽüŠú‚ð6‰ÓŠ‘S‚Ä•ÏX (LSPCW_PER‚Í-4‚µ‚Ä12‚É•ÏX)
-							   //PCW1—ñ–Ú‚Íwtaper 63 nm‚É‘Š“– •ƒ`ƒƒ‚Í“r’†‚©‚ç
+else if (BOUNDARYLINE == 52) { //SiWGãƒ†ãƒ¼ãƒ‘å…¥å‡ºå°„ å††å­”èª¿æ•´æœ‰ å¤–å´æŽ¥è§¦ å¹…ãƒãƒ£æœ‰ N = 9 ãƒ†ãƒ¼ãƒ‘å‘¨æœŸã‚’6ç®‡æ‰€å…¨ã¦å¤‰æ›´ (LSPCW_PERã¯-4ã—ã¦12ã«å¤‰æ›´)
+							   //PCW1åˆ—ç›®ã¯wtaper 63 nmã«ç›¸å½“ å¹…ãƒãƒ£ã¯é€”ä¸­ã‹ã‚‰
 	double WG_chirp_in = 0;
 	double WG_chirp_in2 = 0;
 	double WG_chirp_out = 0;
 	double WG_chirp_out2 = 0;
 
-	// “üŽË
-	//“y‘ä•”
+	// å…¥å°„
+	//åœŸå°éƒ¨
 	for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset - 1 - 100; x++) {
 		for (y = 0; y < ymax_all - intWireWid_2 - 27 + WG_chirp_in + 5; y++) {
 
@@ -4652,9 +4653,9 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 	}
 
-	//‰Â•Ï•”
+	//å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2 - 27 + 5; y++) {
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 1 + 5 - 5 - 5 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4663,14 +4664,14 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 
 		//if (x > 220) {
-		if (y > 79) //ƒe[ƒpŠJŽn‚ÌyÀ•W
+		if (y > 79) //ãƒ†ãƒ¼ãƒ‘é–‹å§‹ã®yåº§æ¨™
 			WG_chirp_in2 = WG_chirp_in2 + 1.25;
 		//}
 	}
 
-	//‰Â•Ï•”
-	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6 - 1; y++) {//’·–@—Ìˆæ
-		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 10; x++) { //PCW‘¤‚Ì’[‚ÌÀ•W
+	//å¯å¤‰éƒ¨
+	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6 - 1; y++) {//é•·æ³•é ˜åŸŸ
+		for (x = 0; x < intWireLen1 - 1 - intPcwSislabOffset + WG_chirp_in2 - 10 + 2 + 10; x++) { //PCWå´ã®ç«¯ã®åº§æ¨™
 
 			ALL_cell[x][y][z] = CLAD;
 			ALL_epsilonx[x][y][z] = epsilon2;
@@ -4678,7 +4679,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 			ALL_epsilonz[x][y][z] = epsilon2;
 		}
 	}
-	//// “üŽË‚Ì‰~E‚ðÁ‚·ƒvƒƒOƒ‰ƒ€ //‚±‚ê‚ÍŽg‚¤•K—v‚Í‚È‚¢
+	//// å…¥å°„ã®å††å­”ã‚’æ¶ˆã™ãƒ—ãƒ­ã‚°ãƒ©ãƒ  //ã“ã‚Œã¯ä½¿ã†å¿…è¦ã¯ãªã„
 	//for (x = 0; x <431; x++) {
 	//	for (y = 0; y < ymax_all; y++) {
 
@@ -4692,7 +4693,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 	//}
 
 
-	//// oŽË “y‘ä
+	//// å‡ºå°„ åœŸå°
 	//for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer3; x++) {
 	//	for (y = 0; y < ymax_all - intWireWid_2_Out + WG_chirp_out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10; y++) {
 
@@ -4701,9 +4702,9 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 	//		ALL_epsilony[x][y][z] = epsilon2;
 	//		ALL_epsilonz[x][y][z] = epsilon2;
 	//	}
-	//}//oŽËI
+	//}//å‡ºå°„çµ‚
 
-	// oŽË‰Â•Ï•”
+	// å‡ºå°„å¯å¤‰éƒ¨
 	for (y = 0; y < ymax_all - intWireWid_2_Out - WG_chirp_off_out_y20 - 2 + 9 + 4 + 2 - 5 - 10 + 5; y++) {
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3; x < intWirePer3; x++) {
 
@@ -4720,8 +4721,8 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		//}
 	}
-	//‰Â•Ï•”
-	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6 - 1; y++) {//’·–@—Ìˆæ
+	//å¯å¤‰éƒ¨
+	for (y = 153; y < ymax_all - intWireWid_2 - 22 + 6 - 1; y++) {//é•·æ³•é ˜åŸŸ
 		for (x = intWirePer2 + intPcwSislabOffset + WG_chirp_out2 + 6 + 6 - 20 + 3 + 5 + 10 - 3 - 10; x < intWirePer3 - 20; x++) {
 
 			ALL_cell[x][y][z] = CLAD;
@@ -4737,10 +4738,10 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 
 
 
-		//“c‘º
-		//“üŽË
+		//ç”°æ‘
+		//å…¥å°„
 		/*for (y = 0; y < ymax_all - intWireWid_2; y++){
-		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -8; x < intWireLen1 - 1 - intPcwSislabOffset - 7; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -8; x < intWireLen1 - 1 - intPcwSislabOffset - 7; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4748,7 +4749,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-1; y++){
-		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -6; x < intWireLen1 - 1 - intPcwSislabOffset - 5; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -6; x < intWireLen1 - 1 - intPcwSislabOffset - 5; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4756,7 +4757,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-2; y++){
-		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -4; x < intWireLen1 - 1 - intPcwSislabOffset - 3; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -4; x < intWireLen1 - 1 - intPcwSislabOffset - 3; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4764,7 +4765,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-4; y++){
-		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -2; x < intWireLen1 - 1 - intPcwSislabOffset - 2; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -2; x < intWireLen1 - 1 - intPcwSislabOffset - 2; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4772,7 +4773,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-6; y++){
-		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -1; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -1; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4780,16 +4781,16 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-6; y++){
-		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -1; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWireLen1 - 1 - intPcwSislabOffset - 1 -1; x < intWireLen1 - 1 - intPcwSislabOffset - 1; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
 		ALL_epsilonz[x][y][z] = epsilon2;
 		}
 		}
-		//oŽË
+		//å‡ºå°„
 		for (y = 0; y < ymax_all - intWireWid_2; y++){
-		for (x = intWirePer2 + intPcwSislabOffset+6; x < intWirePer2 + intPcwSislabOffset+8; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWirePer2 + intPcwSislabOffset+6; x < intWirePer2 + intPcwSislabOffset+8; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4797,7 +4798,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-1; y++){
-		for (x = intWirePer2 + intPcwSislabOffset+4; x < intWirePer2 + intPcwSislabOffset+6; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWirePer2 + intPcwSislabOffset+4; x < intWirePer2 + intPcwSislabOffset+6; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4805,7 +4806,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-2; y++){
-		for (x = intWirePer2 + intPcwSislabOffset+2; x < intWirePer2 + intPcwSislabOffset+4; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWirePer2 + intPcwSislabOffset+2; x < intWirePer2 + intPcwSislabOffset+4; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4813,7 +4814,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-4; y++){
-		for (x = intWirePer2 + intPcwSislabOffset+1; x < intWirePer2 + intPcwSislabOffset+2; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWirePer2 + intPcwSislabOffset+1; x < intWirePer2 + intPcwSislabOffset+2; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4821,7 +4822,7 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-6; y++){
-		for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer2 + intPcwSislabOffset+1; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer2 + intPcwSislabOffset+1; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
@@ -4829,20 +4830,20 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 		}
 		for (y = 0; y < ymax_all - intWireWid_2-6; y++){
-		for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer2 + intPcwSislabOffset+1; x++){		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1
+		for (x = intWirePer2 + intPcwSislabOffset; x < intWirePer2 + intPcwSislabOffset+1; x++){		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1
 		ALL_cell[x][y][z] = CLAD;
 		ALL_epsilonx[x][y][z] = epsilon2;
 		ALL_epsilony[x][y][z] = epsilon2;
 		ALL_epsilonz[x][y][z] = epsilon2;
 		}
 		}*/
-		//“c‘º‚±‚±‚Ü‚Å
+		//ç”°æ‘ã“ã“ã¾ã§
 	}
-	/****************************** “üoŽË×ü“±”g˜H ******************************/ //1915
+	/****************************** å…¥å‡ºå°„ç´°ç·šå°Žæ³¢è·¯ ******************************/ //1915
 
 
 
-	/****************************** ‘ÎÌ‹«ŠE•”•ª‚Ì—U“d—¦‚ÌÝ’è ******************************/
+	/****************************** å¯¾ç§°å¢ƒç•Œéƒ¨åˆ†ã®èª˜é›»çŽ‡ã®è¨­å®š ******************************/
 
 	for(x = 0; x < xmax_all+1; x++){
 		for(z = 0; z < zmax_all+1; z++){
@@ -4862,11 +4863,11 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 		}
 	}
 
-	/****************************** ‘ÎÌ‹«ŠE•”•ª‚Ì—U“d—¦‚ÌÝ’è ******************************/
+	/****************************** å¯¾ç§°å¢ƒç•Œéƒ¨åˆ†ã®èª˜é›»çŽ‡ã®è¨­å®š ******************************/
 
 
 
-	/****************************** Šeƒm[ƒh‚Éƒ‚ƒfƒ‹‚ð•ªŠ„ ******************************/
+	/****************************** å„ãƒŽãƒ¼ãƒ‰ã«ãƒ¢ãƒ‡ãƒ«ã‚’åˆ†å‰² ******************************/
 	if(irank != IRANK_MAX){
 		for(x = 0; x < xmax+1; x++){
 			for(y = 0; y < ymax+1; y++){
@@ -4891,66 +4892,66 @@ else if (BOUNDARYLINE == 52) { //SiWGƒe[ƒp“üoŽË ‰~E’²®—L ŠO‘¤ÚG •ƒ`ƒƒ—L N
 			}
 		}
 	}
-	/****************************** Šeƒm[ƒh‚Éƒ‚ƒfƒ‹‚ð•ªŠ„ ******************************/
+	/****************************** å„ãƒŽãƒ¼ãƒ‰ã«ãƒ¢ãƒ‡ãƒ«ã‚’åˆ†å‰² ******************************/
 
-	/****************************** ‹¤’Êƒpƒ‰ƒ[ƒ^‚ÌÝ’è ******************************/
+	/****************************** å…±é€šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š ******************************/
 
-	// —ãU“_CŠÏ‘ª–Ê‚ÌÝ’è (XMAX‚Í "‚Ì‚è‚µ‚ë" •”•ª‚ðŠÜ‚ß‚Ä‚¢‚é‚±‚Æ‚É’ˆÓ)
+	// åŠ±æŒ¯ç‚¹ï¼Œè¦³æ¸¬é¢ã®è¨­å®š (XMAXã¯ "ã®ã‚Šã—ã‚" éƒ¨åˆ†ã‚’å«ã‚ã¦ã„ã‚‹ã“ã¨ã«æ³¨æ„)
 	intExctPortNum = intExctLen / (XMAX - 1);
 	intObseInPortNum = intObseLen1 / (XMAX - 1);
 	intObseOutPortNum = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) / (XMAX - 1);
 	if (NODE % 2 != 0) {
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// Šï”ŒÂ•À—ñŒvŽZ‚Ì‚Æ‚«
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1);	// å¥‡æ•°å€‹ä¸¦åˆ—è¨ˆç®—ã®ã¨ã
 	}
 	else {
-		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// ‹ô”ŒÂ•À—ñŒvŽZ‚Ì‚Æ‚«
+		intObseCenPortNum = XMAX_ALL / 2 / (XMAX - 1) - 1;	// å¶æ•°å€‹ä¸¦åˆ—è¨ˆç®—ã®ã¨ã
 	}
 
-	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// ”z—ñ‚Ìˆø”‚ÉŽg—p‚·‚é‚Ì‚Å-1 //™“üŽËƒ‚ƒjƒ^
+	intExctLenPart = intExctLen % (XMAX - 1) - 1;		// é…åˆ—ã®å¼•æ•°ã«ä½¿ç”¨ã™ã‚‹ã®ã§-1 //â˜†å…¥å°„ãƒ¢ãƒ‹ã‚¿
 	intObseLenPart1 = intObseLen1 % (XMAX - 1) - INT_DIV(intObseInter, 2) - 1;
 	intObseLenPart2 = intObseLenPart1 + intObseInter;
 	intObseLenPart3 = intObseLen1 % (XMAX - 1);
 	intObseLenPart4 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1) - INT_DIV(intObseInter, 2);
-	//™™oŽËƒ‚ƒjƒ^‚ªˆÚ“®D‚±‚ê‚¾D	+ 119(ƒZƒ‹ƒTƒCƒY)@+ ‚ÅoŽË’[‘¤‚ÉˆÚ“®
-	//~ ‚±‚±‚ð‚¢‚¶‚é‚Æ‚¸‚ê‚é‚Ì‚Å‚â‚ç‚È‚¢
+	//â˜†â˜†å‡ºå°„ãƒ¢ãƒ‹ã‚¿ãŒç§»å‹•ï¼Žã“ã‚Œã ï¼Ž	+ 119(ã‚»ãƒ«ã‚µã‚¤ã‚º)ã€€+ ã§å‡ºå°„ç«¯å´ã«ç§»å‹•
+	//Ã— ã“ã“ã‚’ã„ã˜ã‚‹ã¨ãšã‚Œã‚‹ã®ã§ã‚„ã‚‰ãªã„
 
 	intObseLenPart5 = intObseLenPart4 + intObseInter;
-	intObseLenPart6 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1);//™’†“_‚Æ‚ÍH¨‚¨‚»‚ç‚­^’†‚É‚ ‚é—ÎF‚Ìü‚Ì‚±‚Æ
+	intObseLenPart6 = (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1);//â˜†ä¸­ç‚¹ã¨ã¯ï¼Ÿâ†’ãŠãã‚‰ãçœŸä¸­ã«ã‚ã‚‹ç·‘è‰²ã®ç·šã®ã“ã¨
 
 																					 //intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - INT_DIV(intObseInter, 2);
 																					 //intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1);
 
-																					 //intObseLenPart10  =  (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1)  - 20;//™™PCW“à‚Ìƒ‚ƒjƒ^ 16/1/5
+																					 //intObseLenPart10  =  (intWirePer2 + INT_DIV(OBSE_WIRE_LEN, CELL_SIZE)) % (XMAX - 1)  - 20;//â˜†â˜†PCWå†…ã®ãƒ¢ãƒ‹ã‚¿ 16/1/5
 
 
 	if (NODE % 2 != 0) {
-		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// Šï”ŒÂ•À—ñŒvŽZ‚Ì‚Æ‚«
+		intObseLenPart7 = (XMAX_ALL / 2) % (XMAX - 1) - 10;		// å¥‡æ•°å€‹ä¸¦åˆ—è¨ˆç®—ã®ã¨ã
 	}
 	else {
-		intObseLenPart7 = (XMAX - 1) - 10;		// ‹ô”ŒÂ•À—ñŒvŽZ‚Ì‚Æ‚«
+		intObseLenPart7 = (XMAX - 1) - 10;		// å¶æ•°å€‹ä¸¦åˆ—è¨ˆç®—ã®ã¨ã
 	}
 	//intObseLenPart8 = intObseLenPart7 + intObseInter;
 	//intObseLenPart9 = (XMAX_ALL / 2) % (XMAX - 1);
 
-	/****************************** ‹¤’Êƒpƒ‰ƒ[ƒ^‚ÌÝ’è ******************************/
+	/****************************** å…±é€šãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š ******************************/
 }
 
 
 
-//—U“d—¦‚ÌŠ„‚è“–‚Ä
+//èª˜é›»çŽ‡ã®å‰²ã‚Šå½“ã¦
 void set_epsilon(){
 
-	//—U“d—¦•ª•z‚Ìo—Í(ƒ‚ƒfƒ‹‚ÌŠm”F)
+	//èª˜é›»çŽ‡åˆ†å¸ƒã®å‡ºåŠ›(ãƒ¢ãƒ‡ãƒ«ã®ç¢ºèª)
 	int tag1 = 1;
 
 #if _FDTD
 
-	/****************************** ŒvŽZŽÀsŽž ******************************/
+	/****************************** è¨ˆç®—å®Ÿè¡Œæ™‚ ******************************/
 	int node;
 
 	MPI_Status status;
 
-	//XY•½–Ê
+	//XYå¹³é¢
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
 			epsilon_xy[x][y] = epsilonx[x][y][intSlabCen-1];
@@ -5000,11 +5001,11 @@ void set_epsilon(){
 			}
 		}
 	}
-	/****************************** ŒvŽZŽÀsŽž ******************************/
+	/****************************** è¨ˆç®—å®Ÿè¡Œæ™‚ ******************************/
 #else
 
-	/****************************** ƒ‚ƒfƒ‹Šm”FŽž ******************************/
-	char fname[40],dir_name[50];	//ƒtƒ@ƒCƒ‹–¼Ši”[•Ï”
+	/****************************** ãƒ¢ãƒ‡ãƒ«ç¢ºèªæ™‚ ******************************/
+	char fname[40],dir_name[50];	//ãƒ•ã‚¡ã‚¤ãƒ«åæ ¼ç´å¤‰æ•°
 
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
@@ -5064,10 +5065,10 @@ void set_epsilon(){
 	}
 #endif
 
-	/****************************** ƒ‚ƒfƒ‹Šm”FŽž ******************************/
+	/****************************** ãƒ¢ãƒ‡ãƒ«ç¢ºèªæ™‚ ******************************/
 #endif
 
-	//YZ•½–Ê
+	//YZå¹³é¢
 	for(y = 0; y < ymax+1; y++){
 		for(z = 0; z < zmax+1; z++){
 			epsilon_yz[y][z] = epsilony[intObseLenPart1][y][z];
@@ -5080,7 +5081,7 @@ void set_epsilon(){
 		fprintf(fpepsilony, "\n");
 	}
 
-	//ZX•½–Ê (Y:‹«ŠE–Ê)
+	//ZXå¹³é¢ (Y:å¢ƒç•Œé¢)
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax+1; z++){
 			epsilon_zx[x][z] = epsilonz[x][ymax][z];
@@ -5092,7 +5093,7 @@ void set_epsilon(){
 		}
 		fprintf(fpepsilonz, "\n");
 	}
-	//ZX•½–Ê (Y:’†S)
+	//ZXå¹³é¢ (Y:ä¸­å¿ƒ)
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax+1; z++){
 			epsilon_zx2[x][z] = epsilonz[x][ymax/2][z];
@@ -5105,7 +5106,7 @@ void set_epsilon(){
 		fprintf(fpepsilonz2, "\n");
 	}
 
-	////YZ•½–Ê
+	////YZå¹³é¢
 	//for(y = 0; y < ymax+1; y++){
 	//	for(z = 0; z <= zmax; z++){
 	//		epsilon_yz[y][z] = epsilony[intObseLenPart1][y][z];
@@ -5118,7 +5119,7 @@ void set_epsilon(){
 	//	fprintf(fpepsilony, "\n");
 	//}
 
-	////ZX•½–Ê (Y:‹«ŠE–Ê)
+	////ZXå¹³é¢ (Y:å¢ƒç•Œé¢)
 	//for(x = 0; x < xmax; x++){
 	//	for(z = 0; z < zmax+1; z++){
 	//		epsilon_zx[x][z] = epsilonz[x][ymax][z];
@@ -5130,7 +5131,7 @@ void set_epsilon(){
 	//	}
 	//	fprintf(fpepsilonz, "\n");
 	//}
-	////ZX•½–Ê (Y:’†S)
+	////ZXå¹³é¢ (Y:ä¸­å¿ƒ)
 	//for(x = 0; x < xmax; x++){
 	//	for(z = 0; z < zmax+1; z++){
 	//		epsilon_zx2[x][z] = epsilonz[x][ymax/2][z];
@@ -5144,7 +5145,7 @@ void set_epsilon(){
 	//}
 
 
-	// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ð•Â‚¶‚é
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚’é–‰ã˜ã‚‹
 	if (irank == IRANK_MIN){
 		fclose(fpallepsilonx);
 	}
@@ -5153,9 +5154,9 @@ void set_epsilon(){
 	fclose(fpepsilonz);
 
 
-	//MPI_Barrier(MPI_COMM_WORLD); 			// ˆê“x“¯Šú‚ð‚Æ‚é
+	//MPI_Barrier(MPI_COMM_WORLD); 			// ä¸€åº¦åŒæœŸã‚’ã¨ã‚‹
 
-	//// ƒƒ‚ƒŠ‚ÌŠJ•ú
+	//// ãƒ¡ãƒ¢ãƒªã®é–‹æ”¾
 	//for(x = 0; x < XMAX+1; x++)	free(epsilon_xy[x]);
 	//for(y = 0; y < YMAX+1; y++)	free(epsilon_yz[y]);
 	//for(x = 0; x < XMAX+1; x++)	free(epsilon_zx[x]);
@@ -5166,33 +5167,33 @@ void set_epsilon(){
 }
 
 
-// —ãUŠÖ”
+// åŠ±æŒ¯é–¢æ•°
 void source_func(){
 
 	int x, y, z;
 
 	if(irank == intExctPortNum){
 
-		// —ãU“_‚ÌÝ’è
+		// åŠ±æŒ¯ç‚¹ã®è¨­å®š
 		x = intExctLenPart;
 
 		for(y = ex_y_st; y < ex_y_ed; y++){
 			for(z = ex_z_st; z < ex_z_ed; z++){
-#if _EXITATION_FUNC	// CW—ãU
+#if _EXITATION_FUNC	// CWåŠ±æŒ¯
 
 
-				//–Ê“à³Œ·•ª•z—ãU‚Ìê‡ ©‰ðÍ‹óŠÔ‚ª‹ô”ƒZƒ‹‚©Šï”ƒZƒ‹‚©‚Å—ãU‚ªˆÙ‚È‚é‚Ì‚Å‚»‚Ì“s“x’ˆÓ
+				//é¢å†…æ­£å¼¦åˆ†å¸ƒåŠ±æŒ¯ã®å ´åˆ â†è§£æžç©ºé–“ãŒå¶æ•°ã‚»ãƒ«ã‹å¥‡æ•°ã‚»ãƒ«ã‹ã§åŠ±æŒ¯ãŒç•°ãªã‚‹ã®ã§ãã®éƒ½åº¦æ³¨æ„
 
-				// ƒXƒ‰ƒuŒú‚Ì”¼•ª‚ÌƒZƒ‹”:‹ô” “±”g˜H•‚Ì”¼•ª‚ÌƒZƒ‹”:‹ô”
+				// ã‚¹ãƒ©ãƒ–åŽšã®åŠåˆ†ã®ã‚»ãƒ«æ•°:å¶æ•° å°Žæ³¢è·¯å¹…ã®åŠåˆ†ã®ã‚»ãƒ«æ•°:å¶æ•°
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt);
 
-				// ƒXƒ‰ƒuŒú‚Ì”¼•ª‚ÌƒZƒ‹”:Šï” “±”g˜H•‚Ì”¼•ª‚ÌƒZƒ‹”:Šï”
+				// ã‚¹ãƒ©ãƒ–åŽšã®åŠåˆ†ã®ã‚»ãƒ«æ•°:å¥‡æ•° å°Žæ³¢è·¯å¹…ã®åŠåˆ†ã®ã‚»ãƒ«æ•°:å¥‡æ•°
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt);
 				Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 01
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st)) * sin(omega0*n*dt); // 02
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 03
 				//Hz[x][y][z] += cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st - 1)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st - 1)) * sin(omega0*n*dt); // 04
-#else	// Gaussian—ãU
+#else	// GaussianåŠ±æŒ¯
 
 				//Hz[x][(YMAX+1)/2][intSlabCen] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2));
 				Hz[x][y][z] += 1000 * cos(omega0*(n-Npeak)*dt) * exp(-(SQ(sigma*dt*(n-Npeak))/2)) * cos(0.5*PI*(y - ex_y_ed + 1)/(ex_y_ed - ex_y_st)) * cos(0.5*PI*(z - ex_z_ed + 1)/(ex_z_ed - ex_z_st));
@@ -5202,51 +5203,51 @@ void source_func(){
 	}
 
 
-	/****************************** Ž¥ŠE‚Ì‘ÎÌ‹«ŠEðŒ(4‰ñ‘ÎÌ) ******************************/
+	/****************************** ç£ç•Œã®å¯¾ç§°å¢ƒç•Œæ¡ä»¶(4å›žå¯¾ç§°) ******************************/
 
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax; z++){
-			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// ‹ôŠÖ”
+			Hx[x][ymax][z] = Hx[x][ymax-1][z];		// å¶é–¢æ•°
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax+1; z++){
-			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// ‹ôŠÖ”
+			Hz[x][ymax][z] = Hz[x][ymax-1][z];		// å¶é–¢æ•°
 		}
 	}
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax+1; y++){
-			Hy[x][y][zmax] = -Hy[x][y][zmax-1];		// ŠïŠÖ”
+			Hy[x][y][zmax] = -Hy[x][y][zmax-1];		// å¥‡é–¢æ•°
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(y = 0; y < ymax; y++){
-			Hx[x][y][zmax] = -Hx[x][y][zmax-1];		// ŠïŠÖ”
+			Hx[x][y][zmax] = -Hx[x][y][zmax-1];		// å¥‡é–¢æ•°
 		}
 	}
 
-	/****************************** Ž¥ŠE‚Ì‘ÎÌ‹«ŠEðŒ(4‰ñ‘ÎÌ) ******************************/
+	/****************************** ç£ç•Œã®å¯¾ç§°å¢ƒç•Œæ¡ä»¶(4å›žå¯¾ç§°) ******************************/
 }
 
 
-// ƒ‚ƒfƒ‹‚Ö‚Ì—ãU“_CŠÏ‘ª“_‚Ì‹L˜^
+// ãƒ¢ãƒ‡ãƒ«ã¸ã®åŠ±æŒ¯ç‚¹ï¼Œè¦³æ¸¬ç‚¹ã®è¨˜éŒ²
 void observation_func(){
 
 	//int y, z;
 
-	if(irank == intObseInPortNum){ //“üŽË
+	if(irank == intObseInPortNum){ //å…¥å°„
 
 		for(int x = intObseLenPart1; x < intObseLenPart2; x++){
-			/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-					//for(int y = 0; y <= YMAX-1; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD-1‚Í”z—ñ‚ª0ŠJŽn‚È‚½‚ß
-					/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		//Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-						cell[x][y][z] = 4; 					//’†‰›“_Šm”F—p
+			/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				for(int z = zmax - intObseHeig; z < zmax; z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+					//for(int y = 0; y <= YMAX-1; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž-1ã¯é…åˆ—ãŒ0é–‹å§‹ãªãŸã‚
+					/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		//æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+						cell[x][y][z] = 4; 					//ä¸­å¤®ç‚¹ç¢ºèªç”¨
 					}
-					cell[x][y][z] += OBSERVATION; 		//–ÊŠm”F—p
+					cell[x][y][z] += OBSERVATION; 		//é¢ç¢ºèªç”¨
 				}
 			}
 		}
@@ -5254,45 +5255,45 @@ void observation_func(){
 	if (irank == intExctPortNum){
 		int x;
 		x = intExctLenPart;
-		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//ƒvƒ‰ƒX1‚µ‚Ä‚¢‚é‚Ì‚ÍƒZƒ‹”‚ÌŠÖŒW
+		for(int y = ex_y_st; y <= ex_y_ed-1; y++){		//ãƒ—ãƒ©ã‚¹1ã—ã¦ã„ã‚‹ã®ã¯ã‚»ãƒ«æ•°ã®é–¢ä¿‚
 			for(int z = ex_z_st; z <= ex_z_ed-1; z++){
-				cell[x][y][z] += EXITATION; 		//—ãU–ÊŠm”F—p
+				cell[x][y][z] += EXITATION; 		//åŠ±æŒ¯é¢ç¢ºèªç”¨
 			}
 		}
 	}
 
-	if(irank == intObseOutPortNum){ //oŽË NODE 2
+	if(irank == intObseOutPortNum){ //å‡ºå°„ NODE 2
 		for(int x = intObseLenPart4; x < intObseLenPart5; x++){
-			/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-					//for(int y = 0; y <= YMAX-1; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD-1‚Í”z—ñ‚ª0ŠJŽn‚È‚½‚ß
-					/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+			/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+			for(int y = ymax - intObseWid; y < ymax; y++){ // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				for(int z = zmax - intObseHeig; z < zmax; z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+					//for(int y = 0; y <= YMAX-1; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+					//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž-1ã¯é…åˆ—ãŒ0é–‹å§‹ãªãŸã‚
+					/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
 
-					if((y == YMAX-1) && (z == (intSlabCen-1))){		// Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-						cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+					if((y == YMAX-1) && (z == (intSlabCen-1))){		// æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+						cell[x][y][z] = 4; 					// ä¸­å¤®ç‚¹ç¢ºèªç”¨
 					}
-					cell[x][y][z] += OBSERVATION; 			// –ÊŠm”F—p
+					cell[x][y][z] += OBSERVATION; 			// é¢ç¢ºèªç”¨
 				}
 			}
 		}
 	}
 
-	if(irank == intObseCenPortNum){ //oŽË NODE 2
+	if(irank == intObseCenPortNum){ //å‡ºå°„ NODE 2
 		//for(int x = intObseLenPart7; x < intObseLenPart8; x++){
 		int x = intObseLenPart7;
-		/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-		for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-			for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-				//for(int y = 0; y <= YMAX-1; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD-1‚Í”z—ñ‚ª0ŠJŽn‚È‚½‚ß
-				/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+		/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+		for(int y = ymax - intObseWid; y < ymax; y++){ // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+			for(int z = zmax - intObseHeig; z < zmax; z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+				//for(int y = 0; y <= YMAX-1; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž-1ã¯é…åˆ—ãŒ0é–‹å§‹ãªãŸã‚
+				/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
 
-				if((y == YMAX-1) && (z == (intSlabCen-1))){		// Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-					cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+				if((y == YMAX-1) && (z == (intSlabCen-1))){		// æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+					cell[x][y][z] = 4; 					// ä¸­å¤®ç‚¹ç¢ºèªç”¨
 				}
-				cell[x][y][z] += OBSERVATION; 			// –ÊŠm”F—p
+				cell[x][y][z] += OBSERVATION; 			// é¢ç¢ºèªç”¨
 			}
 		}
 
@@ -5300,19 +5301,19 @@ void observation_func(){
 }
 
 
-/*if (irank == intObseCenPortNum) { //oŽË NODE 2@//16/1/5
+/*if (irank == intObseCenPortNum) { //å‡ºå°„ NODE 2ã€€//16/1/5
 int x = intObseLenPart10;*/
-/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-/*for (int y = ymax - intObseWid; y < ymax; y++) { // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-for (int z = zmax - intObseHeig; z < zmax; z++) {		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-//for(int y = 0; y <= YMAX-1; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD-1‚Í”z—ñ‚ª0ŠJŽn‚È‚½‚ß
-/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+/*for (int y = ymax - intObseWid; y < ymax; y++) { // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+for (int z = zmax - intObseHeig; z < zmax; z++) {		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+//for(int y = 0; y <= YMAX-1; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž-1ã¯é…åˆ—ãŒ0é–‹å§‹ãªãŸã‚
+/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
 /*
-if ((y == YMAX - 1) && (z == (intSlabCen - 1))) {		// Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+if ((y == YMAX - 1) && (z == (intSlabCen - 1))) {		// æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+cell[x][y][z] = 4; 					// ä¸­å¤®ç‚¹ç¢ºèªç”¨
 }
-cell[x][y][z] += OBSERVATION; 			// –ÊŠm”F—p
+cell[x][y][z] += OBSERVATION; 			// é¢ç¢ºèªç”¨
 }
 }
 
@@ -5328,7 +5329,7 @@ void calc_efield(){
 
 	// Ex
 	for(x = 0; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ex‚ÍyŽ²‚É‘Î‚µ‚ÄŠïŠÖ”
+		for(y = 1; y < ymax+1; y++){		// Exã¯yè»¸ã«å¯¾ã—ã¦å¥‡é–¢æ•°
 			for(z = 1; z < zmax+1; z++){
 				cnstEx = dt / epsilonx[x][y][z];
 				dex = ( (Hz[x][y][z] - Hz[x][y-1][z]) / dy) - ( (Hy[x][y][z] - Hy[x][y][z-1]) / dz);
@@ -5350,7 +5351,7 @@ void calc_efield(){
 
 	// Ez
 	for(x = 1; x < xmax; x++){
-		for(y = 1; y < ymax+1; y++){		// Ez‚ÍyŽ²‚É‘Î‚µ‚ÄŠïŠÖ”
+		for(y = 1; y < ymax+1; y++){		// Ezã¯yè»¸ã«å¯¾ã—ã¦å¥‡é–¢æ•°
 			for(z = 0; z < zmax; z++){
 				cnstEz = dt / epsilonz[x][y][z];
 				dez = ( (Hy[x][y][z] - Hy[x-1][y][z]) / dx) - ( (Hx[x][y][z] - Hx[x][y-1][z]) / dy);
@@ -5359,19 +5360,19 @@ void calc_efield(){
 		}
 	}
 
-		/*if (irank == intObseCenPortNum) { //oŽË NODE 2@//16/1/5
+		/*if (irank == intObseCenPortNum) { //å‡ºå°„ NODE 2ã€€//16/1/5
 		int x = intObseLenPart10;*/
-		/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-		/*for (int y = ymax - intObseWid; y < ymax; y++) { // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-			for (int z = zmax - intObseHeig; z < zmax; z++) {		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-																	//for(int y = 0; y <= YMAX-1; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-																	//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD-1‚Í”z—ñ‚ª0ŠJŽn‚È‚½‚ß
-																	/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+		/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+		/*for (int y = ymax - intObseWid; y < ymax; y++) { // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+			for (int z = zmax - intObseHeig; z < zmax; z++) {		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+																	//for(int y = 0; y <= YMAX-1; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+																	//	for(int z = (air_hc+intCladHeight1); z <= (air_hc+intCladHeight1+intSlabHeigPer); z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž-1ã¯é…åˆ—ãŒ0é–‹å§‹ãªãŸã‚
+																	/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
 	/*
-				if ((y == YMAX - 1) && (z == (intSlabCen - 1))) {		// Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-					cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+				if ((y == YMAX - 1) && (z == (intSlabCen - 1))) {		// æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+					cell[x][y][z] = 4; 					// ä¸­å¤®ç‚¹ç¢ºèªç”¨
 				}
-				cell[x][y][z] += OBSERVATION; 			// –ÊŠm”F—p
+				cell[x][y][z] += OBSERVATION; 			// é¢ç¢ºèªç”¨
 			}
 		}
 
@@ -5380,20 +5381,20 @@ void calc_efield(){
 	*/
 
 
-	/****************************** “dŠE‚Ì‘ÎÌ‹«ŠEðŒ ******************************/
+	/****************************** é›»ç•Œã®å¯¾ç§°å¢ƒç•Œæ¡ä»¶ ******************************/
 
-	// ‹«ŠE–Ê‚Å”½‘ÎÌ‚Æ‚È‚é“dŠE¬•ª‚Ì‹«ŠE–Êã‚Ì’l‚ð0‚Æ‚µ‚Ä‚¢‚é
+	// å¢ƒç•Œé¢ã§åå¯¾ç§°ã¨ãªã‚‹é›»ç•Œæˆåˆ†ã®å¢ƒç•Œé¢ä¸Šã®å€¤ã‚’0ã¨ã—ã¦ã„ã‚‹
 	for(x = 0; x < xmax; x++){
 		for(z = 0; z < zmax+1; z++){
-			Ex[x][ymax][z] = 0.0;		// ŠïŠÖ”
+			Ex[x][ymax][z] = 0.0;		// å¥‡é–¢æ•°
 		}
 	}
 	for(x = 0; x < xmax+1; x++){
 		for(z = 0; z < zmax; z++){
-			Ez[x][ymax][z] = 0.0;		// ŠïŠÖ”
+			Ez[x][ymax][z] = 0.0;		// å¥‡é–¢æ•°
 		}
 	}
-	/****************************** “dŠE‚Ì‘ÎÌ‹«ŠEðŒ ******************************/
+	/****************************** é›»ç•Œã®å¯¾ç§°å¢ƒç•Œæ¡ä»¶ ******************************/
 }
 
 
@@ -5434,12 +5435,12 @@ void calc_hfield(){
 }
 
 
-// Mur2ŽŸC1ŽŸ‚Ì‹zŽû‹«ŠEðŒ‚©‚ç’[–Ê‚ÌŒvŽZ
+// Mur2æ¬¡ï¼Œ1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶ã‹ã‚‰ç«¯é¢ã®è¨ˆç®—
 void absorpt_bound_condition(){
 
-	/****************************** ‘ÎÌ‹«ŠEðŒ ******************************/
+	/****************************** å¯¾ç§°å¢ƒç•Œæ¡ä»¶ ******************************/
 
-	// 2‰ñ‘ÎÌ
+	// 2å›žå¯¾ç§°
 	//for(z = 0; z < zmax+1; z++){
 	//	Exn1y00[xmax][z] = Exn1y00[xmax-1][z];
 	//	Exn1y01[xmax][z] = Exn1y01[xmax-1][z];
@@ -5465,7 +5466,7 @@ void absorpt_bound_condition(){
 	//	Ezn1ym1[xmax+1][z] = -Ezn1ym1[xmax-1][z];
 	//}
 
-	// 4‰ñ‘ÎÌ
+	// 4å›žå¯¾ç§°
 	for(z = 0; z < zmax+1; z++){
 		Eyn1x00[ymax][z] = Eyn1x00[ymax-1][z];
 		Eyn1x01[ymax][z] = Eyn1x01[ymax-1][z];
@@ -5491,7 +5492,7 @@ void absorpt_bound_condition(){
 		Ezn1xm1[ymax+1][z] = -Ezn1xm1[ymax-1][z];
 	}
 
-	// 8‰ñ‘ÎÌ
+	// 8å›žå¯¾ç§°
 	for(y = 0; y < ymax+1; y++){
 		Ezn1x00[y][zmax] = -Ezn1x00[y][zmax-1];
 		Ezn1x01[y][zmax] = -Ezn1x01[y][zmax-1];
@@ -5516,12 +5517,12 @@ void absorpt_bound_condition(){
 		Eyn1xm0[y][zmax+1] = Eyn1xm0[y][zmax-1];
 		Eyn1xm1[y][zmax+1] = Eyn1xm1[y][zmax-1];
 	}
-	/****************************** ‘ÎÌ‹«ŠEðŒ ******************************/
+	/****************************** å¯¾ç§°å¢ƒç•Œæ¡ä»¶ ******************************/
 
 
 
 
-	/****************************** Mur‚Ì2ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ex) ******************************/
+	/****************************** Murã®2æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ex) ******************************/
 
 	double u1ax1, u2ax1,u3ax1, u4ax1;
 	double u1bx1, u2bx1,u3bx1, u4bx1;
@@ -5598,12 +5599,12 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì2ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ex) ******************************/
+	/****************************** Murã®2æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ex) ******************************/
 
 	double u1xa, u1xc;
 	double u2xa, u2xc;
 
-	/****************************** Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ex) ******************************/
+	/****************************** Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ex) ******************************/
 
 	for(y = 1; y < ymax+1; y++){
 
@@ -5640,7 +5641,7 @@ void absorpt_bound_condition(){
 	}
 
 
-	// •Ó(Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ) -- y•½–Ê‚Æz•½–Ê‚©‚ç‚»‚ê‚¼‚êŽZo‚³‚ê‚é’l‚Ì•½‹Ï’l‚ðŽæ‚é
+	// è¾º(Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶) -- yå¹³é¢ã¨zå¹³é¢ã‹ã‚‰ãã‚Œãžã‚Œç®—å‡ºã•ã‚Œã‚‹å€¤ã®å¹³å‡å€¤ã‚’å–ã‚‹
 	if (irank != IRANK_MIN){
 		for(x = 0; x < xmax; x++){
 			velo_dt = (C0 / sqrt(epsilonx[x][0][0]/epsilon0) ) * dt;
@@ -5662,13 +5663,13 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ex) ******************************/
+	/****************************** Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ex) ******************************/
 
 	double u1by1, u2by1, u3by1, u4by1;
 	double u1cy1, u2cy1, u3cy1, u4cy1;
 	double u1cy2, u2cy2, u3cy2, u4cy2;
 
-	/****************************** Mur‚Ì2ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ey) ******************************/
+	/****************************** Murã®2æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(y = 1; y < ymax; y++){
@@ -5723,14 +5724,14 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì2ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ey) ******************************/
+	/****************************** Murã®2æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ey) ******************************/
 
 
 	double u2ya, u3ya, u3yb;
 	double u2ya1;
 	double u2yc1;
 
-	/****************************** Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ey) ******************************/
+	/****************************** Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ey) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilony[x][0][0]/epsilon0) ) * dt;
@@ -5753,7 +5754,7 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// •Ó(Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ) --x•½–Ê‚Æz•½–Ê‚©‚ç‚»‚ê‚¼‚êŽZo‚³‚ê‚é’l‚Ì•½‹Ï’l‚ðŽæ‚é
+	// è¾º(Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶) --xå¹³é¢ã¨zå¹³é¢ã‹ã‚‰ãã‚Œãžã‚Œç®—å‡ºã•ã‚Œã‚‹å€¤ã®å¹³å‡å€¤ã‚’å–ã‚‹
 	for(y = 0; y < ymax; y++){
 
 		if(irank == IRANK_MIN){
@@ -5771,13 +5772,13 @@ void absorpt_bound_condition(){
 				+ Eyn1xm1[y][0] + u2yc1 * (Ey[xmax-1][y][0] - Eyn1xm0[y][0]));
 		}
 	}
-	/****************************** Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ey) ******************************/
+	/****************************** Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ey) ******************************/
 
 	double u1az1, u2az1, u3az1, u4az1;
 	double u1cz1, u2cz1, u3cz1, u4cz1;
 	double u1cz2, u2cz2, u3cz2, u4cz2;
 
-	/****************************** Mur‚Ì2ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ez) ******************************/
+	/****************************** Murã®2æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ez) ******************************/
 
 	for(x = 1; x < xmax; x++){
 		for(z = 1; z < zmax; z++){
@@ -5829,12 +5830,12 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	/****************************** Mur‚Ì2ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ez) ******************************/
+	/****************************** Murã®2æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ez) ******************************/
 
 	double u1za, u3za, u3zb;
 	double u1za1, u1zb1;
 
-	/****************************** Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ez) ******************************/
+	/****************************** Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ez) ******************************/
 	for(x = 1; x < xmax; x++){
 		velo_dt = (C0 / sqrt(epsilonz[x][0][0] / epsilon0) ) * dt;
 		u1za = (velo_dt - dy) / (velo_dt + dy);
@@ -5858,7 +5859,7 @@ void absorpt_bound_condition(){
 		}
 	}
 
-	// •Ó(Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ) --x•½–Ê‚Æy•½–Ê‚©‚ç‚»‚ê‚¼‚êŽZo‚³‚ê‚é’l‚Ì•½‹Ï’l‚ðŽæ‚é
+	// è¾º(Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶) --xå¹³é¢ã¨yå¹³é¢ã‹ã‚‰ãã‚Œãžã‚Œç®—å‡ºã•ã‚Œã‚‹å€¤ã®å¹³å‡å€¤ã‚’å–ã‚‹
 	for(z = 0; z < zmax+1; z++){
 
 		if(irank == IRANK_MIN){
@@ -5876,13 +5877,13 @@ void absorpt_bound_condition(){
 				+ Ezn1xm1[0][z] + u1zb1 * (Ez[xmax-1][0][z] - Ezn1xm0[0][z]));
 		}
 	}
-	/****************************** Mur‚Ì1ŽŸ‚Ì‹zŽû‹«ŠEðŒ(Ez) ******************************/
+	/****************************** Murã®1æ¬¡ã®å¸åŽå¢ƒç•Œæ¡ä»¶(Ez) ******************************/
 
 }
 
 
 
-/*“dŠE‚Ì•Û‘¶*/
+/*é›»ç•Œã®ä¿å­˜*/
 void saving_electric_field(){
 
 	// Ex
@@ -5973,7 +5974,7 @@ void saving_electric_field(){
 }
 
 
-//ƒ‚ƒfƒ‹‚Ìo—Í
+//ãƒ¢ãƒ‡ãƒ«ã®å‡ºåŠ›
 void output_model(){
 
 	//char cell_xy[XMAX][YMAX];
@@ -5981,14 +5982,14 @@ void output_model(){
 	int x, y, z;
 
 #if _FDTD
-	/****************************** ŒvŽZŽÀsŽž ******************************/
+	/****************************** è¨ˆç®—å®Ÿè¡Œæ™‚ ******************************/
 	int node;
 
 	MPI_Status status;
 
 	z = intSlabCen - 1;
 
-	// XY•½–Ê
+	// XYå¹³é¢
 	for(x = 0; x < xmax; x++){
 		for(y = 0; y < ymax; y++){
 			cell_xy[x][y] = cell[x][y][z];
@@ -6007,7 +6008,7 @@ void output_model(){
 		fclose(model_xy);
 	}
 
-	// ‚»‚ê‚¼‚ê•ªŠ„•”‚Ìƒ‚ƒfƒ‹
+	// ãã‚Œãžã‚Œåˆ†å‰²éƒ¨ã®ãƒ¢ãƒ‡ãƒ«
 	if(irank != IRANK_MIN){
 		MPI_Send(&cell_xy[0][0], (xmax)*(ymax), MPI_INT, 0, tag2, MPI_COMM_WORLD);
 		for(x = 1; x < xmax; x++){
@@ -6020,12 +6021,12 @@ void output_model(){
 		fclose(model_xy);
 	}
 
-	// ‘S‘Ìƒ‚ƒfƒ‹¶¬
+	// å…¨ä½“ãƒ¢ãƒ‡ãƒ«ç”Ÿæˆ
 	if(irank == IRANK_MIN){
 		for(node = 1; node < ISIZE; node++){
 			if(node == IRANK_MAX){
 
-				// ÅI’i‚Í"‚Ì‚è‚µ‚ë"‚ª–³‚¢‚Ì‚ÅCx•ûŒü‚ð-1‚·‚é
+				// æœ€çµ‚æ®µã¯"ã®ã‚Šã—ã‚"ãŒç„¡ã„ã®ã§ï¼Œxæ–¹å‘ã‚’-1ã™ã‚‹
 				MPI_Recv(&cell_xy[0][0], (xmax-1)*(ymax), MPI_INT, node, tag2, MPI_COMM_WORLD, &status);
 
 				for(x = 1; x < xmax-1; x++){
@@ -6051,8 +6052,8 @@ void output_model(){
 	}
 
 
-	// YZ•½–Ê
-	if(irank == intObseInPortNum){ // “üŽË
+	// YZå¹³é¢
+	if(irank == intObseInPortNum){ // å…¥å°„
 		x = intObseLenPart1;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -6068,7 +6069,7 @@ void output_model(){
 		fclose(allmodel_yz1);
 	}
 
-	if(irank == intObseOutPortNum){ // oŽË
+	if(irank == intObseOutPortNum){ // å‡ºå°„
 		x = intObseLenPart4;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -6084,7 +6085,7 @@ void output_model(){
 		fclose(allmodel_yz4);
 	}
 
-	if(irank == intObseCenPortNum){			// ’†‰›
+	if(irank == intObseCenPortNum){			// ä¸­å¤®
 		x = intObseLenPart7;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -6101,9 +6102,9 @@ void output_model(){
 	}
 
 
-	// ™ZX•½–Ê‚Ìƒ‚ƒjƒ^ 1/15¨1/26‚±‚ê“ü‚ê‚é‚ÆƒvƒƒOƒ‰ƒ€‚ª‚Æ‚Ü‚éD
+	// â˜†ZXå¹³é¢ã®ãƒ¢ãƒ‹ã‚¿ 1/15â†’1/26ã“ã‚Œå…¥ã‚Œã‚‹ã¨ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãŒã¨ã¾ã‚‹ï¼Ž
 	/*
-	if (irank == intObseInPortNum) { // “üŽË
+	if (irank == intObseInPortNum) { // å…¥å°„
 		y = intObseLenPart1;
 		for (z = 0; z < zmax; z++) {
 			for (x = 0; x < xmax; x++) {
@@ -6119,9 +6120,9 @@ void output_model(){
 		fclose(allmodel_zx);
 	}*/
 
-	//™™ZX•½–Ê //16/1/6
+	//â˜†â˜†ZXå¹³é¢ //16/1/6
 	/*
-	if (irank == intObseInPortNum) { // “üŽË
+	if (irank == intObseInPortNum) { // å…¥å°„
 	x = intObseLenPart1;
 	for (z = 0; z < zmax; z++) {
 	for (x = 0; x < xmax; x++) {
@@ -6137,7 +6138,7 @@ void output_model(){
 	fclose(allmodel_zx1);
 	}
 
-	if (irank == intObseOutPortNum) { // oŽË
+	if (irank == intObseOutPortNum) { // å‡ºå°„
 	x = intObseLenPart4;
 	for (z = 0; z < zmax; z++) {
 	for (x = 0; x < xmax; x++) {
@@ -6153,7 +6154,7 @@ void output_model(){
 	fclose(allmodel_zx4);
 	}
 
-	if (irank == intObseCenPortNum) {			// ’†‰›
+	if (irank == intObseCenPortNum) {			// ä¸­å¤®
 	x = intObseLenPart7;
 	for (z = 0; z < zmax; z++) {
 	for (x = 0; x < zmax; x++) {
@@ -6173,13 +6174,13 @@ void output_model(){
 
 
 
-	/****************************** ŒvŽZŽÀsŽž ******************************/
+	/****************************** è¨ˆç®—å®Ÿè¡Œæ™‚ ******************************/
 
 #else
-	/****************************** ƒ‚ƒfƒ‹Šm”FŽž ******************************/
+	/****************************** ãƒ¢ãƒ‡ãƒ«ç¢ºèªæ™‚ ******************************/
 
 
-	//ZX•½–Êi“c‘º16/01/15j
+	//ZXå¹³é¢ï¼ˆç”°æ‘16/01/15ï¼‰
 for (x = 0; x < xmax; x++) {
 	for (z = 0; z < zmax; z++) {
 		cell_zx[z][x] = cell[x][ymax][z];
@@ -6226,7 +6227,7 @@ for(x = 0; x < xmax; x++){
 	}
 	fclose(allmodel_yz1);
 
-	if(irank == intObseOutPortNum){ // oŽË
+	if(irank == intObseOutPortNum){ // å‡ºå°„
 		x = intObseLenPart4;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -6242,7 +6243,7 @@ for(x = 0; x < xmax; x++){
 		fclose(allmodel_yz4);
 	}
 
-	if(irank == intObseCenPortNum){			// ’†‰›
+	if(irank == intObseCenPortNum){			// ä¸­å¤®
 		x = intObseLenPart7;
 		for(y = 0; y < ymax; y++){
 			for(z = 0; z < zmax; z++){
@@ -6258,10 +6259,10 @@ for(x = 0; x < xmax; x++){
 		fclose(allmodel_yz7);
 	}
 
-	//™™ZX•½–Ê //16/1/6
+	//â˜†â˜†ZXå¹³é¢ //16/1/6
 
 
-	if (irank == intObseInPortNum) { // “üŽË
+	if (irank == intObseInPortNum) { // å…¥å°„
 	x = intObseLenPart1;
 	for (z = 0; z < zmax; z++) {
 	for (x = 0; x < xmax; x++) {
@@ -6277,7 +6278,7 @@ for(x = 0; x < xmax; x++){
 	fclose(allmodel_zx1);
 	}
 
-	if(irank == intObseOutPortNum){ // oŽË
+	if(irank == intObseOutPortNum){ // å‡ºå°„
 	x = intObseLenPart4;
 	for(z = 0; z < zmax; z++){
 	for(x = 0; x < xmax; x++){
@@ -6293,7 +6294,7 @@ for(x = 0; x < xmax; x++){
 	fclose(allmodel_zx4);
 	}
 
-	if (irank == intObseCenPortNum) {			// ’†‰›
+	if (irank == intObseCenPortNum) {			// ä¸­å¤®
 		x = intObseLenPart7;
 		for (z = 0; z < zmax; z++) {
 			for (x = 0; x < xmax; x++) {
@@ -6309,7 +6310,7 @@ for(x = 0; x < xmax; x++){
 		}
 
 	}
-	/****************************** ƒ‚ƒfƒ‹Šm”FŽž ******************************/ //™
+	/****************************** ãƒ¢ãƒ‡ãƒ«ç¢ºèªæ™‚ ******************************/ //â˜†
 #endif
 
 }
@@ -6317,7 +6318,7 @@ for(x = 0; x < xmax; x++){
 
 void output_field_write(char *dir_name_def) {
 
-	char fname[40], dir_name[50]; 	//ƒtƒ@ƒCƒ‹–¼Ši”[•Ï”
+	char fname[40], dir_name[50]; 	//ãƒ•ã‚¡ã‚¤ãƒ«åæ ¼ç´å¤‰æ•°
 	int node;
 	int tag3 = 3;
 	int pi1, pj1, pk1;
@@ -6335,11 +6336,11 @@ void output_field_write(char *dir_name_def) {
 
 	for (x = 0; x < xmax; x++) {
 		for (y = 0; y < ymax; y++) {
-			field_xy[x][y] = Hz[x][y][ex_z_ed - 1]; 	//‘S‚Ä‚Ìƒm[ƒh‚Å“dŽ¥ŠE¬•ª‚ð2ŽŸŒ³”z—ñ‚ÉŠi”[‚·‚éD
+			field_xy[x][y] = Hz[x][y][ex_z_ed - 1]; 	//å…¨ã¦ã®ãƒŽãƒ¼ãƒ‰ã§é›»ç£ç•Œæˆåˆ†ã‚’2æ¬¡å…ƒé…åˆ—ã«æ ¼ç´ã™ã‚‹ï¼Ž
 		}
 	}
 
-	// ƒ‚ƒfƒ‹o—Íƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚Ì‰Šú‰»
+	// ãƒ¢ãƒ‡ãƒ«å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã®åˆæœŸåŒ–
 	if (irank == IRANK_MIN) {
 		sprintf(fname, "/Field_Hz_XY_%d_01.txt", n);
 		HZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
@@ -6351,20 +6352,20 @@ void output_field_write(char *dir_name_def) {
 		}
 	}
 
-	// ƒ‚ƒfƒ‹‚ðƒzƒXƒg‚É‘—M
+	// ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ›ã‚¹ãƒˆã«é€ä¿¡
 	else {
 		if (irank != IRANK_MAX) {
-			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“dŽ¥ŠE¬•ª‚ð‘—‚éD
+			MPI_Send(&field_xy[0][0], (xmax)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ãƒŽãƒ¼ãƒ‰0ä»¥å¤–ã®ãƒŽãƒ¼ãƒ‰ãŒãƒŽãƒ¼ãƒ‰0ã«é›»ç£ç•Œæˆåˆ†ã‚’é€ã‚‹ï¼Ž
 		}
 		if (irank == IRANK_MAX) {
-			MPI_Send(&field_xy[0][0], (xmax - 1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“dŽ¥ŠE¬•ª‚ð‘—‚éD
+			MPI_Send(&field_xy[0][0], (xmax - 1)*(ymax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ãƒŽãƒ¼ãƒ‰0ä»¥å¤–ã®ãƒŽãƒ¼ãƒ‰ãŒãƒŽãƒ¼ãƒ‰0ã«é›»ç£ç•Œæˆåˆ†ã‚’é€ã‚‹ï¼Ž
 		}
 	}
 
-	// ŽóM‚µ‚½ƒ‚ƒfƒ‹‚©‚ç‘Sƒ‚ƒfƒ‹‚ðì¬
+	// å—ä¿¡ã—ãŸãƒ¢ãƒ‡ãƒ«ã‹ã‚‰å…¨ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆ
 	if (irank == IRANK_MIN) {
-		for (node = 1; node < ISIZE; node++) {		// ƒm[ƒh0‚ªƒm[ƒh1‚©‚ç‡‚Éƒf[ƒ^‚ðŽó‚¯Žæ‚èo—Í‚µ‚Ä‚¢‚­D
-			if (node == IRANK_MAX) {					// ƒm[ƒhisize-1‚Ì‚Ý1ƒZƒ‹¬‚³‚­Ý’è‚µ‚Ä‚¢‚é‚½‚ßðŒ•¶‚Å•ªŠò
+		for (node = 1; node < ISIZE; node++) {		// ãƒŽãƒ¼ãƒ‰0ãŒãƒŽãƒ¼ãƒ‰1ã‹ã‚‰é †ã«ãƒ‡ãƒ¼ã‚¿ã‚’å—ã‘å–ã‚Šå‡ºåŠ›ã—ã¦ã„ãï¼Ž
+			if (node == IRANK_MAX) {					// ãƒŽãƒ¼ãƒ‰isize-1ã®ã¿1ã‚»ãƒ«å°ã•ãè¨­å®šã—ã¦ã„ã‚‹ãŸã‚æ¡ä»¶æ–‡ã§åˆ†å²
 				MPI_Recv(&field_xy[0][0], (xmax - 1)*(ymax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				for (x = 1; x < xmax - 1; x++) {
 					for (y = 0; y < ymax; y++) {
@@ -6384,33 +6385,33 @@ void output_field_write(char *dir_name_def) {
 			}
 		}
 
-		// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ð•Â‚¶‚é
+		// ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚’é–‰ã˜ã‚‹
 		fclose(HZ1);
 	}
 
 
 
-	//ZX•½–ÊHy•ª•zi“c‘º16/1/15j™™
+	//ZXå¹³é¢Hyåˆ†å¸ƒï¼ˆç”°æ‘16/1/15ï¼‰â˜†â˜†
 	FILE *HY1;
 
 	for (x = 0; x < xmax; x++) {
 		for (z = 0; z < zmax; z++) {
-			field_zx_Hz[z][x] = Hz[x][y_zx][z]; 	//‘S‚Ä‚Ìƒm[ƒh‚Å“dŽ¥ŠE¬•ª‚ð2ŽŸŒ³”z—ñ‚ÉŠi”[‚·‚éD
-													// y = 0’†SCy = 26 ƒVƒŠƒJ‚Æ‹«ŠE(‰~E1—ñ–Ú)Cy = 89 ‰~E5—ñ–Ú•t‹ßCy = 137 ‰~E8—ñ–Ú
+			field_zx_Hz[z][x] = Hz[x][y_zx][z]; 	//å…¨ã¦ã®ãƒŽãƒ¼ãƒ‰ã§é›»ç£ç•Œæˆåˆ†ã‚’2æ¬¡å…ƒé…åˆ—ã«æ ¼ç´ã™ã‚‹ï¼Ž
+													// y = 0ä¸­å¿ƒï¼Œy = 26 ã‚·ãƒªã‚«ã¨å¢ƒç•Œ(å††å­”1åˆ—ç›®)ï¼Œy = 89 å††å­”5åˆ—ç›®ä»˜è¿‘ï¼Œy = 137 å††å­”8åˆ—ç›®
 													//			field_zx[z][x] = Hy[x][y_zx][z];
 		}
 	}
 
 	/*
-	for (x = 0; x < xmax; x++) {//™™16/1/22 ”nêæ¶Œ¾‚í‚ê‚½‚Ì‚Å‰Á‚¦‚½D
+	for (x = 0; x < xmax; x++) {//â˜†â˜†16/1/22 é¦¬å ´å…ˆç”Ÿè¨€ã‚ã‚ŒãŸã®ã§åŠ ãˆãŸï¼Ž
 		for (z = 0; z < zmax; z++) {
-			field_zx_Hy[z][x] = Hy[x][y_zx][z]; 	//‘S‚Ä‚Ìƒm[ƒh‚Å“dŽ¥ŠE¬•ª‚ð2ŽŸŒ³”z—ñ‚ÉŠi”[‚·‚éD
+			field_zx_Hy[z][x] = Hy[x][y_zx][z]; 	//å…¨ã¦ã®ãƒŽãƒ¼ãƒ‰ã§é›»ç£ç•Œæˆåˆ†ã‚’2æ¬¡å…ƒé…åˆ—ã«æ ¼ç´ã™ã‚‹ï¼Ž
 		}
 	}*/
 
 
 
-	// ƒ‚ƒfƒ‹o—Íƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚Ì‰Šú‰»
+	// ãƒ¢ãƒ‡ãƒ«å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã®åˆæœŸåŒ–
 	/*if (irank == IRANK_MIN) {
 		sprintf(fname, "/Field_Hz_ZX_%d_01.txt", n);
 		HY1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
@@ -6422,20 +6423,20 @@ void output_field_write(char *dir_name_def) {
 		}
 	}
 
-	// ƒ‚ƒfƒ‹‚ðƒzƒXƒg‚É‘—M
+	// ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ›ã‚¹ãƒˆã«é€ä¿¡
 	else {
 		if (irank != IRANK_MAX) {
-			MPI_Send(&field_zx_Hz[0][0], (xmax)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“dŽ¥ŠE¬•ª‚ð‘—‚éD
+			MPI_Send(&field_zx_Hz[0][0], (xmax)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ãƒŽãƒ¼ãƒ‰0ä»¥å¤–ã®ãƒŽãƒ¼ãƒ‰ãŒãƒŽãƒ¼ãƒ‰0ã«é›»ç£ç•Œæˆåˆ†ã‚’é€ã‚‹ï¼Ž
 		}
 		if (irank == IRANK_MAX) {
-			MPI_Send(&field_zx_Hz[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“dŽ¥ŠE¬•ª‚ð‘—‚éD
+			MPI_Send(&field_zx_Hz[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ãƒŽãƒ¼ãƒ‰0ä»¥å¤–ã®ãƒŽãƒ¼ãƒ‰ãŒãƒŽãƒ¼ãƒ‰0ã«é›»ç£ç•Œæˆåˆ†ã‚’é€ã‚‹ï¼Ž
 		}
 	}*/
 
-	// ŽóM‚µ‚½ƒ‚ƒfƒ‹‚©‚ç‘Sƒ‚ƒfƒ‹‚ðì¬
+	// å—ä¿¡ã—ãŸãƒ¢ãƒ‡ãƒ«ã‹ã‚‰å…¨ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆ
 /*	if (irank == IRANK_MIN) {
-		for (node = 1; node < ISIZE; node++) {		// ƒm[ƒh0‚ªƒm[ƒh1‚©‚ç‡‚Éƒf[ƒ^‚ðŽó‚¯Žæ‚èo—Í‚µ‚Ä‚¢‚­D
-			if (node == IRANK_MAX) {					// ƒm[ƒhisize-1‚Ì‚Ý1ƒZƒ‹¬‚³‚­Ý’è‚µ‚Ä‚¢‚é‚½‚ßðŒ•¶‚Å•ªŠò
+		for (node = 1; node < ISIZE; node++) {		// ãƒŽãƒ¼ãƒ‰0ãŒãƒŽãƒ¼ãƒ‰1ã‹ã‚‰é †ã«ãƒ‡ãƒ¼ã‚¿ã‚’å—ã‘å–ã‚Šå‡ºåŠ›ã—ã¦ã„ãï¼Ž
+			if (node == IRANK_MAX) {					// ãƒŽãƒ¼ãƒ‰isize-1ã®ã¿1ã‚»ãƒ«å°ã•ãè¨­å®šã—ã¦ã„ã‚‹ãŸã‚æ¡ä»¶æ–‡ã§åˆ†å²
 				MPI_Recv(&field_zx_Hz[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				for (x = 1; x < xmax - 1; x++) {
 					for (z = 0; z < zmax; z++) {
@@ -6455,13 +6456,13 @@ void output_field_write(char *dir_name_def) {
 			}
 		}
 
-		// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ð•Â‚¶‚é
+		// ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚’é–‰ã˜ã‚‹
 		fclose(HY1);
 	}*/
 
 
 	/*
-	// ƒ‚ƒfƒ‹o—Íƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚Ì‰Šú‰»// Hy‚Ì“±“ü‚É”º‚¢’Ç‰Á
+	// ãƒ¢ãƒ‡ãƒ«å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã®åˆæœŸåŒ–// Hyã®å°Žå…¥ã«ä¼´ã„è¿½åŠ 
 	if (irank == IRANK_MIN) {
 		sprintf(fname, "/Field_Hy_ZX_%d_01.txt", n);
 		HY1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname), "w");
@@ -6473,20 +6474,20 @@ void output_field_write(char *dir_name_def) {
 		}
 	}
 	//Field_Hy_ZX
-	// ƒ‚ƒfƒ‹‚ðƒzƒXƒg‚É‘—M
+	// ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ›ã‚¹ãƒˆã«é€ä¿¡
 	else {
 		if (irank != IRANK_MAX) {
-			MPI_Send(&field_zx_Hy[0][0], (xmax)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“dŽ¥ŠE¬•ª‚ð‘—‚éD
+			MPI_Send(&field_zx_Hy[0][0], (xmax)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 		// ãƒŽãƒ¼ãƒ‰0ä»¥å¤–ã®ãƒŽãƒ¼ãƒ‰ãŒãƒŽãƒ¼ãƒ‰0ã«é›»ç£ç•Œæˆåˆ†ã‚’é€ã‚‹ï¼Ž
 		}
 		if (irank == IRANK_MAX) {
-			MPI_Send(&field_zx_Hy[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ƒm[ƒh0ˆÈŠO‚Ìƒm[ƒh‚ªƒm[ƒh0‚É“dŽ¥ŠE¬•ª‚ð‘—‚éD
+			MPI_Send(&field_zx_Hy[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, 0, tag3, MPI_COMM_WORLD); 	// ãƒŽãƒ¼ãƒ‰0ä»¥å¤–ã®ãƒŽãƒ¼ãƒ‰ãŒãƒŽãƒ¼ãƒ‰0ã«é›»ç£ç•Œæˆåˆ†ã‚’é€ã‚‹ï¼Ž
 		}
 	}
 
-	// ŽóM‚µ‚½ƒ‚ƒfƒ‹‚©‚ç‘Sƒ‚ƒfƒ‹‚ðì¬
+	// å—ä¿¡ã—ãŸãƒ¢ãƒ‡ãƒ«ã‹ã‚‰å…¨ãƒ¢ãƒ‡ãƒ«ã‚’ä½œæˆ
 	if (irank == IRANK_MIN) {
-		for (node = 1; node < ISIZE; node++) {		// ƒm[ƒh0‚ªƒm[ƒh1‚©‚ç‡‚Éƒf[ƒ^‚ðŽó‚¯Žæ‚èo—Í‚µ‚Ä‚¢‚­D
-			if (node == IRANK_MAX) {					// ƒm[ƒhisize-1‚Ì‚Ý1ƒZƒ‹¬‚³‚­Ý’è‚µ‚Ä‚¢‚é‚½‚ßðŒ•¶‚Å•ªŠò
+		for (node = 1; node < ISIZE; node++) {		// ãƒŽãƒ¼ãƒ‰0ãŒãƒŽãƒ¼ãƒ‰1ã‹ã‚‰é †ã«ãƒ‡ãƒ¼ã‚¿ã‚’å—ã‘å–ã‚Šå‡ºåŠ›ã—ã¦ã„ãï¼Ž
+			if (node == IRANK_MAX) {					// ãƒŽãƒ¼ãƒ‰isize-1ã®ã¿1ã‚»ãƒ«å°ã•ãè¨­å®šã—ã¦ã„ã‚‹ãŸã‚æ¡ä»¶æ–‡ã§åˆ†å²
 				MPI_Recv(&field_zx_Hy[0][0], (xmax - 1)*(zmax), MPI_DOUBLE, node, tag3, MPI_COMM_WORLD, &status);
 				for (x = 1; x < xmax - 1; x++) {
 					for (z = 0; z < zmax; z++) {
@@ -6506,26 +6507,26 @@ void output_field_write(char *dir_name_def) {
 			}
 		}
 
-		// ƒtƒ@ƒCƒ‹ƒ|ƒCƒ“ƒ^‚ð•Â‚¶‚é
+		// ãƒ•ã‚¡ã‚¤ãƒ«ãƒã‚¤ãƒ³ã‚¿ã‚’é–‰ã˜ã‚‹
 		fclose(HY1);
 	}
 	*/
 
-	// ™YZ•½–Ê‚Ì“dŠE•ª•z‚Ìo—Í
+	// â˜†YZå¹³é¢ã®é›»ç•Œåˆ†å¸ƒã®å‡ºåŠ›
 	int x;
 	double E_yz;
 	FILE *EYZ1, *EYZ2, *EYZ3;
 	char fname2[40], fname3[40], fname4[40];
 
-/*	if (irank == intObseInPortNum) { //“üŽË
+/*	if (irank == intObseInPortNum) { //å…¥å°„
 		x = intObseLenPart1;
 		sprintf(fname2, "/Field_E_YZ_%d_01.txt", n);
 		EYZ1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname2), "w");
 
-		for (int y = 0; y < ymax; y++) { //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-			for (int z = 0; z < zmax; z++) {		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
+		for (int y = 0; y < ymax; y++) { //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+			for (int z = 0; z < zmax; z++) {		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
-				//E_yz = Hz[x][y][y_zx];//¨ŒvŽZ‚·‚é‚Æ‚±‚ê‚Í‚¨‚©‚µ‚¢
+				//E_yz = Hz[x][y][y_zx];//â†’è¨ˆç®—ã™ã‚‹ã¨ã“ã‚Œã¯ãŠã‹ã—ã„
 
 				fprintf(EYZ1, "%e\t", E_yz);
 			}
@@ -6534,13 +6535,13 @@ void output_field_write(char *dir_name_def) {
 		fclose(EYZ1);
 	}*/
 
-/*	if (irank == intObseOutPortNum) {			// oŽË
+/*	if (irank == intObseOutPortNum) {			// å‡ºå°„
 		x = intObseLenPart4;
 		sprintf(fname3, "/Field_E_YZ_%d_04.txt", n);
 		EYZ2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname3), "w");
 
-		for (int y = 0; y < ymax; y++) { //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-			for (int z = 0; z < zmax; z++) {		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
+		for (int y = 0; y < ymax; y++) { //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+			for (int z = 0; z < zmax; z++) {		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ2, "%e\t", E_yz);
 			}
@@ -6549,13 +6550,13 @@ void output_field_write(char *dir_name_def) {
 		fclose(EYZ2);
 	}
 
-	if (irank == intObseCenPortNum) {			// oŽË
+	if (irank == intObseCenPortNum) {			// å‡ºå°„
 		x = intObseLenPart7;
 		sprintf(fname4, "/Field_E_YZ_%d_07.txt", n);
 		EYZ3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname4), "w");
 
-		for (int y = 0; y < ymax; y++) { //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-			for (int z = 0; z < zmax; z++) {		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
+		for (int y = 0; y < ymax; y++) { //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+			for (int z = 0; z < zmax; z++) {		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
 				E_yz = SQ((Ex[x][y][z] + Ey[x][y][z]));
 				fprintf(EYZ3, "%e\t", E_yz);
 			}
@@ -6564,7 +6565,7 @@ void output_field_write(char *dir_name_def) {
 		fclose(EYZ3);
 	}*/
 
-	// 2013/01/22 ÅIƒXƒeƒbƒv‚Å‚ÌYZ•½–Ê‚ÌHz¬•ª‚ðo—Í
+	// 2013/01/22 æœ€çµ‚ã‚¹ãƒ†ãƒƒãƒ—ã§ã®YZå¹³é¢ã®Hzæˆåˆ†ã‚’å‡ºåŠ›
 	//if (n == Nmax){
 	//	if (irank == intObseInPortNum){
 	//		sprintf(fname, "/Field_Hz_YZ_%d_03.txt", n);
@@ -6592,7 +6593,7 @@ void output_field_write(char *dir_name_def) {
 
 
 
-//™™™ZX•½–Ê‚Ì“dŠE•ª•z‚Ìo—Í16/1/5 ƒvƒƒOƒ‰ƒ€ì¬ŠJŽn ‚±‚±‚Å•Ê‚Ìƒ‚ƒjƒ^‚Æ‚µ‚Ä‹@”\
+//â˜†â˜†â˜†ZXå¹³é¢ã®é›»ç•Œåˆ†å¸ƒã®å‡ºåŠ›16/1/5 ãƒ—ãƒ­ã‚°ãƒ©ãƒ ä½œæˆé–‹å§‹ ã“ã“ã§åˆ¥ã®ãƒ¢ãƒ‹ã‚¿ã¨ã—ã¦æ©Ÿèƒ½
 
 /*	double E_zx;
 	char fname10[40];
@@ -6600,13 +6601,13 @@ void output_field_write(char *dir_name_def) {
 
 
 	char fname5[40], fname6[40], fname7[40];
-	if (irank == intObseInPortNum) { //“üŽË
+	if (irank == intObseInPortNum) { //å…¥å°„
 	x = intObseLenPart1;
 	sprintf(fname5, "/Field_E_ZX_%d_01.txt", n);
 	EZX1 = fopen(strcat(strcpy(dir_name, dir_name_def), fname5), "w");
 
-	for (int z = 0; z < zmax; z++) { //‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-	for (int x = 0; x < xmax; x++) {		// ‹éŒ`“±”g˜H’f–ÊX—Ìˆæ”»’f
+	for (int z = 0; z < zmax; z++) { //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+	for (int x = 0; x < xmax; x++) {		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Xé ˜åŸŸåˆ¤æ–­
 	E_zx = SQ((Ey[x][y][z] + Ez[x][y][z]));
 	fprintf(EZX1, "%e\t", E_zx);
 	}
@@ -6616,13 +6617,13 @@ void output_field_write(char *dir_name_def) {
 	}
 
 
-		if(irank == intObseOutPortNum){			// oŽË
+		if(irank == intObseOutPortNum){			// å‡ºå°„
 			x = intObseLenPart4;
 			sprintf(fname6, "/Field_E_ZX_%d_04.txt", n);
 			EZX2 = fopen(strcat(strcpy(dir_name, dir_name_def), fname6), "w");
 
-	for (int z = 0; z < zmax; z++) { //‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-	for (int x = 0; x < xmax; x++) {		// ‹éŒ`“±”g˜H’f–ÊX—Ìˆæ”»’f
+	for (int z = 0; z < zmax; z++) { //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+	for (int x = 0; x < xmax; x++) {		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Xé ˜åŸŸåˆ¤æ–­
 	E_zx = SQ((Ey[x][y][z] + Ez[x][y][z]));
 		fprintf(EZX2, "%e\t", E_zx);
 		}
@@ -6633,13 +6634,13 @@ void output_field_write(char *dir_name_def) {
 
 
 
-	if (irank == intObseCenPortNum) {			// oŽË//‚±‚±‚¾‚¯Žg‚¦‚Î‚¢‚¢
+	if (irank == intObseCenPortNum) {			// å‡ºå°„//ã“ã“ã ã‘ä½¿ãˆã°ã„ã„
 	x = intObseLenPart7;
 	sprintf(fname7, "/Field_E_ZX_%d_07.txt", n);
 	EZX3 = fopen(strcat(strcpy(dir_name, dir_name_def), fname7), "w");
 
-	for (int z = 0; z < zmax; z++) { //‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-	for (int x = 0; x < xmax; x++) {		// ‹éŒ`“±”g˜H’f–ÊX—Ìˆæ”»’f
+	for (int z = 0; z < zmax; z++) { //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+	for (int x = 0; x < xmax; x++) {		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Xé ˜åŸŸåˆ¤æ–­
 	E_zx = SQ((Ey[x][y][z] + Ez[x][y][z]));
 	fprintf(EZX3, "%e\t", E_zx);
 	}
@@ -6650,7 +6651,7 @@ void output_field_write(char *dir_name_def) {
 
 */
 
-	//// 2013/01/22 ÅIƒXƒeƒbƒv‚Å‚ÌYZ•½–Ê‚ÌHz¬•ª‚ðo—Í
+	//// 2013/01/22 æœ€çµ‚ã‚¹ãƒ†ãƒƒãƒ—ã§ã®YZå¹³é¢ã®Hzæˆåˆ†ã‚’å‡ºåŠ›
 	//if (n == Nmax){
 	//	if (irank == intObseInPortNum){
 	//		sprintf(fname, "/Field_Hz_YZ_%d_03.txt", n);
@@ -6677,25 +6678,25 @@ void output_field_write(char *dir_name_def) {
 	//}
 }
 
-//™ƒtƒ@ƒCƒ‹o—Í
+//â˜†ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 void output_field(char *dir_name_def){
 
-	//double field_xy[XMAX][YMAX]; 	// Hz-field ‚Ìƒtƒ@ƒCƒ‹o—Í (–Ê‚’¼•ûŒü‚ÌŽ¥ŠE¬•ª)
+	//double field_xy[XMAX][YMAX]; 	// Hz-field ã®ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ› (é¢åž‚ç›´æ–¹å‘ã®ç£ç•Œæˆåˆ†)
 
 	if(n <= Nmax - Fcut){
-		// “®ìŠm”F‚Ì‚½‚ß‚Ìƒtƒ@ƒCƒ‹o—Í
+		// å‹•ä½œç¢ºèªã®ãŸã‚ã®ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 		if(n == Ncheck){
 			output_field_write (dir_name_def);
 		}
 
-		// ’èŠú“I‚Èƒtƒ@ƒCƒ‹o—Í
+		// å®šæœŸçš„ãªãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 		if(n % Ncutfield == 0){
 			output_field_write (dir_name_def);
 		}
 	}
 	if((n >= Nmax - Fcut) && (n <= Nmax)){
 
-		// ˆÀ’è“_‚Å‚Ìƒtƒ@ƒCƒ‹o—Í
+		// å®‰å®šç‚¹ã§ã®ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 		if(n % Ncutfield2 == 0){
 			output_field_write (dir_name_def);
 		}
@@ -6703,26 +6704,26 @@ void output_field(char *dir_name_def){
 	}
 
 
-/*//™™™ƒtƒ@ƒCƒ‹o—Í
+/*//â˜†â˜†â˜†ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 void output_field(char *dir_name_def) {
 
-// Hz-field ‚Ìƒtƒ@ƒCƒ‹o—Í (–Ê“±”g˜H‚’¼•ûŒü‚ÌŽ¥ŠE¬•ª)16/1/5 ƒvƒƒOƒ‰ƒ€ì¬ŠJŽn
-// ‚à‚µ‚©‚µ‚½‚ç‚±‚ê‚Íˆá‚¤‚©H
+// Hz-field ã®ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ› (é¢å°Žæ³¢è·¯åž‚ç›´æ–¹å‘ã®ç£ç•Œæˆåˆ†)16/1/5 ãƒ—ãƒ­ã‚°ãƒ©ãƒ ä½œæˆé–‹å§‹
+// ã‚‚ã—ã‹ã—ãŸã‚‰ã“ã‚Œã¯é•ã†ã‹ï¼Ÿ
 
 if (n <= Nmax - Fcut) {
-// “®ìŠm”F‚Ì‚½‚ß‚Ìƒtƒ@ƒCƒ‹o—Í
+// å‹•ä½œç¢ºèªã®ãŸã‚ã®ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 if (n == Ncheck) {
 output_field_write(dir_name_def);
 }
 
-// ’èŠú“I‚Èƒtƒ@ƒCƒ‹o—Í
+// å®šæœŸçš„ãªãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 if (n % Ncutfield == 0) {
 output_field_write(dir_name_def);
 }
 }
 if ((n >= Nmax - Fcut) && (n <= Nmax)) {
 
-// ˆÀ’è“_‚Å‚Ìƒtƒ@ƒCƒ‹o—Í
+// å®‰å®šç‚¹ã§ã®ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
 if (n % Ncutfield2 == 0) {
 output_field_write(dir_name_def);
 }
@@ -6730,20 +6731,20 @@ output_field_write(dir_name_def);
 }*/
 
 
-void calc_poynting_powerHz(){				// ™“§‰ßƒXƒyƒNƒgƒ‹ŒvŽZ—p‚ÌŠÏ‘ª–Ê’†‰›‚Å‚ÌHz‚Ìo—Í
+void calc_poynting_powerHz(){				// â˜†é€éŽã‚¹ãƒšã‚¯ãƒˆãƒ«è¨ˆç®—ç”¨ã®è¦³æ¸¬é¢ä¸­å¤®ã§ã®Hzã®å‡ºåŠ›
 
-	//“ü—Í•”•ª‚Å‚Ì poynting power (x•ûŒü)
-	//double Eyin, Ezin, Hyin, Hzin; 		// Še¬•ª‚ÌÏŽZ•Û‘¶•Ï”
-	//double EyHz, EzHy; 					// Ï•ª’l‚ðŠ|‚¯ŽZ‚ð•Û‘¶‚·‚é•Ï”‚ÆƒZƒ‹’†‰›‚Ì’l
+	//å…¥åŠ›éƒ¨åˆ†ã§ã® poynting power (xæ–¹å‘)
+	//double Eyin, Ezin, Hyin, Hzin; 		// å„æˆåˆ†ã®ç©ç®—ä¿å­˜å¤‰æ•°
+	//double EyHz, EzHy; 					// ç©åˆ†å€¤ã‚’æŽ›ã‘ç®—ã‚’ä¿å­˜ã™ã‚‹å¤‰æ•°ã¨ã‚»ãƒ«ä¸­å¤®ã®å€¤
 
-	double pmax_01 = 0;		// “ü—Íƒpƒ[‚ÌÅ‘å’l‚ð‹L˜^‚·‚é•Ï”
-	double pmax_03 = 0;		// o—Íƒpƒ[‚ÌÅ‘å’l‚ð‹L˜^
-	double pmin_01 = 0;		// o—Íƒpƒ[‚ÌÅ¬’l‚ð‹L˜^
-	double pmin_03 = 0;		// o—Íƒpƒ[‚ÌÅ¬’l‚ð‹L˜^
+	double pmax_01 = 0;		// å…¥åŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã‚’è¨˜éŒ²ã™ã‚‹å¤‰æ•°
+	double pmax_03 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã‚’è¨˜éŒ²
+	double pmin_01 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å°å€¤ã‚’è¨˜éŒ²
+	double pmin_03 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å°å€¤ã‚’è¨˜éŒ²
 
 	int x = 0;
 
-	if(irank == intObseInPortNum){ //“üŽË
+	if(irank == intObseInPortNum){ //å…¥å°„
 		x = intObseLenPart1;
 		y = ymax - 1;
 		z = zmax - 1;
@@ -6752,7 +6753,7 @@ void calc_poynting_powerHz(){				// ™“§‰ßƒXƒyƒNƒgƒ‹ŒvŽZ—p‚ÌŠÏ‘ª–Ê’†‰›‚Å‚ÌHz‚Ìo
 
 	}
 
-	if(irank == intObseOutPortNum){			// oŽË
+	if(irank == intObseOutPortNum){			// å‡ºå°„
 		x = intObseLenPart4;
 		y = ymax - 1;
 		z = zmax - 1;
@@ -6764,22 +6765,22 @@ void calc_poynting_powerHz(){				// ™“§‰ßƒXƒyƒNƒgƒ‹ŒvŽZ—p‚ÌŠÏ‘ª–Ê’†‰›‚Å‚ÌHz‚Ìo
 
 
 /*
-void calc_poynting_power(){				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€
+void calc_poynting_power(){				// â˜†å‰ç”°ä½œæˆãƒ‘ãƒ¯ãƒ¼è©•ä¾¡ãƒ—ãƒ­ã‚°ãƒ©ãƒ 
 
-	//“ü—Í•”•ª‚Å‚Ì poynting power (x•ûŒü)
-	double Eyin, Ezin, Hyin, Hzin; 		// Še¬•ª‚ÌÏŽZ•Û‘¶•Ï”
-	double EyHz, EzHy; 					// Ï•ª’l‚ÌŠ|‚¯ŽZ‚ð•Û‘¶‚·‚é•Ï”‚ÆƒZƒ‹’†‰›‚Ì’l
+	//å…¥åŠ›éƒ¨åˆ†ã§ã® poynting power (xæ–¹å‘)
+	double Eyin, Ezin, Hyin, Hzin; 		// å„æˆåˆ†ã®ç©ç®—ä¿å­˜å¤‰æ•°
+	double EyHz, EzHy; 					// ç©åˆ†å€¤ã®æŽ›ã‘ç®—ã‚’ä¿å­˜ã™ã‚‹å¤‰æ•°ã¨ã‚»ãƒ«ä¸­å¤®ã®å€¤
 
-	double pmax_01 = 0;		// “ü—Íƒpƒ[‚ÌÅ‘å’l‚ð‹L˜^‚·‚é•Ï”
-	double pmax_03 = 0;		// o—Íƒpƒ[‚ÌÅ‘å’l‚ð‹L˜^
-	double pmin_01 = 0;		// o—Íƒpƒ[‚ÌÅ¬’l‚ð‹L˜^ //“üŽË‚ÌŠÔˆá‚¦‚Å‚ÍH
-	double pmin_03 = 0;		// o—Íƒpƒ[‚ÌÅ¬’l‚ð‹L˜^
+	double pmax_01 = 0;		// å…¥åŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã‚’è¨˜éŒ²ã™ã‚‹å¤‰æ•°
+	double pmax_03 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã‚’è¨˜éŒ²
+	double pmin_01 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å°å€¤ã‚’è¨˜éŒ² //å…¥å°„ã®é–“é•ãˆã§ã¯ï¼Ÿ
+	double pmin_03 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å°å€¤ã‚’è¨˜éŒ²
 
 	int x = 0;
 
-	if(irank == intObseInPortNum){ //“üŽË
+	if(irank == intObseInPortNum){ //å…¥å°„
 
-		if(n == Nmax - Tcut){ //‚ ‚éŽž‚Ü‚Å‚Ì“üo—Íƒpƒ[‚ÌÅ‘å’l‚ÆÅ¬’l‚ð•ÛŽ‚·‚é•Ï”D16/2/1 ‚ ‚éŽž‚Í‚¢‚Â‚Ü‚Å‚©H
+		if(n == Nmax - Tcut){ //ã‚ã‚‹æ™‚åˆ»ã¾ã§ã®å…¥å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã¨æœ€å°å€¤ã‚’ä¿æŒã™ã‚‹å¤‰æ•°ï¼Ž16/2/1 ã‚ã‚‹æ™‚åˆ»ã¯ã„ã¤ã¾ã§ã‹ï¼Ÿ
 			powermax_in = 0.0;
 			powermin_in = 0.0;
 			powermax_out = 0.0;
@@ -6788,15 +6789,15 @@ void calc_poynting_power(){				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€
 
 		for(x = intObseLenPart1; x < intObseLenPart2; x++){
 
-			// ‰Šú‰»
+			// åˆæœŸåŒ–
 			Eyin = 0; 	Ezin = 0; 	Hyin = 0; 	Hzin = 0; 	EyHz = 0; 	EzHy = 0;
 
-			// ŠÏ‘ª–Ê‚ÌC³(2013/8/8) /
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-					//for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-					//	for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-					// ŠÏ‘ª–Ê‚ÌC³(2013/8/8)
+			// è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) /
+			for(int y = ymax - intObseWid; y < ymax; y++){ // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				for(int z = zmax - intObseHeig; z < zmax; z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+					//for(int y = 0; y < ymax; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+					//	for(int z = 0; z < zmax; z++){		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+					// è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8)
 
 
 					Eyin = 0.25 * (Ey[x][y][z] + Ey[x+1][y][z] + Ey[x][y][z+1] + Ey[x+1][y][z+1]);
@@ -6809,7 +6810,7 @@ void calc_poynting_power(){				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€
 				}
 			}
 
-			//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ðƒtƒ@ƒCƒ‹‚É•Û‘¶
+			//ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
 			if(x == intObseLenPart3){
 				fprintf(fppoynt1, "%e\n", EyHz - EzHy);
 			}
@@ -6847,43 +6848,43 @@ void calc_poynting_power(){				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€
 		}
 	}
 
-	if(irank == intObseOutPortNum){			// oŽË
+	if(irank == intObseOutPortNum){			// å‡ºå°„
 
-		if(n == Nmax - Tcut){ //‚ ‚éŽž‚Ü‚Å‚Ì“üo—Íƒpƒ[‚ÌÅ‘å’l‚ÆÅ¬’l‚ð•ÛŽ‚·‚é•Ï”
+		if(n == Nmax - Tcut){ //ã‚ã‚‹æ™‚åˆ»ã¾ã§ã®å…¥å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã¨æœ€å°å€¤ã‚’ä¿æŒã™ã‚‹å¤‰æ•°
 			powermax_in = 0.0;
 			powermin_in = 0.0;
 			powermax_out = 0.0;
 			powermin_out = 0.0;
 		}
 
-		for(x = intObseLenPart4; x < intObseLenPart5; x++){//‚±‚±‚ÅƒGƒ‰[”­¶()16/1/6Œß‘O
+		for(x = intObseLenPart4; x < intObseLenPart5; x++){//ã“ã“ã§ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ()16/1/6åˆå‰
 
-			//‰Šú‰»
+			//åˆæœŸåŒ–
 			Eyin = 0; 	Ezin = 0; 	Hyin = 0; 	Hzin = 0; 	EyHz = 0; 	EzHy = 0;
 
-			// ŠÏ‘ª–Ê‚ÌC³(2013/8/8) /
-			for(int y = ymax - intObseWid; y < ymax; y++){ // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for(int z = zmax - intObseHeig; z < zmax; z++){		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-					//for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-					//	for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-					//ŠÏ‘ª–Ê‚ÌC³(2013/8/8) /
+			// è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) /
+			for(int y = ymax - intObseWid; y < ymax; y++){ // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				for(int z = zmax - intObseHeig; z < zmax; z++){		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+					//for(int y = 0; y < ymax; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+					//	for(int z = 0; z < zmax; z++){		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+					//è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) /
 
 					Eyin = 0.25 * (Ey[x][y][z] + Ey[x+1][y][z] + Ey[x][y][z+1] + Ey[x+1][y][z+1]);
 					Hzin = 0.50 * (Hz[x][y][z] + Hz[x][y][z+1]);
 					Ezin = 0.25 * (Ez[x][y][z] + Ez[x+1][y][z] + Ez[x][y+1][z] + Ez[x+1][y+1][z]);
 					Hyin = 0.50 * (Hy[x][y][z] + Hy[x][y+1][z]);
 
-					//if((y == YMAX-1) && (z == (intSlabCen-1))){		// Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-					//	cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+					//if((y == YMAX-1) && (z == (intSlabCen-1))){		// æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+					//	cell[x][y][z] = 4; 					// ä¸­å¤®ç‚¹ç¢ºèªç”¨
 					//}
 
 					EyHz += Eyin * Hzin;
-					EzHy += Ezin * Hyin;					// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ðŠeƒZƒ‹–ˆ‚É‘«‚·
+					EzHy += Ezin * Hyin;					// ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼ã‚’å„ã‚»ãƒ«æ¯Žã«è¶³ã™
 				}
 			}
 
 			if(x == intObseLenPart6){
-				fprintf(fppoynt5, "%e\n", EyHz - EzHy); 		// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ðƒtƒ@ƒCƒ‹‚É•Û‘¶
+				fprintf(fppoynt5, "%e\n", EyHz - EzHy); 		// ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
 			}
 			//if(x == intObseLenPartHz5){
 			//	fprintf(fppoynt5h, "%e\n", EyHz - EzHy);
@@ -6917,22 +6918,22 @@ void calc_poynting_power(){				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€
 }*/
 
 
-void calc_poynting_power() {				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€‰ü “r’†Œo‰ß(not`Nmax)‘ª’è—p 16/2/1
+void calc_poynting_power() {				// â˜†å‰ç”°ä½œæˆãƒ‘ãƒ¯ãƒ¼è©•ä¾¡ãƒ—ãƒ­ã‚°ãƒ©ãƒ æ”¹ é€”ä¸­çµŒéŽ(notï½žNmax)æ¸¬å®šç”¨ 16/2/1
 
-											//“ü—Í•”•ª‚Å‚Ì poynting power (x•ûŒü)
-	double Eyin, Ezin, Hyin, Hzin; 		// Še¬•ª‚ÌÏŽZ•Û‘¶•Ï”
-	double EyHz, EzHy; 					// Ï•ª’l‚ÌŠ|‚¯ŽZ‚ð•Û‘¶‚·‚é•Ï”‚ÆƒZƒ‹’†‰›‚Ì’l
+											//å…¥åŠ›éƒ¨åˆ†ã§ã® poynting power (xæ–¹å‘)
+	double Eyin, Ezin, Hyin, Hzin; 		// å„æˆåˆ†ã®ç©ç®—ä¿å­˜å¤‰æ•°
+	double EyHz, EzHy; 					// ç©åˆ†å€¤ã®æŽ›ã‘ç®—ã‚’ä¿å­˜ã™ã‚‹å¤‰æ•°ã¨ã‚»ãƒ«ä¸­å¤®ã®å€¤
 
-	double pmax_01 = 0;		// “ü—Íƒpƒ[‚ÌÅ‘å’l‚ð‹L˜^‚·‚é•Ï”
-	double pmax_03 = 0;		// o—Íƒpƒ[‚ÌÅ‘å’l‚ð‹L˜^
-	double pmin_01 = 0;		// o—Íƒpƒ[‚ÌÅ¬’l‚ð‹L˜^ //“üŽË‚ÌŠÔˆá‚¦‚Å‚ÍH
-	double pmin_03 = 0;		// o—Íƒpƒ[‚ÌÅ¬’l‚ð‹L˜^
+	double pmax_01 = 0;		// å…¥åŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã‚’è¨˜éŒ²ã™ã‚‹å¤‰æ•°
+	double pmax_03 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã‚’è¨˜éŒ²
+	double pmin_01 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å°å€¤ã‚’è¨˜éŒ² //å…¥å°„ã®é–“é•ãˆã§ã¯ï¼Ÿ
+	double pmin_03 = 0;		// å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å°å€¤ã‚’è¨˜éŒ²
 
 	int x = 0;
 
-	if (irank == intObseInPortNum) { //“üŽË
+	if (irank == intObseInPortNum) { //å…¥å°„
 
-		if (n == Nmax - Tcut) { //‚ ‚éŽž‚Ü‚Å‚Ì“üo—Íƒpƒ[‚ÌÅ‘å’l‚ÆÅ¬’l‚ð•ÛŽ‚·‚é•Ï”D16/2/1 ‚ ‚éŽž‚Í‚¢‚Â‚Ü‚Å‚©H
+		if (n == Nmax - Tcut) { //ã‚ã‚‹æ™‚åˆ»ã¾ã§ã®å…¥å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã¨æœ€å°å€¤ã‚’ä¿æŒã™ã‚‹å¤‰æ•°ï¼Ž16/2/1 ã‚ã‚‹æ™‚åˆ»ã¯ã„ã¤ã¾ã§ã‹ï¼Ÿ
 			powermax_in = 0.0;
 			powermin_in = 0.0;
 			powermax_out = 0.0;
@@ -6941,15 +6942,15 @@ void calc_poynting_power() {				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€‰ü “r’†Œo‰ß(not
 
 		for (x = intObseLenPart1; x < intObseLenPart2; x++) {
 
-			// ‰Šú‰»
+			// åˆæœŸåŒ–
 			Eyin = 0; 	Ezin = 0; 	Hyin = 0; 	Hzin = 0; 	EyHz = 0; 	EzHy = 0;
 
-			/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-			for (int y = ymax - intObseWid; y < ymax; y++) { // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for (int z = zmax - intObseHeig; z < zmax; z++) {		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-																		//for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-																		//	for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-																		/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+			/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+			for (int y = ymax - intObseWid; y < ymax; y++) { // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				for (int z = zmax - intObseHeig; z < zmax; z++) {		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+																		//for(int y = 0; y < ymax; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+																		//	for(int z = 0; z < zmax; z++){		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+																		/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
 
 
 					Eyin = 0.25 * (Ey[x][y][z] + Ey[x + 1][y][z] + Ey[x][y][z + 1] + Ey[x + 1][y][z + 1]);
@@ -6962,7 +6963,7 @@ void calc_poynting_power() {				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€‰ü “r’†Œo‰ß(not
 				}
 			}
 
-			//ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ðƒtƒ@ƒCƒ‹‚É•Û‘¶
+			//ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
 			if (x == intObseLenPart3) {
 				fprintf(fppoynt1, "%e\n", EyHz - EzHy);
 			}
@@ -7000,43 +7001,43 @@ void calc_poynting_power() {				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€‰ü “r’†Œo‰ß(not
 		}
 	}
 
-	if (irank == intObseOutPortNum) {			// oŽË
+	if (irank == intObseOutPortNum) {			// å‡ºå°„
 
-		if (n == Nmax - Tcut) { //‚ ‚éŽž‚Ü‚Å‚Ì“üo—Íƒpƒ[‚ÌÅ‘å’l‚ÆÅ¬’l‚ð•ÛŽ‚·‚é•Ï”
+		if (n == Nmax - Tcut) { //ã‚ã‚‹æ™‚åˆ»ã¾ã§ã®å…¥å‡ºåŠ›ãƒ‘ãƒ¯ãƒ¼ã®æœ€å¤§å€¤ã¨æœ€å°å€¤ã‚’ä¿æŒã™ã‚‹å¤‰æ•°
 			powermax_in = 0.0;
 			powermin_in = 0.0;
 			powermax_out = 0.0;
 			powermin_out = 0.0;
 		}
 
-		for (x = intObseLenPart4; x < intObseLenPart5; x++) {//‚±‚±‚ÅƒGƒ‰[”­¶()16/1/6Œß‘O
+		for (x = intObseLenPart4; x < intObseLenPart5; x++) {//ã“ã“ã§ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ()16/1/6åˆå‰
 
-															 //‰Šú‰»
+															 //åˆæœŸåŒ–
 			Eyin = 0; 	Ezin = 0; 	Hyin = 0; 	Hzin = 0; 	EyHz = 0; 	EzHy = 0;
 
-			/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
-			for (int y = ymax - intObseWid; y < ymax; y++) { // ‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’fD
-				for (int z = zmax - intObseHeig; z < zmax; z++) {		//‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’fD
-																		//for(int y = 0; y < ymax; y++){ //‹éŒ`“±”g˜H’f–ÊY—Ìˆæ”»’f
-																		//	for(int z = 0; z < zmax; z++){		// ‹éŒ`“±”g˜H’f–ÊZ—Ìˆæ”»’f
-																		/****************************** ŠÏ‘ª–Ê‚ÌC³(2013/8/8) ******************************/
+			/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
+			for (int y = ymax - intObseWid; y < ymax; y++) { // çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­ï¼Ž
+				for (int z = zmax - intObseHeig; z < zmax; z++) {		//çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­ï¼Ž
+																		//for(int y = 0; y < ymax; y++){ //çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Yé ˜åŸŸåˆ¤æ–­
+																		//	for(int z = 0; z < zmax; z++){		// çŸ©å½¢å°Žæ³¢è·¯æ–­é¢Zé ˜åŸŸåˆ¤æ–­
+																		/****************************** è¦³æ¸¬é¢ã®ä¿®æ­£(2013/8/8) ******************************/
 
 					Eyin = 0.25 * (Ey[x][y][z] + Ey[x + 1][y][z] + Ey[x][y][z + 1] + Ey[x + 1][y][z + 1]);
 					Hzin = 0.50 * (Hz[x][y][z] + Hz[x][y][z + 1]);
 					Ezin = 0.25 * (Ez[x][y][z] + Ez[x + 1][y][z] + Ez[x][y + 1][z] + Ez[x + 1][y + 1][z]);
 					Hyin = 0.50 * (Hy[x][y][z] + Hy[x][y + 1][z]);
 
-					//if((y == YMAX-1) && (z == (intSlabCen-1))){		// Šˆ«‘w’f–Ê’†‰›“_‚ÌŽž‚ð‹L˜^
-					//	cell[x][y][z] = 4; 					// ’†‰›“_Šm”F—p
+					//if((y == YMAX-1) && (z == (intSlabCen-1))){		// æ´»æ€§å±¤æ–­é¢ä¸­å¤®ç‚¹ã®æ™‚ã‚’è¨˜éŒ²
+					//	cell[x][y][z] = 4; 					// ä¸­å¤®ç‚¹ç¢ºèªç”¨
 					//}
 
 					EyHz += Eyin * Hzin;
-					EzHy += Ezin * Hyin;					// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ðŠeƒZƒ‹–ˆ‚É‘«‚·
+					EzHy += Ezin * Hyin;					// ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼ã‚’å„ã‚»ãƒ«æ¯Žã«è¶³ã™
 				}
 			}
 
 			if (x == intObseLenPart6) {
-				fprintf(fppoynt5, "%e\n", EyHz - EzHy); 		// ƒ|ƒCƒ“ƒeƒBƒ“ƒOƒpƒ[‚ðƒtƒ@ƒCƒ‹‚É•Û‘¶
+				fprintf(fppoynt5, "%e\n", EyHz - EzHy); 		// ãƒã‚¤ãƒ³ãƒ†ã‚£ãƒ³ã‚°ãƒ‘ãƒ¯ãƒ¼ã‚’ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
 			}
 			//if(x == intObseLenPartHz5){
 			//	fprintf(fppoynt5h, "%e\n", EyHz - EzHy);
@@ -7073,12 +7074,12 @@ void calc_poynting_power() {				// ™‹g“cì¬ƒpƒ[•]‰¿ƒvƒƒOƒ‰ƒ€‰ü “r’†Œo‰ß(not
 
 
 
-void mcircle(int x_circ, int y_circ, int z_circ, int type) {//™™ ‚±‚±‚Å‰~E‚Ì‘å‚«‚³§Œä‚©H
+void mcircle(int x_circ, int y_circ, int z_circ, int type) {//â˜†â˜† ã“ã“ã§å††å­”ã®å¤§ãã•åˆ¶å¾¡ã‹ï¼Ÿ
 
 	double R;
 
-	//”¼ŒaƒZƒ‹”‚ÌŒvŽZ
-	if (type == 1)	R = ((dblRadius*1.0e10) / (dx*1.0e10)); 		//ŒvŽZŒë·‚ð–h‚®‚½‚ß‚ÉŒ…ã‚°‚µ‚Ä‚¢‚Ü‚·
+	//åŠå¾„ã‚»ãƒ«æ•°ã®è¨ˆç®—
+	if (type == 1)	R = ((dblRadius*1.0e10) / (dx*1.0e10)); 		//è¨ˆç®—èª¤å·®ã‚’é˜²ããŸã‚ã«æ¡ä¸Šã’ã—ã¦ã„ã¾ã™
 	else if (type == 2)	R = ((dblRadius2*1.0e10) / (dx*1.0e10));
 	else if (type == 3)	R = ((dblRadius3*1.0e10) / (dx*1.0e10));
 	else if (type == 5)	R = ((dblRadius5*1.0e10) / (dx*1.0e10));
@@ -7102,12 +7103,12 @@ void mcircle(int x_circ, int y_circ, int z_circ, int type) {//™™ ‚±‚±‚Å‰~E‚Ì‘
 }
 
 
-void halfcircle(int x_circ, int y_circ, int z_circ, int type) {//™™‘½•ª‚±‚ê‚ÍŽg‚Á‚Ä‚¢‚È‚¢
+void halfcircle(int x_circ, int y_circ, int z_circ, int type) {//â˜†â˜†å¤šåˆ†ã“ã‚Œã¯ä½¿ã£ã¦ã„ãªã„
 
 	double R;
 
-	//”¼ŒaƒZƒ‹”‚ÌŒvŽZ
-	if (type == 1)	R = ((dblRadius*1.0e10) / (dx*1.0e10)); 		//ŒvŽZŒë·‚ð–h‚®‚½‚ß‚ÉŒ…ã‚°‚µ‚Ä‚¢‚Ü‚·
+	//åŠå¾„ã‚»ãƒ«æ•°ã®è¨ˆç®—
+	if (type == 1)	R = ((dblRadius*1.0e10) / (dx*1.0e10)); 		//è¨ˆç®—èª¤å·®ã‚’é˜²ããŸã‚ã«æ¡ä¸Šã’ã—ã¦ã„ã¾ã™
 	else if (type == 2)	R = ((dblRadius2*1.0e10) / (dx*1.0e10));
 	else if (type == 3)	R = ((dblRadius3*1.0e10) / (dx*1.0e10));
 	else if (type == 5)	R = ((dblRadius5*1.0e10) / (dx*1.0e10));
