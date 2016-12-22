@@ -186,7 +186,7 @@ int main(int argc, char **argv){
 		// 計算開始時刻の出力
 		if (irank == IRANK_MIN){
 			//_strtime(time);
-			fprintf(fpparameter, "Start Time:\t %s\n", time);
+			//fprintf(fpparameter, "Start Time:\t %s\n", time);
 			//fprintf("Start Time:\t %s\n", time);
 
 			//stime[0] == 0;//☆計算開始時刻をホールド　動作しない
@@ -200,20 +200,19 @@ int main(int argc, char **argv){
 			stime[8] == 0;
 			stime[9] == 0;*/ //1行空けるはず
 
-			s_time = MPI_Wtime();
+			//s_time = MPI_Wtime();
 			//fprintf(fpparameter, "Start Time1:\t %s\n", s_time);
 		}
-
 		// 電磁界計算
 		for(n = 1 ; n <= Nmax; n++){
 
 			// 時間ステップ数の表示
-			if(n % Ncut == 0){
-				//_strtime(time); 
+			if(n % Ncut == 0 && irank == 0){
+				//_strtime(time);
 				printf("n = %d, \t\t", n);
-				printf("time = %s\n", time);
+				//printf("time = %s\n", time);
 
-}
+			}
 
 			// 励振関数の設定
 			source_func();
@@ -279,12 +278,12 @@ int main(int argc, char **argv){
 		if (irank == IRANK_MIN){
 			//_strtime(time);
 			//etime == time;//☆計算終了時刻をホールド
-			fprintf(fpparameter, "End Time:\t %s\n", time); 	//計算終了時刻の出力
+			//fprintf(fpparameter, "End Time:\t %s\n", time); 	//計算終了時刻の出力
 			//fprintf(fpparameter, "Calculation Time:\t %s\n", time-stime); 	//☆計算時間の出力
 
 			//時刻の出力
-			e_time = MPI_Wtime();
-			printf ("\ntime = %f\n", e_time - s_time);
+		//	e_time = MPI_Wtime();
+			//printf ("\ntime = %f\n", e_time - s_time);
 			//fprintf(fpparameter, "Calculation Time:\t %s\n", time);
 		}
 
