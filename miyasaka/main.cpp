@@ -207,9 +207,9 @@ int main(int argc, char **argv){
 		for(n = 1 ; n <= Nmax; n++){
 
 			// 時間ステップ数の表示
-			if(n % Ncut == 0 && irank == 0){
+			if(n % Ncut == 0){
 				//_strtime(time);
-				printf("n = %d, \t\t", n);
+				//printf("n = %d, \t\t", n);
 				//printf("time = %s\n", time);
 
 			}
